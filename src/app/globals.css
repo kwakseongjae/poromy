@@ -6,7 +6,7 @@
   src:
     url('/fonts/Pretendard-Regular.woff2') format('woff2'),
     url('/fonts/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
+  font-weight: 300;
   font-display: swap;
   font-style: normal;
 }
@@ -16,7 +16,7 @@
   src:
     url('/fonts/Pretendard-Medium.woff2') format('woff2'),
     url('/fonts/Pretendard-Medium.woff') format('woff');
-  font-weight: 500;
+  font-weight: 400;
   font-display: swap;
   font-style: normal;
 }
@@ -26,7 +26,7 @@
   src:
     url('/fonts/Pretendard-SemiBold.woff2') format('woff2'),
     url('/fonts/Pretendard-SemiBold.woff') format('woff');
-  font-weight: 600;
+  font-weight: 500;
   font-display: swap;
   font-style: normal;
 }
@@ -36,7 +36,7 @@
   src:
     url('/fonts/Pretendard-Bold.woff2') format('woff2'),
     url('/fonts/Pretendard-Bold.woff') format('woff');
-  font-weight: 700;
+  font-weight: 600;
   font-display: swap;
   font-style: normal;
 }
@@ -48,6 +48,62 @@
     'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR',
     'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     sans-serif;
+
+  /* Base colors */
+  --color-white-smoke: #f9f7f7;
+  --color-lavender-blue: #dbe2ef;
+  --color-steel-blue: #3f72af;
+  --color-oxford-blue: #112d4e;
+  --color-black: #17171b;
+
+  /* Neutral colors */
+  --color-off-white: #f5f5f5;
+  --color-light-gray: #e8e8e8;
+  --color-medium-gray: #c0c0c0;
+  --color-dark-gray: #808080;
+
+  /* Extended blue colors */
+  --color-light-blue: #eef2fa;
+  --color-powder-blue: #c5d5eb;
+  --color-sky-blue: #5d8bc3;
+  --color-royal-blue: #2a5893;
+  --color-dark-navy: #091b33;
+
+  /* Accent colors */
+  --color-soft-red: #f47c7c;
+  --color-coral: #f7a072;
+  --color-mint-green: #7cdedc;
+  --color-pale-yellow: #ffeaa7;
+
+  /* Color scale for Tailwind */
+  --color-50: var(--color-white-smoke);
+  --color-100: var(--color-off-white);
+  --color-200: var(--color-lavender-blue);
+  --color-300: var(--color-powder-blue);
+  --color-400: var(--color-sky-blue);
+  --color-500: var(--color-steel-blue);
+  --color-600: var(--color-royal-blue);
+  --color-700: var(--color-oxford-blue);
+  --color-800: var(--color-dark-navy);
+
+  /* Semantic colors */
+  --color-primary: var(--color-steel-blue);
+  --color-primary-hover: var(--color-royal-blue);
+  --color-secondary: var(--color-lavender-blue);
+  --color-background: var(--color-white-smoke);
+  --color-text-primary: var(--color-oxford-blue);
+  --color-text-secondary: var(--color-steel-blue);
+  --color-text-tertiary: var(--color-lavender-blue);
+  --color-text-disabled: var(--color-dark-gray);
+  --color-text-black: var(--color-black);
+  --color-border: var(--color-light-gray);
+  --color-border-focus: var(--color-steel-blue);
+
+  /* Status colors */
+  --color-success: var(--color-mint-green);
+  --color-error: var(--color-soft-red);
+  --color-warning: var(--color-coral);
+  --color-info: var(--color-sky-blue);
 }
 
 /* Base styles */
@@ -56,5 +112,7 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-background);
+    color: var(--color-text-black);
   }
 }
