@@ -1,103 +1,85 @@
-import Image from "next/image";
+import { HomeContainer } from '@/components/home/HomeContainer'
+import { Section } from '@/components/home/Section'
+import JobList from '@/components/position/JobList'
+import CompanyCarousel from '@/components/company/CompanyCarousel'
+import { jobs } from '@/constants/job.data'
+import { companies } from '@/constants/company.data'
+import Script from 'next/script'
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Poromy - AI 프롬프트 아카이브',
+  description: '채용 공고와 기업 분석을 위한 AI 프롬프트 아카이브',
+  mainEntity: [
+    {
+      '@type': 'ItemList',
+      name: '채용 공고 별 프롬프트',
+      itemListElement: jobs.map((job, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'JobPosting',
+          title: job.jobTitle,
+          companyName: job.companyName,
+          jobLocation:
+            job.conditions.find(
+              (c) =>
+                c.includes('서울') ||
+                c.includes('성남') ||
+                c.includes('수원') ||
+                c.includes('대전') ||
+                c.includes('제주') ||
+                c.includes('판교')
+            ) || '미지정',
+          employmentType:
+            job.conditions.find(
+              (c) => c.includes('신입') || c.includes('경력')
+            ) || '미지정',
+          educationRequirements:
+            job.conditions.find(
+              (c) =>
+                c.includes('대졸') || c.includes('석사') || c.includes('박사')
+            ) || '미지정',
+          url: `/position/${job.id}`,
+        },
+      })),
+    },
+    {
+      '@type': 'ItemList',
+      name: '인기 기업 분석 프롬프트',
+      itemListElement: companies.map((company, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Organization',
+          name: company.name,
+          description: company.description,
+          url: `/company/${company.id}`,
+        },
+      })),
+    },
+  ],
+}
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      <Script
+        id="structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      <HomeContainer>
+        <Section title="채용 공고 별 프롬프트" viewAllLink="/position">
+          <JobList />
+        </Section>
+
+        <Section title="인기 기업 분석 프롬프트">
+          <CompanyCarousel />
+        </Section>
+      </HomeContainer>
+    </>
+  )
 }

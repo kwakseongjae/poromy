@@ -1,0 +1,140 @@
+'use client'
+
+import { useCustomEmblaCarousel } from '@/hooks/useEmblaCarousel'
+import { companies } from '@/constants/company.data'
+import type { Company } from '@/types/company'
+import Image from 'next/image'
+import Link from 'next/link'
+import { ChevronIcon } from '@/assets'
+import { encrypt } from '@/utils/crypto'
+
+// Navigation button component
+const NavigationButton = ({
+  direction,
+  onClick,
+  disabled,
+}: {
+  direction: 'prev' | 'next'
+  onClick: () => void
+  disabled: boolean
+}) => {
+  const rotation = direction === 'prev' ? 'rotate-270' : 'rotate-90'
+  const label = direction === 'prev' ? 'Previous slide' : 'Next slide'
+
+  return (
+    <button
+      onClick={onClick}
+      className="bg-background cursor-pointer rounded-sm p-2 shadow-sm transition-colors hover:bg-gray-100 disabled:opacity-50"
+      aria-label={label}
+      disabled={disabled}
+    >
+      <ChevronIcon className={rotation} />
+    </button>
+  )
+}
+
+// Individual card component
+const CompanyCard = ({ company }: { company: Company }) => {
+  const encryptedId = encrypt(company.id)
+
+  return (
+    <article className="h-full">
+      <Link
+        href={`/company/${encryptedId}`}
+        className="block h-full"
+        aria-label={`Learn more about ${company.name}`}
+      >
+        <div
+          className={`${company.color} relative flex h-64 flex-col justify-between overflow-hidden rounded-2xl p-6 shadow-lg transition-transform hover:scale-[1.02]`}
+        >
+          {/* Logo and Text content */}
+          <div className="pt-8">
+            <h3
+              className={`${company.textColor} mb-2 text-2xl font-bold md:text-3xl`}
+            >
+              {company.logoUrl ? (
+                <Image
+                  src={company.logoUrl}
+                  alt={`${company.name} logo`}
+                  width={100}
+                  height={32}
+                  className="h-8 w-auto object-contain"
+                  priority
+                />
+              ) : (
+                company.name
+              )}
+            </h3>
+            <p
+              className={`${company.textColor} text-lg whitespace-pre-line opacity-80`}
+            >
+              {company.description}
+            </p>
+          </div>
+
+          {/* Button */}
+          <div className="mt-auto">
+            <button
+              className={`${company.buttonColor} cursor-pointer rounded-lg px-6 py-3 font-medium shadow-sm transition-colors`}
+            >
+              자세히 보기
+            </button>
+          </div>
+        </div>
+      </Link>
+    </article>
+  )
+}
+
+export default function CompanyCarousel() {
+  const { emblaRef, scrollPrev, scrollNext, prevBtnDisabled, nextBtnDisabled } =
+    useCustomEmblaCarousel()
+
+  return (
+    <section className="w-full py-8" aria-label="Featured Companies">
+      {/* Navigation controls */}
+      <nav
+        className="mb-6 flex items-center justify-end"
+        aria-label="Carousel navigation"
+      >
+        <div className="flex space-x-2">
+          <NavigationButton
+            direction="prev"
+            onClick={scrollPrev}
+            disabled={prevBtnDisabled}
+          />
+          <NavigationButton
+            direction="next"
+            onClick={scrollNext}
+            disabled={nextBtnDisabled}
+          />
+        </div>
+      </nav>
+
+      {/* Carousel container */}
+      <div className="relative overflow-y-visible">
+        <div
+          className="overflow-x-clip"
+          ref={emblaRef}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Featured companies carousel"
+        >
+          <div className="flex touch-pan-y">
+            {companies.map((company) => (
+              <div
+                key={company.id}
+                className="relative mr-6 min-w-0 flex-[0_0_33.33%]"
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${company.name} slide`}
+              >
+                <CompanyCard company={company} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
