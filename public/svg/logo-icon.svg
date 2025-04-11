@@ -1,0 +1,24 @@
+<svg viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3F72AF" />
+      <stop offset="100%" stop-color="#112D4E" />
+    </linearGradient>
+  </defs>
+  
+  <text x="20" y="60" 
+        font-family="Arial, sans-serif" 
+        font-size="60" 
+        font-weight="bold" 
+        font-style="italic" 
+        fill="url(#logoGradient)"
+        letter-spacing="1">
+    Poromy
+  </text>
+  
+  <path d="M22 65 L235 65" 
+        stroke="url(#logoGradient)" 
+        stroke-width="3" 
+        stroke-linecap="round"
+        opacity="0.7" />
+</svg>
