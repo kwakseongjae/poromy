@@ -116,3 +116,32 @@
     color: var(--color-text-black);
   }
 }
+
+/* Carousel animations */
+@layer utilities {
+  .animate-slide-left {
+    animation: slide-left 500ms ease-in-out forwards;
+  }
+
+  .animate-slide-right {
+    animation: slide-right 500ms ease-in-out forwards;
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(33.333%);
+  }
+}
