@@ -7,6 +7,7 @@ import { companies } from '@/constants/company.data'
 import Script from 'next/script'
 import InquiryList from '@/components/inquiry/InquiryList'
 import { NotificationMessage } from '@/components/common/NotificationMessage'
+import HomeCarousel from '@/components/home/HomeCarousel'
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -72,7 +73,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-
+      <HomeCarousel />
       <HomeContainer>
         <Section title="채용 공고 별 프롬프트" viewAllLink="/position">
           <JobList />
