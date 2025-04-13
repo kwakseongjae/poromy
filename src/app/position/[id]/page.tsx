@@ -98,16 +98,6 @@ export default function PositionDetail() {
       )}
 
       <div className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Link
-            href="/"
-            className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700"
-          >
-            <ChevronIcon className="mr-1 h-4 w-4 rotate-270" />
-            홈으로 돌아가기
-          </Link>
-        </div>
-
         <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <div className="mb-6 flex items-center">
             <div className="relative h-16 w-16 overflow-hidden rounded-lg">
