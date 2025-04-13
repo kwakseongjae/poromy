@@ -3,10 +3,24 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { LogoIcon, ProfileImage } from '@/assets'
+import { useEffect, useState } from 'react'
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <nav className="shadow-md">
+    <nav
+      className={`sticky top-0 z-50 bg-white transition-all duration-200 ${isScrolled ? 'border-b border-gray-200' : ''}`}
+    >
       <div className="mx-auto flex justify-between px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4">
         <div className="flex items-center">
           <Link href="/">
