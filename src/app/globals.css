@@ -112,7 +112,6 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-background);
     color: var(--color-text-black);
   }
 }
@@ -144,4 +143,25 @@
   100% {
     transform: translateX(33.333%);
   }
+}
+
+/* Carousel animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-fade-in-delayed {
+  animation: fadeIn 0.5s ease-out 0.2s forwards;
+  opacity: 0;
 }
