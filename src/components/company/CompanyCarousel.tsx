@@ -28,7 +28,7 @@ const NavigationButton = ({
       aria-label={label}
       disabled={disabled}
     >
-      <ChevronIcon className={rotation} />
+      <ChevronIcon className={rotation} fill="#808080" />
     </button>
   )
 }
@@ -91,7 +91,7 @@ export default function CompanyCarousel() {
     useCustomEmblaCarousel()
 
   return (
-    <section className="w-full py-8" aria-label="Featured Companies">
+    <section className="w-full" aria-label="Featured Companies">
       {/* Navigation controls */}
       <nav
         className="mb-6 flex items-center justify-end"

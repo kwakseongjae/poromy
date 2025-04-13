@@ -10,7 +10,7 @@ type HomeContainerProps = {
  */
 export const HomeContainer = ({ children }: HomeContainerProps) => {
   return (
-    <div className="px-12 py-8">
+    <div className="px-12 py-10">
       <div className="flex flex-col gap-12">{children}</div>
     </div>
   )
