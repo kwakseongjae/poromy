@@ -8,4 +8,5 @@ export type Job = {
   jobTitle: string
   conditions: string[]
   logoUrl: string
+  url: string
 }
