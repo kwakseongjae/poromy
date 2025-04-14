@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { decrypt, encrypt } from '@/utils/crypto'
 import { jobs } from '@/constants/job.data'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
-import { LinkIcon } from '@/components/icons/LinkIcon'
+import { LinkIcon } from '@/assets'
 
 interface PreviewJob {
   id: string
@@ -18,7 +18,7 @@ interface PreviewJob {
   url: string
 }
 
-export default function PositionDetail() {
+function PositionContent() {
   const searchParams = useSearchParams()
   const [job, setJob] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -307,5 +307,19 @@ export default function PositionDetail() {
         </div>
       </div>
     </>
+  )
+}
+
+export default function PositionDetail() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[50vh] items-center justify-center">
+          <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+        </div>
+      }
+    >
+      <PositionContent />
+    </Suspense>
   )
 }
