@@ -27,13 +27,15 @@ const Navbar = () => {
             <LogoIcon className="w-25 sm:w-28 lg:w-32" />
           </Link>
         </div>
-        <div className="flex items-center">
+
+        {/* Profile Image */}
+        {/* <div className="flex items-center">
           <Image
             src={ProfileImage}
             alt="Profile"
             className="aspect-square w-8 rounded-full object-cover sm:w-9 lg:w-10"
           />
-        </div>
+        </div> */}
       </div>
     </nav>
   )
