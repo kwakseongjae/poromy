@@ -16,12 +16,12 @@ export default function JobList() {
             className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md"
           >
             <Link
-              href={`/position/${encryptedId}`}
+              href={`/position?id=${encryptedId}`}
               className="flex h-full flex-col"
               aria-label={`${job.companyName} ${job.jobTitle} 상세 정보 보기`}
             >
               <div className="mb-4 flex items-center">
-                <div className="relative h-14 w-14 overflow-hidden rounded-sm">
+                <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-gray-200">
                   <Image
                     src={job.logoUrl}
                     alt={`${job.companyName} 로고`}
