@@ -38,19 +38,19 @@ const CompanyCard = ({ company }: { company: Company }) => {
   const encryptedId = encrypt(company.id)
 
   return (
-    <article className="h-full">
+    <article>
       <Link
         href={`/company/${encryptedId}`}
-        className="block h-full"
+        className="block"
         aria-label={`Learn more about ${company.name}`}
       >
         <div
-          className={`${company.color} relative flex h-64 flex-col justify-between overflow-hidden rounded-2xl p-6 shadow-lg transition-transform hover:scale-[1.02]`}
+          className={`${company.color} ${company.borderColor} relative flex h-64 flex-col justify-between overflow-hidden rounded-2xl border p-6 shadow-lg transition-transform hover:scale-[1.02]`}
         >
           {/* Logo and Text content */}
           <div className="pt-8">
             <h3
-              className={`${company.textColor} mb-2 text-2xl font-bold md:text-3xl`}
+              className={`${company.textColor} mb-4 text-2xl font-bold md:text-3xl`}
             >
               {company.logoUrl ? (
                 <Image
@@ -66,7 +66,7 @@ const CompanyCard = ({ company }: { company: Company }) => {
               )}
             </h3>
             <p
-              className={`${company.textColor} text-lg whitespace-pre-line opacity-80`}
+              className={`${company.textColor} ml-1 whitespace-pre-line opacity-80`}
             >
               {company.description}
             </p>
