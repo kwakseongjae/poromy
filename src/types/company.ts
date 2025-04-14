@@ -7,6 +7,7 @@ export type Company = {
   name: string
   description: string
   color: string
+  borderColor: string
   textColor: string
   buttonColor: string
   logoUrl: string | null
