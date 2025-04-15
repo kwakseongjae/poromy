@@ -89,7 +89,7 @@ function PositionContent() {
     if (isHovered) {
       timeoutId = setTimeout(() => {
         setIsVisible(true)
-      }, 300)
+      }, 200)
     } else {
       setIsVisible(false)
     }
@@ -143,7 +143,7 @@ function PositionContent() {
 
       <div className="relative flex py-8 pr-2">
         <div
-          className="group sticky top-25 z-9999 flex max-h-[75vh] w-60 flex-col items-start gap-2 overflow-y-auto px-4 transition-all duration-300 hover:w-1/3"
+          className="group sticky top-25 z-9999 flex max-h-[75vh] w-60 flex-col items-start gap-2 px-4 transition-all duration-300 hover:w-1/3"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => {
             setIsHovered(false)
@@ -151,107 +151,109 @@ function PositionContent() {
             setPreviewJob(null)
           }}
         >
-          <div className="sticky top-0 w-full bg-white py-2">
+          <div className="sticky top-0 z-10 w-full bg-white py-2">
             <SearchBar />
           </div>
 
-          {filteredJobs.length === 0 ? (
-            <div className="flex h-64 w-full flex-col items-center justify-center gap-2">
-              <p className="text-center text-sm whitespace-pre-line text-gray-500">
-                <span className="text-[#252525]">
-                  일치하는 검색결과가 없습니다
-                </span>
-                <br />
-                이런 검색어는 어떠신가요?
-              </p>
-              <div className="mt-4 flex items-center gap-2">
-                {['개발', '신입', '대졸'].map((suggestion, index) => (
-                  <Fragment key={suggestion}>
-                    <button
-                      onClick={() => {
-                        const params = new URLSearchParams(
-                          searchParams.toString()
-                        )
-                        params.set('query', suggestion)
-                        router.push(`/position?${params.toString()}`)
-                      }}
-                      className="text-primary cursor-pointer text-sm"
-                      aria-label={`${suggestion} 검색`}
-                    >
-                      {suggestion}
-                    </button>
-                    {index < 2 && <div className="h-3 w-px bg-gray-200" />}
-                  </Fragment>
-                ))}
-              </div>
-            </div>
-          ) : (
-            filteredJobs.map((jobItem) => {
-              const encryptedId = encrypt(jobItem.id)
-              const isCurrentJob = job?.id === jobItem.id
-
-              const params = new URLSearchParams(searchParams.toString())
-              if (isCurrentJob) {
-                params.delete('id')
-              } else {
-                params.set('id', encryptedId)
-              }
-
-              return (
-                <Link
-                  key={jobItem.id}
-                  href={`/position?${params.toString()}`}
-                  className={`flex min-h-12 w-full items-center gap-2 rounded-lg px-4 ${
-                    isCurrentJob
-                      ? 'bg-primary hover:bg-primary-hover text-white'
-                      : 'bg-white hover:bg-gray-100'
-                  }`}
-                  onMouseEnter={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect()
-                    setPreviewPosition({
-                      x: rect.right + 10,
-                      y: rect.top,
-                    })
-
-                    setPreviewJob(jobItem)
-                  }}
-                  onMouseLeave={() => {
-                    setPreviewJob(null)
-                  }}
-                  onClick={() => {
-                    setPreviewJob(null)
-                  }}
-                >
-                  <Image
-                    src={jobItem.logoUrl}
-                    alt={jobItem.companyName}
-                    width={40}
-                    height={40}
-                    className="h-10 w-10 rounded-lg border border-gray-200"
-                  />
-
-                  <div className="flex w-full flex-col items-start overflow-hidden">
-                    <span className="truncate text-sm font-medium">
-                      {jobItem.companyName}
-                    </span>
-                    {isHovered && (
-                      <span
-                        className={`truncate text-xs transition-all duration-300 ease-in-out ${
-                          isCurrentJob ? 'text-white/80' : 'text-gray-500'
-                        } ${
-                          isVisible
-                            ? 'w-auto max-w-full opacity-100'
-                            : 'w-0 max-w-0 overflow-hidden opacity-0'
-                        }`}
+          <div className="flex w-full flex-col gap-2 overflow-y-auto">
+            {filteredJobs.length === 0 ? (
+              <div className="flex h-64 w-full flex-col items-center justify-center gap-2">
+                <p className="text-center text-sm whitespace-pre-line text-gray-500">
+                  <span className="text-[#252525]">
+                    일치하는 검색결과가 없습니다
+                  </span>
+                  <br />
+                  이런 검색어는 어떠신가요?
+                </p>
+                <div className="mt-4 flex items-center gap-2">
+                  {['개발', '신입', '대졸'].map((suggestion, index) => (
+                    <Fragment key={suggestion}>
+                      <button
+                        onClick={() => {
+                          const params = new URLSearchParams(
+                            searchParams.toString()
+                          )
+                          params.set('query', suggestion)
+                          router.push(`/position?${params.toString()}`)
+                        }}
+                        className="text-primary cursor-pointer text-sm"
+                        aria-label={`${suggestion} 검색`}
                       >
-                        {jobItem.jobTitle}
+                        {suggestion}
+                      </button>
+                      {index < 2 && <div className="h-3 w-px bg-gray-200" />}
+                    </Fragment>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              filteredJobs.map((jobItem) => {
+                const encryptedId = encrypt(jobItem.id)
+                const isCurrentJob = job?.id === jobItem.id
+
+                const params = new URLSearchParams(searchParams.toString())
+                if (isCurrentJob) {
+                  params.delete('id')
+                } else {
+                  params.set('id', encryptedId)
+                }
+
+                return (
+                  <Link
+                    key={jobItem.id}
+                    href={`/position?${params.toString()}`}
+                    className={`flex min-h-12 w-full items-center gap-2 rounded-lg px-4 ${
+                      isCurrentJob
+                        ? 'bg-primary hover:bg-primary-hover text-white'
+                        : 'bg-white hover:bg-gray-100'
+                    }`}
+                    onMouseEnter={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect()
+                      setPreviewPosition({
+                        x: rect.right + 10,
+                        y: rect.top,
+                      })
+
+                      setPreviewJob(jobItem)
+                    }}
+                    onMouseLeave={() => {
+                      setPreviewJob(null)
+                    }}
+                    onClick={() => {
+                      setPreviewJob(null)
+                    }}
+                  >
+                    <Image
+                      src={jobItem.logoUrl}
+                      alt={jobItem.companyName}
+                      width={40}
+                      height={40}
+                      className="h-10 w-10 rounded-lg border border-gray-200"
+                    />
+
+                    <div className="flex w-full flex-col items-start overflow-hidden">
+                      <span className="truncate text-sm font-medium">
+                        {jobItem.companyName}
                       </span>
-                    )}
-                  </div>
-                </Link>
-              )
-            })
-          )}
+                      {isHovered && (
+                        <span
+                          className={`truncate text-xs transition-all duration-200 ease-in-out ${
+                            isCurrentJob ? 'text-white/80' : 'text-gray-500'
+                          } ${
+                            isVisible
+                              ? 'w-auto max-w-full opacity-100'
+                              : 'w-0 max-w-0 overflow-hidden opacity-0'
+                          }`}
+                        >
+                          {jobItem.jobTitle}
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                )
+              })
+            )}
+          </div>
 
           {previewJob && (
             <div
