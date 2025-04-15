@@ -9,4 +9,6 @@ export type Job = {
   conditions: string[]
   logoUrl: string
   url: string
+  qualifications: string[]
+  preferredQualifications: string[]
 }
