@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
 import { LinkIcon } from '@/assets'
-import SearchBar from '@/components/SearchBar'
+import SearchBar from '@/components/common/SearchBar'
 
 interface PreviewJob {
   id: string
