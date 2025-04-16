@@ -10,6 +10,7 @@ export type Company = {
   borderColor: string
   textColor: string
   buttonColor: string
+  imageUrl: string | null
   logoUrl: string | null
   hasLogo: boolean
 }
