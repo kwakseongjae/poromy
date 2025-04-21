@@ -7,6 +7,9 @@ export { default as HamburgerIcon } from './icons/HamburgerIcon'
 export { default as BulbIcon } from './icons/BulbIcon'
 export { default as DisabledBulbIcon } from './icons/DisabledBulbIcon'
 export { default as DisabledHamburgerIcon } from './icons/DisabledHamburgerIcon'
+export { default as BuildingsIcon } from './icons/BuildingsIcon'
+export { default as PersonIcon } from './icons/PersonIcon'
+export { default as SalesIcon } from './icons/SalesIcon'
 
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpeg'
