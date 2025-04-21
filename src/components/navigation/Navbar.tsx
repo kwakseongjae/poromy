@@ -26,7 +26,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 bg-white transition-all duration-200 ${
+      className={`sticky top-0 z-9999 bg-white transition-all duration-200 ${
         isScrolled ? 'border-b border-gray-200' : ''
       }`}
     >

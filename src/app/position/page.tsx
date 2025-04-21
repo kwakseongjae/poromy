@@ -143,7 +143,7 @@ function PositionContent() {
 
       <div className="relative flex py-8 pr-2">
         <div
-          className="group sticky top-25 z-9999 flex max-h-[75vh] w-60 flex-col items-start gap-2 px-4 transition-all duration-300 hover:w-1/3"
+          className="group sticky top-25 z-99 flex max-h-[75vh] w-60 flex-col items-start gap-2 px-4 transition-all duration-300 hover:w-1/3"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => {
             setIsHovered(false)
