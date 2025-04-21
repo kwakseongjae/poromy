@@ -165,3 +165,11 @@
   animation: fadeIn 0.5s ease-out 0.2s forwards;
   opacity: 0;
 }
+
+/* Custom cursor styles */
+body.custom-cursor,
+body.custom-cursor * {
+  cursor:
+    url('/pobi_cursor.png') 32 32,
+    auto !important;
+}

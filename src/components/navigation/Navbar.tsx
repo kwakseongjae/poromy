@@ -9,11 +9,13 @@ import {
   DisabledHamburgerIcon,
 } from '@/assets'
 import { useEffect, useState } from 'react'
+import { useCursor } from '@/contexts/CursorContext'
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
+  const { incrementClickCount } = useCursor()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +25,10 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const handlePromptClick = () => {
+    incrementClickCount()
+  }
 
   return (
     <nav
@@ -51,6 +57,7 @@ const Navbar = () => {
                 setIsModalOpen(false)
                 setHoveredCategory(null)
               }}
+              onClick={handlePromptClick}
             >
               <div className="flex items-center gap-1 px-2 py-2">
                 {hoveredCategory && hoveredCategory !== 'prompt' ? (
@@ -59,7 +66,7 @@ const Navbar = () => {
                   <HamburgerIcon className="h-5 w-5" />
                 )}
                 <span
-                  className={`font-semibold ${hoveredCategory && hoveredCategory !== 'prompt' ? 'text-text-disabled' : ''}`}
+                  className={`font-semibold select-none ${hoveredCategory && hoveredCategory !== 'prompt' ? 'text-text-disabled' : ''}`}
                 >
                   프롬프트
                 </span>
