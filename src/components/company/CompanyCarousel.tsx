@@ -56,8 +56,8 @@ const CompanyCard = ({ company }: { company: Company }) => {
                 <Image
                   src={company.logoUrl}
                   alt={`${company.name} logo`}
-                  width={100}
-                  height={32}
+                  width={120}
+                  height={40}
                   className="h-8 w-auto object-contain"
                   priority
                 />

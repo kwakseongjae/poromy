@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, useRef } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Fade from 'embla-carousel-fade'
 import { ChevronIcon } from '@/assets'
+import Image from 'next/image'
 
 const SLIDE_COUNT = 3
 const SLIDE_INTERVAL = 5000
@@ -99,10 +100,13 @@ export default function HomeCarousel() {
         <div className="flex h-full">
           {slides.map((slide, index) => (
             <div key={index} className="relative min-w-0 flex-[0_0_100%]">
-              <img
+              <Image
                 src={slide.image}
                 alt={slide.alt}
+                width={1000}
+                height={1000}
                 className="h-full w-full object-cover"
+                priority
               />
             </div>
           ))}
