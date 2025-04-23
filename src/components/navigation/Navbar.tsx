@@ -7,15 +7,26 @@ import {
   BulbIcon,
   DisabledBulbIcon,
   DisabledHamburgerIcon,
+  ProfileImage,
 } from '@/assets'
 import { useEffect, useState } from 'react'
 import { useCursor } from '@/contexts/CursorContext'
+import { useSupabase } from '@/contexts/SupabaseContext'
+import Image from 'next/image'
+import ProfileModal from '@/components/modal/ProfileModal'
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const { incrementClickCount } = useCursor()
+  const { user, loading } = useSupabase()
+
+  // 사용자 UI 상태를 관리하는 상태 변수
+  const [authUIState, setAuthUIState] = useState<
+    'loading' | 'authenticated' | 'unauthenticated'
+  >('loading')
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,8 +37,62 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // 사용자 인증 상태에 따라 UI 상태 업데이트
+  useEffect(() => {
+    if (loading) {
+      setAuthUIState('loading')
+    } else if (user) {
+      setAuthUIState('authenticated')
+    } else {
+      setAuthUIState('unauthenticated')
+    }
+  }, [loading, user])
+
   const handlePromptClick = () => {
     incrementClickCount()
+  }
+
+  const handleProfileClick = () => {
+    setIsProfileModalOpen(true)
+  }
+
+  // 사용자 인증 UI 렌더링
+  const renderAuthUI = () => {
+    if (loading) {
+      return <div className="h-9 w-24 animate-pulse rounded-lg bg-gray-50" />
+    }
+
+    if (user) {
+      return (
+        <div className="flex items-center">
+          <button
+            className="flex cursor-pointer items-center justify-center"
+            aria-label="User profile"
+            tabIndex={0}
+            onClick={handleProfileClick}
+          >
+            <Image
+              src={ProfileImage}
+              alt="Profile"
+              width={32}
+              height={32}
+              className="aspect-square w-8 rounded-full object-cover shadow-md hover:ring-6 hover:ring-gray-100"
+            />
+          </button>
+        </div>
+      )
+    }
+
+    return (
+      <Link
+        href="/login"
+        className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
+        aria-label="로그인 또는 회원가입"
+        tabIndex={0}
+      >
+        회원가입/로그인
+      </Link>
+    )
   }
 
   return (
@@ -126,19 +191,14 @@ const Navbar = () => {
 
         {/* Right Side */}
         {/* Sign In Button */}
-        <div className="flex items-center">
-          <button className="text-500 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-bold hover:bg-gray-100">
-            회원가입/로그인
-          </button>
-        </div>
-        {/* <div className="flex items-center">
-          <Image
-            src={ProfileImage}
-            alt="Profile"
-            className="aspect-square w-8 rounded-full object-cover sm:w-9 lg:w-10"
-          />
-        </div> */}
+        <div className="flex items-center gap-4">{renderAuthUI()}</div>
       </div>
+
+      {/* Profile Modal */}
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
     </nav>
   )
 }
