@@ -4,6 +4,8 @@ import './globals.css'
 import Navbar from '@/components/navigation/Navbar'
 import { CursorProvider } from '@/contexts/CursorContext'
 import CustomCursor from '@/components/CustomCursor'
+import { createClient } from '@/lib/supabase-server'
+import SupabaseProvider from '@/contexts/SupabaseContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -71,19 +73,26 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const supabase = await createClient()
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <CursorProvider>
-          <CustomCursor />
-          <Navbar />
-          <main>{children}</main>
-        </CursorProvider>
+        <SupabaseProvider initialSession={session}>
+          <CursorProvider>
+            <CustomCursor />
+            <Navbar />
+            <main>{children}</main>
+          </CursorProvider>
+        </SupabaseProvider>
       </body>
     </html>
   )
