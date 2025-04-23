@@ -12,4 +12,4 @@ export { default as PersonIcon } from './icons/PersonIcon'
 export { default as SalesIcon } from './icons/SalesIcon'
 
 // Image
-export { default as ProfileImage } from '../../public/images/profile.jpeg'
+export { default as ProfileImage } from '../../public/images/profile.jpg'
