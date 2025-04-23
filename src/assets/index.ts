@@ -10,6 +10,7 @@ export { default as DisabledHamburgerIcon } from './icons/DisabledHamburgerIcon'
 export { default as BuildingsIcon } from './icons/BuildingsIcon'
 export { default as PersonIcon } from './icons/PersonIcon'
 export { default as SalesIcon } from './icons/SalesIcon'
+export { default as EditIcon } from './icons/EditIcon'
 
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpg'
