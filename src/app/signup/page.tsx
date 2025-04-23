@@ -129,6 +129,7 @@ export default function SignUp() {
             onChange={(e) => setNickname(e.target.value)}
             className="w-full rounded border border-gray-300 p-2 text-sm font-semibold"
             placeholder="닉네임을 입력해주세요."
+            maxLength={20}
             required
           />
         </div>
