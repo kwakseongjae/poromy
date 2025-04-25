@@ -14,3 +14,4 @@ export { default as EditIcon } from './icons/EditIcon'
 
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpg'
+export { default as InquiryTextImage } from '../../public/images/inquiry-text.png'
