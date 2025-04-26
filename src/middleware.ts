@@ -15,6 +15,20 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession()
 
+  let isAdmin = false
+  if (session?.user) {
+    const { data: adminData } = await supabase
+      .from('administrators')
+      .select('id')
+      .eq('id', session.user.id)
+      .single()
+
+    isAdmin = !!adminData
+  }
+
+  // 관리자 상태를 쿠키에 저장
+  response.cookies.set('is-admin', isAdmin.toString())
+
   // 로그인/회원가입 페이지 접근 시 로그인된 사용자 체크
   if (
     request.nextUrl.pathname.startsWith('/login') ||
