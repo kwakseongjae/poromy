@@ -8,18 +8,21 @@ import {
   DisabledBulbIcon,
   DisabledHamburgerIcon,
   ProfileImage,
+  InquiryTextImage,
 } from '@/assets'
 import { useEffect, useState } from 'react'
 import { useCursor } from '@/contexts/CursorContext'
 import { useSupabase } from '@/contexts/SupabaseContext'
 import Image from 'next/image'
 import ProfileModal from '@/components/modal/ProfileModal'
+import Sidebar from './Sidebar'
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const { incrementClickCount } = useCursor()
   const { user, loading } = useSupabase()
 
@@ -96,110 +99,146 @@ const Navbar = () => {
   }
 
   return (
-    <nav
-      className={`sticky top-0 z-9999 bg-white transition-all duration-200 ${
-        isScrolled ? 'border-b border-gray-200' : ''
-      }`}
-    >
-      <div className="mx-auto flex justify-between px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4">
-        {/* Left Side */}
-        <div className="flex items-center gap-8">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/">
-              <LogoIcon className="w-25 sm:w-28 lg:w-32" />
-            </Link>
-          </div>
-          {/* Category */}
-          <div className="flex items-center gap-4">
-            <div
-              className="group relative cursor-default"
-              onMouseEnter={() => {
-                setIsModalOpen(true)
-                setHoveredCategory('prompt')
-              }}
-              onMouseLeave={() => {
-                setIsModalOpen(false)
-                setHoveredCategory(null)
-              }}
-              onClick={handlePromptClick}
-            >
-              <div className="flex items-center gap-1 px-2 py-2">
-                {hoveredCategory && hoveredCategory !== 'prompt' ? (
-                  <DisabledHamburgerIcon className="h-5 w-5" />
+    <>
+      <nav
+        className={`sticky top-0 z-9999 bg-white transition-all duration-200 ${
+          isScrolled ? 'border-b border-gray-200' : ''
+        }`}
+      >
+        <div className="mx-auto flex min-h-12 items-center justify-between px-4 sm:min-h-16 sm:px-6 lg:px-8">
+          {/* Left Side */}
+          <div className="flex items-center gap-8">
+            {/* Logo */}
+            <div className="flex items-center">
+              <Link href="/">
+                <LogoIcon className="w-25 sm:w-28 lg:w-32" />
+              </Link>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden sm:flex sm:items-center sm:gap-4">
+              <div
+                className="group relative cursor-default"
+                onMouseEnter={() => {
+                  setIsModalOpen(true)
+                  setHoveredCategory('prompt')
+                }}
+                onMouseLeave={() => {
+                  setIsModalOpen(false)
+                  setHoveredCategory(null)
+                }}
+                onClick={handlePromptClick}
+              >
+                <div className="flex items-center gap-1 px-2 py-2">
+                  {hoveredCategory && hoveredCategory !== 'prompt' ? (
+                    <DisabledHamburgerIcon className="h-5 w-5" />
+                  ) : (
+                    <HamburgerIcon className="h-5 w-5" />
+                  )}
+                  <span
+                    className={`font-semibold select-none ${
+                      hoveredCategory && hoveredCategory !== 'prompt'
+                        ? 'text-text-disabled'
+                        : ''
+                    }`}
+                  >
+                    프롬프트
+                  </span>
+                </div>
+                <div
+                  className={`absolute top-full left-0 z-50 ml-2 w-48 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 ${
+                    isModalOpen ? 'block' : 'hidden'
+                  }`}
+                >
+                  <Link
+                    href="/position"
+                    className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    채용 공고 분석 프롬프트
+                  </Link>
+                  <Link
+                    href="/company"
+                    className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    기업 분석 프롬프트
+                  </Link>
+                </div>
+              </div>
+              <Link
+                href="/guide"
+                className="flex items-center gap-1 px-2 py-2"
+                onMouseEnter={() => setHoveredCategory('guide')}
+                onMouseLeave={() => setHoveredCategory(null)}
+              >
+                {hoveredCategory && hoveredCategory !== 'guide' ? (
+                  <DisabledBulbIcon className="h-5 w-5" />
                 ) : (
-                  <HamburgerIcon className="h-5 w-5" />
+                  <BulbIcon className="h-5 w-5" />
                 )}
                 <span
-                  className={`font-semibold select-none ${hoveredCategory && hoveredCategory !== 'prompt' ? 'text-text-disabled' : ''}`}
+                  className={`font-semibold ${
+                    hoveredCategory && hoveredCategory !== 'guide'
+                      ? 'text-text-disabled'
+                      : ''
+                  }`}
                 >
-                  프롬프트
+                  적용 가이드
                 </span>
-              </div>
-              <div
-                className={`absolute top-full left-0 z-50 ml-2 w-48 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 ${
-                  isModalOpen ? 'block' : 'hidden'
-                }`}
+              </Link>
+              <Link
+                href="/inquiry"
+                onMouseEnter={() => setHoveredCategory('inquiry')}
+                onMouseLeave={() => setHoveredCategory(null)}
+                className="flex"
               >
-                <Link
-                  href="/position"
-                  className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  채용 공고 분석 프롬프트
-                </Link>
-                <Link
-                  href="/company"
-                  className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  기업 분석 프롬프트
-                </Link>
-              </div>
+                <Image
+                  src={InquiryTextImage}
+                  alt="문의하기"
+                  width={120}
+                  height={20}
+                  className="h-4"
+                />
+                <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
+                  Free
+                </span>
+              </Link>
             </div>
-            <Link
-              href="/guide"
-              className="flex items-center gap-1 px-2 py-2"
-              onMouseEnter={() => setHoveredCategory('guide')}
-              onMouseLeave={() => setHoveredCategory(null)}
+          </div>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-4">
+            {/* Mobile Menu Button */}
+            <button
+              className="cursor-pointer sm:hidden"
+              onClick={() => {
+                if (isSidebarOpen) {
+                  setIsSidebarOpen(false)
+                } else {
+                  setIsSidebarOpen(true)
+                }
+              }}
+              aria-label="Toggle menu"
             >
-              {hoveredCategory && hoveredCategory !== 'guide' ? (
-                <DisabledBulbIcon className="h-5 w-5" />
-              ) : (
-                <BulbIcon className="h-5 w-5" />
-              )}
-              <span
-                className={`font-semibold ${hoveredCategory && hoveredCategory !== 'guide' ? 'text-text-disabled' : ''}`}
-              >
-                적용 가이드
-              </span>
-            </Link>
-            <Link
-              href="/inquiry"
-              className="flex items-center gap-1 px-2 py-2"
-              onMouseEnter={() => setHoveredCategory('inquiry')}
-              onMouseLeave={() => setHoveredCategory(null)}
-            >
-              <span
-                className={`font-semibold ${hoveredCategory && hoveredCategory !== 'inquiry' ? 'text-text-disabled' : ''}`}
-              >
-                분석 요청
-              </span>
-            </Link>
+              <HamburgerIcon className="h-6 w-6" />
+            </button>
+
+            {/* Desktop Auth UI */}
+            <div className="hidden sm:block">{renderAuthUI()}</div>
           </div>
         </div>
-
-        {/* Right Side */}
-        {/* Sign In Button */}
-        <div className="flex items-center gap-4">{renderAuthUI()}</div>
-      </div>
+      </nav>
 
       {/* Profile Modal */}
       <ProfileModal
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
       />
-    </nav>
+
+      {/* Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+    </>
   )
 }
 
