@@ -2,7 +2,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['images.unsplash.com'],
+    domains: [],
   },
   webpack(config) {
     // Configuration to convert SVG files to React components
