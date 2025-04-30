@@ -11,9 +11,9 @@ const supabase = createClient(
 )
 
 interface InquiryDetailPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 interface Answer {
