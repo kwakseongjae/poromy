@@ -9,6 +9,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import { LinkIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
+import PromptContainer from '@/components/common/PromptContainer'
 
 interface PreviewJob {
   id: string
@@ -152,7 +153,7 @@ function PositionContent() {
           }}
         >
           <div className="sticky top-0 z-10 w-full bg-white py-2">
-            <SearchBar />
+            <SearchBar placeholder="관심있는 직무 혹은 기업을 검색해보세요" />
           </div>
 
           <div className="flex w-full flex-col gap-2 overflow-y-auto">
@@ -384,22 +385,12 @@ function PositionContent() {
               </div>
 
               <div className="mb-6">
-                <h2 className="mb-2 text-lg font-semibold text-gray-900">
-                  AI 프롬프트
-                </h2>
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-                  <p className="text-gray-700">
-                    {job.companyName}의 {job.jobTitle} 포지션에 대한 AI
-                    프롬프트를 생성해 드립니다. 아래 버튼을 클릭하여 맞춤형
-                    프롬프트를 받아보세요.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-center">
-                <button className="bg-primary hover:bg-primary-dark rounded-lg px-6 py-3 text-white shadow-sm transition-colors">
-                  AI 프롬프트 생성하기
-                </button>
+                <PromptContainer
+                  type="position"
+                  title="AI 프롬프트"
+                  description={`${job.companyName}의 ${job.jobTitle} 포지션에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사하세요.`}
+                  prompt={job.prompt}
+                />
               </div>
             </>
           )}

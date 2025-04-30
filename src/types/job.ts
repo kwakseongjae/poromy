@@ -11,4 +11,5 @@ export type Job = {
   url: string
   qualifications: string[]
   preferredQualifications: string[]
+  prompt: string
 }
