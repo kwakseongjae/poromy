@@ -138,7 +138,7 @@ export default function Login() {
             required
           />
         </div>
-        {error && <div className="mb-4 text-red-500">{error}</div>}
+        {error && <div className="mt-4 text-center text-red-500">{error}</div>}
 
         <div className="mt-10">
           <button
@@ -161,13 +161,14 @@ export default function Login() {
               이메일 회원가입
             </button>
           </Link>
-          <div className="mt-2 flex justify-end">
+          {/* 비밀번호 재설정 기능 추후 추가 예정 */}
+          {/* <div className="mt-2 flex justify-end">
             <Link href="/reset-password">
               <span className="text-sm font-semibold text-gray-500 underline hover:text-gray-700">
                 비밀번호 재설정
               </span>
             </Link>
-          </div>
+          </div> */}
         </div>
       </form>
     </div>
