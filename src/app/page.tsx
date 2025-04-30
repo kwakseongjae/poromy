@@ -5,9 +5,8 @@ import CompanyCarousel from '@/components/company/CompanyCarousel'
 import { jobs } from '@/constants/job.data'
 import { companies } from '@/constants/company.data'
 import Script from 'next/script'
-import InquiryList from '@/components/inquiry/InquiryList'
-import { NotificationMessage } from '@/components/common/NotificationMessage'
 import HomeCarousel from '@/components/home/HomeCarousel'
+import { HomeInquiry } from '@/components/home/HomeInquiry'
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -79,13 +78,12 @@ export default function Home() {
           <JobList />
         </Section>
 
-        <Section title="인기 기업 분석 프롬프트">
+        <Section title="인기 기업 분석 프롬프트" viewAllLink="/company">
           <CompanyCarousel />
         </Section>
 
-        <Section title="프롬프트 분석 요청 게시판">
-          <NotificationMessage message="요청하신 공고 및 기업 프롬프트 분석은 24시간 이내에 검토 후 답변해 드립니다." />
-          <InquiryList />
+        <Section title="채용공고 분석요청" viewAllLink="/inquiry">
+          <HomeInquiry />
         </Section>
       </HomeContainer>
     </>
