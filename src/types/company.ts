@@ -10,7 +10,21 @@ export type Company = {
   borderColor: string
   textColor: string
   buttonColor: string
-  imageUrl: string | null
-  logoUrl: string | null
+  imageUrl: string
+  logoUrl: string
   hasLogo: boolean
+  type: string
+  tags: string[]
+  industry: string
+  size: string
+  headquarters: string
+  founded: string
+  website: string
+  salary: string
+  ceo: string
+  marketType: string
+  employeeCount: string
+  employeeCountDate: string
+  revenue: string
+  revenueDate: string
 }
