@@ -11,6 +11,8 @@ export { default as BuildingsIcon } from './icons/BuildingsIcon'
 export { default as PersonIcon } from './icons/PersonIcon'
 export { default as SalesIcon } from './icons/SalesIcon'
 export { default as EditIcon } from './icons/EditIcon'
+export { default as CopyIcon } from './icons/CopyIcon'
+export { default as HelpIcon } from './icons/HelpIcon'
 
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpg'
