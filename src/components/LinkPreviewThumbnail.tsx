@@ -11,8 +11,6 @@ interface LinkPreviewData {
 interface LinkPreviewThumbnailProps {
   url: string
   className?: string
-  width?: number
-  height?: number
 }
 
 const getProxyImageUrl = (originalUrl: string) => {
@@ -22,8 +20,6 @@ const getProxyImageUrl = (originalUrl: string) => {
 const LinkPreviewThumbnail = ({
   url,
   className = '',
-  width = 200,
-  height = 120,
 }: LinkPreviewThumbnailProps) => {
   const [preview, setPreview] = useState<LinkPreviewData | null>(null)
   const [loading, setLoading] = useState(false)
@@ -64,8 +60,7 @@ const LinkPreviewThumbnail = ({
   if (loading) {
     return (
       <div
-        className={`animate-pulse rounded-lg bg-gray-100 ${className}`}
-        style={{ width, height }}
+        className={`relative aspect-video animate-pulse rounded-lg bg-gray-100 ${className}`}
       />
     )
   }
@@ -73,8 +68,7 @@ const LinkPreviewThumbnail = ({
   if (error || !preview?.images?.length) {
     return (
       <div
-        className={`flex items-center justify-center rounded-lg bg-gray-100 ${className}`}
-        style={{ width, height }}
+        className={`relative flex aspect-video items-center justify-center rounded-lg bg-gray-100 ${className}`}
       >
         <span className="text-xs text-gray-500">No preview available</span>
       </div>
@@ -83,15 +77,16 @@ const LinkPreviewThumbnail = ({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-lg ${className}`}
-      style={{ width, height }}
+      className={`relative aspect-video overflow-hidden rounded-lg ${className}`}
     >
       <Image
         src={getProxyImageUrl(preview.images[0])}
         alt="Link thumbnail"
         fill
-        className="object-cover"
-        sizes={`${width}px`}
+        className="!h-full !w-full object-cover object-center"
+        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+        priority
+        style={{ objectFit: 'cover' }}
       />
     </div>
   )
