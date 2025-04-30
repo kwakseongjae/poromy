@@ -3,7 +3,7 @@
 import { useSupabase } from '@/contexts/SupabaseContext'
 import Image from 'next/image'
 import { EditIcon, ProfileImage } from '@/assets'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 
 export default function ProfileModal({
@@ -15,11 +15,26 @@ export default function ProfileModal({
 }) {
   const { user, signOut, refreshSession } = useSupabase()
   const [isEditing, setIsEditing] = useState(false)
-  const [newNickname, setNewNickname] = useState(
-    user?.user_metadata.nickname || ''
-  )
+  const [newNickname, setNewNickname] = useState('')
   const [error, setError] = useState<string | null>(null)
   const supabase = createBrowserSupabaseClient()
+
+  // Fetch nickname from profiles table on component mount
+  useEffect(() => {
+    const fetchNickname = async () => {
+      if (user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('nickname')
+          .eq('id', user.id)
+          .single()
+
+        setNewNickname(profile?.nickname || user.user_metadata.nickname || '')
+      }
+    }
+
+    fetchNickname()
+  }, [user, supabase])
 
   const handleUpdateNickname = async () => {
     if (!user) return
