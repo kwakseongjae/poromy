@@ -15,7 +15,7 @@ export const SectionHeader = ({
   viewAllText = '전체 보기',
 }: SectionHeaderProps) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex items-center justify-between">
       <h1 className="text-2xl font-bold">{title}</h1>
       {viewAllLink && (
         <Link
