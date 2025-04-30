@@ -1,25 +1,31 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
-const SearchBar = () => {
+interface SearchBarProps {
+  placeholder?: string
+  size?: 'medium' | 'large'
+}
+
+const SearchBar = ({
+  placeholder = '검색어를 입력하세요',
+  size = 'medium',
+}: SearchBarProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
-    const query = searchParams.get('query')
-    if (query) {
-      setSearchQuery(query)
+    // 페이지 새로고침 시 URL 파라미터 초기화
+    if (searchParams.get('query')) {
+      router.replace(pathname)
     }
-  }, [searchParams])
+  }, [])
 
   const handleSearch = () => {
-    const params = new URLSearchParams(searchParams.toString())
+    const params = new URLSearchParams()
     if (searchQuery.trim()) {
       params.set('query', searchQuery)
-    } else {
-      params.delete('query')
     }
     router.push(`${pathname}?${params.toString()}`)
   }
@@ -30,15 +36,30 @@ const SearchBar = () => {
     }
   }
 
+  const sizeClasses = {
+    medium: {
+      container: 'max-w-md',
+      input: 'py-2 text-sm',
+      icon: 'h-5 w-5',
+    },
+    large: {
+      container: 'max-w-3xl',
+      input: 'py-3 text-base',
+      icon: 'h-6 w-6',
+    },
+  }
+
   return (
-    <div className="relative w-full max-w-md overflow-hidden">
+    <div
+      className={`relative w-full overflow-hidden ${sizeClasses[size].container}`}
+    >
       <input
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder={`관심있는 직무 혹은 기업을 검색해보세요`}
-        className="focus:border-primary w-full rounded-lg border-2 border-gray-200 bg-white px-4 py-2 pr-10 text-sm placeholder:text-ellipsis focus:outline-none"
+        placeholder={placeholder}
+        className={`focus:border-primary w-full rounded-lg border-2 border-gray-200 bg-white px-4 pr-10 placeholder:text-ellipsis focus:outline-none ${sizeClasses[size].input}`}
         aria-label="검색"
       />
       <button
@@ -47,7 +68,7 @@ const SearchBar = () => {
         aria-label="검색"
       >
         <svg
-          className="h-5 w-5"
+          className={sizeClasses[size].icon}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
