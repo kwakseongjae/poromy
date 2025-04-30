@@ -108,6 +108,22 @@
 
 /* Base styles */
 @layer base {
+  html {
+    font-size: 12px; /* Mobile base font size */
+  }
+
+  @media (min-width: 640px) {
+    html {
+      font-size: 14px; /* Tablet base font size */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 16px; /* Desktop base font size */
+    }
+  }
+
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
