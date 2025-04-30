@@ -58,15 +58,17 @@ const CompanyCard = ({ company }: { company: Company }) => {
                   alt={`${company.name} logo`}
                   width={120}
                   height={40}
-                  className="h-8 w-auto object-contain"
+                  className="h-7 w-auto object-contain md:h-8 lg:h-10"
                   priority
                 />
               ) : (
-                company.name
+                <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">
+                  {company.name}
+                </span>
               )}
             </h3>
             <p
-              className={`${company.textColor} ml-1 whitespace-pre-line opacity-80`}
+              className={`${company.textColor} ml-1 line-clamp-3 whitespace-pre-line opacity-80 lg:line-clamp-4`}
             >
               {company.description}
             </p>
@@ -75,7 +77,7 @@ const CompanyCard = ({ company }: { company: Company }) => {
           {/* Button */}
           <div className="mt-auto">
             <button
-              className={`${company.buttonColor} cursor-pointer rounded-lg px-6 py-3 font-medium shadow-sm transition-colors`}
+              className={`${company.buttonColor} cursor-pointer rounded-lg px-4 py-2 text-sm font-medium shadow-sm transition-colors sm:px-5 sm:py-2.5 md:text-base`}
             >
               자세히 보기
             </button>
@@ -124,7 +126,7 @@ export default function CompanyCarousel() {
             {companies.map((company) => (
               <div
                 key={company.id}
-                className="relative mr-6 min-w-0 flex-[0_0_33.33%]"
+                className="relative mr-6 min-w-0 flex-[0_0_50%] lg:flex-[0_0_33.33%]"
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${company.name} slide`}
