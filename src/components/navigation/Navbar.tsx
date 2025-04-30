@@ -105,7 +105,7 @@ const Navbar = () => {
           isScrolled ? 'border-b border-gray-200' : ''
         }`}
       >
-        <div className="mx-auto flex min-h-12 items-center justify-between px-4 sm:min-h-16 sm:px-6 lg:px-8">
+        <div className="mx-auto flex min-h-[44px] items-center justify-between px-4 sm:min-h-16 sm:px-6 lg:px-8">
           {/* Left Side */}
           <div className="flex items-center gap-8">
             {/* Logo */}

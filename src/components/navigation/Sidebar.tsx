@@ -90,7 +90,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 right-0 z-1000 h-full w-64 transform bg-white pt-12 transition-transform duration-300 ${
+        className={`fixed top-0 right-0 z-1000 h-full w-64 transform bg-white pt-[44px] transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         onClick={(e) => e.stopPropagation()}
