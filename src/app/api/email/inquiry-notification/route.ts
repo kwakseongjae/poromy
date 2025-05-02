@@ -37,7 +37,7 @@ export async function POST(request: Request) {
 
     // 이메일 발송
     const data = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>', // Resend 기본 도메인 또는 설정한 도메인
+      from: '포로미 <contact@poromy.ai.kr>',
       to: adminEmail,
       subject: `[새 문의] ${inquiry.title}`,
       react: InquiryNotification({

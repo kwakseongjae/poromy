@@ -32,10 +32,10 @@ export async function POST(request: Request) {
       )
     }
 
-    // 이메일 발송 (테스트 이메일로만 전송)
+    // 이메일 발송
     const data = await resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: userEmail || testEmail,
+      from: '포로미 <contact@poromy.ai.kr>',
+      to: userEmail,
       subject: `[포로미] 문의하신 "${inquiry.title}"에 답변이 등록되었습니다.`,
       react: AnswerNotification({
         inquiryTitle: inquiry.title,
