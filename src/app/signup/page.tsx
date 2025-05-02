@@ -42,11 +42,18 @@ export default function SignUp() {
           data: {
             nickname: nickname,
           },
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
         },
       })
 
-      if (authError) throw authError
-      if (!authData.user) throw new Error('회원가입 중 오류가 발생했습니다.')
+      if (authError) {
+        console.error('Auth Error:', authError)
+        throw new Error(authError.message)
+      }
+
+      if (!authData.user) {
+        throw new Error('회원가입 중 오류가 발생했습니다.')
+      }
 
       // 2. 서버 API를 통해 프로필 생성
       const response = await fetch('/api/create-profile', {
@@ -62,7 +69,10 @@ export default function SignUp() {
       })
 
       const profileData = await response.json()
-      if (!response.ok) throw new Error(profileData.error || '프로필 생성 실패')
+      if (!response.ok) {
+        console.error('Profile Creation Error:', profileData)
+        throw new Error(profileData.error || '프로필 생성 실패')
+      }
 
       // 성공 메시지 표시
       alert('회원가입이 완료되었습니다. 이메일을 확인해주세요.')

@@ -29,7 +29,7 @@ export const InquiryNotification = ({
   url,
   userEmail,
   userNickname,
-  appUrl = 'http://localhost:3000',
+  appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
 }: InquiryNotificationProps) => {
   return (
     <Html>
