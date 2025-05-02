@@ -1,6 +1,5 @@
-import { createAdminClient } from '@/lib/supabase-server'
+import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
-import { Database } from '@/types/supabase'
 
 export async function POST(request: Request) {
   try {
@@ -13,15 +12,22 @@ export async function POST(request: Request) {
       )
     }
 
-    const supabaseAdmin = await createAdminClient()
+    // 서비스 롤 키를 사용하여 RLS를 우회
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false,
+        },
+      }
+    )
 
     // 프로필 업데이트
-    const { error } = await supabaseAdmin
+    const { error } = await supabase
       .from('profiles')
-      .update({
-        is_verified: is_verified || null,
-        updated_at: new Date().toISOString(),
-      } as Database['public']['Tables']['profiles']['Update'])
+      .update({ is_verified: is_verified })
       .eq('id', userId)
 
     if (error) {
