@@ -44,7 +44,7 @@ export default function SignUp() {
           data: {
             nickname: nickname,
           },
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+          emailRedirectTo: 'https://poromy.ai.kr/auth/callback',
         },
       })
 
@@ -57,12 +57,12 @@ export default function SignUp() {
         throw new Error('회원가입 중 오류가 발생했습니다.')
       }
 
-      // 2. 임시 프로필 생성 (이메일 인증 전)
+      // 2. 프로필 생성 (이메일 인증 전)
       const { error: profileError } = await supabase.from('profiles').insert({
         id: authData.user.id,
         email,
         nickname,
-        is_verified: false, // 이메일 인증 여부
+        is_verified: false,
         created_at: new Date().toISOString(),
       })
 
