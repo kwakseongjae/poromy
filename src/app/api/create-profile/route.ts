@@ -22,6 +22,7 @@ export async function POST(request: Request) {
       nickname,
       is_verified: is_verified || false,
       created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
     })
 
     if (error) {
