@@ -11,6 +11,7 @@ export default function SignUp() {
   const [nickname, setNickname] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createBrowserSupabaseClient()
   const { user } = useSupabase()
@@ -32,9 +33,10 @@ export default function SignUp() {
     e.preventDefault()
     setLoading(true)
     setError(null)
+    setSuccess(null)
 
     try {
-      // 1. 사용자 생성
+      // 1. 사용자 생성 (이메일 인증 포함)
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -55,28 +57,25 @@ export default function SignUp() {
         throw new Error('회원가입 중 오류가 발생했습니다.')
       }
 
-      // 2. 서버 API를 통해 프로필 생성
-      const response = await fetch('/api/create-profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: authData.user.id,
-          email,
-          nickname,
-        }),
+      // 2. 임시 프로필 생성 (이메일 인증 전)
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: authData.user.id,
+        email,
+        nickname,
+        is_verified: false, // 이메일 인증 여부
+        created_at: new Date().toISOString(),
       })
 
-      const profileData = await response.json()
-      if (!response.ok) {
-        console.error('Profile Creation Error:', profileData)
-        throw new Error(profileData.error || '프로필 생성 실패')
+      if (profileError) {
+        console.error('Profile Creation Error:', profileError)
+        throw new Error('프로필 생성 실패')
       }
 
-      // 성공 메시지 표시
-      alert('회원가입이 완료되었습니다. 이메일을 확인해주세요.')
-      router.push('/login')
+      // 3. 이메일 인증 안내 메시지 표시
+      setSuccess('이메일 인증 링크를 발송했습니다. 이메일을 확인해주세요.')
+      setEmail('')
+      setPassword('')
+      setNickname('')
     } catch (error) {
       console.error('회원가입 오류:', error)
       setError((error as Error).message)
@@ -144,6 +143,7 @@ export default function SignUp() {
           />
         </div>
         {error && <div className="mb-4 text-red-500">{error}</div>}
+        {success && <div className="mb-4 text-green-500">{success}</div>}
 
         <div className="mt-12">
           <button
