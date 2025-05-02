@@ -1,5 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
+import { createAdminClient } from '@/lib/supabase-server'
+import { Database } from '@/types/supabase'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
@@ -18,23 +20,25 @@ export async function GET(request: Request) {
 
     // 이메일 인증이 완료된 경우 프로필 업데이트
     if (data.user.email_confirmed_at) {
-      // 서버 사이드에서 프로필 업데이트
-      const updateResponse = await fetch(
-        `${requestUrl.origin}/api/update-profile`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: data.user.id,
-            is_verified: true,
-          }),
-        }
-      )
+      try {
+        const supabaseAdmin = await createAdminClient()
 
-      if (!updateResponse.ok) {
-        console.error('Profile update failed')
+        // 직접 프로필 업데이트
+        const { error: updateError } = await supabaseAdmin
+          .from('profiles')
+          .update({
+            is_verified: true,
+          } as Database['public']['Tables']['profiles']['Update'])
+          .eq('id', data.user.id)
+
+        if (updateError) {
+          console.error('Profile update error:', updateError)
+          return NextResponse.redirect(
+            `${requestUrl.origin}/login?error=프로필 업데이트 실패`
+          )
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error)
         return NextResponse.redirect(
           `${requestUrl.origin}/login?error=프로필 업데이트 실패`
         )
