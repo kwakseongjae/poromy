@@ -19,19 +19,28 @@ export async function GET(request: Request) {
 
     // 이메일 인증이 완료된 경우 프로필 생성
     if (data.user.email_confirmed_at) {
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: data.user.id,
-        email: data.user.email,
-        nickname: data.user.user_metadata.nickname,
-        is_verified: true,
-        created_at: new Date().toISOString(),
-      })
+      // 먼저 프로필이 존재하는지 확인
+      const { data: existingProfile } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('id', data.user.id)
+        .single()
 
-      if (profileError) {
-        console.error('Profile creation error:', profileError)
-        return NextResponse.redirect(
-          `${requestUrl.origin}/login?error=프로필 생성 실패`
-        )
+      if (!existingProfile) {
+        // 프로필이 없는 경우에만 생성
+        const { error: profileError } = await supabase.from('profiles').insert({
+          id: data.user.id,
+          email: data.user.email,
+          nickname: data.user.user_metadata.nickname || null,
+          created_at: new Date().toISOString(),
+        })
+
+        if (profileError) {
+          console.error('Profile creation error:', profileError)
+          return NextResponse.redirect(
+            `${requestUrl.origin}/login?error=프로필 생성 실패`
+          )
+        }
       }
     }
 

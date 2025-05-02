@@ -57,6 +57,19 @@ export default function SignUp() {
         throw new Error('회원가입 중 오류가 발생했습니다.')
       }
 
+      // 프로필 생성
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: authData.user.id,
+        email: email,
+        nickname: nickname,
+        created_at: new Date().toISOString(),
+      })
+
+      if (profileError) {
+        console.error('Profile creation error:', profileError)
+        throw new Error('프로필 생성 중 오류가 발생했습니다.')
+      }
+
       // 2. 이메일 인증 안내 메시지 표시
       setSuccess('이메일 인증 링크를 발송했습니다. 이메일을 확인해주세요.')
       setEmail('')
