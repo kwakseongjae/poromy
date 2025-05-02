@@ -17,7 +17,7 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${requestUrl.origin}/login?error=인증 실패`)
     }
 
-    // 이메일 인증이 완료된 경우 프로필 생성
+    // 이메일 인증이 완료된 경우 프로필 생성 또는 업데이트
     if (data.user.email_confirmed_at) {
       // 프로필 생성 API 호출
       const profileResponse = await fetch(
@@ -37,10 +37,27 @@ export async function GET(request: Request) {
       )
 
       if (!profileResponse.ok) {
-        console.error('Profile creation failed')
-        return NextResponse.redirect(
-          `${requestUrl.origin}/login?error=프로필 생성 실패`
+        // 프로필이 이미 존재하는 경우 업데이트
+        const updateResponse = await fetch(
+          `${requestUrl.origin}/api/update-profile`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId: data.user.id,
+              is_verified: true,
+            }),
+          }
         )
+
+        if (!updateResponse.ok) {
+          console.error('Profile update failed')
+          return NextResponse.redirect(
+            `${requestUrl.origin}/login?error=프로필 업데이트 실패`
+          )
+        }
       }
     }
 
