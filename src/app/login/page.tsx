@@ -157,24 +157,37 @@ export default function Login() {
         {error && <div className="mb-4 text-red-500">{error}</div>}
         {message && <div className="mb-4 text-green-500">{message}</div>}
 
-        <div className="mt-12">
+        <div className="mt-10">
           <button
             type="submit"
             className="w-full cursor-pointer rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-600"
             disabled={loading}
           >
-            {loading ? '처리 중...' : '로그인'}
+            {loading ? '로그인 중...' : '로그인'}
           </button>
+          <div className="my-2 flex items-center">
+            <div className="flex-grow border-t border-gray-300"></div>
+            <span className="mx-4 text-sm text-gray-500">또는</span>
+            <div className="flex-grow border-t border-gray-300"></div>
+          </div>
+          <Link href="/signup">
+            <button
+              type="submit"
+              className="w-full cursor-pointer rounded border border-gray-300 p-2 font-bold text-black hover:bg-gray-100"
+            >
+              이메일로 회원가입
+            </button>
+          </Link>
+          {/* 비밀번호 재설정 기능 추후 추가 예정 */}
+          {/* <div className="mt-2 flex justify-end">
+            <Link href="/reset-password">
+              <span className="text-sm font-semibold text-gray-500 underline hover:text-gray-700">
+                비밀번호 재설정
+              </span>
+            </Link>
+          </div> */}
         </div>
       </form>
-      <div className="mt-4 text-center">
-        <Link
-          href="/signup"
-          className="text-sm text-blue-500 hover:text-blue-700"
-        >
-          회원가입
-        </Link>
-      </div>
     </div>
   )
 }

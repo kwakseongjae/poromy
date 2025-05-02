@@ -132,7 +132,6 @@ export default function SignUp() {
           />
         </div>
         {error && <div className="mb-4 text-red-500">{error}</div>}
-        {success && <div className="mb-4 text-green-500">{success}</div>}
 
         <div className="mt-12">
           <button
