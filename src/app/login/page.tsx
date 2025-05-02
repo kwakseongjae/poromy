@@ -45,8 +45,8 @@ export default function Login() {
       }
     }
 
-    if (message === 'email_verified') {
-      setMessage('이메일 인증이 완료되었습니다. 로그인해주세요.')
+    if (message) {
+      setMessage(decodeURIComponent(message))
     }
   }, [searchParams])
 
@@ -148,55 +148,52 @@ export default function Login() {
     handleEmailVerification()
   }, [router])
 
-  async function handleLogin(e: FormEvent<HTMLFormElement>) {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    setMessage(null)
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const {
+        data: { user },
+        error: signInError,
+      } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
-      if (error) {
-        throw new Error(error.message)
+      if (signInError) {
+        throw signInError
       }
 
-      if (!data.user) {
-        throw new Error('로그인에 실패했습니다.')
-      }
+      if (user) {
+        // 프로필 정보 가져오기
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('is_verified')
+          .eq('id', user.id)
+          .single()
 
-      // 사용자 프로필 확인
-      const { data: profile, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', data.user.id)
-        .single()
+        if (profileError) {
+          throw profileError
+        }
 
-      if (profileError) {
-        throw new Error('프로필 정보를 확인할 수 없습니다.')
-      }
+        // 이메일 인증되지 않은 경우
+        if (!profile?.is_verified) {
+          // 로그아웃 처리
+          await supabase.auth.signOut()
+          setError(
+            '이메일 인증이 필요합니다. 가입 시 입력한 이메일로 전송된 인증 링크를 확인해주세요.'
+          )
+          return
+        }
 
-      if (!data.user.email_confirmed_at) {
-        throw new Error(
-          '이메일 인증이 완료되지 않았습니다. 이메일을 확인해주세요.'
-        )
-      }
-
-      // 성공 시 리다이렉트
-      const returnUrl = localStorage.getItem('returnUrl')
-      localStorage.removeItem('returnUrl')
-
-      if (returnUrl) {
-        router.push(returnUrl)
-      } else {
+        // 인증된 경우 홈으로 리다이렉트
         router.push('/')
       }
     } catch (error) {
-      console.error('로그인 오류:', error)
-      setError((error as Error).message)
+      console.error('Login error:', error)
+      setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.')
     } finally {
       setLoading(false)
     }

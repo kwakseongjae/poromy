@@ -112,20 +112,26 @@ export interface Database {
         Row: {
           id: string
           email: string
-          nickname: string | null
+          nickname: string
           created_at: string
+          updated_at: string
+          is_verified: boolean
         }
         Insert: {
           id: string
           email: string
-          nickname?: string | null
+          nickname: string
           created_at?: string
+          updated_at?: string
+          is_verified?: boolean
         }
         Update: {
           id?: string
           email?: string
-          nickname?: string | null
+          nickname?: string
           created_at?: string
+          updated_at?: string
+          is_verified?: boolean
         }
         Relationships: [
           {
