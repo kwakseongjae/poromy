@@ -1,7 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase-server'
-import { Database } from '@/types/supabase'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
@@ -15,20 +13,34 @@ export async function GET(request: Request) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (error) {
+      console.error('Auth error:', error)
       return NextResponse.redirect(`${requestUrl.origin}/login?error=인증 실패`)
     }
 
     // 이메일 인증이 완료된 경우 프로필 업데이트
-    if (data.user.email_confirmed_at) {
+    if (data.session) {
       try {
-        const supabaseAdmin = await createAdminClient()
+        // 서비스 롤 키를 사용하여 Supabase 클라이언트 생성
+        const supabaseAdmin = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          {
+            auth: {
+              autoRefreshToken: false,
+              persistSession: false,
+            },
+          }
+        )
 
-        // 직접 프로필 업데이트
+        console.log('Updating profile for user:', data.user.id)
+
+        // 프로필 업데이트
         const { error: updateError } = await supabaseAdmin
           .from('profiles')
           .update({
             is_verified: true,
-          } as Database['public']['Tables']['profiles']['Update'])
+            updated_at: new Date().toISOString(),
+          })
           .eq('id', data.user.id)
 
         if (updateError) {
@@ -37,8 +49,11 @@ export async function GET(request: Request) {
             `${requestUrl.origin}/login?error=프로필 업데이트 실패`
           )
         }
+
+        console.log('Profile updated successfully')
+        return NextResponse.redirect(`${requestUrl.origin}/`)
       } catch (error) {
-        console.error('Error updating profile:', error)
+        console.error('Error in profile update:', error)
         return NextResponse.redirect(
           `${requestUrl.origin}/login?error=프로필 업데이트 실패`
         )
