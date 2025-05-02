@@ -57,17 +57,24 @@ export default function SignUp() {
         throw new Error('회원가입 중 오류가 발생했습니다.')
       }
 
-      // 프로필 생성
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        email: email,
-        nickname: nickname,
-        created_at: new Date().toISOString(),
+      // 프로필 생성 API 호출
+      const profileResponse = await fetch('/api/create-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: authData.user.id,
+          email: email,
+          nickname: nickname,
+        }),
       })
 
-      if (profileError) {
-        console.error('Profile creation error:', profileError)
-        throw new Error('프로필 생성 중 오류가 발생했습니다.')
+      if (!profileResponse.ok) {
+        const errorData = await profileResponse.json()
+        throw new Error(
+          errorData.error || '프로필 생성 중 오류가 발생했습니다.'
+        )
       }
 
       // 2. 이메일 인증 안내 메시지 표시
