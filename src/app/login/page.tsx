@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useSupabase } from '@/contexts/SupabaseContext'
+import { createClient } from '@supabase/supabase-js'
 
 export default function Login() {
   const [email, setEmail] = useState<string>('')
@@ -61,6 +62,91 @@ export default function Login() {
       }
     }
   }, [user, router])
+
+  useEffect(() => {
+    const handleEmailVerification = async () => {
+      const hash = window.location.hash.substring(1)
+      const params = new URLSearchParams(hash)
+      const accessToken = params.get('access_token')
+      const type = params.get('type')
+      const error = params.get('error')
+
+      if (error) {
+        console.error('Email verification error:', error)
+        return
+      }
+
+      if (accessToken && type === 'signup') {
+        try {
+          const supabaseAdmin = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!,
+            {
+              auth: {
+                autoRefreshToken: false,
+                persistSession: false,
+              },
+            }
+          )
+
+          // access_token으로 세션 정보 가져오기
+          const {
+            data: { user },
+            error: userError,
+          } = await supabaseAdmin.auth.getUser(accessToken)
+
+          if (userError || !user) {
+            console.error('User error:', userError)
+            return
+          }
+
+          // 프로필 업데이트
+          const { error: updateError } = await supabaseAdmin
+            .from('profiles')
+            .update({
+              is_verified: true,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('id', user.id)
+
+          if (updateError) {
+            console.error('Profile update error:', updateError)
+            return
+          }
+
+          // 업데이트 후 is_verified 상태 확인
+          const { data: profile, error: checkError } = await supabaseAdmin
+            .from('profiles')
+            .select('is_verified')
+            .eq('id', user.id)
+            .single()
+
+          if (checkError || !profile?.is_verified) {
+            console.error('Profile verification failed')
+            return
+          }
+
+          // 세션 생성
+          const { error: sessionError } = await supabaseAdmin.auth.setSession({
+            access_token: accessToken,
+            refresh_token: params.get('refresh_token') || '',
+          })
+
+          if (sessionError) {
+            console.error('Session creation error:', sessionError)
+            return
+          }
+
+          // 모든 것이 성공적으로 완료되면 홈으로 리다이렉트
+          router.push('/')
+        } catch (error) {
+          console.error('Error in verification process:', error)
+        }
+      }
+    }
+
+    handleEmailVerification()
+  }, [router])
 
   async function handleLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
