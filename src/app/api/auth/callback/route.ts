@@ -17,17 +17,20 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${requestUrl.origin}/login?error=인증 실패`)
     }
 
-    // 이메일 인증이 완료된 경우 프로필 업데이트
+    // 이메일 인증이 완료된 경우 프로필 생성
     if (data.user.email_confirmed_at) {
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .update({ is_verified: true })
-        .eq('id', data.user.id)
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: data.user.id,
+        email: data.user.email,
+        nickname: data.user.user_metadata.nickname,
+        is_verified: true,
+        created_at: new Date().toISOString(),
+      })
 
       if (profileError) {
-        console.error('Profile update error:', profileError)
+        console.error('Profile creation error:', profileError)
         return NextResponse.redirect(
-          `${requestUrl.origin}/login?error=프로필 업데이트 실패`
+          `${requestUrl.origin}/login?error=프로필 생성 실패`
         )
       }
     }

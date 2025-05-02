@@ -57,25 +57,14 @@ export default function SignUp() {
         throw new Error('회원가입 중 오류가 발생했습니다.')
       }
 
-      // 2. 프로필 생성 (이메일 인증 전)
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        email,
-        nickname,
-        is_verified: false,
-        created_at: new Date().toISOString(),
-      })
-
-      if (profileError) {
-        console.error('Profile Creation Error:', profileError)
-        throw new Error('프로필 생성 실패')
-      }
-
-      // 3. 이메일 인증 안내 메시지 표시
+      // 2. 이메일 인증 안내 메시지 표시
       setSuccess('이메일 인증 링크를 발송했습니다. 이메일을 확인해주세요.')
       setEmail('')
       setPassword('')
       setNickname('')
+
+      // 3. 이메일 인증 페이지로 리다이렉트
+      router.push('/verify-email')
     } catch (error) {
       console.error('회원가입 오류:', error)
       setError((error as Error).message)
