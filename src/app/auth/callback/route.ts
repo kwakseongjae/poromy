@@ -24,7 +24,10 @@ export async function GET(request: Request) {
       const {
         data: { user },
         error: verifyError,
-      } = await supabaseAdmin.auth.getUser(token_hash)
+      } = await supabaseAdmin.auth.verifyOtp({
+        type: 'email',
+        token_hash,
+      })
 
       if (verifyError || !user) {
         console.error('Email verification error:', verifyError)
