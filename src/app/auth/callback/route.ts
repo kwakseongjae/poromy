@@ -66,7 +66,35 @@ export async function GET(request: Request) {
         )
       }
 
-      return NextResponse.redirect(`${requestUrl.origin}/`)
+      // 세션 생성
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabaseAdmin.auth.getSession()
+
+      if (sessionError) {
+        console.error('Session creation error:', sessionError)
+        return NextResponse.redirect(
+          `${requestUrl.origin}/login?error=세션 생성에 실패했습니다.`
+        )
+      }
+
+      // 세션 쿠키 설정
+      const response = NextResponse.redirect(`${requestUrl.origin}/`)
+      response.cookies.set('sb-access-token', session?.access_token || '', {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      })
+      response.cookies.set('sb-refresh-token', session?.refresh_token || '', {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7, // 1 week
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+      })
+
+      return response
     } catch (error) {
       console.error('Error in verification process:', error)
       return NextResponse.redirect(
