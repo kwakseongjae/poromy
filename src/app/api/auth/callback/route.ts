@@ -31,6 +31,7 @@ export async function GET(request: Request) {
             userId: data.user.id,
             email: data.user.email,
             nickname: data.user.user_metadata.nickname || null,
+            is_verified: true,
           }),
         }
       )

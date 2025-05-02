@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   try {
-    const { userId, email, nickname } = await request.json()
+    const { userId, email, nickname, is_verified } = await request.json()
 
     if (!userId || !email) {
       return NextResponse.json(
@@ -20,6 +20,7 @@ export async function POST(request: Request) {
       id: userId,
       email,
       nickname,
+      is_verified: is_verified || false,
       created_at: new Date().toISOString(),
     })
 

@@ -67,6 +67,7 @@ export default function SignUp() {
           userId: authData.user.id,
           email: email,
           nickname: nickname,
+          is_verified: false,
         }),
       })
 
