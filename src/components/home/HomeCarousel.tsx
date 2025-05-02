@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState, useRef } from 'react'
+import { useRouter } from 'next/navigation'
 import useEmblaCarousel from 'embla-carousel-react'
 import Fade from 'embla-carousel-fade'
 import {
@@ -23,6 +24,7 @@ const slides = [
       '단 30초만 투자하면\n맞춤 채용공고 프롬프트를 받아볼 수 있습니다.',
     backgroundColor: 'bg-[#8590E9]',
     textColor: 'text-black',
+    link: '/inquiry',
   },
   {
     image: HomeCarouselImage2,
@@ -32,6 +34,7 @@ const slides = [
       'AI 프롬프트를 활용하여\n채용공고와 기업 정보를 효율적으로 분석하세요.',
     backgroundColor: 'bg-[#171A33]',
     textColor: 'text-white',
+    link: null,
   },
   {
     image: HomeCarouselImage3,
@@ -41,10 +44,12 @@ const slides = [
       '프롬프트 적용 방법과\nAI 활용 팁을 제공하는 가이드를 확인하세요.',
     backgroundColor: 'bg-[#121212]',
     textColor: 'text-white',
+    link: '/guide',
   },
 ]
 
 export default function HomeCarousel() {
+  const router = useRouter()
   const [desktopEmblaRef, desktopEmblaApi] = useEmblaCarousel({ loop: true }, [
     Fade(),
   ])
@@ -53,6 +58,22 @@ export default function HomeCarousel() {
   ])
   const [selectedIndex, setSelectedIndex] = useState(0)
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const handleCarouselClick = (e: React.MouseEvent) => {
+    // 네비게이션 버튼이나 컨트롤 요소를 클릭한 경우 페이지 이동하지 않음
+    if (
+      e.target instanceof Element &&
+      (e.target.closest('.carousel-control') ||
+        e.target.closest('.carousel-dots'))
+    ) {
+      return
+    }
+
+    const currentSlide = slides[selectedIndex]
+    if (currentSlide.link) {
+      router.push(currentSlide.link)
+    }
+  }
 
   const resetAutoplay = useCallback(() => {
     if (autoplayTimerRef.current) {
@@ -64,17 +85,25 @@ export default function HomeCarousel() {
     }, SLIDE_INTERVAL)
   }, [desktopEmblaApi, mobileEmblaApi])
 
-  const scrollPrev = useCallback(() => {
-    if (desktopEmblaApi) desktopEmblaApi.scrollPrev()
-    if (mobileEmblaApi) mobileEmblaApi.scrollPrev()
-    resetAutoplay()
-  }, [desktopEmblaApi, mobileEmblaApi, resetAutoplay])
+  const scrollPrev = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (desktopEmblaApi) desktopEmblaApi.scrollPrev()
+      if (mobileEmblaApi) mobileEmblaApi.scrollPrev()
+      resetAutoplay()
+    },
+    [desktopEmblaApi, mobileEmblaApi, resetAutoplay]
+  )
 
-  const scrollNext = useCallback(() => {
-    if (desktopEmblaApi) desktopEmblaApi.scrollNext()
-    if (mobileEmblaApi) mobileEmblaApi.scrollNext()
-    resetAutoplay()
-  }, [desktopEmblaApi, mobileEmblaApi, resetAutoplay])
+  const scrollNext = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (desktopEmblaApi) desktopEmblaApi.scrollNext()
+      if (mobileEmblaApi) mobileEmblaApi.scrollNext()
+      resetAutoplay()
+    },
+    [desktopEmblaApi, mobileEmblaApi, resetAutoplay]
+  )
 
   const onSelect = useCallback(() => {
     if (desktopEmblaApi) {
@@ -104,6 +133,7 @@ export default function HomeCarousel() {
   return (
     <div
       className={`relative w-full cursor-pointer overflow-hidden transition-colors duration-500 ${slides[selectedIndex].backgroundColor} ${slides[selectedIndex].textColor}`}
+      onClick={handleCarouselClick}
     >
       {/* Desktop Layout */}
       <div className="hidden h-[400px] md:block">
@@ -145,7 +175,7 @@ export default function HomeCarousel() {
             </p>
           </div>
 
-          <div className="flex w-fit items-center justify-center gap-2 rounded-full bg-[#262624] px-4 py-2 text-white">
+          <div className="carousel-control flex w-fit items-center justify-center gap-2 rounded-full bg-[#262624] px-4 py-2 text-white">
             <button
               onClick={scrollPrev}
               className="cursor-pointer"
@@ -214,7 +244,7 @@ export default function HomeCarousel() {
             </p>
           </div>
 
-          <div className="flex items-center justify-center gap-2 rounded-full bg-[#262624] px-4 py-2 text-white">
+          <div className="carousel-control flex items-center justify-center gap-2 rounded-full bg-[#262624] px-4 py-2 text-white">
             <button
               onClick={scrollPrev}
               className="cursor-pointer"
