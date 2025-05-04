@@ -1,8 +1,8 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'https://poromy.ai.kr',
+  siteUrl: 'https://poromy.ai.kr',
   generateRobotsTxt: true,
-  generateIndexSitemap: true,
+  generateIndexSitemap: false,
   robotsTxtOptions: {
     policies: [
       {
@@ -16,13 +16,35 @@ module.exports = {
   priority: 0.7,
   sitemapSize: 7000,
   exclude: ['/api/*', '/auth/*'],
-  transform: async (config, path) => {
-    return {
-      loc: path,
-      changefreq: config.changefreq,
-      priority: path === '/' ? 1.0 : config.priority,
-      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
-      alternateRefs: config.alternateRefs ?? [],
-    }
+  additionalPaths: async (config) => {
+    const result = []
+
+    // 메인 페이지
+    result.push({
+      loc: '/',
+      priority: 1.0,
+      changefreq: 'daily',
+      lastmod: new Date().toISOString(),
+    })
+
+    // 기타 중요 페이지
+    const importantPages = [
+      { path: 'company', priority: 0.8 },
+      { path: 'inquiry', priority: 0.8 },
+      { path: 'position', priority: 0.8 },
+      { path: 'login', priority: 0.5 },
+      { path: 'signup', priority: 0.5 },
+    ]
+
+    importantPages.forEach(({ path, priority }) => {
+      result.push({
+        loc: `/${path}`,
+        priority,
+        changefreq: 'daily',
+        lastmod: new Date().toISOString(),
+      })
+    })
+
+    return result
   },
 }
