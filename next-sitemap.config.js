@@ -11,9 +11,6 @@ module.exports = {
         disallow: ['/api/*', '/auth/*'],
       },
     ],
-    additionalSitemaps: [
-      `${process.env.NEXT_PUBLIC_APP_URL || 'https://poromy.ai.kr'}/sitemap.xml`,
-    ],
   },
   changefreq: 'daily',
   priority: 0.7,
