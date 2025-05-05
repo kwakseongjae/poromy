@@ -148,13 +148,13 @@ export default function CompanyPage() {
                 >
                   <div className="flex h-full flex-col p-4">
                     <div className="mb-4 flex items-center">
-                      <div className="relative h-16 w-16 overflow-hidden rounded-lg border border-gray-200 p-1">
-                        {company.logoUrl ? (
+                      <div className="relative h-16 w-16 overflow-hidden">
+                        {company.imageUrl ? (
                           <Image
-                            src={company.logoUrl}
+                            src={company.imageUrl}
                             alt={`${company.name} 로고`}
                             fill
-                            className="object-contain p-1"
+                            className="rounded-lg object-contain"
                             sizes="40px"
                           />
                         ) : (
