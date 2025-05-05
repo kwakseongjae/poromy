@@ -47,7 +47,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // 보호된 라우트 체크
-  const protectedRoutes: string[] = []
+  const protectedRoutes: string[] = ['/inquiry/new']
   if (
     protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
   ) {
