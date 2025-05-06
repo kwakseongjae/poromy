@@ -6,7 +6,6 @@ import { decrypt, encrypt } from '@/utils/crypto'
 import { jobs } from '@/constants/job.data'
 import Image from 'next/image'
 import Link from 'next/link'
-import Script from 'next/script'
 import { LinkIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
@@ -102,85 +101,8 @@ export default function PositionContent() {
     }
   }, [isHovered])
 
-  // 구조화된 데이터 생성
-  const structuredData = job
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'JobPosting',
-        title: job.jobTitle,
-        description:
-          job.qualifications.join('. ') +
-          '. ' +
-          job.preferredQualifications.join('. '),
-        datePosted: new Date().toISOString(),
-        validThrough: new Date(
-          Date.now() + 30 * 24 * 60 * 60 * 1000
-        ).toISOString(), // 30일 후
-        hiringOrganization: {
-          '@type': 'Organization',
-          name: job.companyName,
-          sameAs: job.url || `https://poromy.ai.kr/company/${job.companyId}`,
-        },
-        jobLocation: {
-          '@type': 'Place',
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality:
-              job.conditions.find((condition: string) =>
-                ['서울', '성남', '수원', '대전', '제주', '판교'].includes(
-                  condition
-                )
-              ) || '미지정',
-            addressCountry: 'KR',
-          },
-        },
-        employmentType:
-          job.conditions.find((condition: string) =>
-            ['신입', '경력', '신입/경력'].includes(condition)
-          ) || 'FULL_TIME',
-        baseSalary: {
-          '@type': 'MonetaryAmount',
-          currency: 'KRW',
-          value: {
-            '@type': 'QuantitativeValue',
-            minValue: 0,
-            maxValue: 0,
-            unitText: 'YEAR',
-          },
-        },
-        educationRequirements: {
-          '@type': 'EducationalOccupationalCredential',
-          credentialCategory:
-            job.conditions.find((condition: string) =>
-              ['대졸', '석사이상', '박사우대'].includes(condition)
-            ) || 'NONE',
-        },
-        experienceRequirements: {
-          '@type': 'OccupationalExperienceRequirements',
-          monthsOfExperience: job.conditions.find((condition: string) =>
-            condition.includes('년')
-          )
-            ? parseInt(
-                job.conditions
-                  .find((condition: string) => condition.includes('년'))
-                  ?.match(/\d+/)?.[0] || '0'
-              ) * 12
-            : 0,
-        },
-        url: `https://poromy.ai.kr/position/${job.id}`,
-      }
-    : null
-
   return (
     <>
-      {structuredData && (
-        <Script
-          id="structured-data"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      )}
-
       <div className="relative flex py-8 pr-2">
         <div
           className="group sticky top-25 z-99 flex max-h-[75vh] w-60 flex-col items-start gap-2 px-4 transition-all duration-300 hover:w-1/3"
