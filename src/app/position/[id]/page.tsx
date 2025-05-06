@@ -32,12 +32,41 @@ export async function generateMetadata({
       '@context': 'https://schema.org',
       '@type': 'JobPosting',
       title: job.jobTitle,
+      description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다. ${job.qualifications.join(' ')} ${job.preferredQualifications.join(' ')}`,
+      datePosted: new Date().toISOString(),
       hiringOrganization: {
         '@type': 'Organization',
         name: job.companyName,
         logo: job.logoUrl,
+        sameAs: job.url,
       },
+      jobLocation: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          addressLocality:
+            job.conditions.find(
+              (c) =>
+                c.includes('서울') ||
+                c.includes('성남') ||
+                c.includes('수원') ||
+                c.includes('대전') ||
+                c.includes('제주') ||
+                c.includes('판교')
+            ) || '미지정',
+        },
+      },
+      employmentType:
+        job.conditions.find((c) => c.includes('신입') || c.includes('경력')) ||
+        '미지정',
+      educationRequirements:
+        job.conditions.find(
+          (c) => c.includes('대졸') || c.includes('석사') || c.includes('박사')
+        ) || '미지정',
       url: `https://poromy.ai.kr/position/${resolvedParams.id}`,
+      validThrough: new Date(
+        Date.now() + 30 * 24 * 60 * 60 * 1000
+      ).toISOString(), // 30 days from now
     }
 
     return {
