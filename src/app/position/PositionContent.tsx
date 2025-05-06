@@ -105,48 +105,47 @@ export default function PositionContent() {
   // 구조화된 데이터 생성
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: '채용 공고별 GPT/Claude AI 자소서 프롬프트',
+    '@type': 'JobPosting',
+    title: job.title,
     description:
-      'ChatGPT, Claude 등 AI 모델을 활용한 채용 공고별 맞춤형 자소서 프롬프트를 제공합니다.',
-    itemListElement: jobs.map((job, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      item: {
-        '@type': 'JobPosting',
-        title: job.jobTitle,
-        companyName: job.companyName,
-        jobLocation:
-          job.conditions.find(
-            (c) =>
-              c.includes('서울') ||
-              c.includes('성남') ||
-              c.includes('수원') ||
-              c.includes('대전') ||
-              c.includes('제주') ||
-              c.includes('판교')
-          ) || '미지정',
-        employmentType:
-          job.conditions.find(
-            (c) => c.includes('신입') || c.includes('경력')
-          ) || '미지정',
-        educationRequirements:
-          job.conditions.find(
-            (c) =>
-              c.includes('대졸') || c.includes('석사') || c.includes('박사')
-          ) || '미지정',
-        url: `/position/${job.id}`,
-        offers: {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'AI 자소서 프롬프트',
-            description:
-              'ChatGPT, Claude 등 AI 모델을 활용한 맞춤형 자소서 작성 프롬프트',
-          },
-        },
+      job.description || `${job.companyName}의 ${job.title} 포지션입니다.`,
+    datePosted: job.createdAt || new Date().toISOString(),
+    validThrough:
+      job.endDate ||
+      new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30일 후
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: job.companyName,
+      sameAs: job.companyUrl || `https://poromy.ai.kr/company/${job.companyId}`,
+    },
+    jobLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: job.location || '미지정',
+        addressCountry: 'KR',
       },
-    })),
+    },
+    employmentType: job.employmentType || 'FULL_TIME',
+    baseSalary: {
+      '@type': 'MonetaryAmount',
+      currency: 'KRW',
+      value: {
+        '@type': 'QuantitativeValue',
+        minValue: job.salaryMin || 0,
+        maxValue: job.salaryMax || 0,
+        unitText: 'YEAR',
+      },
+    },
+    educationRequirements: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: job.educationRequirements || 'NONE',
+    },
+    experienceRequirements: {
+      '@type': 'OccupationalExperienceRequirements',
+      monthsOfExperience: job.experienceYears ? job.experienceYears * 12 : 0,
+    },
+    url: `https://poromy.ai.kr/position/${job.id}`,
   }
 
   return (
