@@ -2,7 +2,7 @@
 module.exports = {
   siteUrl: 'https://poromy.ai.kr',
   generateRobotsTxt: true,
-  generateIndexSitemap: false,
+  generateIndexSitemap: false, // 인덱스 사이트맵 대신 일반 사이트맵 생성
   robotsTxtOptions: {
     policies: [
       {
@@ -17,6 +17,7 @@ module.exports = {
   sitemapSize: 7000,
   exclude: ['/api/*', '/auth/*'],
   additionalPaths: async (config) => {
+    // 추가 경로를 수동으로 정의
     const result = []
 
     // 메인 페이지
@@ -28,23 +29,44 @@ module.exports = {
     })
 
     // 기타 중요 페이지
-    const importantPages = [
-      { path: 'company', priority: 0.8 },
-      { path: 'inquiry', priority: 0.8 },
-      { path: 'position', priority: 0.8 },
-      { path: 'login', priority: 0.5 },
-      { path: 'signup', priority: 0.5 },
-    ]
-
-    importantPages.forEach(({ path, priority }) => {
+    ;['company', 'inquiry', 'position', 'login', 'signup'].forEach((path) => {
       result.push({
         loc: `/${path}`,
-        priority,
+        priority: path === 'login' || path === 'signup' ? 0.5 : 0.8,
         changefreq: 'daily',
         lastmod: new Date().toISOString(),
       })
     })
 
     return result
+  },
+  transform: async (config, path) => {
+    // 기본 우선순위 설정
+    let priority = config.priority
+
+    // 메인 페이지는 최우선
+    if (path === '/') {
+      priority = 1.0
+    }
+    // 기업 및 채용 공고 페이지는 높은 우선순위
+    else if (path.startsWith('/company') || path.startsWith('/position')) {
+      priority = 0.8
+    }
+    // 문의 페이지는 중간 우선순위
+    else if (path.startsWith('/inquiry')) {
+      priority = 0.8
+    }
+    // 로그인/회원가입은 낮은 우선순위
+    else if (path.startsWith('/login') || path.startsWith('/signup')) {
+      priority = 0.5
+    }
+
+    return {
+      loc: path,
+      changefreq: config.changefreq,
+      priority,
+      lastmod: config.autoLastmod ? new Date().toISOString() : undefined,
+      alternateRefs: config.alternateRefs ?? [],
+    }
   },
 }

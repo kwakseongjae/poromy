@@ -7,16 +7,50 @@ import { companies } from '@/constants/company.data'
 import Script from 'next/script'
 import HomeCarousel from '@/components/home/HomeCarousel'
 import { HomeInquiry } from '@/components/home/HomeInquiry'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
+  description:
+    'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브. 맞춤형 자기소개서 작성과 기업 분석을 도와드립니다.',
+  keywords:
+    'AI 자소서, AI 자기소개서, AI 프롬프트, GPT 프롬프트, Claude 프롬프트, ChatGPT 프롬프트, 자소서 작성, 자기소개서 작성, 기업 분석, 채용 공고, 취업 준비, 면접 준비, GPT 활용, Claude 활용',
+  openGraph: {
+    title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
+    description:
+      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
+    url: 'https://poromy.ai.kr',
+    siteName: 'Poromy',
+    images: [
+      {
+        url: '/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
+    description:
+      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
+    images: ['/images/og-image.jpg'],
+  },
+}
 
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
-  name: 'Poromy - AI 프롬프트 아카이브',
-  description: '채용 공고와 기업 분석을 위한 AI 프롬프트 아카이브',
+  name: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
+  description:
+    'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
   mainEntity: [
     {
       '@type': 'ItemList',
-      name: '채용 공고 별 프롬프트',
+      name: '채용 공고 별 AI 프롬프트',
       itemListElement: jobs.map((job, index) => ({
         '@type': 'ListItem',
         position: index + 1,
@@ -49,7 +83,7 @@ const structuredData = {
     },
     {
       '@type': 'ItemList',
-      name: '인기 기업 분석 프롬프트',
+      name: '기업별 AI 프롬프트',
       itemListElement: companies.map((company, index) => ({
         '@type': 'ListItem',
         position: index + 1,
@@ -57,11 +91,24 @@ const structuredData = {
           '@type': 'Organization',
           name: company.name,
           description: company.description,
+          industry: company.industry,
+          employeeCount: company.employeeCount,
+          foundingDate: company.founded,
           url: `/company/${company.id}`,
         },
       })),
     },
   ],
+  about: {
+    '@type': 'Thing',
+    name: 'AI 프롬프트',
+    description:
+      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성과 기업 분석을 위한 프롬프트 모음',
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://poromy.ai.kr',
+  },
 }
 
 export default function Home() {
