@@ -106,44 +106,61 @@ export default function PositionContent() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'JobPosting',
-    title: job.title,
+    title: job.jobTitle,
     description:
-      job.description || `${job.companyName}의 ${job.title} 포지션입니다.`,
-    datePosted: job.createdAt || new Date().toISOString(),
-    validThrough:
-      job.endDate ||
-      new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30일 후
+      job.qualifications.join('. ') +
+      '. ' +
+      job.preferredQualifications.join('. '),
+    datePosted: new Date().toISOString(),
+    validThrough: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30일 후
     hiringOrganization: {
       '@type': 'Organization',
       name: job.companyName,
-      sameAs: job.companyUrl || `https://poromy.ai.kr/company/${job.companyId}`,
+      sameAs: job.url || `https://poromy.ai.kr/company/${job.companyId}`,
     },
     jobLocation: {
       '@type': 'Place',
       address: {
         '@type': 'PostalAddress',
-        addressLocality: job.location || '미지정',
+        addressLocality:
+          job.conditions.find((condition: string) =>
+            ['서울', '성남', '수원', '대전', '제주', '판교'].includes(condition)
+          ) || '미지정',
         addressCountry: 'KR',
       },
     },
-    employmentType: job.employmentType || 'FULL_TIME',
+    employmentType:
+      job.conditions.find((condition: string) =>
+        ['신입', '경력', '신입/경력'].includes(condition)
+      ) || 'FULL_TIME',
     baseSalary: {
       '@type': 'MonetaryAmount',
       currency: 'KRW',
       value: {
         '@type': 'QuantitativeValue',
-        minValue: job.salaryMin || 0,
-        maxValue: job.salaryMax || 0,
+        minValue: 0,
+        maxValue: 0,
         unitText: 'YEAR',
       },
     },
     educationRequirements: {
       '@type': 'EducationalOccupationalCredential',
-      credentialCategory: job.educationRequirements || 'NONE',
+      credentialCategory:
+        job.conditions.find((condition: string) =>
+          ['대졸', '석사이상', '박사우대'].includes(condition)
+        ) || 'NONE',
     },
     experienceRequirements: {
       '@type': 'OccupationalExperienceRequirements',
-      monthsOfExperience: job.experienceYears ? job.experienceYears * 12 : 0,
+      monthsOfExperience: job.conditions.find((condition: string) =>
+        condition.includes('년')
+      )
+        ? parseInt(
+            job.conditions
+              .find((condition: string) => condition.includes('년'))
+              ?.match(/\d+/)?.[0] || '0'
+          ) * 12
+        : 0,
     },
     url: `https://poromy.ai.kr/position/${job.id}`,
   }
