@@ -5,6 +5,8 @@ export const pageview = (url: string) => {
   if (typeof window.gtag === 'function') {
     window.gtag('config', GA_MEASUREMENT_ID!, {
       page_path: url,
+      page_title: document.title,
+      page_location: window.location.href,
     })
   }
 }
@@ -26,6 +28,7 @@ export const event = ({
       event_category: category,
       event_label: label,
       value: value,
+      non_interaction: false,
     })
   }
 }

@@ -10,7 +10,11 @@ export default function GoogleAnalytics() {
 
   useEffect(() => {
     if (pathname) {
-      pageview(pathname + searchParams.toString())
+      const url =
+        searchParams.size > 0
+          ? `${pathname}?${searchParams.toString()}`
+          : pathname
+      pageview(url)
     }
   }, [pathname, searchParams])
 
