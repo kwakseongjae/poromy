@@ -6,6 +6,8 @@ import { CursorProvider } from '@/contexts/CursorContext'
 import CustomCursor from '@/components/CustomCursor'
 import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
+import { GoogleTagManager } from '@next/third-parties/google'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -93,6 +95,8 @@ export default async function RootLayout({
             <main>{children}</main>
           </CursorProvider>
         </SupabaseProvider>
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
+        <GoogleAnalytics />
       </body>
     </html>
   )
