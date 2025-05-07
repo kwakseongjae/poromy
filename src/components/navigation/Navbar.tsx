@@ -16,6 +16,7 @@ import { useSupabase } from '@/contexts/SupabaseContext'
 import Image from 'next/image'
 import ProfileModal from '@/components/modal/ProfileModal'
 import Sidebar from './Sidebar'
+import { trackNavigationClick } from '@/lib/gtag'
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -59,6 +60,10 @@ const Navbar = () => {
     setIsProfileModalOpen(true)
   }
 
+  const handleNavigationClick = (linkName: string, linkUrl: string) => {
+    trackNavigationClick(linkName, linkUrl)
+  }
+
   // 사용자 인증 UI 렌더링
   const renderAuthUI = () => {
     if (loading) {
@@ -72,7 +77,10 @@ const Navbar = () => {
             className="flex cursor-pointer items-center justify-center"
             aria-label="User profile"
             tabIndex={0}
-            onClick={handleProfileClick}
+            onClick={() => {
+              handleProfileClick()
+              handleNavigationClick('프로필', '/profile')
+            }}
           >
             <Image
               src={ProfileImage}
@@ -92,6 +100,7 @@ const Navbar = () => {
         className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
         aria-label="로그인 또는 회원가입"
         tabIndex={0}
+        onClick={() => handleNavigationClick('로그인/회원가입', '/login')}
       >
         회원가입/로그인
       </Link>
@@ -110,7 +119,7 @@ const Navbar = () => {
           <div className="flex items-center gap-8">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/">
+              <Link href="/" onClick={() => handleNavigationClick('Logo', '/')}>
                 <LogoIcon className="w-25 sm:w-28 lg:w-32" />
               </Link>
             </div>
@@ -153,14 +162,23 @@ const Navbar = () => {
                   <Link
                     href="/position"
                     className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => {
+                      setIsModalOpen(false)
+                      handleNavigationClick(
+                        '채용 공고 분석 프롬프트',
+                        '/position'
+                      )
+                    }}
                   >
                     채용 공고 분석 프롬프트
                   </Link>
                   <Link
                     href="/company"
                     className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={() => {
+                      setIsModalOpen(false)
+                      handleNavigationClick('기업 분석 프롬프트', '/company')
+                    }}
                   >
                     기업 분석 프롬프트
                   </Link>
@@ -171,6 +189,7 @@ const Navbar = () => {
                 className="flex items-center gap-1 px-2 py-2"
                 onMouseEnter={() => setHoveredCategory('guide')}
                 onMouseLeave={() => setHoveredCategory(null)}
+                onClick={() => handleNavigationClick('적용 가이드', '/guide')}
               >
                 {hoveredCategory && hoveredCategory !== 'guide' ? (
                   <DisabledBulbIcon className="h-5 w-5" />
@@ -192,6 +211,7 @@ const Navbar = () => {
                 onMouseEnter={() => setHoveredCategory('inquiry')}
                 onMouseLeave={() => setHoveredCategory(null)}
                 className="flex"
+                onClick={() => handleNavigationClick('문의하기', '/inquiry')}
               >
                 <Image
                   src={InquiryTextImage}

@@ -32,3 +32,22 @@ export const event = ({
     })
   }
 }
+
+// 네비게이션 클릭 이벤트 추적
+export const trackNavigationClick = (linkName: string, linkUrl: string) => {
+  event({
+    action: 'navigation_click',
+    category: 'Navigation',
+    label: `${linkName} (${linkUrl})`,
+  })
+}
+
+// 체류 시간 추적
+export const trackEngagement = (duration: number) => {
+  event({
+    action: 'engagement',
+    category: 'User Engagement',
+    label: 'Time on Page',
+    value: duration,
+  })
+}

@@ -9,6 +9,7 @@ import HomeCarousel from '@/components/home/HomeCarousel'
 import { HomeInquiry } from '@/components/home/HomeInquiry'
 import { Metadata } from 'next'
 import { encrypt } from '@/utils/crypto'
+import EngagementTracker from '@/components/analytics/EngagementTracker'
 
 export const metadata: Metadata = {
   title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
@@ -150,6 +151,7 @@ export default function Home() {
           <HomeInquiry />
         </Section>
       </HomeContainer>
+      <EngagementTracker />
     </>
   )
 }
