@@ -1,4 +1,4 @@
-import { Database } from '@/types/supabase.js'
+import { Database } from '@/types/supabase'
 import { createClient as createBrowserClient } from '@supabase/supabase-js'
 
 let browserClient: ReturnType<typeof createBrowserClient<Database>> | null =
