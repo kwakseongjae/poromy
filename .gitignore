@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generate prompt 
+position_generate_prompt.md
+company_generate_prompt.md
