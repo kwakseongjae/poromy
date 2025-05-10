@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
       use: ['@svgr/webpack'],
     })
 
+    // Configuration to handle markdown files
+    config.module.rules.push({
+      test: /\.md$/,
+      use: 'raw-loader',
+    })
+
     return config
   },
 }
