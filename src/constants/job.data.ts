@@ -1,5 +1,5 @@
 import type { Job } from '@/types/job'
-import companyPrompt from '@/templates/prompts/company.md'
+import { getPositionPrompt } from '@/utils/prompt'
 
 /**
  * Job data
@@ -30,7 +30,7 @@ export const jobs: Job[] = [
     ],
     logoUrl: '/images/company/hanwha-life.png',
     url: 'https://www.hanwhalife.com/recruit',
-    prompt: companyPrompt,
+    prompt: () => getPositionPrompt('1'),
   },
   {
     id: '2',
@@ -53,7 +53,7 @@ export const jobs: Job[] = [
     ],
     logoUrl: '/images/company/naver.jpg',
     url: 'https://www.naver.com',
-    prompt: companyPrompt,
+    prompt: () => getPositionPrompt('2'),
   },
   {
     id: '3',
@@ -76,7 +76,7 @@ export const jobs: Job[] = [
     ],
     logoUrl: '/images/company/hyundai-autoever.jpg',
     url: 'https://www.hyundai-autoever.com/recruit',
-    prompt: companyPrompt,
+    prompt: () => getPositionPrompt('3'),
   },
   {
     id: '4',
@@ -98,7 +98,7 @@ export const jobs: Job[] = [
     ],
     logoUrl: '/images/company/samsung.jpg',
     url: 'https://www.samsung.com/recruit',
-    prompt: companyPrompt,
+    prompt: () => getPositionPrompt('4'),
   },
   {
     id: '5',
@@ -120,7 +120,7 @@ export const jobs: Job[] = [
     ],
     logoUrl: '/images/company/lg.jpg',
     url: 'https://www.lg.com/recruit',
-    prompt: companyPrompt,
+    prompt: () => getPositionPrompt('5'),
   },
   {
     id: '6',
@@ -144,6 +144,6 @@ export const jobs: Job[] = [
     ],
     logoUrl: '/images/company/kakao-bank.jpg',
     url: 'https://www.kakao-bank.com/recruit',
-    prompt: companyPrompt,
+    prompt: () => getPositionPrompt('6'),
   },
 ]

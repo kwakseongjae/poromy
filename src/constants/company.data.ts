@@ -1,4 +1,5 @@
 import type { Company } from '@/types/company'
+import { getCompanyPrompt } from '@/utils/prompt'
 
 /**
  * Company data for the carousel
@@ -30,9 +31,10 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '25조 5,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('hanwha_solutions'),
   },
   {
-    id: 'skhynix',
+    id: 'sk_hynix',
     name: 'SK 하이닉스',
     description: '더 나은 세상을 향한 반도체 혁신을 이끌어갑니다',
     color: 'hover:bg-orange-50',
@@ -56,6 +58,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '55조 7,363억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('sk_hynix'),
   },
   {
     id: 'hyundai_motors',
@@ -82,6 +85,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '142조 5,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('hyundai_motors'),
   },
   {
     id: 'gs_construction',
@@ -108,6 +112,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '15조 2,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('gs_construction'),
   },
   {
     id: 'samsung_display',
@@ -134,6 +139,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '35조 8,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('samsung_display'),
   },
   {
     id: 'krafton',
@@ -160,6 +166,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '2조 5,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('krafton'),
   },
   {
     id: 'hana_bank',
@@ -186,6 +193,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '12조 8,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('hana_bank'),
   },
   {
     id: 'lg_electronics',
@@ -212,6 +220,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '84조 5,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('lg_electronics'),
   },
   {
     id: 'samsung_sdi',
@@ -238,6 +247,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '28조 3,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('samsung_sdi'),
   },
   {
     id: 'samsung_sds',
@@ -264,6 +274,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '18조 5,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('samsung_sds'),
   },
   {
     id: 'kakao',
@@ -290,6 +301,7 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '8조 5,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('kakao'),
   },
   {
     id: 'naver',
@@ -316,5 +328,6 @@ export const companies: Company[] = [
     employeeCountDate: '2024.12',
     revenue: '7조 8,000억',
     revenueDate: '2024.12',
+    prompt: () => getCompanyPrompt('naver'),
   },
 ]

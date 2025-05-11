@@ -29,6 +29,7 @@ export default function PositionContent() {
   const [isVisible, setIsVisible] = useState(false)
   const [previewJob, setPreviewJob] = useState<PreviewJob | null>(null)
   const [previewPosition, setPreviewPosition] = useState({ x: 0, y: 0 })
+  const [promptContent, setPromptContent] = useState<string>('')
 
   const query = searchParams.get('query')
   const filteredJobs = query
@@ -51,36 +52,48 @@ export default function PositionContent() {
     : jobs
 
   useEffect(() => {
-    try {
-      const encryptedId = searchParams.get('id')
-      if (!encryptedId) {
-        setError(
-          '채용 공고를 선택하면\n채용 공고 분석 프롬프트를 확인할 수 있습니다.'
-        )
+    const fetchJobAndPrompt = async () => {
+      try {
+        const encryptedId = searchParams.get('id')
+        if (!encryptedId) {
+          setError(
+            '채용 공고를 선택하면\n채용 공고 분석 프롬프트를 확인할 수 있습니다.'
+          )
+          setLoading(false)
+          setJob(null)
+          setPromptContent('')
+          return
+        }
+
+        const decryptedId = decrypt(encryptedId)
+        const foundJob = jobs.find((job) => job.id === decryptedId)
+
+        if (foundJob) {
+          setJob(foundJob)
+          setError(null)
+          try {
+            const prompt = await foundJob.prompt()
+            setPromptContent(prompt)
+          } catch (err) {
+            console.error('Error fetching prompt:', err)
+            setPromptContent('')
+          }
+        } else {
+          setError('해당 채용 공고를 찾을 수 없습니다.')
+          setJob(null)
+          setPromptContent('')
+        }
+      } catch (err) {
+        setError('잘못된 URL입니다.')
+        console.error('Error decrypting job ID:', err)
+        setJob(null)
+        setPromptContent('')
+      } finally {
         setLoading(false)
-        setJob(null)
-        return
       }
-
-      const decryptedId = decrypt(encryptedId)
-
-      // Find job posting with decrypted ID
-      const foundJob = jobs.find((job) => job.id === decryptedId)
-
-      if (foundJob) {
-        setJob(foundJob)
-        setError(null)
-      } else {
-        setError('해당 채용 공고를 찾을 수 없습니다.')
-        setJob(null)
-      }
-    } catch (err) {
-      setError('잘못된 URL입니다.')
-      console.error('Error decrypting job ID:', err)
-      setJob(null)
-    } finally {
-      setLoading(false)
     }
+
+    fetchJobAndPrompt()
   }, [searchParams])
 
   useEffect(() => {
@@ -350,7 +363,7 @@ export default function PositionContent() {
                   type="position"
                   title="AI 프롬프트"
                   description={`${job.companyName}의 ${job.jobTitle} 포지션에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사하세요.`}
-                  prompt={job.prompt}
+                  prompt={promptContent}
                 />
               </div>
             </>

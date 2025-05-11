@@ -27,4 +27,5 @@ export type Company = {
   employeeCountDate: string
   revenue: string
   revenueDate: string
+  prompt: () => Promise<string>
 }

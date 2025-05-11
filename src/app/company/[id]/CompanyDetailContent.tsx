@@ -21,6 +21,7 @@ export default function CompanyDetailContent() {
   const [activeTab, setActiveTab] = useState<'intro' | 'prompt'>(
     (searchParams.get('tab') as 'intro' | 'prompt') || 'intro'
   )
+  const [promptContent, setPromptContent] = useState<string>('')
 
   useEffect(() => {
     const currentTab = searchParams.get('tab') as 'intro' | 'prompt'
@@ -56,6 +57,22 @@ export default function CompanyDetailContent() {
       setLoading(false)
     }
   }, [params.id])
+
+  useEffect(() => {
+    const fetchPrompt = async () => {
+      if (company && activeTab === 'prompt') {
+        try {
+          const prompt = await company.prompt()
+          setPromptContent(prompt)
+        } catch (err) {
+          console.error('Error fetching prompt:', err)
+          setPromptContent('')
+        }
+      }
+    }
+
+    fetchPrompt()
+  }, [company, activeTab])
 
   // 구조화된 데이터 생성
   const structuredData = company
@@ -487,18 +504,7 @@ export default function CompanyDetailContent() {
                   type="company"
                   title={`${company.name} 프롬프트`}
                   description={`${company.name}의 채용 공고에 대한 AI 프롬프트입니다. 아래 버튼을 클릭하여 프롬프트를 복사하세요.`}
-                  prompt={`${company.name}의 채용 공고에 지원하려고 합니다.
-
-회사 소개:
-${company.description}
-
-회사 정보:
-- 산업: ${company.industry}
-- 기업규모: ${company.size}
-- 본사: ${company.headquarters}
-- 설립: ${company.founded}
-
-위 정보를 바탕으로 지원서를 작성하는 데 도움이 되는 프롬프트를 생성해주세요.`}
+                  prompt={promptContent}
                 />
               </div>
             )}
