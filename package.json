@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next-sitemap",
+    "build": "next build && pnpm run generate-company-data && next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "generate-icons": "svgr --config-file .svgrrc.mjs --out-dir src/assets/icons -- public/svg/*.svg",
-    "postbuild": "next-sitemap"
+    "generate-company-data": "node scripts/generate-company-data.js"
   },
   "dependencies": {
     "@next/third-parties": "^15.3.2",

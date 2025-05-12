@@ -1,8 +1,11 @@
 /** @type {import('next-sitemap').IConfig} */
+const { companies } = require('./temp/company.data')
+const { encrypt } = require('./temp/crypto')
+
 module.exports = {
   siteUrl: 'https://poromy.ai.kr',
   generateRobotsTxt: true,
-  generateIndexSitemap: false, // 인덱스 사이트맵 대신 일반 사이트맵 생성
+  generateIndexSitemap: false,
   robotsTxtOptions: {
     policies: [
       {
@@ -17,7 +20,6 @@ module.exports = {
   sitemapSize: 7000,
   exclude: ['/api/*', '/auth/*'],
   additionalPaths: async (config) => {
-    // 추가 경로를 수동으로 정의
     const result = []
 
     // 메인 페이지
@@ -33,6 +35,17 @@ module.exports = {
       result.push({
         loc: `/${path}`,
         priority: path === 'login' || path === 'signup' ? 0.5 : 0.8,
+        changefreq: 'daily',
+        lastmod: new Date().toISOString(),
+      })
+    })
+
+    // Company 상세 페이지 추가
+    companies.forEach((company) => {
+      const encryptedId = encrypt(company.id)
+      result.push({
+        loc: `/company/${encryptedId}`,
+        priority: 0.8,
         changefreq: 'daily',
         lastmod: new Date().toISOString(),
       })

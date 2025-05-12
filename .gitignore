@@ -43,3 +43,14 @@ next-env.d.ts
 # generate prompt 
 position_generate_prompt.md
 company_generate_prompt.md
+
+# temp files
+/temp
+tsconfig.temp.json
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
