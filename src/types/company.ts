@@ -5,6 +5,7 @@
 export type Company = {
   id: string
   name: string
+  thumbnailDescription: string
   description: string
   color: string
   borderColor: string
@@ -20,7 +21,7 @@ export type Company = {
   headquarters: string
   founded: string
   website: string
-  salary: string
+  entryLevelSalary: string
   ceo: string
   marketType: string
   employeeCount: string

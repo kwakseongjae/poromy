@@ -168,7 +168,7 @@ export default function CompanyPage() {
                           {company.name}
                         </h2>
                         <p className="text-sm text-gray-500">
-                          {company.description}
+                          {company.thumbnailDescription}
                         </p>
                       </div>
                     </div>

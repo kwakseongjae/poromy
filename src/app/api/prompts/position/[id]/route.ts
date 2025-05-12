@@ -23,19 +23,6 @@ export async function GET(
       return NextResponse.json({ prompt: content })
     }
 
-    // If position-specific prompt doesn't exist, return default prompt
-    const defaultPath = path.join(
-      process.cwd(),
-      'public',
-      'prompts',
-      'position',
-      'default.md'
-    )
-    if (fs.existsSync(defaultPath)) {
-      const content = fs.readFileSync(defaultPath, 'utf-8')
-      return NextResponse.json({ prompt: content })
-    }
-
     return NextResponse.json({ error: 'Prompt not found' }, { status: 404 })
   } catch (error) {
     console.error('Error reading prompt file:', error)

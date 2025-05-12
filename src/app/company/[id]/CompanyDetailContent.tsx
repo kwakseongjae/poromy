@@ -354,9 +354,9 @@ export default function CompanyDetailContent() {
                       </div>
                       <div className="flex items-center">
                         <span className="text-text-disabled w-24 text-sm whitespace-nowrap">
-                          연봉정보
+                          신입사원 초임
                         </span>
-                        <span>{company.salary}</span>
+                        <span>{company.entryLevelSalary}</span>
                       </div>
                       <div className="flex items-center">
                         <span className="text-text-disabled w-24 text-sm whitespace-nowrap">
@@ -462,9 +462,9 @@ export default function CompanyDetailContent() {
                     </div>
                     <div className="mb-4 flex items-center">
                       <span className="text-text-disabled w-24 text-sm whitespace-nowrap">
-                        연봉정보
+                        신입사원 초임
                       </span>
-                      <span>{company.salary}</span>
+                      <span>{company.entryLevelSalary}</span>
                     </div>
                     {/* Other information - 2 column grid */}
                     <div className="grid grid-cols-2 gap-x-8 gap-y-4">

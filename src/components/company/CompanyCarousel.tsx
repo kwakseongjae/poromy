@@ -70,7 +70,7 @@ const CompanyCard = ({ company }: { company: Company }) => {
             <p
               className={`${company.textColor} ml-1 line-clamp-3 whitespace-pre-line opacity-80 lg:line-clamp-4`}
             >
-              {company.description}
+              {company.thumbnailDescription}
             </p>
           </div>
 
