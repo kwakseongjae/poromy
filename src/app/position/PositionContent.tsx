@@ -331,7 +331,26 @@ export default function PositionContent() {
                   ))}
                 </div>
               </div>
-
+              {job.positionDescription && (
+                <div className="mb-6">
+                  <h2 className="mb-2 text-lg font-semibold text-gray-900">
+                    포지션 소개
+                  </h2>
+                  <p className="whitespace-pre-line text-gray-700">
+                    {job.positionDescription}
+                  </p>
+                </div>
+              )}
+              {job.mainTask && (
+                <div className="mb-6">
+                  <h2 className="mb-2 text-lg font-semibold text-gray-900">
+                    주요 업무
+                  </h2>
+                  <p className="whitespace-pre-line text-gray-700">
+                    {job.mainTask}
+                  </p>
+                </div>
+              )}
               <div className="mb-6">
                 <h2 className="mb-2 text-lg font-semibold text-gray-900">
                   지원 자격
