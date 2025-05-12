@@ -105,14 +105,11 @@ export default async function InquiriesPage() {
 
   // 답변 정보 가져오기
   const inquiryIds = inquiries?.map((inquiry) => inquiry.id) || []
-  console.log('Inquiry IDs:', inquiryIds)
 
   const { data: answers, error: answersError } = await supabase
     .from('answers')
     .select('id, content, url, created_at, admin_id, inquiry_id')
     .in('inquiry_id', inquiryIds.length > 0 ? inquiryIds : [])
-
-  console.log('Answers from database:', answers)
 
   if (answersError) {
     console.error('답변 정보 조회 오류:', answersError)
@@ -139,14 +136,11 @@ export default async function InquiriesPage() {
 
   // 관리자 정보 가져오기
   const adminIds = [...new Set(answers?.map((answer) => answer.admin_id) || [])]
-  console.log('Admin IDs:', adminIds)
 
   const { data: adminProfiles, error: adminProfilesError } = await supabase
     .from('profiles')
     .select('id, nickname')
     .in('id', adminIds.length > 0 ? adminIds : [])
-
-  console.log('Admin Profiles:', adminProfiles)
 
   if (adminProfilesError) {
     console.error('관리자 정보 조회 오류:', adminProfilesError)
@@ -164,8 +158,6 @@ export default async function InquiriesPage() {
     {}
   )
 
-  console.log('Admin Map:', adminMap)
-
   // 데이터 조합
   const combinedInquiries: Inquiry[] = (inquiries || []).map((inquiry) => {
     // 사용자 정보 가져오기
@@ -175,8 +167,6 @@ export default async function InquiriesPage() {
     const inquiryAnswers = (answers || []).filter(
       (answer) => answer.inquiry_id === inquiry.id
     )
-
-    console.log(`Inquiry ${inquiry.id} answers:`, inquiryAnswers)
 
     const formattedAnswers = inquiryAnswers.map((answer) => {
       const admin = adminMap[answer.admin_id] || { nickname: '관리자' }
@@ -211,11 +201,8 @@ export default async function InquiriesPage() {
       answers: formattedAnswers || [],
     }
 
-    console.log(`Combined Inquiry ${inquiry.id}:`, combinedInquiry)
     return combinedInquiry
   })
-
-  console.log('Final Combined Inquiries:', combinedInquiries)
 
   return (
     <div className="mx-auto max-w-6xl p-6">
