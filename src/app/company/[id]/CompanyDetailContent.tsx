@@ -22,6 +22,7 @@ export default function CompanyDetailContent() {
     (searchParams.get('tab') as 'intro' | 'prompt') || 'intro'
   )
   const [promptContent, setPromptContent] = useState<string>('')
+  const [isPromptLoading, setIsPromptLoading] = useState(false)
 
   useEffect(() => {
     const currentTab = searchParams.get('tab') as 'intro' | 'prompt'
@@ -47,6 +48,14 @@ export default function CompanyDetailContent() {
 
       if (foundCompany) {
         setCompany(foundCompany)
+        // 프롬프트 데이터 프리패칭
+        if (foundCompany.prompt) {
+          setIsPromptLoading(true)
+          foundCompany.prompt().then((prompt) => {
+            setPromptContent(prompt)
+            setIsPromptLoading(false)
+          })
+        }
       } else {
         setError('회사를 찾을 수 없습니다.')
       }
@@ -57,22 +66,6 @@ export default function CompanyDetailContent() {
       setLoading(false)
     }
   }, [params.id])
-
-  useEffect(() => {
-    const fetchPrompt = async () => {
-      if (company && activeTab === 'prompt') {
-        try {
-          const prompt = await company.prompt()
-          setPromptContent(prompt)
-        } catch (err) {
-          console.error('Error fetching prompt:', err)
-          setPromptContent('')
-        }
-      }
-    }
-
-    fetchPrompt()
-  }, [company, activeTab])
 
   // 구조화된 데이터 생성
   const structuredData = company
@@ -500,12 +493,18 @@ export default function CompanyDetailContent() {
             )}
             {activeTab === 'prompt' && (
               <div className="p-6">
-                <PromptContainer
-                  type="company"
-                  title={`${company.name} 프롬프트`}
-                  description={`${company.name}의 채용 공고에 대한 AI 프롬프트입니다. 아래 버튼을 클릭하여 프롬프트를 복사하세요.`}
-                  prompt={promptContent}
-                />
+                {isPromptLoading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+                  </div>
+                ) : (
+                  <PromptContainer
+                    type="company"
+                    title={`${company.name} 프롬프트`}
+                    description={`${company.name}의 채용 공고에 대한 AI 프롬프트입니다. 아래 버튼을 클릭하여 프롬프트를 복사하세요.`}
+                    prompt={promptContent}
+                  />
+                )}
               </div>
             )}
           </div>
