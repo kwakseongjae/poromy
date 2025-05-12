@@ -112,10 +112,9 @@ export async function generateStaticParams() {
   }))
 }
 
-export default async function PositionPage({ params, searchParams }: Props) {
+export default async function PositionPage({ params }: Props) {
   try {
     const resolvedParams = await params
-    const resolvedSearchParams = await searchParams
     const decryptedId = decrypt(resolvedParams.id)
     const job = jobs.find((job) => job.id === decryptedId)
 
