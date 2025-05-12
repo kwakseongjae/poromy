@@ -42,21 +42,34 @@ const LinkPreview = ({ url, className = '' }: LinkPreviewProps) => {
         body: JSON.stringify({ url }),
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch link preview')
+      const data = await response.json()
+
+      if (!data.hasPreview) {
+        setError('No preview available')
+        return
       }
 
-      const data = await response.json()
       setPreview(data)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
+    } catch {
+      setError('No preview available')
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchPreview()
+    let mounted = true
+
+    const loadPreview = async () => {
+      if (!mounted) return
+      await fetchPreview()
+    }
+
+    loadPreview()
+
+    return () => {
+      mounted = false
+    }
   }, [url])
 
   if (loading) {

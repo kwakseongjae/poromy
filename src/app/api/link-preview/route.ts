@@ -9,6 +9,7 @@ interface LinkPreviewResponse {
   mediaType?: string
   contentType?: string
   favicons?: string[]
+  hasPreview?: boolean
 }
 
 // Simple in-memory cache (consider using Redis in production)
@@ -17,13 +18,18 @@ const cache = new Map<
   { data: LinkPreviewResponse; timestamp: number }
 >()
 const CACHE_TTL = 1000 * 60 * 60 // 1 hour cache
+const TIMEOUT = 5000 // 5 seconds timeout
 
 export async function POST(request: Request) {
   try {
     const { url } = await request.json()
 
     if (!url) {
-      return NextResponse.json({ error: 'URL is required' }, { status: 400 })
+      return NextResponse.json({
+        url,
+        hasPreview: false,
+        error: 'URL is required',
+      })
     }
 
     // Check cache
@@ -39,24 +45,40 @@ export async function POST(request: Request) {
       headers: {
         'user-agent': 'Googlebot/2.1 (+http://www.google.com/bot.html)',
       },
-      timeout: 3000,
+      timeout: TIMEOUT,
     })
+
+    // Validate data
+    if (!data || !data.url) {
+      return NextResponse.json({
+        url,
+        hasPreview: false,
+        error: 'No preview available',
+      })
+    }
+
+    // Add hasPreview flag
+    const responseData = {
+      ...data,
+      hasPreview: true,
+    }
 
     // Store in cache
     cache.set(cacheKey, {
-      data,
+      data: responseData,
       timestamp: Date.now(),
     })
 
-    return NextResponse.json(data)
+    return NextResponse.json(responseData)
   } catch (error) {
+    // Log error for debugging but return generic message
     console.error('Error fetching link preview:', error)
-    return NextResponse.json(
-      {
-        error:
-          error instanceof Error ? error.message : 'Unknown error occurred',
-      },
-      { status: 500 }
-    )
+
+    // Return a generic error response with 200 status
+    return NextResponse.json({
+      url: request.url,
+      hasPreview: false,
+      error: 'No preview available',
+    })
   }
 }
