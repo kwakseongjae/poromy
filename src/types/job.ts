@@ -7,6 +7,8 @@ export interface Job {
   companyName: string
   jobTitle: string
   conditions: string[]
+  positionDescription: string | null
+  mainTask: string | null
   qualifications: string[]
   preferredQualifications: string[]
   logoUrl: string
