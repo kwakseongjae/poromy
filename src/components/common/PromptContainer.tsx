@@ -85,10 +85,11 @@ const PromptContainer = ({
       </div>
 
       <HelpModal
+        type={type}
         isOpen={isHelpModalOpen}
         onClose={() => setIsHelpModalOpen(false)}
         title="프롬프트 적용 방법"
-        description="AI 프롬프트를 적용하여 지원서를 작성하는 방법을 안내해드립니다."
+        description={`AI 프롬프트를 적용하여 ${type === 'company' ? '기업' : '채용공고'} 별로 지원서를 작성하는 방법을 안내해드립니다.`}
         buttonRef={helpButtonRef}
       />
     </div>
