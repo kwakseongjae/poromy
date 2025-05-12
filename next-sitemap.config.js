@@ -14,6 +14,7 @@ module.exports = {
         disallow: ['/api/*', '/auth/*'],
       },
     ],
+    additionalSitemaps: ['https://poromy.ai.kr/rss'],
   },
   changefreq: 'daily',
   priority: 0.7,

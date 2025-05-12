@@ -12,6 +12,7 @@ import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://poromy.ai.kr'),
   title: 'Poromy - AI 프롬프트 아카이브',
   description:
     '채용 공고와 기업 분석을 위한 AI 프롬프트 아카이브. 다양한 직무와 기업에 맞는 맞춤형 프롬프트를 제공합니다.',
@@ -107,6 +108,12 @@ export default async function RootLayout({
               gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
             `,
           }}
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Poromy RSS"
+          href="/rss"
         />
       </head>
       <body className={inter.className}>

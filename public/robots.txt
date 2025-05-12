@@ -9,3 +9,4 @@ Host: https://poromy.ai.kr
 
 # Sitemaps
 Sitemap: https://poromy.ai.kr/sitemap.xml
+Sitemap: https://poromy.ai.kr/rss
