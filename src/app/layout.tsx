@@ -1,5 +1,4 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Navbar from '@/components/navigation/Navbar'
 import { CursorProvider } from '@/contexts/CursorContext'
@@ -8,9 +7,13 @@ import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Script from 'next/script'
-import preventZoomOnFocus from '@/utils/input-focus-handler'
 
-const inter = Inter({ subsets: ['latin'] })
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://poromy.ai.kr'),
@@ -87,18 +90,9 @@ export default async function RootLayout({
     data: { session },
   } = await supabase.auth.getSession()
 
-  // input-focus-handler 적용
-  if (typeof window !== 'undefined') {
-    preventZoomOnFocus()
-  }
-
   return (
     <html lang="ko">
       <head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
-        />
         <meta
           name="naver-site-verification"
           content="9934f90db2f107b504163e05d916ab579541c6b0"
@@ -126,7 +120,7 @@ export default async function RootLayout({
           href="/rss"
         />
       </head>
-      <body className={inter.className}>
+      <body>
         <SupabaseProvider initialSession={session}>
           <CursorProvider>
             <CustomCursor />
