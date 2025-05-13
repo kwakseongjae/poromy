@@ -116,7 +116,7 @@ export default function PositionContent() {
 
   return (
     <>
-      <div className="relative flex py-8 pr-2">
+      <div className="relative flex py-8 pr-4">
         <div
           className="group sticky top-25 z-99 flex max-h-[75vh] w-60 flex-col items-start gap-2 px-4 transition-all duration-300 hover:w-1/3"
           onMouseEnter={() => setIsHovered(true)}
@@ -131,7 +131,7 @@ export default function PositionContent() {
           </div>
 
           <div className="flex w-full flex-col gap-2 overflow-y-auto">
-            {filteredJobs.length === 0 ? (
+          {filteredJobs.length === 0 ? (
               <div className="flex h-64 w-full flex-col items-center justify-center gap-2">
                 <p className="text-center text-sm whitespace-pre-line text-gray-500">
                   <span className="text-[#252525]">
@@ -229,6 +229,7 @@ export default function PositionContent() {
               })
             )}
           </div>
+          
 
           {previewJob && (
             <div
