@@ -73,7 +73,7 @@ const PromptContainer = ({
             <CopyIcon className="h-4 w-4" />
             <span>{isCopied ? '복사 완료!' : 'Copy'}</span>
           </button>
-          <pre className="text-sm whitespace-pre-wrap text-gray-700">
+          <pre className="mt-6 text-sm whitespace-pre-wrap text-gray-700 md:mt-0">
             {prompt}
           </pre>
         </div>
