@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import Script from 'next/script'
+import preventZoomOnFocus from '@/utils/input-focus-handler'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -85,6 +86,11 @@ export default async function RootLayout({
   const {
     data: { session },
   } = await supabase.auth.getSession()
+
+  // input-focus-handler 적용
+  if (typeof window !== 'undefined') {
+    preventZoomOnFocus()
+  }
 
   return (
     <html lang="ko">
