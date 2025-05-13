@@ -90,6 +90,10 @@ export default async function RootLayout({
     <html lang="ko">
       <head>
         <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+        />
+        <meta
           name="naver-site-verification"
           content="9934f90db2f107b504163e05d916ab579541c6b0"
         />
