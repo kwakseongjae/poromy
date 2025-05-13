@@ -131,7 +131,7 @@ export default function PositionContent() {
           </div>
 
           <div className="flex w-full flex-col gap-2 overflow-y-auto">
-          {filteredJobs.length === 0 ? (
+            {filteredJobs.length === 0 ? (
               <div className="flex h-64 w-full flex-col items-center justify-center gap-2">
                 <p className="text-center text-sm whitespace-pre-line text-gray-500">
                   <span className="text-[#252525]">
@@ -229,7 +229,6 @@ export default function PositionContent() {
               })
             )}
           </div>
-          
 
           {previewJob && (
             <div
@@ -382,7 +381,7 @@ export default function PositionContent() {
                 <PromptContainer
                   type="position"
                   title="AI 프롬프트"
-                  description={`${job.companyName}의 ${job.jobTitle} 포지션에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사하세요.`}
+                  description={`${job.companyName}의 ${job.jobTitle} 포지션에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사한 후 ChatGPT, Claude 등 AI 솔루션에 붙여넣어 학습시키세요.`}
                   prompt={promptContent}
                 />
               </div>

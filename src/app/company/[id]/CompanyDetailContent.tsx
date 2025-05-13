@@ -501,7 +501,7 @@ export default function CompanyDetailContent() {
                   <PromptContainer
                     type="company"
                     title={`${company.name} 프롬프트`}
-                    description={`${company.name}의 채용 공고에 대한 AI 프롬프트입니다. 아래 버튼을 클릭하여 프롬프트를 복사하세요.`}
+                    description={`${company.name}에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사한 후 ChatGPT, Claude 등 AI 솔루션에 붙여넣어 학습시키세요.`}
                     prompt={promptContent}
                   />
                 )}
