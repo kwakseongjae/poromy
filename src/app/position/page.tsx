@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import PositionContent from './PositionContent'
-import { jobs } from '@/constants/job.data'
 
 export const metadata: Metadata = {
   title: '채용 공고 분석 프롬프트 - Poromy',

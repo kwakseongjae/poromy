@@ -14,8 +14,8 @@ export async function GET() {
     id: siteUrl,
     link: siteUrl,
     language: 'ko',
-    image: `${siteUrl}/og-image.png`,
-    favicon: `${siteUrl}/favicon.ico`,
+    image: `${siteUrl}/og-image.jpg`,
+    favicon: `${siteUrl}/favicon.svg`,
     copyright: `All rights reserved ${new Date().getFullYear()}, Poromy`,
     updated: new Date(),
     feedLinks: {
@@ -23,7 +23,7 @@ export async function GET() {
     },
     author: {
       name: 'Poromy',
-      email: 'contact@poromy.ai.kr',
+      email: 'poromy.contact@gmail.com',
       link: siteUrl,
     },
   })

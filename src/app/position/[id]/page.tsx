@@ -11,13 +11,9 @@ interface Props {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const resolvedParams = await params
-    const resolvedSearchParams = await searchParams
     const decryptedId = decrypt(resolvedParams.id)
     const job = jobs.find((job) => job.id === decryptedId)
 
