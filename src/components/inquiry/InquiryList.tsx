@@ -210,8 +210,14 @@ export default function InquiryList({ initialInquiries }: InquiryListProps) {
             </button>
           )}
         </div>
-        <div className="min-w-[200px] flex-1">
+        <div className="hidden flex-1 sm:block">
           <SearchBar placeholder="관심있는 채용공고 URL, 직무 또는 기업을 검색해보세요" />
+        </div>
+        <div className="w-full min-w-[300px] flex-1 sm:hidden">
+          <SearchBar
+            placeholder="관심있는 채용공고 URL, 직무 또는 기업을 검색해보세요"
+            size="large"
+          />
         </div>
       </div>
 
