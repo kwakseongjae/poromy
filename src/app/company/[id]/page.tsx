@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import CompanyDetailContent from './CompanyDetailContent'
 import { companies } from '@/constants/company.data'
 import { encrypt } from '@/utils/crypto'
+import { getAllKeywords } from '@/constants/seo-keywords'
 
 interface Company {
   id: string
@@ -14,10 +15,13 @@ interface Company {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }): Promise<Metadata> {
   // 기업 정보 조회
-  const company = companies.find((company: Company) => company.id === params.id)
+  const resolvedParams = await params
+  const company = companies.find(
+    (company: Company) => company.id === resolvedParams.id
+  )
 
   const title = company
     ? `${company.name} 기업 분석 및 AI 자소서 프롬프트 - Poromy`
@@ -29,12 +33,11 @@ export async function generateMetadata({
   return {
     title,
     description,
-    keywords:
-      'AI 자소서, AI 자기소개서, GPT 프롬프트, Claude 프롬프트, ChatGPT 프롬프트, 기업 분석, 취업 준비, 면접 준비, 기업 정보, GPT 활용, Claude 활용',
+    keywords: getAllKeywords(),
     openGraph: {
       title,
       description,
-      url: `https://poromy.ai.kr/company/${encrypt(params.id)}`,
+      url: `https://poromy.ai.kr/company/${encrypt(resolvedParams.id)}`,
       siteName: 'Poromy',
       images: [
         {

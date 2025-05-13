@@ -3,6 +3,7 @@ import { jobs } from '@/constants/job.data'
 import { decrypt, encrypt } from '@/utils/crypto'
 import { notFound } from 'next/navigation'
 import ClientRedirect from '@/components/ClientRedirect'
+import { getAllKeywords } from '@/constants/seo-keywords'
 
 interface Props {
   params: Promise<{
@@ -23,6 +24,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: '요청하신 채용 공고를 찾을 수 없습니다.',
       }
     }
+
+    const title = `${job.jobTitle} - ${job.companyName} 채용 공고 분석 및 AI 자소서 프롬프트 - Poromy`
+    const description = `${job.companyName}의 ${job.jobTitle} 채용 공고 분석과 맞춤형 AI 자소서 프롬프트를 제공합니다. ${job.qualifications.join(', ')} ${job.preferredQualifications.join(', ')} 자격요건에 맞는 최적화된 자기소개서 작성 가이드를 확인하세요.`
 
     const jobPostingSchema = {
       '@context': 'https://schema.org',
@@ -66,19 +70,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: `${job.jobTitle} - ${job.companyName} 채용 공고 - Poromy`,
-      description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다.`,
+      title,
+      description,
+      keywords: getAllKeywords(),
       openGraph: {
-        title: `${job.jobTitle} - ${job.companyName} 채용 공고 - Poromy`,
-        description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다.`,
+        title,
+        description,
         url: `https://poromy.ai.kr/position/${resolvedParams.id}`,
         siteName: 'Poromy',
         images: [
           {
-            url: job.logoUrl,
+            url: job.logoUrl || '/images/og-image.jpg',
             width: 1200,
             height: 630,
-            alt: `${job.companyName} 로고`,
+            alt: `${job.companyName} ${job.jobTitle} 채용공고 분석 및 AI 자소서 프롬프트`,
           },
         ],
         locale: 'ko_KR',
@@ -86,9 +91,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
       twitter: {
         card: 'summary_large_image',
-        title: `${job.jobTitle} - ${job.companyName} 채용 공고 - Poromy`,
-        description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다.`,
-        images: [job.logoUrl],
+        title,
+        description,
+        images: [job.logoUrl || '/images/og-image.jpg'],
       },
       other: {
         'application/ld+json': JSON.stringify(jobPostingSchema),

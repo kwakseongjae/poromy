@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { companies } from '@/constants/company.data'
 import SearchBar from '@/components/common/SearchBar'
 import Image from 'next/image'

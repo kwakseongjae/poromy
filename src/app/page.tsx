@@ -10,13 +10,13 @@ import { HomeInquiry } from '@/components/home/HomeInquiry'
 import { Metadata } from 'next'
 import { encrypt } from '@/utils/crypto'
 import EngagementTracker from '@/components/analytics/EngagementTracker'
+import { getAllKeywords } from '@/constants/seo-keywords'
 
 export const metadata: Metadata = {
   title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
   description:
     'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브. 맞춤형 자기소개서 작성과 기업 분석을 도와드립니다.',
-  keywords:
-    'AI 자소서, AI 자기소개서, AI 프롬프트, GPT 프롬프트, Claude 프롬프트, ChatGPT 프롬프트, 자소서 작성, 자기소개서 작성, 기업 분석, 채용 공고, 취업 준비, 면접 준비, GPT 활용, Claude 활용',
+  keywords: getAllKeywords(),
   openGraph: {
     title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
     description:
