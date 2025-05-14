@@ -1,0 +1,221 @@
+
+
+
+<!-- PROJECT_STRUCTURE_START -->
+
+## 📋 Project Structure
+
+### 🔧 Project Info
+- **Name**: poromy-front
+- **Version**: 0.1.0
+- **Package Manager**: pnpm
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+
+### 📁 Directory Structure
+
+```
+📁 .vscode/
+  📄 .vscode/tasks.json
+📁 public/
+  📁 public/fonts/
+  📁 public/icons/
+  📁 public/images/
+    📁 public/images/company/
+    📁 public/images/position/
+  📁 public/prompts/
+    📁 public/prompts/company/
+      📄 public/prompts/company/gs_construction.md
+      📄 public/prompts/company/hana_bank.md
+      📄 public/prompts/company/hanwha_solutions.md
+      📄 public/prompts/company/hyundai_motors.md
+      📄 public/prompts/company/kakao.md
+      📄 public/prompts/company/krafton.md
+      📄 public/prompts/company/lg_electronics.md
+      📄 public/prompts/company/naver.md
+      📄 public/prompts/company/samsung_display.md
+      📄 public/prompts/company/samsung_sdi.md
+      📄 public/prompts/company/samsung_sds.md
+      📄 public/prompts/company/sk_hynix.md
+    📁 public/prompts/position/
+      📄 public/prompts/position/1.md
+      📄 public/prompts/position/2.md
+      📄 public/prompts/position/3.md
+      📄 public/prompts/position/4.md
+      📄 public/prompts/position/5.md
+      📄 public/prompts/position/6.md
+  📁 public/svg/
+    📁 public/svg/company/
+📁 scripts/
+  📄 scripts/generate-data.js
+  📄 scripts/structure-injector.ts
+  📄 scripts/update-cursorrules.js
+📁 src/
+  📁 src/app/
+    📁 src/app/account/
+      📄 src/app/account/page.tsx
+    📁 src/app/api/
+      📁 src/app/api/auth/
+      📁 src/app/api/create-profile/
+      📁 src/app/api/email/
+      📁 src/app/api/image-proxy/
+      📁 src/app/api/inquiry/
+      📁 src/app/api/link-preview/
+      📁 src/app/api/prompts/
+      📁 src/app/api/update-profile/
+    📁 src/app/auth/
+      📁 src/app/auth/callback/
+    📁 src/app/company/
+      📁 src/app/company/[id]/
+      📄 src/app/company/page.tsx
+    📁 src/app/guide/
+      📁 src/app/guide/[type]/
+      📄 src/app/guide/page.tsx
+    📁 src/app/inquiry/
+      📁 src/app/inquiry/[id]/
+      📁 src/app/inquiry/new/
+      📄 src/app/inquiry/page.tsx
+    📁 src/app/login/
+      📄 src/app/login/page.tsx
+    📁 src/app/position/
+      📁 src/app/position/[id]/
+      📄 src/app/position/page.tsx
+      📄 src/app/position/PositionContent.tsx
+    📁 src/app/role/
+      📁 src/app/role/[name]/
+      📄 src/app/role/page.tsx
+    📁 src/app/rss/
+      📄 src/app/rss/route.ts
+    📁 src/app/signup/
+      📄 src/app/signup/page.tsx
+    📁 src/app/verify-email/
+      📄 src/app/verify-email/page.tsx
+    📄 src/app/layout.tsx
+    📄 src/app/page.tsx
+  📁 src/assets/
+    📁 src/assets/icons/
+      📄 src/assets/icons/BuildingsIcon.tsx
+      📄 src/assets/icons/BulbIcon.tsx
+      📄 src/assets/icons/ChevronIcon.tsx
+      📄 src/assets/icons/CopyIcon.tsx
+      📄 src/assets/icons/DisabledBulbIcon.tsx
+      📄 src/assets/icons/DisabledHamburgerIcon.tsx
+      📄 src/assets/icons/EditIcon.tsx
+      📄 src/assets/icons/ExclamationIcon.tsx
+      📄 src/assets/icons/HamburgerIcon.tsx
+      📄 src/assets/icons/HelpIcon.tsx
+      📄 src/assets/icons/LinkIcon.tsx
+      📄 src/assets/icons/LogoIcon.tsx
+      📄 src/assets/icons/PersonIcon.tsx
+      📄 src/assets/icons/SalesIcon.tsx
+    📄 src/assets/index.ts
+  📁 src/components/
+    📁 src/components/analytics/
+      📄 src/components/analytics/EngagementTracker.tsx
+    📁 src/components/common/
+      📄 src/components/common/HelpModal.tsx
+      📄 src/components/common/NotificationMessage.tsx
+      📄 src/components/common/PromptContainer.tsx
+      📄 src/components/common/SearchBar.tsx
+    📁 src/components/company/
+      📄 src/components/company/CompanyCarousel.tsx
+    📁 src/components/home/
+      📄 src/components/home/HomeCarousel.tsx
+      📄 src/components/home/HomeContainer.tsx
+      📄 src/components/home/HomeInquiry.tsx
+      📄 src/components/home/Section.tsx
+      📄 src/components/home/SectionHeader.tsx
+    📁 src/components/inquiry/
+      📄 src/components/inquiry/AnswerForm.tsx
+      📄 src/components/inquiry/HomeInquiryCard.tsx
+      📄 src/components/inquiry/InquiryCard.tsx
+      📄 src/components/inquiry/InquiryCarousel.tsx
+      📄 src/components/inquiry/InquiryList.tsx
+      📄 src/components/inquiry/InquiryProcessModal.tsx
+    📁 src/components/modal/
+      📄 src/components/modal/ProfileModal.tsx
+    📁 src/components/navigation/
+      📄 src/components/navigation/Navbar.tsx
+      📄 src/components/navigation/Sidebar.tsx
+    📁 src/components/position/
+      📄 src/components/position/JobList.tsx
+    📁 src/components/ui/
+      📄 src/components/ui/Dialog.tsx
+    📄 src/components/ClientRedirect.tsx
+    📄 src/components/CustomCursor.tsx
+    📄 src/components/GoogleAnalytics.tsx
+    📄 src/components/LinkPreview.tsx
+    📄 src/components/LinkPreviewThumbnail.tsx
+  📁 src/constants/
+    📄 src/constants/company.data.ts
+    📄 src/constants/job.data.ts
+    📄 src/constants/seo-keywords.ts
+  📁 src/contexts/
+    📄 src/contexts/CursorContext.tsx
+    📄 src/contexts/SupabaseContext.tsx
+  📁 src/emails/
+    📄 src/emails/answer-notification.tsx
+    📄 src/emails/inquiry-notification.tsx
+    📄 src/emails/verification.tsx
+  📁 src/hooks/
+    📄 src/hooks/useEmblaCarousel.ts
+  📁 src/lib/
+    📄 src/lib/gtag.ts
+    📄 src/lib/supabase-client.ts
+    📄 src/lib/supabase-server.ts
+    📄 src/lib/utils.ts
+  📁 src/types/
+    📄 src/types/company.ts
+    📄 src/types/ga.d.ts
+    📄 src/types/inquiry.ts
+    📄 src/types/job.ts
+    📄 src/types/markdown.d.ts
+    📄 src/types/supabase.ts
+    📄 src/types/svg.d.ts
+  📁 src/utils/
+    📄 src/utils/crypto.ts
+    📄 src/utils/image.ts
+    📄 src/utils/prompt.ts
+  📄 src/middleware.ts
+  📄 src/test-structure-file.ts
+📁 temp/
+  📁 temp/src/
+    📁 temp/src/constants/
+      📄 temp/src/constants/company.data.js
+      📄 temp/src/constants/job.data.js
+    📁 temp/src/types/
+      📄 temp/src/types/company.js
+      📄 temp/src/types/job.js
+    📁 temp/src/utils/
+      📄 temp/src/utils/crypto.js
+      📄 temp/src/utils/prompt.js
+  📄 temp/company.data.js
+  📄 temp/crypto.js
+  📄 temp/job.data.js
+📄 .cursorrules
+📄 company_generate_prompt.md
+📄 next-env.d.ts
+📄 next-sitemap.config.js
+📄 next.config.ts
+📄 package.json
+📄 pnpm-lock.yaml
+📄 position_generate_prompt.md
+📄 README.md
+📄 tsconfig.json
+```
+
+### 🎯 Guidelines
+- Follow Domain-Driven Design (DDD) under `src/domains/`
+- Keep shared components in `src/components/`
+- Use TypeScript for type safety
+- Implement error boundaries and loading states
+- Follow the frontend design guidelines
+
+### 🔗 Key Conventions
+- Use barrel exports (index.ts) for clean imports
+- Prefer composition over props drilling
+- Keep components focused and single-responsibility
+- Abstract complex logic into custom hooks
+- Use descriptive names for better readability
+
+<!-- PROJECT_STRUCTURE_END -->
