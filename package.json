@@ -10,7 +10,13 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "generate-icons": "svgr --config-file .svgrrc.mjs --out-dir src/assets/icons -- public/svg/*.svg",
-    "generate-company-data": "node scripts/generate-data.js"
+    "generate-company-data": "node scripts/generate-data.js",
+    "cursorrules:update": "node scripts/update-cursorrules.js",
+    "cursorrules:watch": "node scripts/update-cursorrules.js --watch",
+    "cursorrules:setup": "node scripts/update-cursorrules.js --hook",
+    "dev:auto": "pnpm cursorrules:update && next dev",
+    "predev": "pnpm cursorrules:update",
+    "postinstall": "pnpm cursorrules:update"
   },
   "dependencies": {
     "@next/third-parties": "^15.3.2",
@@ -33,6 +39,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "chokidar": "^3.6.0",
     "embla-carousel-fade": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "eslint": "^8",
@@ -49,6 +56,7 @@
     "react-email": "^4.0.7",
     "resend": "^4.4.0",
     "tailwindcss": "^4.1.3",
+    "tsx": "^4.19.4",
     "typescript": "^5"
   }
 }
