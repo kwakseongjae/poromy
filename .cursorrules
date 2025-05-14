@@ -1,7 +1,4 @@
 
-
-
-
 <!-- PROJECT_STRUCTURE_START -->
 
 ## 📋 Project Structure
@@ -178,6 +175,7 @@
     📄 src/utils/image.ts
     📄 src/utils/prompt.ts
   📄 src/middleware.ts
+  📄 src/test-structure-file.ts
 📁 temp/
   📁 temp/src/
     📁 temp/src/constants/
