@@ -143,24 +143,41 @@ class CursorRulesStructureInjector {
       structureMarkdown
     )
 
+    // Frontend Design Guideline 파일 읽기 (존재할 때만)
+    let guidelineContent = ''
+    try {
+      guidelineContent = await fs.readFile(
+        'frontend-design-guideline.md',
+        'utf-8'
+      )
+    } catch {}
+
     const { start, end } = this.config.projectStructureMarkers
     const startIndex = currentContent.indexOf(start)
     const endIndex = currentContent.indexOf(end)
 
     let newContent: string
-    if (startIndex !== -1 && endIndex !== -1) {
-      newContent =
-        currentContent.substring(0, startIndex) +
-        newStructureSection +
-        currentContent.substring(endIndex + end.length)
+    if (startIndex !== -1 && endIndex !== -1 && endIndex > startIndex) {
+      // 기존 마커 구간만 교체 (중복 방지, 이후 모든 내용 제거)
+      newContent = currentContent.substring(0, startIndex) + newStructureSection
     } else {
-      newContent =
-        currentContent +
-        (currentContent.endsWith('\n') ? '' : '\n') +
-        newStructureSection
+      // 마커가 없으면 구조 섹션만
+      newContent = newStructureSection
     }
 
-    await fs.writeFile('.cursorrules', newContent.trimEnd() + '\n', 'utf-8')
+    // 가이드라인 붙이기 (항상 한 줄 개행)
+    if (guidelineContent.trim()) {
+      const trimmedGuideline = guidelineContent.trim()
+      newContent =
+        newContent.replace(/[\s\r\n]+$/, '') + '\n\n' + trimmedGuideline
+    }
+
+    // 파일 끝에도 정확히 한 줄만 남도록 보장
+    await fs.writeFile(
+      '.cursorrules',
+      newContent.replace(/[\s\r\n]+$/, '') + '\n',
+      'utf-8'
+    )
     console.log('✅ .cursorrules updated successfully!')
   }
 
@@ -194,7 +211,39 @@ class CursorRulesStructureInjector {
     structureMarkdown: string
   ): string {
     const { start, end } = this.config.projectStructureMarkers
-    return `\n${start}\n\n## 📋 Project Structure\n\n### 🔧 Project Info\n- **Name**: ${projectInfo.name || 'Unknown'}\n- **Version**: ${projectInfo.version || 'Unknown'}\n- **Package Manager**: pnpm\n- **Framework**: Next.js (App Router)\n- **Language**: TypeScript\n\n### 📁 Directory Structure\n\n\`\`\`\n${structureMarkdown.trim()}\n\`\`\`\n\n### 🎯 Guidelines\n- Follow Domain-Driven Design (DDD) under \`src/domains/\`\n- Keep shared components in \`src/components/\`\n- Use TypeScript for type safety\n- Implement error boundaries and loading states\n- Follow the frontend design guidelines\n\n### 🔗 Key Conventions\n- Use barrel exports (index.ts) for clean imports\n- Prefer composition over props drilling\n- Keep components focused and single-responsibility\n- Abstract complex logic into custom hooks\n- Use descriptive names for better readability\n\n${end}\n`
+    return `${start}
+
+## 📋 Project Structure
+
+### 🔧 Project Info
+- **Name**: ${projectInfo.name || 'Unknown'}
+- **Version**: ${projectInfo.version || 'Unknown'}
+- **Package Manager**: pnpm
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+
+### 📁 Directory Structure
+
+\`\`\`
+${structureMarkdown.trim()}
+\`\`\`
+
+### 🎯 Guidelines
+- Follow Domain-Driven Design (DDD) under \`src/domains/\`
+- Keep shared components in \`src/components/\`
+- Use TypeScript for type safety
+- Implement error boundaries and loading states
+- Follow the frontend design guidelines
+
+### 🔗 Key Conventions
+- Use barrel exports (index.ts) for clean imports
+- Prefer composition over props drilling
+- Keep components focused and single-responsibility
+- Abstract complex logic into custom hooks
+- Use descriptive names for better readability
+
+${end}
+`
   }
 }
 
