@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { getProxyImageUrl } from '@/utils/image'
 
 interface LinkPreviewData {
   url: string
@@ -11,10 +12,6 @@ interface LinkPreviewData {
 interface LinkPreviewThumbnailProps {
   url: string
   className?: string
-}
-
-const getProxyImageUrl = (originalUrl: string) => {
-  return `/api/image-proxy?url=${encodeURIComponent(originalUrl)}`
 }
 
 const LinkPreviewThumbnail = ({

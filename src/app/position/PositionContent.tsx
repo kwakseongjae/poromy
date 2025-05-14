@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { LinkIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
+import { getProxyImageUrl } from '@/utils/image'
 
 interface PreviewJob {
   id: string
@@ -199,7 +200,7 @@ export default function PositionContent() {
                     }}
                   >
                     <Image
-                      src={jobItem.logoUrl}
+                      src={getProxyImageUrl(jobItem.logoUrl)}
                       alt={jobItem.companyName}
                       width={40}
                       height={40}
@@ -241,7 +242,7 @@ export default function PositionContent() {
               <div className="mb-4 flex items-center gap-3">
                 <div className="relative h-12 w-12 overflow-hidden rounded-lg">
                   <Image
-                    src={previewJob.logoUrl}
+                    src={getProxyImageUrl(previewJob.logoUrl)}
                     alt={previewJob.companyName}
                     fill
                     className="object-cover"
@@ -288,7 +289,7 @@ export default function PositionContent() {
               <div className="mb-6 flex items-center">
                 <div className="relative h-16 w-16 overflow-hidden rounded-lg">
                   <Image
-                    src={job.logoUrl}
+                    src={getProxyImageUrl(job.logoUrl)}
                     alt={`${job.companyName} 로고`}
                     fill
                     className="object-cover"
@@ -311,8 +312,8 @@ export default function PositionContent() {
                   target="_blank"
                   className="inline-flex items-center rounded-full py-1 text-sm font-medium text-gray-800"
                 >
-                  <LinkIcon className="mr-1 h-4 w-4" />
-                  <span>{job.url}</span>
+                  <LinkIcon className="mr-1 h-4 w-4 flex-shrink-0" />
+                  <span className="break-all">{job.url}</span>
                 </Link>
               </div>
 

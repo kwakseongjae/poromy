@@ -2,6 +2,7 @@ import { jobs } from '@/constants/job.data'
 import Link from 'next/link'
 import Image from 'next/image'
 import { encrypt } from '@/utils/crypto'
+import { getProxyImageUrl } from '@/utils/image'
 
 export default function JobList() {
   return (
@@ -25,7 +26,7 @@ export default function JobList() {
                 <div className="flex h-30 w-full items-center justify-center overflow-hidden pt-4">
                   <div className="relative h-24 w-24 overflow-hidden rounded-lg">
                     <Image
-                      src={job.logoUrl}
+                      src={getProxyImageUrl(job.logoUrl)}
                       alt={`${job.companyName} 로고`}
                       fill
                       className="object-contain transition-transform group-hover:scale-110"
@@ -58,7 +59,7 @@ export default function JobList() {
                 <div className="mb-4 flex items-center">
                   <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-gray-200">
                     <Image
-                      src={job.logoUrl}
+                      src={getProxyImageUrl(job.logoUrl)}
                       alt={`${job.companyName} 로고`}
                       fill
                       className="object-cover"
