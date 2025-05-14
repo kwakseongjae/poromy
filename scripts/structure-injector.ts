@@ -160,7 +160,7 @@ class CursorRulesStructureInjector {
         newStructureSection
     }
 
-    await fs.writeFile('.cursorrules', newContent, 'utf-8')
+    await fs.writeFile('.cursorrules', newContent.trimEnd() + '\n', 'utf-8')
     console.log('✅ .cursorrules updated successfully!')
   }
 
