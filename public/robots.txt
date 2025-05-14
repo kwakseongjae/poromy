@@ -3,6 +3,23 @@ User-agent: *
 Allow: /
 Disallow: /api/*
 Disallow: /auth/*
+Disallow: /position?id=*
+
+# Googlebot
+User-agent: Googlebot
+Allow: /
+Allow: /position/*
+Disallow: /api/*
+Disallow: /auth/*
+Disallow: /position?id=*
+
+# Yeti
+User-agent: Yeti
+Allow: /
+Allow: /position/*
+Disallow: /api/*
+Disallow: /auth/*
+Disallow: /position?id=*
 
 # Host
 Host: https://poromy.ai.kr

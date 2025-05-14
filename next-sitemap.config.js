@@ -1,5 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 const { companies } = require('./temp/company.data')
+const { jobs } = require('./temp/job.data')
 const { encrypt } = require('./temp/crypto')
 
 module.exports = {
@@ -11,7 +12,24 @@ module.exports = {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/*', '/auth/*'],
+        disallow: [
+          '/api/*',
+          '/auth/*',
+          '/position?id=*', // 쿼리 파라미터 URL 차단
+        ],
+      },
+      {
+        userAgent: 'Googlebot',
+        allow: [
+          '/',
+          '/position/*', // 경로 파라미터 URL 허용
+        ],
+        disallow: ['/api/*', '/auth/*', '/position?id=*'],
+      },
+      {
+        userAgent: 'Yeti', // 네이버 봇
+        allow: ['/', '/position/*'],
+        disallow: ['/api/*', '/auth/*', '/position?id=*'],
       },
     ],
     additionalSitemaps: ['https://poromy.ai.kr/rss'],
@@ -46,6 +64,17 @@ module.exports = {
       const encryptedId = encrypt(company.id)
       result.push({
         loc: `/company/${encryptedId}`,
+        priority: 0.8,
+        changefreq: 'daily',
+        lastmod: new Date().toISOString(),
+      })
+    })
+
+    // Position 상세 페이지 추가
+    jobs.forEach((job) => {
+      const encryptedId = encrypt(job.id)
+      result.push({
+        loc: `/position/${encryptedId}`,
         priority: 0.8,
         changefreq: 'daily',
         lastmod: new Date().toISOString(),

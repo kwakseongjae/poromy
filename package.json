@@ -10,7 +10,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "generate-icons": "svgr --config-file .svgrrc.mjs --out-dir src/assets/icons -- public/svg/*.svg",
-    "generate-company-data": "node scripts/generate-company-data.js"
+    "generate-company-data": "node scripts/generate-data.js"
   },
   "dependencies": {
     "@next/third-parties": "^15.3.2",

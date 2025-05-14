@@ -73,6 +73,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       keywords: getAllKeywords(),
+      alternates: {
+        canonical: `/position/${resolvedParams.id}`,
+      },
       openGraph: {
         title,
         description,
