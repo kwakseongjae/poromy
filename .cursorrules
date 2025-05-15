@@ -12,6 +12,8 @@
 ### 📁 Directory Structure
 
 ```
+📁 .cursor/
+  📄 .cursor/mcp.json
 📁 .vscode/
   📄 .vscode/tasks.json
 📁 public/
@@ -58,7 +60,11 @@
   📁 src/app/
     📁 src/app/account/
       📄 src/app/account/page.tsx
+    📁 src/app/admin/
+      📁 src/app/admin/add-test-users/
+      📄 src/app/admin/page.tsx
     📁 src/app/api/
+      📁 src/app/api/admin/
       📁 src/app/api/auth/
       📁 src/app/api/create-profile/
       📁 src/app/api/email/

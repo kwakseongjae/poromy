@@ -53,4 +53,4 @@ tsconfig.temp.json
 .vscode
 *.swp
 *.swo
-
+.cursor
