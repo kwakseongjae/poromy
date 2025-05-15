@@ -7,14 +7,24 @@ import { getProxyImageUrl } from '@/utils/image'
 export default function JobList() {
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-      {jobs.map((job) => {
+      {jobs.map((job, idx) => {
+        // Tailwind로 3줄만 보이게 제어
+        let visibility = ''
+        if (idx >= 6 && idx < 9) {
+          visibility = 'hidden sm:block'
+        } else if (idx >= 9) {
+          visibility = 'hidden'
+        }
         // Encrypt the ID for use in the URL
         const encryptedId = encrypt(job.id)
 
         return (
           <article
             key={job.id}
-            className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md lg:overflow-hidden"
+            className={
+              visibility +
+              ' group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md lg:overflow-hidden'
+            }
           >
             <Link
               href={`/position?id=${encryptedId}`}
