@@ -58,6 +58,8 @@
   📄 scripts/update-cursorrules.js
 📁 src/
   📁 src/app/
+    📁 src/app/403/
+      📄 src/app/403/page.tsx
     📁 src/app/account/
       📄 src/app/account/page.tsx
     📁 src/app/admin/

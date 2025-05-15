@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
+import { cookies } from 'next/headers'
 
 export async function createClient() {
   const cookieStore = await cookies()
@@ -41,14 +41,11 @@ export const createAdminClient = () => {
 }
 
 export async function getUser() {
-  const { auth } = await createClient()
-
-  const userObject = await auth.getUser()
-
-  if (userObject.error) {
-    console.error(userObject.error)
+  const supabase = await createClient()
+  const { data, error } = await supabase.auth.getUser()
+  if (error) {
+    console.error(error)
     return null
   }
-
-  return userObject.data.user
+  return data.user
 }
