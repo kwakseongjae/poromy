@@ -1,14 +1,13 @@
-import { jobs } from '@/constants/job.data'
+import { sortedJobs as jobs } from '@/constants/job.data'
 import Link from 'next/link'
 import Image from 'next/image'
 import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
 
 export default function JobList() {
-  const sortedJobs = jobs.slice().sort((a, b) => Number(b.id) - Number(a.id))
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-      {sortedJobs.map((job) => {
+      {jobs.map((job) => {
         // Encrypt the ID for use in the URL
         const encryptedId = encrypt(job.id)
 

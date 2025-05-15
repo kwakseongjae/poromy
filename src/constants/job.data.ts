@@ -411,3 +411,7 @@ export const jobs: Job[] = [
     prompt: () => getPositionPrompt('13'),
   },
 ]
+
+export const sortedJobs: Job[] = jobs
+  .slice()
+  .sort((a, b) => Number(b.id) - Number(a.id))

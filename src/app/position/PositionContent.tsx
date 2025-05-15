@@ -3,7 +3,7 @@
 import { useEffect, useState, Fragment } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { decrypt, encrypt } from '@/utils/crypto'
-import { jobs } from '@/constants/job.data'
+import { sortedJobs as jobs } from '@/constants/job.data'
 import Image from 'next/image'
 import Link from 'next/link'
 import { LinkIcon } from '@/assets'

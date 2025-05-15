@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { jobs } from '@/constants/job.data'
+import { sortedJobs as jobs } from '@/constants/job.data'
 import { decrypt, encrypt } from '@/utils/crypto'
 import { notFound } from 'next/navigation'
 import ClientRedirect from '@/components/ClientRedirect'
