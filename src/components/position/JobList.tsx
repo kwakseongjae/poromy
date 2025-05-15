@@ -5,16 +5,17 @@ import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
 
 export default function JobList() {
+  const sortedJobs = jobs.slice().sort((a, b) => Number(b.id) - Number(a.id))
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-      {jobs.map((job) => {
+      {sortedJobs.map((job) => {
         // Encrypt the ID for use in the URL
         const encryptedId = encrypt(job.id)
 
         return (
           <article
             key={job.id}
-            className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
+            className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md lg:overflow-hidden"
           >
             <Link
               href={`/position?id=${encryptedId}`}
@@ -55,19 +56,19 @@ export default function JobList() {
               </div>
 
               {/* Desktop Layout (lg and above) */}
-              <div className="hidden p-4 lg:flex lg:flex-col">
-                <div className="mb-4 flex items-center">
-                  <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-gray-200">
+              <div className="hidden lg:flex lg:h-36 lg:flex-col lg:justify-between lg:overflow-hidden lg:p-4">
+                <div className="mb-4 flex items-start">
+                  <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
                     <Image
                       src={getProxyImageUrl(job.logoUrl)}
                       alt={`${job.companyName} 로고`}
                       fill
                       className="object-cover"
-                      sizes="40px"
+                      sizes="56px"
                     />
                   </div>
-                  <div className="ml-4">
-                    <h2 className="group-hover:text-text-secondary text-lg font-semibold text-gray-900">
+                  <div className="ml-4 min-w-0 flex-1 overflow-hidden">
+                    <h2 className="group-hover:text-text-secondary line-clamp-2 text-lg font-semibold text-gray-900">
                       {job.jobTitle}
                     </h2>
                     <p className="text-sm text-gray-500">{job.companyName}</p>
