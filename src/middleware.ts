@@ -17,17 +17,24 @@ export async function middleware(request: NextRequest) {
 
   let isAdmin = false
   if (session?.user) {
-    const { data: adminData } = await supabase
-      .from('administrators')
-      .select('id')
+    // profiles 테이블에서 is_admin 확인
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_admin')
       .eq('id', session.user.id)
       .single()
 
-    isAdmin = !!adminData
+    isAdmin = !!profile?.is_admin
   }
 
   // 관리자 상태를 쿠키에 저장
   response.cookies.set('is-admin', isAdmin.toString())
+
+  // /admin 보호: is_admin이 true가 아니면 접근 불가
+  if (request.nextUrl.pathname.startsWith('/admin') && !isAdmin) {
+    // 403 페이지로 리다이렉트
+    return NextResponse.redirect(new URL('/403', request.url))
+  }
 
   // 로그인/회원가입 페이지 접근 시 로그인된 사용자 체크
   if (
