@@ -1,14 +1,10 @@
 import { notFound } from 'next/navigation'
 import LinkPreview from '@/components/LinkPreview'
 import AnswerForm from '@/components/inquiry/AnswerForm'
-import { createClient } from '@supabase/supabase-js'
+import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import Image from 'next/image'
 import { AdminProfileImage, LinkIcon } from '@/assets'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { formatDate } from '@/utils/date'
 
 interface InquiryDetailPageProps {
   params: Promise<{
@@ -48,19 +44,10 @@ interface Inquiry {
   answers?: Answer[]
 }
 
-const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hours = date.getHours()
-  const minutes = date.getMinutes()
-
-  return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`
-}
-
 // 정적 파라미터 생성
 export async function generateStaticParams() {
+  const supabase = createBrowserSupabaseClient()
+
   const { data: inquiries } = await supabase.from('inquiries').select('id')
 
   return (
@@ -78,6 +65,7 @@ export default async function InquiryDetailPage({
   params,
 }: InquiryDetailPageProps) {
   const { id } = await params
+  const supabase = createBrowserSupabaseClient()
 
   try {
     // 문의 정보 가져오기
@@ -180,7 +168,7 @@ export default async function InquiryDetailPage({
           {/* 답변 작성 폼 */}
           <AnswerForm
             inquiryId={formattedInquiry.id}
-            userEmail={formattedInquiry.user.email}
+            userEmail={formattedInquiry.user.email || ''}
             inquiryTitle={formattedInquiry.title}
             userNickname={formattedInquiry.user.nickname}
           />

@@ -1,14 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
+import { useState } from 'react'
+import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import LinkPreview from '@/components/LinkPreview'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { useSupabase } from '@/contexts/SupabaseContext'
 
 interface AnswerFormProps {
   inquiryId: string
@@ -28,28 +24,8 @@ export default function AnswerForm({
   const [url, setUrl] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [isAdmin, setIsAdmin] = useState(false)
-
-  // 클라이언트 사이드에서 관리자 권한 확인
-  useEffect(() => {
-    const checkAdmin = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('is_admin')
-          .eq('id', user.id)
-          .single()
-
-        setIsAdmin(profile?.is_admin || false)
-        console.log('AnswerForm - User ID:', user.id)
-        console.log('AnswerForm - Is Admin:', profile?.is_admin)
-      }
-    }
-    checkAdmin()
-  }, [])
+  const { isAdmin, user } = useSupabase()
+  const supabase = createBrowserSupabaseClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -57,20 +33,10 @@ export default function AnswerForm({
     setError(null)
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
       if (!user) {
         throw new Error('로그인이 필요합니다.')
       }
-
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('is_admin, nickname')
-        .eq('id', user.id)
-        .single()
-
-      if (!profile?.is_admin) {
+      if (!isAdmin) {
         throw new Error('관리자 권한이 필요합니다.')
       }
 
