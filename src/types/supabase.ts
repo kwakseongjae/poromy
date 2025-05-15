@@ -116,6 +116,7 @@ export interface Database {
           created_at: string
           updated_at: string
           is_verified: boolean
+          is_admin: boolean
         }
         Insert: {
           id: string
@@ -124,6 +125,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
           is_verified?: boolean
+          is_admin?: boolean
         }
         Update: {
           id?: string
@@ -132,6 +134,7 @@ export interface Database {
           created_at?: string
           updated_at?: string
           is_verified?: boolean
+          is_admin?: boolean
         }
         Relationships: [
           {
