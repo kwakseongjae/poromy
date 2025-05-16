@@ -10,6 +10,12 @@ import { getPositionPrompt } from '@/utils/prompt'
  * @property {string[]} conditions - Job requirements (experience, education, location, etc.)
  * @property {string} logoUrl - URL of the company logo image
  * @property {JobType} jobType - Category of the job based on the field/domain
+ * @property {string} uploadedAt - Date and time when the job posting was uploaded
+ * @property {string} deadline - Date and time when the job posting will be closed
+ * @property {string} positionDescription - Description of the job position
+ * @property {string} mainTask - Main tasks of the job position
+ * @property {string[]} qualifications - Qualifications required for the job position
+ * @property {string[]} preferredQualifications - Preferred qualifications for the job position
  */
 export const jobs: Job[] = [
   {
@@ -449,6 +455,224 @@ export const jobs: Job[] = [
     prompt: () => getPositionPrompt('13'),
     uploadedAt: '2025-05-15T22:00:00+09:00',
     deadline: '2025-05-31T23:59:59+09:00',
+  },
+  {
+    id: '14',
+    companyName: 'Allganize',
+    jobTitle: 'Python Back-end Engineer (문서처리 파이프라인 / RAG)',
+    conditions: ['백엔드 개발', '경력 2-5년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '대부분의 기업 데이터는 문서(.pdf, .xlsx, .docx, .png, .pptx 등) 같은 파일에 있습니다. 이 직무는 이러한 복잡한 문서들을 뛰어난 정확도로 LLM에 사용 가능한 데이터으로 변환, 제공하는 데 도움을 줍니다. 다양한 기업 고객들이 On-Premises 및 SaaS 형태로 Allganize를 사용하고 있으며, 매월 수백만 페이지를 처리하고 있습니다.',
+    mainTask:
+      '다양한 비정형 문서로부터 (오피스, PDF, ...) RAG 및 LLM에 사용되는 데이터를 추출, 중요한 정보를 식별, 변환하여 적재합니다. 현재 문서 데이터 파이프라인의 구조를 개선하고, 성능 개선을 위한 전략을 수립 및 구현합니다. 고객 피드백을 바탕으로 API 및 알고리즘을 개선하고(청킹, 추출등), 실패 사례를 더 잘 이해하고 분석하기 위해 내부 툴링과 평가 시스템을 개선합니다. 내부 결정권자 및 고객사와 협력하여 제품의 방향과 엔지니어링 전략을 형성합니다.',
+    qualifications: [
+      '언어: Python',
+      '도구: 서비스에 필요한 도구를 찾아서 적재적소에 사용하거나 스스로 만들 수 있으신 분',
+      '경험: 2 ~ 5년의 상용 서비스 개발 및 운영 경험',
+      '기술 스택: 메시지 큐 및 데이터베이스등 데이터 시스템에 이해도가 있으신 분',
+      '전문연구요원 및 산업기능요원 전직, 보충역 편입 가능(전공학과 또는 경력 2년 이상)',
+    ],
+    preferredQualifications: [
+      '제품에 대한 철학이 있으며 자기주도적인 분',
+      '데이터파이프라인 운영 경험이 있으신 분',
+      'Agentic App 관련 개발 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://opening-attachments.greetinghr.com/2025-04-24/5ad91756-ab68-463c-9e66-d917446c2a5e/symbol_color.png',
+    url: 'https://allganize.career.greetinghr.com/o/153657',
+    prompt: () => getPositionPrompt('14'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '15',
+    companyName: 'CJ올리브영',
+    jobTitle: '커머스플랫폼유닛 Back-end 개발자',
+    conditions: ['백엔드 개발', '경력 5년 이상', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '올리브영 커머스플랫폼유닛은 1,600만 이상의 고객에게 빠르고 안정적인 쇼핑 경험을 제공하는 핵심적인 역할을 수행합니다. 대규모 트래픽을 효율적으로 처리하고, 복잡한 비즈니스 로직을 안정적으로 구현하는 숙련된 Back-End 엔지니어를 찾습니다. 온라인몰의 핵심 기능인 전시, 상품, 검색 등 다양한 서비스의 서버 사이드 개발 및 운영을 담당하며, 시스템의 안정성과 성능을 향상시키고, 서비스 미래 성장을 위한 새로운 기술 도입 및 적용을 주도하게 됩니다.',
+    mainTask:
+      '온라인몰의 핵심 비즈니스 로직 개발 및 안정적인 운영 (상품 관리, 전시 로직, 검색 엔진 연동 등), Java 또는 Kotlin 기반의 Spring Framework를 활용한 고성능 서버 시스템 개발, 효율적인 데이터 관리를 위한 데이터베이스 설계 및 ORM (JPA, Hibernate) 활용, Front-End 및 외부 시스템과의 원활한 연동을 위한 RESTful API 설계 및 개발, 시스템 성능 모니터링 및 개선, 안정성 확보를 위한 기술적인 문제 해결, MSA (Microservice Architecture) 환경에서의 서비스 개발 및 운영, 새로운 기술 도입 및 검토를 통한 시스템 개선',
+    qualifications: [
+      '5년 이상의 백엔드 애플리케이션 개발 경력이 있으신 분',
+      'Java/Kotlin을 이용한 Spring Framework 기반의 애플리케이션 개발 경험이 있으신 분',
+      'JPA, Hibernate 등 ORM 사용과 도메인 모델링 경험이 있으신 분',
+      'WEB 환경에 대한 기본적인 이해 및 지식이 있으신 분',
+      '잠재적인 문제를 해결을 위해 가설을 수립하고 수행한 경험이 있으신 분',
+      '학습과 성장에 관심이 많고, 자기 개발을 위해 노력하시는 분',
+      '올리브영의 성장과 함께 성공 경험을 만들어 가고 싶으신 분',
+    ],
+    preferredQualifications: [
+      'Spring Boot 를 이용한 프로젝트 수행 경험이 있으신 분',
+      'Docker, Kubernetes 등 컨테이너 기반 기술을 이용한 배포/운영 경험이 있으신 분',
+      'MSA 환경을 구축하고 운영해 본 경험이 있으신 분',
+      'MQ 나 Kafka 등의 비동기 처리 Stream Engine 운영/개발 경험이 있으신 분',
+      '다양한 캐싱 전략에 대한 이해 및 경험이 있으신 분',
+      '대용량 데이터, 트래픽에 대한 개발 및 운영 경험이 있으신 분',
+      '기술 부채를 보면 잠 못 이루시는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
+    url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?direct=N&zz_jo_num=J20250515029234',
+    prompt: () => getPositionPrompt('15'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '16',
+    companyName: 'CJ올리브영',
+    jobTitle: '커머스플랫폼유닛 Front-end 개발자',
+    conditions: ['프론트엔드 개발', '경력 5년 이상', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "올리브영 커머스플랫폼유닛에서 '빠르고 매력적인 고객 경험'을 최전선에서 만들어냅니다. 고객에게 최고의 온라인 쇼핑 경험을 제공하기 위해 끊임없이 혁신하며, 고객 중심의 사고를 바탕으로 창의적인 아이디어를 실제 고객이 사용하는 아름답고 편리한 인터페이스로 구현하는 Front-End 엔지니어를 찾습니다.",
+    mainTask:
+      '고객에게 최고의 사용성을 제공하는 온라인몰의 다양한 화면 개발 (상품 목록, 상세 페이지, 검색 결과, 프로모션 페이지 등), 사용자 중심의 인터랙티브한 웹 애플리케이션 개발, 최신 웹 기술 및 트렌드를 적극적으로 활용하여 사용자 경험 및 인터페이스 개선, 백엔드 팀과의 긴밀한 협업을 통해 API 연동 및 데이터 흐름 구축, 웹 성능 최적화 및 안정적인 서비스 운영을 위한 기술적 개선, 다양한 기기 및 브라우저 환경에서의 호환성 확보 및 반응형 웹 개발',
+    qualifications: [
+      '5년 이상의 Front-end 개발 경력이나 그에 준하는 역량',
+      'JavaScript와 React 같은 Front-end Framework 개발 경험',
+      'WEB 환경에 대한 기본적인 이해 및 지식',
+      '잠재적인 문제를 해결을 위해 가설을 수립하고 수행한 경험',
+      '학습과 성장에 관심이 많고, 자기 개발을 위해 노력하는 분',
+      '올리브영의 성장과 함께 성공 경험을 만들어 가고 싶은 분',
+    ],
+    preferredQualifications: [
+      'Typescript/React.js/Node.js 를 활용한 프로젝트 경험',
+      '모바일 웹 및 Single Page Application에 대한 이해가 높은 분',
+      '대규모 서비스 개발 프로젝트에서 Front-end 성능 최적화 경험',
+      '하이브리드 앱 환경에서 개발 경험',
+      '기술 부채를 보면 잠 못 이루는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
+    url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?direct=N&zz_jo_num=J20250515029613',
+    prompt: () => getPositionPrompt('16'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '17',
+    companyName: 'CJ올리브영',
+    jobTitle: '인터널플랫폼유닛 Back-end 개발자',
+    conditions: ['백엔드 개발', '경력 5년 이상', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "올리브영 인터널플랫폼유닛은 '흔들림 없는 비즈니스'를 위한 안정적인 서버 시스템을 구축합니다. 온/오프라인 채널 전반의 효율적인 운영을 위한 핵심 백오피스 시스템을 담당하며, 안정적인 비즈니스 성장을 위한 기술적 토대를 마련합니다. 대규모 데이터를 안정적으로 처리하고, 복잡한 업무 로직을 견고하게 구현하며, 레거시 시스템을 개선하여 더욱 효율적인 시스템 환경을 구축할 숙련된 Back-End 엔지니어를 찾습니다.",
+    mainTask:
+      '온라인몰 거래 처리(주문, 결제, 배송, 클레임 등), 리테일 운영(POS, 정산 등), 파트너 연계 등 핵심 업무 로직 개발 및 유지보수, Java 또는 Kotlin을 사용한 안정적인 서버 시스템 개발, RDBMS 또는 NoSQL DB를 활용한 효율적인 데이터 모델링 및 관리, 레거시 시스템 분석 및 개선을 통한 시스템 현대화, 대용량 데이터 처리 및 고성능 트래픽 환경에서의 개발 및 운영 방안 구축',
+    qualifications: [
+      'Java 또는 Kotlin을 사용한 서버 개발 경험 5년 이상',
+      'RDBMS 또는 Nosql DB를 활용한 설계/운영 경험',
+      'Git 사용, 코드 리뷰에 익숙한 분',
+      '레거시 시스템 개선 경험 및 대용량 시스템 운영 경험',
+    ],
+    preferredQualifications: [
+      '대규모 트래픽을 고려한 시스템 디자인, 개발 경험',
+      'AWS 및 클라우드 환경에서 서비스 개발/운영 경험',
+      '이커머스 또는 오프라인 유통 분야의 시스템 개발/운영 경험',
+      'Agile 개발 방식 / Scrum 경험',
+      '직군과 관계없이 어울릴 수 있고, 적극적인 커뮤니케이션을 하려고 노력하는 분',
+      '나와 나의 팀만을 위한 의사결정이 아닌 조직 전체를 위한 의사결정을 할 수 있는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
+    url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?direct=N&zz_jo_num=J20250515029232',
+    prompt: () => getPositionPrompt('17'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '18',
+    companyName: 'CJ올리브영',
+    jobTitle: '인터널플랫폼유닛 Front-end 개발자',
+    conditions: ['프론트엔드 개발', '경력 5년 이상', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "올리브영 인터널플랫폼유닛은 '안정적인 운영'을 위한 사용자 인터페이스를 구축하고 개선합니다. 온/오프라인 전 채널의 효율적인 운영을 위한 핵심 백오피스 시스템을 개발하고 유지보수하며, 안정적인 비즈니스 성장을 뒷받침하기 위해 내부 사용자의 업무 효율성을 극대화하고, 다양한 시스템 간의 원활한 연동을 지원하는 사용자 인터페이스 개발에 중요한 역할을 담당할 Front-End 엔지니어를 찾습니다.",
+    mainTask:
+      '내부 업무 시스템의 사용자 인터페이스 개발 및 유지보수, Vue, JavaScript 등 Front-End Framework를 활용하여 효율적인 업무 환경 제공, 사용자 경험(UX) 및 사용자 인터페이스(UI) 디자인을 기반으로 최적의 인터페이스 개발, 백엔드 팀과의 긴밀한 협업을 통해 데이터 시각화 및 기능 연동, 웹 성능 최적화 및 사용자 편의성 향상을 위한 지속적인 개선, 다양한 기기 및 환경에서의 호환성 및 안정성 확보',
+    qualifications: [
+      '5년 이상의 Front-end 개발 경력이나 그에 준하는 역량',
+      'JavaScript와 React 같은 Front-end Framework 개발 경험',
+      'WEB 환경에 대한 기본적인 이해 및 지식',
+      '잠재적인 문제를 해결을 위해 가설을 수립하고 수행한 경험',
+      '올리브영의 성장과 함께 성공 경험을 만들어 가고 싶은 분',
+    ],
+    preferredQualifications: [
+      'Typescript/React.js/Node.js 를 활용한 프로젝트 경험',
+      '모바일 웹 및 Single Page Application에 대한 이해가 높은 분',
+      '대규모 서비스 개발 프로젝트에서 Front-end 성능 최적화 경험',
+      'Agile 개발 방식 / Scrum 경험',
+      '하이브리드 앱 환경에서 개발 경험',
+      '직군과 관계없이 어울릴 수 있고, 적극적인 커뮤니케이션을 하려고 노력하는 분',
+      '나와 나의 팀만을 위한 의사결정이 아닌 조직 전체를 위한 의사결정을 할 수 있는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
+    url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?direct=N&zz_jo_num=J20250515029233',
+    prompt: () => getPositionPrompt('18'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '19',
+    companyName: 'CJ올리브영',
+    jobTitle: '코어플랫폼유닛 Back-end 개발자',
+    conditions: ['백엔드 개발', '경력 7-12년', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "올리브영 코어플랫폼유닛은 '고효율 플랫폼'의 핵심 엔진을 개발하고 최적화합니다. 이커머스 옴니채널 비즈니스의 핵심 자산인 상품, 회원, 프로모션, 물류/재고 데이터를 통합 관리하며, 플랫폼의 효율성과 확장성을 책임지는 중요한 역할을 수행합니다. 깊이 있는 기술적 전문성과 풍부한 경험을 바탕으로, 안정적이고 성능 뛰어난 Back-End 시스템을 구축하고 운영하며, 미래 성장을 위한 혁신적인 기술 도입을 주도할 숙련된 Back-End 엔지니어를 찾습니다.",
+    mainTask:
+      '핵심 비즈니스 로직 (상품 관리, 회원 관리, 프로모션, 캠페인, 재고 관리 등) 개발 및 운영, Java 또는 Kotlin 기반의 Spring Framework를 활용한 애플리케이션 개발, JPA, Hibernate 등 ORM을 이용한 효율적인 데이터 모델링 및 관리, 대규모 트래픽 및 데이터 처리를 위한 시스템 설계 및 최적화, 시스템의 안정성, 확장성, 성능 향상을 위한 지속적인 기술 검토 및 개선',
+    qualifications: [
+      '7~12년 이내 Application 개발 경력',
+      'Java 또는 Kotlin 중에 숙련된 개발 경험',
+      'Spring Framework 기반의 애플리케이션 개발 경험',
+      'JPA, Hibernate 등 ORM 사용과 도메인 모델링 경험',
+    ],
+    preferredQualifications: [
+      '새로운 기술을 익히고 도메인 지식을 쌓는 것을 좋아하는 분',
+      'e-commerce 분야에서 개발경험이 있는 분',
+      '틀에서 벗어난 사고를 하고 기존 지식에 도전하기 좋아하는 분',
+      '어떤 문제든 끝까지 파고들어 해결하는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
+    url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?direct=N&zz_jo_num=J20250515029235',
+    prompt: () => getPositionPrompt('19'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '20',
+    companyName: 'CJ올리브영',
+    jobTitle: '코어플랫폼유닛 Front-end 개발자',
+    conditions: ['프론트엔드 개발', '경력 7-12년', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "올리브영 코어플랫폼유닛은 '고효율 플랫폼'의 사용자 경험을 설계하고 구현합니다. 온/오프라인 채널 전반의 핵심 비즈니스 로직을 통합 관리하며, 플랫폼 개발 효율성을 극대화하는 데 중요한 역할을 합니다. 높은 수준의 기술력과 깊이 있는 이해를 바탕으로, 확장 가능하고 유지보수가 용이한 Front-End 아키텍처를 설계하고, 사용자에게 최적의 경험을 제공하는 데 기여할 숙련된 Front-End 엔지니어를 찾습니다.",
+    mainTask:
+      '복잡한 비즈니스 로직을 효율적으로 지원하는 Front-End 애플리케이션 개발, JavaScript 또는 TypeScript 기반의 Modern Front-End Framework 활용, Node.js 기반 애플리케이션 개발 및 운영 환경 구축, 백엔드 팀과의 긴밀한 협업을 통한 효율적인 API 연동 및 데이터 흐름 설계, 플랫폼의 확장성 및 유지보수성을 고려한 Front-End 아키텍처 설계 및 구현, 성능 최적화 및 안정적인 서비스 제공을 위한 기술적 개선',
+    qualifications: [
+      '7~12년 이내 Front Application 개발 경력',
+      'javascript/typescript 중에 숙련된 개발 경험',
+      'node.js 기반의 애플리케이션 개발 경험',
+      '도메인 모델링 경험',
+    ],
+    preferredQualifications: [
+      '새로운 기술을 익히고 도메인 지식을 쌓는 것을 좋아하는 분',
+      'e-commerce 분야에서 개발경험이 있는 분',
+      '틀에서 벗어난 사고를 하고 기존 지식에 도전하기 좋아하는 분',
+      '어떤 문제든 끝까지 파고들어 해결하는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
+    url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?direct=N&zz_jo_num=J20250515029236',
+    prompt: () => getPositionPrompt('20'),
+    uploadedAt: '2025-05-16T20:00:00+09:00',
+    deadline: '상시 채용',
   },
 ]
 
