@@ -15,6 +15,7 @@ import { LinkIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface PreviewJob {
   id: string
@@ -23,23 +24,6 @@ interface PreviewJob {
   logoUrl: string
   conditions: string[]
   url: string
-}
-
-// Hook to detect mobile screen size
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkDevice = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-
-    checkDevice()
-    window.addEventListener('resize', checkDevice)
-    return () => window.removeEventListener('resize', checkDevice)
-  }, [])
-
-  return isMobile
 }
 
 // Helper to calculate D-day or show '상시채용'

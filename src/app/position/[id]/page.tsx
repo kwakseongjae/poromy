@@ -6,12 +6,7 @@ import { headers } from 'next/headers'
 
 import { getAllKeywords } from '@/constants/seo-keywords'
 import DeviceAwarePositionView from '@/components/DeviceAwarePositionView'
-
-function isMobileDevice(userAgent: string): boolean {
-  const mobileRegex =
-    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile Safari/i
-  return mobileRegex.test(userAgent)
-}
+import { isMobileDevice } from '@/utils/device'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -132,9 +127,6 @@ export default async function PositionPage({ params }: Props) {
     const headersList = await headers()
     const userAgent = headersList.get('user-agent') || ''
     const isMobileUA = isMobileDevice(userAgent)
-
-    // 프롬프트 내용 미리 fetch
-    const promptContent = await job.prompt()
 
     return (
       <DeviceAwarePositionView

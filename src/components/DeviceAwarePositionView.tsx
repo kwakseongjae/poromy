@@ -9,28 +9,11 @@ import Link from 'next/link'
 import { LinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
+import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
   isMobileUA: boolean
-}
-
-function useIsMobile(): boolean {
-  const [isMobile, setIsMobile] = useState(() => {
-    // 초기 렌더링 시 안전하게 처리
-    if (typeof window !== 'undefined') {
-      return window.innerWidth <= 768
-    }
-    return false
-  })
-
-  useEffect(() => {
-    const checkDevice = () => setIsMobile(window.innerWidth <= 768)
-    checkDevice()
-    window.addEventListener('resize', checkDevice)
-    return () => window.removeEventListener('resize', checkDevice)
-  }, [])
-  return isMobile
 }
 
 export default function DeviceAwarePositionView({
