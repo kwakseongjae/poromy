@@ -155,6 +155,7 @@
       📄 src/components/ui/Dialog.tsx
     📄 src/components/ClientRedirect.tsx
     📄 src/components/CustomCursor.tsx
+    📄 src/components/DeviceAwarePositionView.tsx
     📄 src/components/GoogleAnalytics.tsx
     📄 src/components/LinkPreview.tsx
     📄 src/components/LinkPreviewThumbnail.tsx

@@ -1,4 +1,4 @@
-import type { Job } from '@/types/job'
+import type { Job, JobType } from '@/types/job'
 import { getPositionPrompt } from '@/utils/prompt'
 
 /**
@@ -9,6 +9,7 @@ import { getPositionPrompt } from '@/utils/prompt'
  * @property {string} jobTitle - Title of the job position
  * @property {string[]} conditions - Job requirements (experience, education, location, etc.)
  * @property {string} logoUrl - URL of the company logo image
+ * @property {JobType} jobType - Category of the job based on the field/domain
  */
 export const jobs: Job[] = [
   {
@@ -16,6 +17,7 @@ export const jobs: Job[] = [
     companyName: '크리에이트립',
     jobTitle: '프론트엔드 엔지니어',
     conditions: ['프론트엔드', '경력 2-5년', '서울 강남구'],
+    jobType: 'IT-개발',
     positionDescription:
       '글로벌 K-콘텐츠&커머스 플랫폼에서 프론트엔드 개발을 담당합니다. 월 활성사용자 130만 명을 보유한 No.1 K-플랫폼에서 React, Next.js 등 최신 기술을 활용한 웹 서비스 개발 업무를 수행합니다.',
     mainTask:
@@ -50,6 +52,7 @@ export const jobs: Job[] = [
     companyName: '피카부랩스',
     jobTitle: 'ML 엔지니어',
     conditions: ['ML엔지니어', '경력 2년 이상', '서울 강남구'],
+    jobType: 'AI-데이터',
     positionDescription:
       'On-Device AI 기술을 통해 세상을 바꿀 기술을 함께 만들어갈 ML Engineer를 모집합니다. 미국 시장 진출을 준비하는 글로벌 팀과 함께 AI 모델 개발 및 최적화 업무를 담당합니다.',
     mainTask:
@@ -82,6 +85,7 @@ export const jobs: Job[] = [
     companyName: '산군',
     jobTitle: '웹 백엔드 개발자',
     conditions: ['백엔드', '신입~10년차', '서울'],
+    jobType: 'IT-개발',
     positionDescription:
       'SpringBoot 기반 웹 서비스 및 API 서버 개발을 담당하며, 대용량 데이터 처리와 AI 모델 연동 시스템을 구축합니다. PostgreSQL, Kafka, Spring Batch 등을 활용한 실시간 데이터 파이프라인 개발 업무를 수행합니다.',
     mainTask:
@@ -115,6 +119,7 @@ export const jobs: Job[] = [
     companyName: '솔로트립',
     jobTitle: '[교육파트] 프론트엔드 개발자 (Cursor AI)',
     conditions: ['프론트엔드', '경력 1-3년', '서울 강동구'],
+    jobType: 'IT-개발',
     positionDescription:
       '여행을 사랑하는 사람들을 위한 플랫폼 솔로트립에서 프론트엔드 개발자 교육 멘토로서 Cursor AI를 활용한 개발 업무를 담당합니다. 생성형 AI 도구를 적극 활용하여 업무 효율을 높이고, 미래 동료 개발자들을 위한 멘토링을 진행합니다.',
     mainTask:
@@ -144,6 +149,7 @@ export const jobs: Job[] = [
     companyName: 'NAVER Cloud',
     jobTitle: '환자향 진료기록 생성 모델 개발 (체험형 인턴)',
     conditions: ['AI/ML', '신입', '성남', '인턴'],
+    jobType: 'AI-데이터',
     positionDescription:
       '의료 분야 전문가들과 협력하여 헬스케어 전반의 AI 기술을 연구하는 NAVER Cloud에서 환자향 진료기록 생성 모델 개발 업무를 담당하는 체험형 인턴을 모집합니다. 의무기록 등 헬스케어 도메인 데이터를 활용한 AI 서비스 개발에 참여합니다.',
     mainTask:
@@ -175,6 +181,7 @@ export const jobs: Job[] = [
     companyName: '넵튠(Neptune)',
     jobTitle: '플랫폼개발팀 백엔드개발자',
     conditions: ['백엔드', '경력 2-5년', '서울 강남구'],
+    jobType: 'IT-개발',
     positionDescription:
       '게임과 광고 플랫폼을 개발하는 넵튠에서 플랫폼개발팀 백엔드개발자를 모집합니다. Golang을 주력으로 하는 미프/KLAT 서비스의 백엔드 개발 및 운영을 담당하며, 다양한 데이터베이스와 클라우드 인프라를 활용하여 서비스를 구축합니다.',
     mainTask:
@@ -209,6 +216,7 @@ export const jobs: Job[] = [
     companyName: '피카부랩스',
     jobTitle: '[인턴] AI 엔지니어',
     conditions: ['AI엔지니어', '신입', '서울 강남구', '인턴'],
+    jobType: 'AI-데이터',
     positionDescription:
       '온디바이스 AI 모델을 경량화하고 최적화하는 피카부랩스에서 AI 엔지니어 인턴을 모집합니다. 현대, LG전자, Intel과 협업하여 경량 LLM으로 홈 IoT를 제어하는 sLAM 프로젝트에 참여하며, 3개월 인턴십 후 정규직 전환 가능성이 있습니다.',
     mainTask:
@@ -242,6 +250,7 @@ export const jobs: Job[] = [
     jobTitle:
       'AI/빅데이터 연구개발 - 인공지능 엔지니어(AE) 및 데이터 과학자(DS)',
     conditions: ['AI/ML', '경력 2년 이상', '서울 종각'],
+    jobType: 'AI-데이터',
     positionDescription:
       '아시아나IDT에서 AI/빅데이터 연구개발 분야의 인공지능 엔지니어(AE) 및 데이터 과학자(DS)를 모집합니다. 딥러닝, 자연어 처리, RAG/생성형AI(LLM) 기술을 활용한 연구개발 업무를 담당하며, 최신 AI 기술을 항공/여행 산업에 적용하는 업무를 수행합니다.',
     mainTask:
@@ -276,6 +285,7 @@ export const jobs: Job[] = [
     companyName: '딥세일즈',
     jobTitle: '[인턴] 웹 크롤링/스크래핑 엔지니어',
     conditions: ['데이터엔지니어', '신입', '서울 강남구', '인턴'],
+    jobType: 'AI-데이터',
     positionDescription:
       '머신러닝과 세일즈 빅데이터 기반의 세일즈 인텔리전스 SaaS 솔루션을 제공하는 딥세일즈에서 웹 크롤링/스크래핑 엔지니어 인턴을 모집합니다. 6개월 인턴 기간 후 정규직 전환 기회가 있으며, 빠르게 성장하는 스타트업에서 데이터 수집 기술을 전문적으로 발전시킬 수 있습니다.',
     mainTask:
@@ -309,6 +319,7 @@ export const jobs: Job[] = [
     companyName: '마이리얼트립',
     jobTitle: 'Product Manager, FTN',
     conditions: ['PM', '경력 3년 이상', '서울'],
+    jobType: '기획-전략',
     positionDescription:
       '마이리얼트립의 FTN(Fight To Non-Flight)팀에서 Product Manager를 모집합니다. 항공권 구매 고객에게 최적의 숙소 및 투어 상품을 제안하여 여행 전 과정의 경험을 완성하는 팀으로, 고객의 여정을 깊이 이해하고 비행 이후의 여행 경험까지 책임지는 업무를 담당합니다.',
     mainTask:
@@ -343,6 +354,7 @@ export const jobs: Job[] = [
     companyName: '모요',
     jobTitle: 'Frontend Developer - Product',
     conditions: ['프론트엔드', '경력 3-10년', '서울 서초구'],
+    jobType: 'IT-개발',
     positionDescription:
       '통신을 쉽고 정직하게 만들어가는 모요에서 Frontend Developer를 모집합니다. 약 2년 만에 MAU 50만명, 연 매출 약 35억을 달성한 빠르게 성장하는 회사에서 모요의 얼굴이 되는 웹사이트, 앱 내 웹뷰, 내부 어드민을 개발하며 고객에게 최적의 경험을 제공합니다.',
     mainTask:
@@ -376,6 +388,7 @@ export const jobs: Job[] = [
     companyName: '넥스트그라운드',
     jobTitle: '[인턴] 백엔드 개발자',
     conditions: ['백엔드', '신입', '서울 강남구', '인턴'],
+    jobType: 'IT-개발',
     positionDescription:
       '부동산 시장의 정보 비대칭을 해소하는 집품 서비스를 운영하는 넥스트그라운드에서 백엔드 개발자 인턴을 모집합니다. 2년간 월 평균 30% 이상의 트래픽 성장을 기록하며 매달 새로운 챌린지가 생겨나는 환경에서 6개월 인턴 후 정규직 전환 기회가 있습니다.',
     mainTask:
@@ -410,6 +423,7 @@ export const jobs: Job[] = [
     companyName: '애드쉴드',
     jobTitle: 'Frontend Engineer',
     conditions: ['프론트엔드', '경력 1년 이상', '서울 강남구'],
+    jobType: 'IT-개발',
     positionDescription:
       '웹사이트의 광고 차단 손실을 복구하여 새로운 광고 매출을 창출하는 ad-tech 스타트업 애드쉴드에서 Frontend Engineer를 모집합니다. 2024년 런칭 이후 월 평균 30% 이상의 빠른 성장을 보이고 있으며, 신규 고객의 온보딩 프로세스 최적화 및 기술 지원 업무를 담당합니다.',
     mainTask:
@@ -441,3 +455,48 @@ export const jobs: Job[] = [
 export const sortedJobs: Job[] = jobs
   .slice()
   .sort((a, b) => Number(b.id) - Number(a.id))
+
+// 실제 jobs 데이터에 존재하는 jobType만 필터링
+export const getAvailableJobTypes = (): JobType[] => {
+  const uniqueJobTypes: JobType[] = []
+  const seen: Record<string, boolean> = {}
+  jobs.forEach((job) => {
+    if (!seen[job.jobType]) {
+      uniqueJobTypes.push(job.jobType)
+      seen[job.jobType] = true
+    }
+  })
+  return uniqueJobTypes.sort()
+}
+
+// Helper function to get display name for job type
+export const getJobTypeDisplayName = (jobType: JobType) => {
+  const displayNames: Record<JobType, string> = {
+    'IT-개발': 'IT·개발',
+    'AI-데이터': 'AI·데이터',
+    게임: '게임',
+    디자인: '디자인',
+    '기획-전략': '기획·전략',
+    '마케팅-광고': '마케팅·광고',
+    '상품기획-MD': '상품기획·MD',
+    영업: '영업',
+    '무역-물류': '무역·물류',
+    '운송-배송': '운송·배송',
+    '법률-법무': '법률·법무',
+    'HR-총무': 'HR·총무',
+    '회계-재무-세무': '회계·재무·세무',
+    '증권-운용': '증권·운용',
+    '은행-카드-보험': '은행·카드·보험',
+    '엔지니어링-R&D': '엔지니어링·R&D',
+    '건설-건축': '건설·건축',
+    '생산-기능직': '생산·기능직',
+    '의료-보건': '의료·보건',
+    '공공-복지': '공공·복지',
+    교육: '교육',
+    '미디어-엔터': '미디어·엔터',
+    '고객상담-TM': '고객상담·TM',
+    서비스: '서비스',
+    식음료: '식음료',
+  }
+  return displayNames[jobType] || jobType
+}
