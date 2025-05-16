@@ -3,7 +3,12 @@
 import { useEffect, useState, Fragment } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { decrypt, encrypt } from '@/utils/crypto'
-import { sortedJobs as jobs } from '@/constants/job.data'
+import {
+  sortedJobs as jobs,
+  getAvailableJobTypes,
+  getJobTypeDisplayName,
+} from '@/constants/job.data'
+import type { JobType } from '@/types/job'
 import Image from 'next/image'
 import Link from 'next/link'
 import { LinkIcon } from '@/assets'
@@ -20,7 +25,270 @@ interface PreviewJob {
   url: string
 }
 
-export default function PositionContent() {
+// Hook to detect mobile screen size
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkDevice = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
+    return () => window.removeEventListener('resize', checkDevice)
+  }, [])
+
+  return isMobile
+}
+
+// Helper to calculate D-day or show '상시채용'
+const getDeadlineLabel = (deadline: string) => {
+  if (deadline === '상시 채용') return '상시채용'
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const end = new Date(deadline)
+  end.setHours(0, 0, 0, 0)
+  const diff = Math.ceil(
+    (end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  )
+  if (diff < 0) return '마감'
+  return `D-${diff}`
+}
+
+// Mobile JobList Component (inspired by company page UI)
+function MobilePositionContent() {
+  const searchParams = useSearchParams()
+  const [currentPage, setCurrentPage] = useState(1)
+  const [jobTypeFilter, setJobTypeFilter] = useState<JobType | 'all'>('all')
+  const itemsPerPage = 10
+
+  const searchQuery = searchParams.get('query') || ''
+
+  // Get available job types from actual data
+  const availableJobTypes = getAvailableJobTypes()
+
+  // Filter jobs based on search query and job type
+  const filteredJobs = jobs.filter((job) => {
+    const matchesSearch = searchQuery
+      ? job.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.conditions.some((condition) =>
+          condition.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
+        job.qualifications.some((qualification) =>
+          qualification.toLowerCase().includes(searchQuery.toLowerCase())
+        ) ||
+        job.preferredQualifications.some((qualification) =>
+          qualification.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : true
+
+    // Filter by job type
+    if (jobTypeFilter === 'all') return matchesSearch
+    return matchesSearch && job.jobType === jobTypeFilter
+  })
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentJobs = filteredJobs.slice(startIndex, endIndex)
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Reset page when filter changes
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [jobTypeFilter, searchQuery])
+
+  const encryptedId = searchParams.get('id')
+
+  if (encryptedId) {
+    return null
+  }
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Search Section */}
+      <section className="mb-6">
+        <h1 className="mb-6 text-center text-3xl font-bold">
+          원하는 채용 공고를 찾아보세요
+        </h1>
+        <div className="mx-auto flex justify-center">
+          <SearchBar
+            placeholder="기업명, 직무, 키워드 등을 검색해보세요"
+            size="large"
+          />
+        </div>
+      </section>
+
+      {/* Filter Section */}
+      <section className="mb-8">
+        <div className="flex flex-wrap justify-center gap-2">
+          <button
+            onClick={() => setJobTypeFilter('all')}
+            className={`rounded-full px-4 py-2 text-sm ${
+              jobTypeFilter === 'all'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+            }`}
+            aria-label="모든 채용공고 보기"
+          >
+            전체
+          </button>
+          {availableJobTypes.map((jobType) => (
+            <button
+              key={jobType}
+              onClick={() => setJobTypeFilter(jobType)}
+              className={`rounded-full px-4 py-2 text-sm ${
+                jobTypeFilter === jobType
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+              }`}
+              aria-label={`${getJobTypeDisplayName(jobType)} 보기`}
+            >
+              {getJobTypeDisplayName(jobType)}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Job Grid */}
+      <section className="mb-8">
+        {currentJobs.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <p className="mb-4 text-gray-600">
+              {searchQuery
+                ? `'${searchQuery}'에 대한 검색 결과가 없습니다.`
+                : '아직 등록된 채용공고가 없습니다.'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {currentJobs.map((job) => {
+              const encryptedId = encrypt(job.id)
+              const deadlineLabel = getDeadlineLabel(job.deadline)
+
+              // Check if job is new (uploaded within 24 hours)
+              const uploadedAtDate = new Date(job.uploadedAt)
+              const now = new Date()
+              const diffMs = now.getTime() - uploadedAtDate.getTime()
+              const isNew = diffMs >= 0 && diffMs < 24 * 60 * 60 * 1000
+
+              return (
+                <Link
+                  key={job.id}
+                  href={`/position/${encryptedId}`}
+                  className="group block overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:border-blue-500 hover:shadow-lg"
+                >
+                  <div className="p-4">
+                    <div className="mb-4 flex items-start">
+                      <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg border border-gray-200">
+                        <Image
+                          src={getProxyImageUrl(job.logoUrl)}
+                          alt={`${job.companyName} 로고`}
+                          fill
+                          className="object-cover"
+                          sizes="56px"
+                        />
+                      </div>
+                      <div className="ml-4 min-w-0 flex-1 overflow-hidden">
+                        <h2 className="line-clamp-2 text-lg font-semibold text-gray-900 group-hover:text-blue-600">
+                          {job.jobTitle}
+                        </h2>
+                        <div className="inline-flex items-center text-sm text-gray-500">
+                          <span>{job.companyName}</span>
+                          {isNew && (
+                            <>
+                              <span
+                                className="mx-2 inline-block h-4 w-px bg-gray-300"
+                                aria-hidden="true"
+                              />
+                              <span
+                                className="text-blue-600"
+                                aria-label="오늘 업로드"
+                              >
+                                New
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tags and Deadline */}
+                    <div className="flex w-full items-center justify-between">
+                      <div className="relative flex-1 overflow-hidden">
+                        <div className="flex gap-2 overflow-hidden">
+                          {job.conditions.map((condition, index) => (
+                            <span
+                              key={index}
+                              className="inline-flex shrink-0 items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"
+                            >
+                              {condition}
+                            </span>
+                          ))}
+                        </div>
+                        {/* Gradient fade-out effect */}
+                        <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent" />
+                      </div>
+                      <span className="ml-3 shrink-0 text-xs font-semibold text-gray-500">
+                        {deadlineLabel}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )
+            })}
+          </div>
+        )}
+      </section>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <section className="flex justify-center">
+          <div className="flex gap-2">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="rounded-full border border-gray-200 px-4 py-2 text-sm disabled:opacity-50"
+            >
+              &lt;
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={`rounded-full border px-4 py-2 text-sm ${
+                  currentPage === page
+                    ? 'border-blue-500 bg-blue-500 text-white'
+                    : 'border-gray-200 hover:bg-gray-100'
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="rounded-full border border-gray-200 px-4 py-2 text-sm disabled:opacity-50"
+            >
+              &gt;
+            </button>
+          </div>
+        </section>
+      )}
+    </div>
+  )
+}
+
+// Desktop PositionContent Component (existing)
+function DesktopPositionContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [job, setJob] = useState<any>(null)
@@ -392,4 +660,24 @@ export default function PositionContent() {
       </div>
     </>
   )
+}
+
+// Main PositionContent Component
+export default function PositionContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const isMobile = useIsMobile()
+
+  // Check if there's an id parameter in the URL
+  const encryptedId = searchParams.get('id')
+
+  // Redirect to /position/[id] if mobile and id exists
+  useEffect(() => {
+    if (isMobile && encryptedId) {
+      router.replace(`/position/${encryptedId}`)
+    }
+  }, [isMobile, encryptedId, router])
+
+  // Render mobile or desktop view based on screen size
+  return isMobile ? <MobilePositionContent /> : <DesktopPositionContent />
 }

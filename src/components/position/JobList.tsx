@@ -47,7 +47,7 @@ export default function JobList() {
             }
           >
             <Link
-              href={`/position?id=${encryptedId}`}
+              href={`/position/${encryptedId}`}
               className="flex h-full flex-col"
               aria-label={`${job.companyName} ${job.jobTitle} 상세 정보 보기`}
             >

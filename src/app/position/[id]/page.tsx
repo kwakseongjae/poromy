@@ -2,14 +2,19 @@ import { Metadata } from 'next'
 import { sortedJobs as jobs } from '@/constants/job.data'
 import { decrypt, encrypt } from '@/utils/crypto'
 import { notFound } from 'next/navigation'
-import ClientRedirect from '@/components/ClientRedirect'
+import { headers } from 'next/headers'
+
 import { getAllKeywords } from '@/constants/seo-keywords'
+import DeviceAwarePositionView from '@/components/DeviceAwarePositionView'
+
+function isMobileDevice(userAgent: string): boolean {
+  const mobileRegex =
+    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile Safari/i
+  return mobileRegex.test(userAgent)
+}
 
 interface Props {
-  params: Promise<{
-    id: string
-  }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  params: Promise<{ id: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -121,12 +126,22 @@ export default async function PositionPage({ params }: Props) {
     const resolvedParams = await params
     const decryptedId = decrypt(resolvedParams.id)
     const job = jobs.find((job) => job.id === decryptedId)
+    if (!job) notFound()
 
-    if (!job) {
-      notFound()
-    }
+    // 서버에서 User-Agent 확인
+    const headersList = await headers()
+    const userAgent = headersList.get('user-agent') || ''
+    const isMobileUA = isMobileDevice(userAgent)
 
-    return <ClientRedirect to={`/position?id=${resolvedParams.id}`} />
+    // 프롬프트 내용 미리 fetch
+    const promptContent = await job.prompt()
+
+    return (
+      <DeviceAwarePositionView
+        redirectTo={`/position?id=${resolvedParams.id}`}
+        isMobileUA={isMobileUA}
+      />
+    )
   } catch (error) {
     notFound()
   }
