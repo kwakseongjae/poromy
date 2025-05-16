@@ -674,6 +674,296 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-16T20:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '21',
+    companyName: '현대자동차',
+    jobTitle: '제조로보틱스 모바일로봇 제조 애플리케이션 SW 개발',
+    conditions: ['모바일로봇 SW 개발', '경력 3년 이상', '경기도 의왕'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '모바일 로봇의 응용솔루션을 개발하는 업무를 담당하며, 완성차 공장을 중심으로 다양한 유즈케이스를 발굴하고 로봇 솔루션을 개발하여 상품 경쟁력을 높이는 역할을 합니다. 제조업 현장에서 의미 있는 유즈케이스를 바탕으로 페이로드 하드웨어 개발, 응용 솔루션 소프트웨어 개발, 그리고 통합 관제 서비스 개발까지 수행하며 당사 로봇의 상업화 확대와 상품 가치 향상을 위한 업무를 수행합니다.',
+    mainTask:
+      '모바일로봇으로 수집한 센서 데이터를 기반으로, 통계·AI 융합 알고리즘과 유연한 데이터 처리 아키텍처를 설계하여 응용서비스를 구현, High-Level 명령어 활용을 통해 모바일로봇을 제어하여 취득한 데이터를 활용한 응용서비스(설비/안전/품질 점검) 모듈 설계 및 구현, 서비스 모듈 내 판단기능을 구현하는 통계, ML모델 및 이를 융합하여 데이터별 상태 판단을 하는 최적 기능에 대한 알고리즘 설계 및 구현, 모바일 로봇 페이로드 센서(IR, RGB, sound 등)에서 데이터 취득 시 로봇에서 발생하는 흔들림 및 환경에서 발생하는 외란 처리를 통한 양질의 데이터 획득 기법 설계 및 구현, 필드별 새로운 환경 설비 조건에도 유연하고 확장 용이한 통계 및 ML모델에서의 데이터 처리 아키텍처 설계, 제한적 컴퓨팅 리소스를 고려하여 원활하게 운영가능한 경량화 모듈 설계, 소프트웨어 모듈 간 기능 연동과 인터페이스 정보를 기반으로 소프트웨어 통합 및 검증 계획 수립, 시스템 관점의 소프트웨어 통합 성능 검증을 통해 소프트웨어 아키텍처의 효율성 검증 및 개선',
+    qualifications: [
+      '이공계(전자, 제어, 전산, 컴퓨터, 소프트웨어) 분야에서 학사 이상의 학위',
+      '3년 이상의 모바일로봇 활용 및 애플리케이션 개발 경력',
+      '비즈니스 영어 커뮤니케이션 및 영어 문서 작성 역량',
+      'SW 요구사항 분석 및 아키텍처 관련 설계 문서 작성 경험',
+      '시스템 및 어플리케이션 기능 설계 및 개발 경험',
+      'Python, C/C++ Programming Language 기반 개발 경험',
+    ],
+    preferredQualifications: [
+      '이공계(전자, 제어, 전산, 컴퓨터, 소프트웨어) 분야에서 석사 이상의 학위',
+      '2년 이상의 제조업 안전/품질/설비의 상태진단 솔루션 개발 경력',
+      'Automotive 산업 내 Mobile Robot Application 개발 경력',
+      '통계모델링, ML모델링 개발 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-07-2913%3A37/fc1bc9ce-01a8-44da-a1f0-60b577e37a17.png',
+    url: 'https://talent.hyundai.com/apply/applyView.hc?recuYy=2025&recuType=N2&recuCls=230',
+    prompt: () => getPositionPrompt('21'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '2025-05-29T17:00:00+09:00',
+  },
+  {
+    id: '22',
+    companyName: '로민',
+    jobTitle: '데이터 매니저',
+    conditions: ['데이터 관리', '경력 1년 이상(신입 가능)', '서울 서초구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '다양한 산업 도메인에서 문서 기반 데이터를 수집하고, 이를 AI 학습에 적합한 형태로 정제하고 구조화하는 업무를 담당합니다. 문서 구조를 분석하고 라벨링 전략을 수립하며, 대량 문서 라벨링 자동화를 기획하고 배포하며, 그 전 과정을 내/외부 협업 주체들과 협의하고 조율합니다. AI 학습 데이터의 품질을 책임지고 지속적으로 개선할 수 있는 운영 체계를 주도적으로 만들어갑니다.',
+    mainTask:
+      '문서 기반 라벨링 정책 및 구조 정의 (문서 유형별: 표, 레이아웃, 수식 등, 산업 도메인별: 무역, 의료, 행정 등), 라벨링 자동화 설계 및 운영 (LLM을 활용한 라벨링 자동화 기획 및 프롬프트 설계, 프롬프트 성능 개선 및 운영), 데이터 품질 및 라벨링 파이프라인 고도화 (데이터 품질 기준 정의 및 검수 프로세스 설계, 엔지니어와 함께 데이터 수집, 전처리, 라벨링까지 이어지는 전체 라벨링 파이프라인 개선 작업 참여), 라벨링 인력(내/외부)의 운영 구조 설계 및 태스크 관리, 다양한 협업 주체와의 커뮤니케이션 및 조율',
+    qualifications: [
+      '복잡한 문서를 구조화하거나 각종 데이터로부터 정보 추출 전략을 수립한 경험',
+      '다양한 산업 도메인에 대한 비즈니스 맥락을 이해하고, 데이터 기반 문제 해결 또는 전략 수립에 참여한 경험',
+      '다양한 직군(ML, 기획, 운영 등)과 협업하여 프로젝트를 리드한 경험',
+      '반복적 수작업을 자동화/시스템화하려는 문제의식과 설계 능력',
+    ],
+    preferredQualifications: [
+      '무역, 의료, 금융, 수식 등 특정 산업 도메인의 문서 처리 경험',
+      'Json, Xml, Html 등 구조화된 문서 포맷에 대한 이해',
+      'LabelBox, SageMaker 등 어노테이션 도구 사용 경험',
+      'PromptLayer, Langfuse 등 프롬프트 실험 도구 사용 경험',
+      'LLM(GPT, Claude 등) 프롬프트 설계 및 성능 실험 경험',
+      'HITL 기반 어노테이션 파이프라인 설계 또는 운영 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-11-17/78e685a3-5a5a-4917-ab5b-f1c325a4324e.png',
+    url: 'https://lominpublic.notion.site/91dfdd573def47ea978c4b61b3341efa?p=1eed46399740807cba4beefe7fc8dcf1&pm=s',
+    prompt: () => getPositionPrompt('22'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '23',
+    companyName: '로민',
+    jobTitle: '솔루션운영 엔지니어',
+    conditions: ['시스템 운영', '경력 1년 이상(신입 가능)', '서울 서초구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '로민의 솔루션을 고객사에 원활하게 설치 및 운영을 지원하는 포지션으로, 고객사 환경에 맞춰 솔루션을 설치하고, 운영 및 유지보수를 담당하며, 기술적인 문의에 대응하는 역할을 합니다. 고객사 방문을 포함한 외부 활동이 많은 직무입니다.',
+    mainTask:
+      '고객사 환경 분석 및 솔루션 설치 진행, 고객사 맞춤형 기능 개발 및 최적화, 패치 업데이트 및 검증, 운영 현황 모니터링 및 정기 점검, 에러 로그 분석 및 리포트 작성, 고객사 및 파트너사의 기술 문의 대응, 설치 및 운영 매뉴얼 제작 및 문서화',
+    qualifications: [
+      '개발 또는 운영 관련 경력이 1년 이상',
+      'Linux 환경에서 시스템 운영 및 관리 가능',
+      '고객사 및 내부 팀과 원활한 커뮤니케이션 가능',
+      '새로운 환경에서도 침착하게 문제를 해결할 수 있는 능력',
+      '기술적 도전과 학습에 적극적인 태도',
+    ],
+    preferredQualifications: [
+      '시스템 모니터링 및 로그 분석 툴 활용 경험',
+      '솔루션 운영 및 배포 자동화 경험',
+      '명확하고 체계적인 문서 작성 가능',
+      '고객사 현장 방문 및 기술 지원 경험',
+      'AI, AWS, GCP 등의 클라우드 환경에서 운영 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-11-17/78e685a3-5a5a-4917-ab5b-f1c325a4324e.png',
+    url: 'https://lominpublic.notion.site/91dfdd573def47ea978c4b61b3341efa?p=1cfd46399740804b862cd1e779392f3b&pm=s',
+    prompt: () => getPositionPrompt('23'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '24',
+    companyName: '카카오',
+    jobTitle: 'Multimodal LLM Research Engineer',
+    conditions: ['AI 연구개발', '경력 2년 이상', '판교'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '카카오의 자체 멀티모달 언어모델인 Kanana 시리즈를 연구 및 개발합니다. 이미지-텍스트를 이해하는 Kanana-v(비전 언어모델), 오디오-텍스트 입출력이 가능한 Kanana-a(오디오 언어모델), 다양한 모달리티의 입출력을 통합하는 Kanana-o(멀티모달 통합 언어모델)을 개발하고 있습니다. 모든 형태의 입력과 출력 간 자유로운 상호 이해가 가능한 범용 멀티모달 모델 개발을 목표로, 국내외 최신 연구 동향을 빠르게 분석하고 이를 바탕으로 기술 선도 수준의 모델을 확보하고자 합니다.',
+    mainTask:
+      '이미지, 오디오, 텍스트 등 다양한 모달리티를 다루는 Multimodal LLM 연구 및 개발, Supervised Fine-tuning(SFT) 및 Human Preference Alignment를 통한 instruction-following 성능 및 모델 안전성 향상, 단순 응답부터 복합 reasoning까지 아우르는 추론 성능 향상 모델링, 대규모 분산 학습 환경에서의 모델 학습 코드 개발 및 성능 최적화, 멀티모달 학습을 위한 고품질 데이터 수집, 전처리, 정합성 확보 및 구축 파이프라인 설계, 멀티모달 모델의 평가 지표 설계 및 벤치마킹, 실사용 시나리오 기반의 성능 검증',
+    qualifications: [
+      '딥러닝 관련 분야 석사 이상 또는 이에 준하는 관련 경력 2년 이상',
+      '주요 딥러닝 프레임워크(PyTorch, TensorFlow, JAX 등) 중 하나 이상을 활용한 경험',
+      'Python 기반의 코드 개발 및 실험 구현에 능숙',
+    ],
+    preferredQualifications: [
+      'Multimodal LLM 기술 및 관련 서비스 개발 경험',
+      'CVPR, NeurIPS, ICLR, ICCV, ICML 등 AI 분야 최상위 학회 논문 발표 또는 공동 연구 경험',
+      'ACM ICPC 등 주요 프로그래밍 대회 수상 경력 또는 이에 준하는 알고리즘 솔빙 역량',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-07-30/24e97f1f-4d82-44cd-89a1-3ab53fc096d9.png',
+    url: 'https://careers.kakao.com/jobs/P-14048',
+    prompt: () => getPositionPrompt('24'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '25',
+    companyName: '카카오',
+    jobTitle: '장소플랫폼 서버 개발자',
+    conditions: ['백엔드 개발', '경력 3년 이상', '판교'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '카카오맵의 POI 정보 구축 및 관련 서비스를 담당하고 있으며, 카카오맵 외에도 카카오와 공동체에도 POI 데이터를 지원하고 있습니다. 다양한 플랫폼에 정확하고 풍부한 장소 정보를 제공하고, 국내 최고의 POI 구축을 목표로 하고 있습니다.',
+    mainTask:
+      '카카오맵 장소정보 서비스와 관련된 서버 플랫폼 개발, POI 데이터 프로세스 구축관련 서버 플랫폼 개발',
+    qualifications: ['Java 혹은 Kotlin 경력 3년 이상'],
+    preferredQualifications: [
+      'k8s 기반 클라우드 플랫폼을 이용한 서버 개발경험',
+      'PostgreSQL DB 설계 및 개발 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-07-30/24e97f1f-4d82-44cd-89a1-3ab53fc096d9.png',
+    url: 'https://careers.kakao.com/jobs/P-14051',
+    prompt: () => getPositionPrompt('25'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '26',
+    companyName: '웨이브릿지',
+    jobTitle: 'Back-end Developer (국내 서비스)',
+    conditions: ['백엔드 개발', '경력 3년 이상', '서울 중구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '디지털 자산 중개 및 입/출금 어플리케이션 개발과 운영을 담당합니다. 고객 자산에 대한 안정성과 고가용성을 위한 데이터 처리 프로세스 설계 및 개발을 수행하며, 규제 이행을 기반으로 한 안정적이고 신뢰성 있는 어플리케이션 운영을 담당합니다. 지속적으로 개발 프로세스를 개선하고 코드 베이스의 성숙도 향상을 추구하는 문화에서 함께 프로덕트를 만들어 갑니다.',
+    mainTask: '디지털 자산 금융 플랫폼 국내 서비스 (Dolfin KR) 백엔드 개발',
+    qualifications: [
+      'Java 8 이상 또는 Kotlin 언어에 능숙',
+      '3년 이상의 관련 개발 경력 또는 그에 준하는 역량',
+      'Spring Framework (Java/Kotlin) 기반의 RESTful API 설계 및 개발 경험',
+      'JPA/Hibernate을 통한 RDBMS 연계 Back-end 개발 가능',
+      '다양한 역할의 크루들과 원활한 커뮤니케이션 가능',
+      '상대방의 다름을 인정하고 존중하며 협업을 통한 목적 달성 가능',
+    ],
+    preferredQualifications: [
+      '핀테크 또는 금융 서비스 개발 경험',
+      '블록체인/가상자산 기술에 관심이 많은 분',
+      '도메인 이해의 중요성을 알고 노력하는 분',
+      '마이크로 서비스 아키텍처에 대해 고민하며 구축/운영한 경험',
+      'AWS 기반의 CI/CD 파이프라인 환경의 서비스 경험',
+      'Docker 기반 서비스 경험',
+      '기본적인 Linux/Unix 명령 사용 능력',
+      '시스템 분석 역량과 개선하고자 하는 의욕',
+      '유의미한 테스트 코드에 대해 고민하는 분',
+      'Kafka, RabbitMQ 등 메시징 미들웨어를 활용한 개발 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-01-27/84fa8c24-c4d8-4d70-b70d-d07b281bf290.png',
+    url: 'https://wavebridge.notion.site/Back-end-Developer-1f4d045b26f28073839ad99038b2faf3',
+    prompt: () => getPositionPrompt('26'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '27',
+    companyName: '케이뱅크',
+    jobTitle: '혁신서비스 개발 및 운영 담당자',
+    conditions: ['서비스 개발', '경력', '서울 중구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '혁신서비스개발팀은 카드, 간편 결제, 방카슈랑스 금융 서비스와 돈나무 키우기, 공모주 메이트, 우리집 변동알림, AI 퀴즈 챌린지 등의 혁신 서비스를 운영하고 있습니다. 현재는 투자 캘린더, 정책보조금 알리미 등 신규 서비스를 개발하고 있으며 투자홈2.0, 돈나무2.0 등 기존 서비스 리뉴얼도 준비하고 있습니다. MSA구조의 환경 및 코드 표준화를 위해 개발표준협의체를 운영하며 별도 과제를 수행하고 있습니다.',
+    mainTask:
+      '혁신서비스개발팀 주요 시스템 개발 및 운영 (결제Part: 카드/간편 결제/마이데이터, 서비스Part: 혁신서비스(MSA)/방카슈랑스), 진행 프로젝트 (개인화 프로젝트 안정화 지원, 신규 서비스 개발 (투자2.0, 정책 보조금 알리미 등), 개발표준협의체 과제 수행), 향후 프로젝트 (카드 개발 환경으로 간편 결제 서비스 전환 개발, 결제DB 구성 후 카드/간편 결제 데이터 전환)',
+    qualifications: [
+      'Python / JAVA / RDB 구조 서비스 개발 및 운영 경험',
+      '인프라 / 아키텍처 등 Tech 전반적으로 지식 보유',
+      'SOA / MSA 아키텍처에 대한 이해',
+      '프로젝트 추진 능력 보유',
+    ],
+    preferredQualifications: [
+      '책임감을 가지고 자기주도적으로 업무를 추진할 수 있는 분',
+      '다양한 구성원과 커뮤니케이션할 수 있는 역량',
+      '새로운 서비스 개발을 즐기는 분',
+      '금융권 컴플라이언스에 대한 이해와 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-16/3bafaab1-1602-4d61-9f65-d293f77af115.png',
+    url: 'https://kbank.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=216866',
+    prompt: () => getPositionPrompt('27'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '2025-05-29T17:00:00+09:00',
+  },
+  {
+    id: '28',
+    companyName: '모멘티',
+    jobTitle: '백엔드 개발자',
+    conditions: ['백엔드 개발', '경력 1-4년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '모멘티는 웹사이트 및 어플리케이션 기획/디자인/개발을 턴키로 진행 가능한 에이전시입니다. 주요 고객사로는 삼성전자, KT, SK, LS산전, 한국네트웍스, 비알코리아(베스킨라빈스), 창비, 대명리조트, NH투자증권, 코웨이, MG새마을금고, 인터파크 큐브릿지, 유한킴벌리, 동아제약 등이 있습니다.',
+    mainTask:
+      '백엔드 웹서비스 전반 개발 (Java, Springboot), 서비스 운영 유지에 필요한 인프라 구축 (AWS, GCP, NCP)',
+    qualifications: ['경력 1~4년차 (선임, 책임급)'],
+    preferredQualifications: [
+      '컴퓨터/시스템공학 전공',
+      '해당직무 인턴경력, 해당직무 근무경험',
+      '에이전시 근무경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-04-18/3c566088-36c5-4642-9bcc-8ce600242d31.jpg',
+    url: 'https://www.wanted.co.kr/wd/130436',
+    prompt: () => getPositionPrompt('28'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '2025-06-08T23:59:59+09:00',
+  },
+  {
+    id: '29',
+    companyName: '르몽',
+    jobTitle: '프론트엔드(F/E) 개발자 (배움몽)',
+    conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 마포구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "르몽의 두 번째 AI인 '배움몽'을 소개합니다. AI를 잘 가르치는 기술이 있다면, 누구나 더 나은 학습자가 될 수 있습니다. 르몽은 모든 사람이 자기 속도에 맞춰 배우고 성장할 수 있도록 돕는 지능형 학습 파트너를 만들고 있습니다. 배움몽은 최신 자연어 이해 기술과 학습 데이터 분석 기술을 활용해 학습자의 질문에 문맥을 이해한 답변을 제공하고, 개인별 성취 수준에 맞는 학습 경로를 설계하는 지능형 AI 튜터 프로젝트입니다.",
+    mainTask:
+      'React 기반 웹 프론트엔드 개발, 디자이너, 백엔드, AI 개발자와 긴밀히 협업하여 기능 기획과 제품 고도화, 빠른 테스트와 배포 환경 구성 및 지속적인 성능 개선 주도, 배움몽 운영자의 효율적인 운영 업무를 위한 어드민 프론트엔드 개발',
+    qualifications: [
+      'React 기반 SPA 개발 3년 이상 경험',
+      'REST API 및 서버와의 데이터 연동에 대한 이해',
+      '디자인시스템 이해와 개발 경험',
+      '사용자 중심 UI/UX 설계 경험',
+      'TypeScript, React에 대한 깊은 이해와 개발 경험',
+    ],
+    preferredQualifications: [
+      '지속적인 코드 품질 개선 및 리팩토링 경험',
+      'React 기반의 Frontend 개발 스킬 보유',
+      'LMS(Learning Management System) 개발에 참여한 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-03-11/807077ca-6052-4463-b3d0-ee8d39673e37.jpg',
+    url: 'https://groupby.kr/positions/5031',
+    prompt: () => getPositionPrompt('29'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '30',
+    companyName: '르몽',
+    jobTitle: '백엔드(B/E) 개발자 (배움몽)',
+    conditions: ['백엔드 개발', '경력 3년 이상', '서울 마포구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "르몽의 두 번째 AI인 '배움몽'을 소개합니다. AI를 잘 가르치는 기술이 있다면, 누구나 더 나은 학습자가 될 수 있습니다. 르몽은 모든 사람이 자기 속도에 맞춰 배우고 성장할 수 있도록 돕는 지능형 학습 파트너를 만들고 있습니다. 배움몽은 최신 자연어 이해 기술과 학습 데이터 분석 기술을 활용해 학습자의 질문에 문맥을 이해한 답변을 제공하고, 개인별 성취 수준에 맞는 학습 경로를 설계하는 지능형 AI 튜터 프로젝트입니다.",
+    mainTask:
+      '배움몽 서비스의 API 서버 설계 및 개발 (Nest.js 기반), 학습자 이력 및 콘텐츠 데이터를 위한 DB 모델링 및 쿼리 최적화, GraphQL 및 REST API 기반의 LMS 연동 백엔드 로직 구현, 학습 로그, 추천 결과 등 주요 데이터를 처리하는 데이터 파이프라인 구축 및 운영, AWS 기반 인프라 설계 및 배포 자동화 (CI/CD), 로그, 트래픽, 성능 모니터링을 위한 백엔드 운영 시스템 구축, AI Agent 및 추천 모델과의 API 연동 게이트웨이 구성',
+    qualifications: [
+      'NestJS 또는 Node.js 기반 API 서버 개발 경험 3년 이상',
+      'PostgreSQL, MongoDB 등 관계형 및 NoSQL 데이터베이스 설계 및 운영 경험',
+      'RESTful API 설계 및 문서화 경험',
+      'AWS 기반 배포 경험 (EC2, S3, RDS, Lambda 등)',
+      'Docker, Github Actions 등 DevOps 도구 활용 경험',
+      'Git 기반 협업 환경과 CI/CD 파이프라인에 익숙',
+    ],
+    preferredQualifications: [
+      'LMS, B2C 플랫폼 백엔드 개발 경험',
+      '대용량 트래픽 또는 멀티테넌시 서비스 운영 경험',
+      '로그 기반 사용자 분석, 서버 모니터링 자동화 경험',
+      'AI inference 서버 연동 경험 (예: 모델 호출 API 설계 등)',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-03-11/807077ca-6052-4463-b3d0-ee8d39673e37.jpg',
+    url: 'https://groupby.kr/positions/5032',
+    prompt: () => getPositionPrompt('30'),
+    uploadedAt: '2025-05-17T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
