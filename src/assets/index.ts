@@ -17,7 +17,7 @@ export { default as HelpIcon } from './icons/HelpIcon'
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpg'
 export { default as InquiryTextImage } from '../../public/images/inquiry-text.png'
-export { default as AdminProfileImage } from '../../public/images/admin-profile.jpg'
+export { default as AdminProfileImage } from '../../public/images/admin-profile.png'
 export { default as HomeCarouselImage1 } from '../../public/images/home-carousel-1.png'
 export { default as HomeCarouselImage2 } from '../../public/images/home-carousel-2.png'
 export { default as HomeCarouselImage3 } from '../../public/images/home-carousel-3.png'
