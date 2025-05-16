@@ -154,7 +154,7 @@ export default function DeviceAwarePositionView({
               target="_blank"
               className="inline-flex items-center rounded-full py-1 text-sm font-medium text-gray-800"
             >
-              <LinkIcon className="mr-1 h-4 w-4 flex-shrink-0" />
+              <LinkIcon className="mr-2 h-4 w-4 flex-shrink-0" />
               <span className="break-all">{job.url}</span>
             </Link>
           </div>

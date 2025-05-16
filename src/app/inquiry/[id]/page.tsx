@@ -202,7 +202,7 @@ export default async function InquiryDetailPage({
                     <div className="mt-2">
                       <a
                         href={answer.url}
-                        className="flex items-center gap-1 text-blue-600 hover:text-blue-800"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800"
                         target={answer.url.startsWith('/') ? '_self' : '_blank'}
                         rel={
                           answer.url.startsWith('/')
@@ -212,7 +212,7 @@ export default async function InquiryDetailPage({
                         tabIndex={0}
                         aria-label={`링크: ${answer.url}`}
                       >
-                        <LinkIcon className="h-4 w-4" />
+                        <LinkIcon className="h-4 w-4 flex-shrink-0" />
                         <span className="break-all">{answer.url}</span>
                       </a>
                     </div>
