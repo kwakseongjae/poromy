@@ -42,6 +42,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-10-15/306dd11b-93e8-4014-8c41-784aefbd6e2c.png',
     url: 'https://www.wanted.co.kr/wd/282961',
     prompt: () => getPositionPrompt('1'),
+    uploadedAt: '2025-05-14T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '2',
@@ -72,6 +74,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-05-14/294f97fd-41c0-4d15-9bc6-9f9ed57e2a42.png',
     url: 'https://www.wanted.co.kr/wd/282928',
     prompt: () => getPositionPrompt('2'),
+    uploadedAt: '2025-05-14T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '3',
@@ -103,6 +107,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-03-18/816dd6f7-1f2f-43e4-bead-8e2bb6a8bef6.jpg',
     url: 'https://groupby.kr/positions/5005',
     prompt: () => getPositionPrompt('3'),
+    uploadedAt: '2025-05-14T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '4',
@@ -130,6 +136,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-05-14/72a03e58-eb54-4488-9066-0142e49f8d96.png',
     url: 'https://www.wanted.co.kr/wd/282997',
     prompt: () => getPositionPrompt('4'),
+    uploadedAt: '2025-05-14T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '5',
@@ -159,6 +167,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
     url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003399&lang=ko',
     prompt: () => getPositionPrompt('5'),
+    uploadedAt: '2025-05-14T22:00:00+09:00',
+    deadline: '2025-05-26T18:00:00+09:00',
   },
   {
     id: '6',
@@ -191,6 +201,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-04-29/32f4f384-1256-4efd-bb27-aa8cb69083e9.png',
     url: 'https://www.wanted.co.kr/wd/282976',
     prompt: () => getPositionPrompt('6'),
+    uploadedAt: '2025-05-14T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '7',
@@ -221,6 +233,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-05-14/294f97fd-41c0-4d15-9bc6-9f9ed57e2a42.png',
     url: 'https://www.wanted.co.kr/wd/283066',
     prompt: () => getPositionPrompt('7'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '8',
@@ -254,6 +268,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-01-26/5579eb4b-6912-40b5-8156-4c8089d740e9.png',
     url: 'https://asianaidt.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=216557',
     prompt: () => getPositionPrompt('8'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '2025-05-21T23:59:00+09:00',
   },
   {
     id: '9',
@@ -285,6 +301,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-09-24/91eb2b7f-f6cc-48b2-bc5a-c483ac0d0178.png',
     url: 'https://www.wanted.co.kr/wd/283236',
     prompt: () => getPositionPrompt('9'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '10',
@@ -317,6 +335,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-09-10/dc51c564-2d75-4f8f-83f4-98d56396a233.png',
     url: 'https://careers.myrealtrip.com/recruit/157175',
     prompt: () => getPositionPrompt('10'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '11',
@@ -348,6 +368,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-10-06/6cad3376-c67b-4e84-8fe2-15c129250e9f.png',
     url: 'https://www.wanted.co.kr/wd/216502',
     prompt: () => getPositionPrompt('11'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '상시 채용',
   },
   {
     id: '12',
@@ -380,6 +402,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-10-12/0f6624d8-9387-4811-8b53-96a608e02625.png',
     url: 'https://www.wanted.co.kr/wd/283216',
     prompt: () => getPositionPrompt('12'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '2025-05-30T23:59:59+09:00',
   },
   {
     id: '13',
@@ -409,6 +433,8 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-05-08/a787d655-feab-47db-8849-65809871eff6.png',
     url: 'https://www.wanted.co.kr/wd/283045',
     prompt: () => getPositionPrompt('13'),
+    uploadedAt: '2025-05-15T22:00:00+09:00',
+    deadline: '2025-05-31T23:59:59+09:00',
   },
 ]
 
