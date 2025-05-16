@@ -183,9 +183,9 @@ export default async function InquiryDetailPage({
                       <Image
                         src={AdminProfileImage}
                         alt={answer.admin?.nickname || '관리자'}
-                        width={32}
-                        height={32}
-                        className="aspect-square w-8 rounded-full object-cover shadow-md"
+                        width={40}
+                        height={40}
+                        className="aspect-square h-10 w-10 rounded-full object-cover shadow-md"
                       />
                       <span className="text-sm font-medium text-gray-900">
                         {answer.admin?.nickname}
