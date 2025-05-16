@@ -32,6 +32,7 @@ class CursorRulesStructureInjector {
       'position_generate_prompt.md',
       '.cursor',
       '.vscode',
+      'legacy_prompt',
     ],
     maxDepth: 4,
     includeFileExtensions: [

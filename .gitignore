@@ -54,3 +54,6 @@ tsconfig.temp.json
 *.swp
 *.swo
 .cursor
+
+# legacy
+/legacy_prompt
