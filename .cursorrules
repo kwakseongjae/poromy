@@ -12,10 +12,6 @@
 ### 📁 Directory Structure
 
 ```
-📁 .cursor/
-  📄 .cursor/mcp.json
-📁 .vscode/
-  📄 .vscode/tasks.json
 📁 public/
   📁 public/fonts/
   📁 public/icons/
@@ -193,29 +189,12 @@
     📄 src/utils/image.ts
     📄 src/utils/prompt.ts
   📄 src/middleware.ts
-📁 temp/
-  📁 temp/src/
-    📁 temp/src/constants/
-      📄 temp/src/constants/company.data.js
-      📄 temp/src/constants/job.data.js
-    📁 temp/src/types/
-      📄 temp/src/types/company.js
-      📄 temp/src/types/job.js
-    📁 temp/src/utils/
-      📄 temp/src/utils/crypto.js
-      📄 temp/src/utils/prompt.js
-  📄 temp/company.data.js
-  📄 temp/crypto.js
-  📄 temp/job.data.js
-📄 .cursorrules
-📄 company_generate_prompt.md
 📄 frontend-design-guideline.md
 📄 next-env.d.ts
 📄 next-sitemap.config.js
 📄 next.config.ts
 📄 package.json
 📄 pnpm-lock.yaml
-📄 position_generate_prompt.md
 📄 README.md
 📄 tsconfig.json
 ```

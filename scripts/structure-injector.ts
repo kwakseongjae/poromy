@@ -27,6 +27,11 @@ class CursorRulesStructureInjector {
       'coverage',
       '.nyc_output',
       '.pnpm-store',
+      'temp',
+      'company_generate_prompt.md',
+      'position_generate_prompt.md',
+      '.cursor',
+      '.vscode',
     ],
     maxDepth: 4,
     includeFileExtensions: [
@@ -50,6 +55,7 @@ class CursorRulesStructureInjector {
       'coverage',
       '.nyc_output',
       '.pnpm-store',
+      'temp',
     ],
   }
 
