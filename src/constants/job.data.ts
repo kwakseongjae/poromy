@@ -964,6 +964,319 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-17T00:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '31',
+    companyName: 'NAVER',
+    jobTitle: 'XR 서비스/기술 개발',
+    conditions: ['XR 개발', '경력 3년 이상'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '프로덕션 기술과 인공지능(AI)을 결합하여 차세대 콘텐츠 컨테이너를 준비합니다. 커머스, 치지직, 버튜버, 드라마, 영화 등 네이버에서 제공하고 있는 스토리텔링 프로덕트에 새로운 미디어 기술을 제공합니다.',
+    mainTask:
+      '언리얼 엔진, 유니티를 이용한 VR, AR 어플리케이션 및 쉐이더 개발, 언리얼 엔진 및 유니티 퍼포먼스 최적화, XR 서비스 및 콘텐츠 개발, 리얼리티 기술 선행 연구',
+    qualifications: [
+      'C/C#/C++를 활용한 개발에 어려움이 없는 분',
+      '언리얼 엔진 또는 유니티를 이용한 어플 개발 경험',
+      '언리얼 엔진과 유니티 머티리얼 및 랜더 환경에 대한 높은 이해도',
+      '기본적인 모션 캡쳐, 3D 그래픽 기술에 대한 이해도',
+      'VR, AR 개발 경험',
+    ],
+    preferredQualifications: [
+      '관련 업무 경험 3년 이상',
+      '자료 구조 및 알고리즘에 대한 이해와 활용 능력이 뛰어난 분',
+      '쉐이더 코딩 개발 및 활용에 대한 이해가 높은 분',
+      '디자인 직군과의 협업 경험이 풍부한 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/1eb52f78-ee3c-436c-a16b-fb1d6e9e61d1.png',
+    url: 'https://recruit.navercorp.com/rcrt/view.do?annoId=30003379&lang=ko',
+    prompt: () => getPositionPrompt('31'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '2025-05-27T18:00:00+09:00',
+  },
+  {
+    id: '32',
+    companyName: 'kt cs',
+    jobTitle: 'SW개발 경력직',
+    conditions: ['백엔드 개발', '경력 3년 이상', '서울/부산/대구/광주/대전'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'kt cs는 KT그룹 중 고객서비스를 주력사업으로 하는 고객서비스 전문기업입니다. AICC, 컨택센터 아웃소싱, KT고객센터, 114번호안내, 통신유통사업, 교육사업 등을 통해 고객만족 서비스를 제공합니다. kt cs는 대전본사 및 서울사무소를 비롯해 부산, 대구, 광주, 대전광역시 등 전국적인 네트워크를 보유하고 있으며, 약 9,000여명의 임직원이 종사하고 있습니다.',
+    mainTask:
+      'AICC(AI 컨택센터) 신사업/핵심기술 FrontEnd/BackEnd 내재화 개발, 웹 분야 신기술/개발표준 선제 적용을 통한 설계 및 개발, 빅데이터 기반의 AI솔루션(AI챗봇, AI보이스봇, 채팅, 상담AP) 개발, 고객 상담 관련 CRM 솔루션 개발 및 유지보수, 신사업 솔루션 분야 대용량/실시간 처리 Web Application 개발',
+    qualifications: [
+      '정규 4년제 대학교 졸업자',
+      'SW개발 관련 경력 3년 이상',
+      'Java Spring 프레임워크 기반 web(front-end,back-end) Application 설계 및 개발 역량 보유',
+      'RDBMS(Postgresql, MariaDB 등) 활용 역량 보유',
+      'HTTP, RestFul API 인터넷 기반 프로토콜 및 기술에 대한 이해',
+    ],
+    preferredQualifications: [
+      'SI 프로젝트 구축 경험 보유자',
+      '개발 프로젝트 PM/PL 역할 진행 경험',
+      '컴퓨터 공학계열 또는 그에 상응하는 교육 이수',
+      '기본적인 Linux 서버 OS 지식 보유',
+      'HTML, Javascript, CSS에 대한 이해와 경험',
+      '구성된 프레임워크를 수정/보완해 가며 연관 프로젝트 개발 경험',
+      'AICC (상담AP, 챗봇, 보이스봇, 상담Assist) 개발 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-28/aaf44e71-879a-4f40-8ea9-29702b120b83.png',
+    url: 'https://recruit.kt.com/careers/216813',
+    prompt: () => getPositionPrompt('32'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '2025-06-03T23:59:59+09:00',
+  },
+  {
+    id: '33',
+    companyName: 'TPC인터넷',
+    jobTitle: 'iOS 개발자 / iOS Developer',
+    conditions: ['iOS 개발', '경력 3년 이상', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'iOS 개발자로서 크리에이터 수익 창출에 도움이 되는 다양한 기능(정기 구독 포스트, DM 및 영상 통화, 라이브 방송, 스토리 등)을 개발하고, CI/CD 환경을 구축하며, 코드 리팩토링을 통해 앱의 품질을 향상시키는 업무를 담당합니다.',
+    mainTask:
+      '크리에이터 수익 창출에 도움이 되는 기능 개발(정기 구독 포스트, DM 및 영상 통화, 라이브 방송, 스토리), CI/CD 개발(Unit 테스트 및 UI 테스트 가능하도록 앱 구조 변경, 네트워크 요청 레코딩 등을 통한 시나리오 테스트 작성, 자동 테스트 및 생산물 자동 등록 등 CI/CD 보강), 코드 리팩토링(현재 작성된 코드 분석 통해 더 좋은 구조로 변경, 예전 디자인으로 작성된 컴포넌트 지속적인 업데이트)',
+    qualifications: [
+      'iOS 앱 개발 경력 3년 이상 또는 그에 준하는 역량',
+      'Swift 언어 개발 경험',
+    ],
+    preferredQualifications: [
+      '코드 개선 및 코드 리뷰에 적극 참여하시는 분',
+      'iOS UI/UX 가이드라인에 대한 이해도가 높으신 분',
+      '새로운 기술 습득과 지식 공유에 즐거움을 느끼시는 분',
+      'Combine 혹은 RxSwift를 능숙하게 사용 가능한 분',
+      '다른 직군 동료(디자인/운영/PM)과 적극적으로 협업, 소통하시는 분',
+      '라이브 스트리밍, 영상채팅, 데이팅 서비스 개발 경험 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-11-12/be61ba44-c04d-41a0-b831-404b97a77b6c.png',
+    url: 'https://www.tpcinternet.com/ios',
+    prompt: () => getPositionPrompt('33'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '34',
+    companyName: 'NHN Cloud',
+    jobTitle: '시스템 엔지니어링',
+    conditions: ['인프라 엔지니어링', '경력 3년 이상', '경기도 성남시 판교'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'NHN Cloud는 대한민국을 대표하는 클라우드 서비스로서 데이터 센터부터 플랫폼, 애플리케이션 서비스에 이르기까지 고객이 필요한 모든 클라우드 서비스를 제공하는 클라우드 서비스 제공사(CSP)입니다. 탄탄한 기술력으로 폭발적인 성장을 이뤄온 NHN Cloud는 이제 국내를 넘어 글로벌 테크 기업으로의 성장을 목표로 하고 있습니다.',
+    mainTask:
+      '오픈스택 기반 NHN Cloud IaaS 배포 및 운영, 시스템/서비스 모니터링 및 트러블슈팅, 모니터링 및 운영도구 구축/개발/운영',
+    qualifications: [
+      '시스템 엔지니어링 경력을 3년 이상 보유',
+      '리눅스 OS 설치 및 시스템/서비스 운영, 트러블슈팅, 모니터링 경험 보유',
+    ],
+    preferredQualifications: [
+      '클라우드 관련 지식/스킬 또는 구축/운영 경험 보유(OpenStack, KVM, VMware, AWS, Azure, GCP 등)',
+      '프로그래밍 개발 스킬 (Bash, Python, Java 등) 보유',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-21/c7fc527a-03d8-4600-b272-fb73d759db28.png',
+    url: 'https://careers.nhn.com/recruits/4069068502100125815',
+    prompt: () => getPositionPrompt('34'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '35',
+    companyName: '신세계디에프',
+    jobTitle: '데이터분석 경력직',
+    conditions: ['데이터 분석', '경력 2-7년', '서울 중구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '면세쇼핑의 신세계! 신세계디에프는 온·오프라인 고객 데이터를 분석하여 인사이트를 발굴하고, 고객 세분화와 맞춤형 타겟마케팅 전략을 수립하며, 데이터 기반의 CRM 캠페인을 성과 모니터링하는 데이터 분석 전문가를 찾고 있습니다.',
+    mainTask:
+      '온·오프라인 고객 구매 및 행동분석을 통한 인사이트 발굴, 고객 세분화 및 맞춤형 타겟마케팅 전략 수행, 오프라인 매장과 온라인몰 데이터를 결합한 고객 여정 분석, CRM 캠페인 성과 모니터링 및 피드백, 기타 데이터 관련 업무 진행 (데이터추출/분석, CRM, RPA 등)',
+    qualifications: [
+      '관련분야 업무경험 (통계학, 컴퓨터공학, 전자공학, 빅데이터, 수학 등)',
+      '데이터분석 및 모델개발 관련 업무 경력 (2~7년 근무경력)',
+      'Python, SQL을 활용한 실무 경력자',
+      '다양한 이해관계자(마케팅, 기획자, 경영자)와 협업 경험 및 커뮤니케이션 가능자',
+    ],
+    preferredQualifications: [
+      '유통/리테일 비즈니스, 데이터에 대한 이해 (백화점, 온라인마켓 등의 경력)',
+      '데이터 기반 서비스/분석/기획 및 백엔드에서 대한 이해 (백엔드개발자, 웹크롤링 경험)',
+      '데이터/AI 관련 아키텍처 및 기술에 대한 경험',
+      'SQL 관련 자격증 보유 (OCP, SQLD 등)',
+      'Python 또는 R을 활용한 고객분석 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-20/f363b072-31ef-4aff-8b61-59e1bff551af.png',
+    url: 'https://job.shinsegae.com/recruit_info/notice/notice01_view.jsp?notino=8714',
+    prompt: () => getPositionPrompt('35'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '2025-05-31T23:59:59+09:00',
+  },
+  {
+    id: '36',
+    companyName: '네오위즈',
+    jobTitle: '신규 프로젝트 UI/UX 디자이너',
+    conditions: ['UI/UX 디자인', '경력 3년 이상', '경기도 판교'],
+    jobType: '디자인',
+    positionDescription:
+      '세계 최고의 리듬 게임인 DJMAX 시리즈를 개발한 ROCKY 스튜디오는 오랫동안 사랑받아온 DJMAX의 브랜드를 더욱 확장시켜 글로벌 유저들에게 더 많은 감동을 전달하려 합니다. 센스티브한 DJMAX 브랜드 고유의 UI 아트를 더욱 확장시켜 주실 수 있는 분을 찾고 있습니다.',
+    mainTask: '신규 프로젝트의 UI 아트 제작, 게임 전반의 UX 플로우 구성',
+    qualifications: [
+      '경력 3년 이상 또는 이에 준하는 실력이나 경험',
+      '언리얼 엔진 사용 경험이 풍부한 분',
+      'UI, UX의 구조적 구현에 대하여 주도적으로 리딩할 수 있는 분',
+    ],
+    preferredQualifications: [
+      'DJMAX 시리즈에 대한 애정이 있으신 분',
+      '모션 그래픽적 연출에 이해도가 높으신 분',
+      '콘솔이나 스팀 게임에 대한 관심이 많으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-10/91093196-b79c-4bd7-86b0-0fcd02121924.png',
+    url: 'https://www.neowiz.com/career/browse-job/c4f38e4c-75ee-406e-a49a-5cec705da573',
+    prompt: () => getPositionPrompt('36'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '37',
+    companyName: '알파자산운용',
+    jobTitle: '투자관리팀 경력직원',
+    conditions: ['투자관리', '경력 3년 이상'],
+    jobType: '기획-전략',
+    positionDescription:
+      '알파자산운용의 투자관리팀에서 펀드 신탁회계 및 운용지시 업무를 담당할 경력직원을 모집합니다. 전통자산 및 대체, 인프라 운용지원 업무 경력을 갖추고, 대외보고서 작성 및 공시, 기타 펀드관리 등 상품업무 지원 업무를 수행하게 됩니다.',
+    mainTask:
+      '펀드 신탁회계 및 운용지시 업무 (전통자산 및 대체, 인프라 운용지원 업무 경력), 대외보고서 작성 및 공시, 기타 펀드관리 등 상품업무 지원',
+    qualifications: [
+      '금융업계 및 지원직무 관련 실무경력 3년 이상',
+      '커뮤니케이션 능력이 원만하고, 긍정적이고 책임감이 강한 분',
+    ],
+    preferredQualifications: [
+      '금융관련 학과 졸업자 및 관련자격증 소지자',
+      '자산운용사, 수탁사, 사무관리사 업무 경력자',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-01-03/e5d29027-c2a1-4a62-8e95-291f3eec9063.png',
+    url: 'https://www.kofia.or.kr/brd/m_96/view.do?seq=33676',
+    prompt: () => getPositionPrompt('37'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '2025-06-13T23:59:59+09:00',
+  },
+  {
+    id: '38',
+    companyName: '와이어트',
+    jobTitle: '국내 물류 담당자',
+    conditions: ['물류 관리', '경력 1-4년', '서울 강남구'],
+    jobType: '기획-전략',
+    positionDescription:
+      '물류팀은 제품의 생산 이후 단계부터 고객에게 전달되기까지의 모든 물류 공급망을 관리하는 역할을 수행합니다. 재고관리, 국내 및 해외 배송 공급망 관리는 물론이고, 더 나아가 데이터 분석과 고객 서비스 지원까지 넓은 범위의 업무를 진행하고 있습니다. 정확하고 빠른 물류 운송을 목표로, 회사와 고객 모두 안심하고 만족하며 사용할 수 있도록 지원하는 팀입니다.',
+    mainTask:
+      '국내 B2C 채널 주문수집 및 출고관리, 국내 B2B 채널 발주확인 및 출고관리, 3PL 운영관리(재고 및 입출고)',
+    qualifications: [
+      '1년 이상의 B2C 국내 물류 관련(주문수집 등) 경력',
+      'ERP, WMS, OMS 사용 경험(영림원, 플레이오토, 난소프트)',
+      '인하우스 코스메틱 또는 생활소비재 업계 경력 보유',
+      '외국인 지원자의 경우 비자(E-7 또는 동급) 보유 및 잔여 비자 기간이 남아있는 분, 국내 취업에 결격 사유가 없는 분',
+    ],
+    preferredQualifications: [
+      '컴퓨터 활용 능력이 뛰어난 분(Excel 등)',
+      '오류 발견 시 신속한 대처 및 처리가 가능한 분',
+      '빠르고 꼼꼼한 업무처리 능력을 갖춘 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-11-08/27030378-a104-4a39-989f-21bb17701668.png',
+    url: 'https://wyatt.ninehire.site/job_posting/MNEU6Jjo',
+    prompt: () => getPositionPrompt('38'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '39',
+    companyName: '와이어트',
+    jobTitle: '개발구매 담당자',
+    conditions: ['구매', '경력 1-3년', '서울 강남구'],
+    jobType: '기획-전략',
+    positionDescription:
+      '구매팀은 브랜드의 마케팅 및 영업을 이슈 없이 진행할 수 있도록 공급망을 효율적으로 관리하는 팀입니다. 공급업체와의 협상, 가격 체결 및 조정, 재고 운영 전략, 비용 절감 계획을 수립하고 실행합니다. 특히, 기능성 헤어케어 No.1 [닥터포헤어]와 올리브영 헤어케어 1위 [어노브]의 성장을 공급 측면에서 뒷받침하며, 단순한 구매를 넘어 브랜드의 가치와 성과를 함께 만들어가는 팀입니다.',
+    mainTask:
+      '신제품 개발 일정 및 프로젝트 관리, 신제품 견적 및 발주 관리, 신제품 채번 및 관련 문서 관리, ERP 품목 등록 및 관리, 공급처 및 유관 부서 커뮤니케이션',
+    qualifications: [
+      '1년 이상 뷰티 및 생활소비재 업계에서의 개발구매 경력',
+      'MS Office 사용이 가능한 분',
+      '운전이 가능한 분',
+      '외국인 지원자의 경우 비자(E-7 또는 동급) 보유 및 잔여 비자 기간이 남아있는 분, 국내 취업에 결격 사유가 없는 분',
+    ],
+    preferredQualifications: [
+      '성장에 대한 욕구가 크고, 책임감을 가지고 적극적으로 일하는 분',
+      '영림원 ERP 사용 경험이 있는 분',
+      '일정 관리 및 원활한 커뮤니케이션 능력을 갖춘 분',
+      'Notion, Slack 등 협업툴 사용 경험이 있는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-11-08/27030378-a104-4a39-989f-21bb17701668.png',
+    url: 'https://wyatt.ninehire.site/job_posting/UtNOgx5q',
+    prompt: () => getPositionPrompt('39'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '40',
+    companyName: '케이씨텍',
+    jobTitle: '미래소재 생산직',
+    conditions: ['생산직', '고졸 이상', '경기 안성시'],
+    jobType: '생산-기능직',
+    positionDescription:
+      '케이씨텍은 반도체 디스플레이 장비 및 소재 국산화를 추구하는 기업으로, 구성원들의 행복한 미래와 건강한 직장 생활을 위해 끊임없이 소통하며 수평적 커뮤니케이션과 서로 다름을 인정하는 상호 존중의 자세로 함께 나아가고 있습니다.',
+    mainTask:
+      'Powder/PrimeSol 생산 등 미래소재 제조 전반 생산 업무 담당, 주/야 교대 근무 (3조2교대, 6일 근무 3일 휴일), 주간 08:15~20:30 / 야간 20:15~08:30(인수인계 시간 포함)',
+    qualifications: [
+      '고졸 이상',
+      '주/야 교대 근무 가능자',
+      '원활한 협업 및 소통 역량 보유자',
+      '책임감 및 성실함 보유자',
+    ],
+    preferredQualifications: [
+      '생산직 또는 교대 근무 경험자',
+      '지게차 운전 기능사 보유자',
+      '안성 지역 인근 거주자',
+      '국가유공자 및 장애인 등 취업 보호 대상자',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-23/86b7074e-ea55-43f1-aa9c-bce0afbb0548.png',
+    url: 'https://kc-group.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=216823',
+    prompt: () => getPositionPrompt('40'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '2025-05-22T23:59:59+09:00',
+  },
+  {
+    id: '41',
+    companyName: '현대글로비스',
+    jobTitle: '인천공항 물류센터 운영 담당자',
+    conditions: ['물류 센터 운영', '경력 3년 이상', '인천'],
+    jobType: '무역-물류',
+    positionDescription:
+      '국내 최대 관문인 인천공항에 신규 개설된 물류센터에서, 특송 및 수출입 화물의 전반적인 운영을 책임지는 핵심 역할을 맡게 됩니다. 보세창고 운영부터 역직구 화물 관리, 고객사 응대, 협력사 조율, 물류 프로세스 개선까지 현장의 실무 경험과 물류 전문성을 쌓으며, 글로벌 공급망의 중심에서 성장할 수 있는 기회입니다. 빠르게 변화하는 공항 물류 현장에서, 직접 흐름을 설계하고 문제를 해결해가는 도전적인 경험을 제공해 드립니다.',
+    mainTask:
+      '인천공항 물류센터 운영 (수출입 화물 입출고, 재고 관리, 작업 현장 관리 및 운영 이슈 대응, 보세창고(GDC 및 일반보세) 운영 및 관리, 역직구(CBeC) 화물 입고/출고/재고관리/ 항공 수출입 조업 관리, 역직구 설비/자산 관리, 운영 프로세스 개선, 운영 원가 관리, 협력사 커뮤니케이션 및 현장 운영 조율), 사업 관리 (신규 고객사 입주 시 초기 사업 셋팅, 고객사 KPI 관리, 협력사/위수탁/노무 Risk 관리, 운영 원가 관리 및 정산 업무, 주말/휴일 비상 대응 및 운영 마감 업무 수행), 센터 안전/환경/CS관리 (고객사 CS 및 요구사항 대응, 사업장 내 안전 관리 및 위험요소 예방, 도급사·관계기관과의 유기적 협업)',
+    qualifications: [
+      '학사 이상의 학위 보유',
+      '보세창고, 수/출입 조업, GDC 관련 현장 운영 경험 or 국제특송 운영 업무 지식 및 운영 실무 경험 (3년 이상)',
+      '역직구(CBeC) 운영에 대한 이해(eCommerce 집화거점, Fulfillment 운영)',
+      '물류 자동화 설비의 이해 및 운영 능력',
+    ],
+    preferredQualifications: [
+      '물류관리사 등 물류 관련 자격증 보유자',
+      '물류학 관련 전공 지식 보유자',
+      '신규 공항 물류센터 구축 및 운영 경험 보유자',
+      '국가유공자 및 장애인 등 취업보호대상자',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-15/19ff933b-c30a-47e2-a4e5-507dfd8a93cf.png',
+    url: 'https://glovis.recruiter.co.kr/career/jobs/69847',
+    prompt: () => getPositionPrompt('41'),
+    uploadedAt: '2025-05-17T20:00:00+09:00',
+    deadline: '2025-05-25T23:59:59+09:00',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
