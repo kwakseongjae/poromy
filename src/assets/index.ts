@@ -13,6 +13,8 @@ export { default as SalesIcon } from './icons/SalesIcon'
 export { default as EditIcon } from './icons/EditIcon'
 export { default as CopyIcon } from './icons/CopyIcon'
 export { default as HelpIcon } from './icons/HelpIcon'
+export { default as CopyLinkIcon } from './icons/CopyLinkIcon'
+export { default as CheckIcon } from './icons/CheckIcon'
 
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpg'
