@@ -6,10 +6,11 @@ import { sortedJobs as jobs } from '@/constants/job.data'
 import { decrypt } from '@/utils/crypto'
 import Image from 'next/image'
 import Link from 'next/link'
-import { LinkIcon } from '@/assets'
+import { LinkIcon, CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useIsMobile } from '@/hooks/useIsMobile'
+import { getJobTypeDisplayName } from '@/constants/job.data'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
@@ -28,6 +29,8 @@ export default function DeviceAwarePositionView({
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [promptContent, setPromptContent] = useState<string>('')
+  const [toastVisible, setToastVisible] = useState(false)
+  const [toastActive, setToastActive] = useState(false)
 
   useEffect(() => {
     const isMobile = isMobileUA || isScreenMobile
@@ -84,12 +87,45 @@ export default function DeviceAwarePositionView({
     }
   }, [shouldRender, redirectTo])
 
+  // 링크 복사 핸들러
+  const handleCopyLink = async () => {
+    if (!job) return
+    try {
+      await navigator.clipboard.writeText(window.location.href)
+      setToastVisible(true)
+      setToastActive(true)
+      setTimeout(() => {
+        setToastActive(false)
+        setTimeout(() => setToastVisible(false), 300)
+      }, 2000)
+    } catch (err) {
+      console.error('Error copying link:', err)
+    }
+  }
+
   if (!shouldRender) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
       </div>
     )
+  }
+
+  // 마감일을 '5월 18일 17:00' 형태로 포맷팅하는 함수
+  const formatDeadline = (deadline: string) => {
+    if (deadline === '상시 채용' || deadline === '마감') return deadline
+    const dateMatch = deadline.match(
+      /(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/
+    )
+    if (!dateMatch) return deadline
+    const [, , month, day, hour, minute] = dateMatch
+    const monthNum = Number(month)
+    const dayNum = Number(day)
+    let result = `${monthNum}월 ${dayNum}일`
+    if (hour && minute) {
+      result += ` ${hour}:${minute}`
+    }
+    return result
   }
 
   return (
@@ -127,51 +163,97 @@ export default function DeviceAwarePositionView({
         </div>
       ) : (
         <>
-          <div className="mb-6 flex items-center">
-            <div className="relative h-16 w-16 overflow-hidden rounded-lg">
-              <Image
-                src={getProxyImageUrl(job.logoUrl)}
-                alt={`${job.companyName} 로고`}
-                fill
-                className="object-cover"
-                sizes="64px"
-              />
-            </div>
-            <div className="ml-4">
-              <h1 className="text-2xl font-bold text-gray-900">
-                {job.jobTitle}
-              </h1>
-              <p className="text-lg text-gray-600">{job.companyName}</p>
+          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center">
+              <div className="relative h-16 w-16 overflow-hidden rounded-lg">
+                <Image
+                  src={getProxyImageUrl(job.logoUrl)}
+                  alt={`${job.companyName} 로고`}
+                  fill
+                  className="object-cover"
+                  sizes="64px"
+                />
+              </div>
+              <div className="ml-4">
+                <h1 className="text-2xl font-bold text-gray-900">
+                  {job.jobTitle}
+                </h1>
+                <p className="text-lg text-gray-600">{job.companyName}</p>
+              </div>
             </div>
           </div>
-
-          <div className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              채용 링크
-            </h2>
-            <Link
-              href={job.url}
-              target="_blank"
-              className="inline-flex items-center rounded-full py-1 text-sm font-medium text-gray-800"
+          {/* 모바일 채용정보 박스 */}
+          <div className="mb-6 flex w-full items-start justify-between md:hidden">
+            <div className="flex w-fit min-w-60 flex-col gap-2 rounded-lg bg-gray-50 px-6 py-4">
+              <div className="flex items-center">
+                <span className="w-20 text-sm font-medium text-gray-400">
+                  직군
+                </span>
+                <span className="font-semibold text-gray-900">
+                  {getJobTypeDisplayName(job.jobType)}
+                </span>
+              </div>
+              <div className="flex items-center">
+                <span className="w-20 text-sm font-medium text-gray-400">
+                  직무
+                </span>
+                <span className="font-semibold text-gray-900">
+                  {job.conditions[0]}
+                </span>
+              </div>
+              <div className="flex items-center">
+                <span className="w-20 text-sm font-medium text-gray-400">
+                  마감일
+                </span>
+                <span className="font-semibold text-blue-600">
+                  {formatDeadline(job.deadline)}
+                </span>
+              </div>
+              <a
+                href={job.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-md bg-blue-600 px-4 py-2 font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+                tabIndex={0}
+                aria-label="지원하기"
+              >
+                <CheckIcon className="h-4 w-4" />
+                지원하기
+              </a>
+            </div>
+            <div
+              className="ml-4 flex h-10 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-[#7db6fa] transition-colors hover:bg-[#6395ee]"
+              tabIndex={0}
+              aria-label="채용공고 링크 복사"
+              role="button"
+              onClick={handleCopyLink}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  handleCopyLink()
+                }
+              }}
             >
-              <LinkIcon className="mr-2 h-4 w-4 flex-shrink-0" />
-              <span className="break-all">{job.url}</span>
-            </Link>
+              <CopyLinkIcon className="h-6 w-6" />
+            </div>
           </div>
 
+          {/* 채용정보 요약란 */}
           <div className="mb-6">
             <h2 className="mb-2 text-lg font-semibold text-gray-900">
               채용 조건
             </h2>
             <div className="flex flex-wrap gap-2">
-              {job.conditions.map((condition: string, index: number) => (
-                <span
-                  key={index}
-                  className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
-                >
-                  {condition}
-                </span>
-              ))}
+              {job.conditions
+                .slice(1)
+                .map((condition: string, index: number) => (
+                  <span
+                    key={index}
+                    className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
+                  >
+                    {condition}
+                  </span>
+                ))}
             </div>
           </div>
 
@@ -231,6 +313,17 @@ export default function DeviceAwarePositionView({
               prompt={promptContent}
             />
           </div>
+
+          {/* Toast/Modal: 링크 복사됨 */}
+          {toastVisible && (
+            <div
+              className={`fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center rounded-lg bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-lg transition-all ${toastActive ? 'animate-toast-in' : 'animate-toast-out'}`}
+              role="status"
+              aria-live="polite"
+            >
+              링크가 복사되었습니다
+            </div>
+          )}
         </>
       )}
     </div>
