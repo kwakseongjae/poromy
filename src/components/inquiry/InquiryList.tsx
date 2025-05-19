@@ -234,7 +234,7 @@ export default function InquiryList({ initialInquiries }: InquiryListProps) {
             {filter === 'all'
               ? '등록된 문의가 없습니다.'
               : filter === 'pending'
-                ? '대기 중인 문의가 없습니다.'
+                ? '답변 대기 중인 문의가 없습니다.'
                 : filter === 'answered'
                   ? '답변 완료된 문의가 없습니다.'
                   : '내 문의가 없습니다.'}
