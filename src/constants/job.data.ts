@@ -1277,6 +1277,229 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-17T20:00:00+09:00',
     deadline: '2025-05-25T23:59:59+09:00',
   },
+  {
+    id: '42',
+    companyName: '뉴빌리티',
+    jobTitle: 'AI Robotics Engineer',
+    conditions: ['AI 로봇 엔지니어', '경력 3년 이상', '서울 성동구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '뉴빌리티에서 기확보한 데이터를 기반으로 End to End Autonomy를 구현하는 것을 목표로 하며, 로봇으로부터 제공되는 센서 정보들을 사용하여 Deep 2D/3D perception 및 End-to-End motion planning과 같은 기능을 자율주행 팀 내 부서와 협업을 통해 구현하고, 이를 기반으로 Robot Foundation Model으로의 확장을 최종 목표로 합니다.',
+    mainTask:
+      'Object Detection / Semantic Segmentation / Depth Estimation 등의 딥러닝 기반 Computer Vision 기술 개발, Nvidia Issac Sim / Mujoco Simulator 등을 활용한 Sim2Real 학습 및 테스트 환경 구성, Robot Foundation Model 구축을 위한 Vision Language Model 활용과 Vision Language Action 관련 학습 알고리즘 설계 및 데이터 구축',
+    qualifications: [
+      'Computer Vision / Robotics / Simulation / Reinforcement Learning 관련 전공 석사 학위 혹은 3년 이상의 경력 보유',
+      '딥러닝 모델을 활용한 Computer Vision 관련 태스크(Object Detection, Semantic Segmentation 등)에 대해 연구 및 구현 경험 보유',
+      'RGB Image, IMU, GPS 등 로봇 센서 데이터를 입력으로 활용한 AI 모델 모델링 경험 보유',
+      'Simulation 기반의 학습 환경을 활용하여 Real World의 문제를 해결한 경험 보유',
+      'Reinforcement Learning 혹은 Imitation Learning 기반의 로봇 제어 관련 경험 보유',
+      'Robotics 인지 판단/제어를 Vision Language Model, Vision Language Action Model 등을 활용해본 경험 보유',
+    ],
+    preferredQualifications: [
+      'Computer Vision / Robotics / Simulation / Reinforcement Learning 관련 전공 박사 학위 이상 보유',
+      'Simulation 환경을 활용한 학습 시스템 구축 및 Real World와의 Domain Gap을 줄이기 위한 real2sim/sim2real 관련 프로젝트 경험 보유',
+      'VLA(Vision Language Action) 모델 학습을 위한 데이터 및 학습 파이프라인 구축 경험 보유',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-06/83cbabd3-7e48-4ded-9c97-b261066f1fa1.png',
+    url: 'https://neubility.career.greetinghr.com/o/156608',
+    prompt: () => getPositionPrompt('42'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '43',
+    companyName: '클라썸(CLASSUM)',
+    jobTitle: '백엔드(Node.js) 개발자',
+    conditions: ['백엔드 개발', '경력 2년 이상', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '빠르게 성장하는 B2B SaaS 섹터에서 한국을 대표하는 스타트업으로, 기업 HRD와 대학 교육 시장에서 숫자로 증명하는 탄탄한 성장을 만들어가고 있습니다. AI나 Skill-based HR 등 기술 및 도메인의 새로운 트렌드를 적극적으로 제품에 반영하며 기업 HRD/대학 교육 시장의 고객들에게 혁신적인 솔루션을 제공하는 포지션입니다.',
+    mainTask:
+      '클라썸 웹, 어플리케이션을 위한 비즈니스 로직 개발, AWS 기반의 서버리스 인프라 구성, 클라썸 서비스 품질 향상을 위한 다양한 최적화 작업 및 리서치',
+    qualifications: [
+      '백엔드 개발에서 2년 이상의 경험이 있거나 그에 준하는 실력을 갖춘 분',
+      'AWS에서 아키텍처 설계에 경험이 많은 분',
+      'Node.js와 JavaScript 또는 TypeScript 에 대한 높은 이해를 갖춘 분',
+      'RDBMS, NoSQL에 대한 이해를 갖춘 분',
+      'SQL 최적화 경험이 있는 분',
+      '단위테스트, 기능테스트, 종단 테스트, 빌드 자동화, 지속적 통합의 경험이 있는 분',
+      '스스로의 목표와 일정을 관리할 수 있는 분',
+      '배움에 대한 열정을 갖고, 지속적이고 효과적으로 피드백을 주고 받는 팀 성장을 추구하는 분',
+      '맡은 작업에 대한 오너십을 갖고, 이를 완성시키는 일에 열정이 있는 분',
+    ],
+    preferredQualifications: [
+      '서버리스로 상용 서비스를 운영한 경험이 있는 분',
+      'WebSocket 혹은 socket.io로 많은 사람들이 접속하는 실시간 채팅 서비스를 구현한 경험이 있는 분',
+      '성장하는 서비스에서 결제 및 VAN 연동 경험이 있는 분',
+      '영상 스트리밍 서비스를 개발하고 DRM을 적용해본 경험이 있는 분',
+      '여러 국가에 걸쳐 서비스를 운영/배포한 경험이 있는 분',
+      '다양한 외부 서비스와 연동한 경험이 있는 분',
+      'MS Teams, Slack, Zoom 연동 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-12/99fa64d6-3c96-42db-aeaa-728a723744d6.png',
+    url: 'https://careers.classum.com/o/12360',
+    prompt: () => getPositionPrompt('43'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '44',
+    companyName: '넷마블(Netmarble)',
+    jobTitle: '웹 프론트엔드 개발자',
+    conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 구로구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '게임 사이트 및 웹 플랫폼 서비스를 개발하는 포지션으로, 단계적 게임 론칭 전략에 따른 브랜드 사이트 개발부터 퍼블리싱 정책에 맞는 신규 기능 제공 및 신속한 웹 플랫폼 서비스 구축까지 담당합니다.',
+    mainTask:
+      '게임 사이트 및 웹 플랫폼 서비스 개발, 단계적 게임 론칭 전략에 따른 브랜드 사이트 개발 및 안정적 운영, 퍼블리싱 정책에 맞는 신규 기능 제공/확대 및 신속한 웹 플랫폼 서비스 구축, 기존 사이트 유지 보수 및 안정적 운영, 레거시 서비스에 대한 프레임워크 최신화, 클러스터 통합을 위한 리소스 절감',
+    qualifications: [
+      '학사 이상',
+      '웹 Front-End 개발 경력 3년 이상',
+      'javascript, vue, react 개발 및 운영 지식',
+      'front-end framework를 활용한 webApp 개발 경험',
+      'html, css, sass를 활용한 markup 개발 지식',
+      '공통화/모듈화/자동화를 위한 설계 능력 보유',
+      'SSR 서비스 적용 경험',
+    ],
+    preferredQualifications: [
+      '컴퓨터 관련 전공자',
+      'javascript 성능 튜닝 지식',
+      '컨테이너 기반 CI/CD 환경 경험 보유',
+      '유관부서와의 원활한 커뮤니케이션 가능',
+      '지속적인 학습능력과 문제해결 능력 보유',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-14/1c746868-dfde-48a4-824c-b420d26ad2a2.png',
+    url: 'https://career.netmarble.com/announce/view?anno_id=1461',
+    prompt: () => getPositionPrompt('44'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '45',
+    companyName: '넷마블(Netmarble)',
+    jobTitle: '웹 백엔드 개발자',
+    conditions: ['백엔드 개발', '경력 3년 이상', '서울 구로구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '결제 시스템 및 웹 상점 개발을 담당하는 백엔드 개발자 포지션으로, 구독, 쿠폰 등의 결제 시스템부터 PG 연동, 웹 이벤트 페이지 개발까지 다양한 웹 서비스 백엔드 개발을 담당합니다.',
+    mainTask:
+      '결제 시스템(구독,쿠폰 등) 개발 및 운영, PG 연동 개발, 결제 운영 툴 개발, 웹 상점 개발 및 운영, 웹 이벤트 페이지 개발',
+    qualifications: [
+      '학사 이상',
+      '웹 Back-End 개발 경력 3년 이상',
+      'Java, Spring Framework 지식, Linux 환경에서 WAS 및 WebServer 운영 지식',
+      'RDBMS(mysql,mssql 등) 지식',
+      '공통화/모듈화/자동화를 위한 설계 능력 보유',
+      'RESTful API에 대한 이해도',
+    ],
+    preferredQualifications: [
+      '컴퓨터 관련 전공자',
+      '결제 시스템 개발 경험',
+      '빌링 및 PG 연동/정산 서비스 설계/개발/운영 경험자',
+      '효과적인 스키마 설계와 쿼리 튜닝이 가능하신 분',
+      '컨테이너 기반 CI/CD 환경 경험 보유',
+      '유관부서와의 원활한 커뮤니케이션 가능',
+      '지속적인 학습능력과 문제해결 능력 보유',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-14/1c746868-dfde-48a4-824c-b420d26ad2a2.png',
+    url: 'https://career.netmarble.com/announce/view?anno_id=1460',
+    prompt: () => getPositionPrompt('45'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '46',
+    companyName: '하나금융융합기술원',
+    jobTitle: 'Data Science 직무',
+    conditions: ['데이터 사이언티스트', '신입', '서울 강남구', '인턴'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '하나금융융합기술원에서 진행하는 체험형 인턴 프로그램으로, 데이터 전처리 및 분석부터 개인화 이력 태그 개발, 예측 모델링까지 데이터 사이언스 전반의 업무를 경험할 수 있는 포지션입니다.',
+    mainTask:
+      'Data 전처리 및 분석, Data 분석 기반 개인화 이력 태그 개발, 태그 이력 기반의 예측 태그 개발 (예측 모델링), 태그 생성 자동화 모델 개발',
+    qualifications: [
+      '4년제 대학교 재학생, 졸업예정자, 기졸업하신 분 (대학원 재학생 및 수료/졸업(예정)이신 분 지원 가능)',
+      '2025년 7월 이후 취업예정인 중로일정까지 풀타임 근무가 가능하신 분',
+      '남자의 경우, 군필 또는 군면제이신 분',
+      '해외여행에 결격 사유가 없으신 분',
+      'AI/ML 프로그래밍 Tool 활용이 가능하신 분',
+      'SQL, Hive 등 DB/빅데이터 Tool 활용이 가능하신 분',
+    ],
+    preferredQualifications: [
+      '통계학, 산업공학 등 AI/ML 관련 전공자',
+      'Confluence 등 협업 Tool 활용이 가능하신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-13/01904410-7fc3-41cd-8f97-8de6539fed8b.png',
+    url: 'https://hanati.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=215091',
+    prompt: () => getPositionPrompt('46'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '2025-05-29T23:59:59+09:00',
+  },
+  {
+    id: '47',
+    companyName: '하나금융융합기술원',
+    jobTitle: 'Computer Vision 직무',
+    conditions: ['AI 엔지니어', '신입', '서울 강남구', '인턴'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '하나금융융합기술원에서 진행하는 체험형 인턴 프로그램으로, E2E OCR 모델 성능 개선 및 OCR 관련 데이터 처리, 분석을 중심으로 Computer Vision 기술을 실무에 적용하는 경험을 쌓을 수 있는 포지션입니다.',
+    mainTask:
+      'E2E(End-to-End) OCR 모델 성능 개선, OCR 관련 데이터 처리, 분석 및 수집, OCR 성능 이슈 분석',
+    qualifications: [
+      '4년제 대학교 재학생, 졸업예정자, 기졸업하신 분 (대학원 재학생 및 수료/졸업(예정)이신 분 지원 가능)',
+      '2025년 7월 이후 취업예정인 중로일정까지 풀타임 근무가 가능하신 분',
+      '남자의 경우, 군필 또는 군면제이신 분',
+      '해외여행에 결격 사유가 없으신 분',
+      'AI/ML 프로그래밍 Tool 활용이 가능하신 분',
+    ],
+    preferredQualifications: [
+      'Document Understanding 프로젝트를 경험하신 분',
+      'OCR 관련 프로젝트를 경험하신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-13/01904410-7fc3-41cd-8f97-8de6539fed8b.png',
+    url: 'https://hanati.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=215091',
+    prompt: () => getPositionPrompt('47'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '2025-05-29T23:59:59+09:00',
+  },
+  {
+    id: '48',
+    companyName: '하나금융융합기술원',
+    jobTitle: 'Natural Language Processing (자연어처리) 직무',
+    conditions: ['AI 엔지니어', '신입', '서울 강남구', '인턴'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '하나금융융합기술원에서 진행하는 체험형 인턴 프로그램으로, 다국어 언어 모델 개발부터 최신 LLM 연구방법론, Prompt Engineering까지 자연어처리의 최신 기술을 연구개발하는 포지션입니다.',
+    mainTask:
+      '다국어 언어 모델 개발을 위한 Data 생성 및 평가 파이프라인 연구 개발, LLM 데이터, 벤치마크 관련 최신 연구방법론 리서치 및 검증, Chain of Thought, Few Shot, Retrieval Augmented Generation 등 Prompt Engineering 연구 개발 Prompt 설계',
+    qualifications: [
+      '4년제 대학교 재학생, 졸업예정자, 기졸업하신 분 (대학원 재학생 및 수료/졸업(예정)이신 분 지원 가능)',
+      '2025년 7월 이후 취업예정인 중로일정까지 풀타임 근무가 가능하신 분',
+      '남자의 경우, 군필 또는 군면제이신 분',
+      '해외여행에 결격 사유가 없으신 분',
+      '컴퓨터공학, 전산학 등 관련 학위 석사이상 보유자 또는 대학원에 재학중이신 분',
+      'Python 기반 프로그래밍이 가능하신 분',
+      '자연어처리(NLP) 연구 역량을 보유하신 분',
+    ],
+    preferredQualifications: [
+      'Pytorch, HuggingFace를 활용하여 Fine-Tuning 관련 NLP 프로젝트를 경험하신 분',
+      'Open AI, Anthropic 등 LLM API 기반의 다국어 코퍼스(corpus), 합성 Data 구축을 경험하신 분',
+      '금융, 고객성향 등 도메인 특화 Data 개발을 경험하신 분',
+      'Prompt Engineering을 경험하신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-13/01904410-7fc3-41cd-8f97-8de6539fed8b.png',
+    url: 'https://hanati.recruiter.co.kr/app/jobnotice/view?systemKindCode=MRS2&jobnoticeSn=215091',
+    prompt: () => getPositionPrompt('48'),
+    uploadedAt: '2025-05-19T20:00:00+09:00',
+    deadline: '2025-05-29T23:59:59+09:00',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
