@@ -126,6 +126,31 @@ export default function DeviceAwarePositionView({
     return result
   }
 
+  // Helper to calculate D-day or show '상시채용'
+  const getDeadlineLabel = (deadline: string) => {
+    if (deadline === '상시 채용') return '상시채용'
+    const now = new Date()
+    const end = new Date(deadline)
+
+    if (now > end) return '마감'
+
+    const isSameDay =
+      now.getFullYear() === end.getFullYear() &&
+      now.getMonth() === end.getMonth() &&
+      now.getDate() === end.getDate()
+
+    if (isSameDay) return 'D-0'
+
+    const todayMidnight = new Date(now)
+    todayMidnight.setHours(0, 0, 0, 0)
+    const endMidnight = new Date(end)
+    endMidnight.setHours(0, 0, 0, 0)
+    const diff = Math.ceil(
+      (endMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24)
+    )
+    return `D-${diff}`
+  }
+
   return (
     <div className="w-full bg-white p-4">
       <button
@@ -203,9 +228,24 @@ export default function DeviceAwarePositionView({
                 <span className="w-20 text-sm font-medium text-gray-400">
                   마감일
                 </span>
-                <span className="font-semibold text-blue-600">
-                  {formatDeadline(job.deadline)}
-                </span>
+                {(() => {
+                  const deadlineLabel = getDeadlineLabel(job.deadline)
+                  if (deadlineLabel === '마감') {
+                    return (
+                      <span
+                        className="font-semibold text-orange-500"
+                        aria-label="마감"
+                      >
+                        마감
+                      </span>
+                    )
+                  }
+                  return (
+                    <span className="font-semibold text-blue-600">
+                      {deadlineLabel}
+                    </span>
+                  )
+                })()}
               </div>
               <a
                 href={job.url}

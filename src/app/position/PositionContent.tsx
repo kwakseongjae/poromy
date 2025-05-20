@@ -47,14 +47,27 @@ const formatDeadline = (deadline: string) => {
 // Helper to calculate D-day or show '상시채용'
 const getDeadlineLabel = (deadline: string) => {
   if (deadline === '상시 채용') return '상시채용'
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  const now = new Date()
   const end = new Date(deadline)
-  end.setHours(0, 0, 0, 0)
+
+  if (now > end) return '마감'
+
+  // 날짜가 오늘이고, 아직 마감 시간이 안 지났으면 D-0
+  const isSameDay =
+    now.getFullYear() === end.getFullYear() &&
+    now.getMonth() === end.getMonth() &&
+    now.getDate() === end.getDate()
+
+  if (isSameDay) return 'D-0'
+
+  // 미래면 D-n
+  const todayMidnight = new Date(now)
+  todayMidnight.setHours(0, 0, 0, 0)
+  const endMidnight = new Date(end)
+  endMidnight.setHours(0, 0, 0, 0)
   const diff = Math.ceil(
-    (end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    (endMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24)
   )
-  if (diff < 0) return '마감'
   return `D-${diff}`
 }
 
@@ -239,9 +252,18 @@ function MobilePositionContent() {
                         {/* Gradient fade-out effect */}
                         <div className="pointer-events-none absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent" />
                       </div>
-                      <span className="ml-3 shrink-0 text-xs font-semibold text-gray-500">
-                        {deadlineLabel}
-                      </span>
+                      {deadlineLabel === '마감' ? (
+                        <span
+                          className="ml-3 shrink-0 text-xs font-semibold text-orange-500"
+                          aria-label="마감"
+                        >
+                          마감
+                        </span>
+                      ) : (
+                        <span className="ml-3 shrink-0 text-xs font-semibold text-gray-500">
+                          {deadlineLabel}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </Link>
@@ -638,9 +660,24 @@ function DesktopPositionContent() {
                   <span className="w-20 text-sm font-medium text-gray-400">
                     마감일
                   </span>
-                  <span className="font-semibold text-blue-600">
-                    {formatDeadline(job.deadline)}
-                  </span>
+                  {(() => {
+                    const deadlineLabel = getDeadlineLabel(job.deadline)
+                    if (deadlineLabel === '마감') {
+                      return (
+                        <span
+                          className="font-semibold text-orange-500"
+                          aria-label="마감"
+                        >
+                          마감
+                        </span>
+                      )
+                    }
+                    return (
+                      <span className="font-semibold text-blue-600">
+                        {deadlineLabel}
+                      </span>
+                    )
+                  })()}
                 </div>
                 <a
                   href={job.url}
