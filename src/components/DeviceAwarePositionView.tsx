@@ -1,12 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { sortedJobs as jobs } from '@/constants/job.data'
 import { decrypt } from '@/utils/crypto'
 import Image from 'next/image'
-import Link from 'next/link'
-import { LinkIcon, CheckIcon, CopyLinkIcon } from '@/assets'
+import { CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useIsMobile } from '@/hooks/useIsMobile'
@@ -22,7 +21,6 @@ export default function DeviceAwarePositionView({
   isMobileUA,
 }: DeviceAwarePositionViewProps) {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const isScreenMobile = useIsMobile()
   const [shouldRender, setShouldRender] = useState(false)
   const [job, setJob] = useState<any>(null)
@@ -37,7 +35,7 @@ export default function DeviceAwarePositionView({
     if (isMobile) {
       setShouldRender(true)
     } else {
-      router.push(redirectTo)
+      router.replace(redirectTo)
     }
   }, [isMobileUA, isScreenMobile, router, redirectTo])
 
