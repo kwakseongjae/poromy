@@ -8,13 +8,15 @@ import type { Company } from '@/types/company'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
-import { BuildingsIcon, PersonIcon, SalesIcon } from '@/assets'
+import { BuildingsIcon, CopyLinkIcon, PersonIcon, SalesIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 
 export default function CompanyDetailContent() {
   const params = useParams()
   const router = useRouter()
   const searchParams = useSearchParams()
+  const [toastVisible, setToastVisible] = useState(false)
+  const [toastActive, setToastActive] = useState(false)
   const [company, setCompany] = useState<Company | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -32,6 +34,23 @@ export default function CompanyDetailContent() {
       router.replace(`?${newParams.toString()}`)
     }
   }, [router, searchParams])
+
+  // 복사 버튼 클릭 핸들러
+  const handleCopyLink = async () => {
+    // /company/[id] 형태의 URL 복사
+    const url = `${process.env.NEXT_PUBLIC_APP_URL}/company/${params.id}`
+    try {
+      await navigator.clipboard.writeText(url)
+      setToastVisible(true)
+      setToastActive(true)
+      setTimeout(() => {
+        setToastActive(false)
+        setTimeout(() => setToastVisible(false), 300)
+      }, 2000)
+    } catch (err) {
+      console.error('Error copying link:', err)
+    }
+  }
 
   const handleTabChange = (tab: 'intro' | 'prompt') => {
     setActiveTab(tab)
@@ -205,30 +224,48 @@ export default function CompanyDetailContent() {
         {/* Company Introduction Section */}
         <div className="w-full bg-white">
           <div className="mx-auto w-4/5 pt-8">
-            <div className="mb-4 flex items-center">
-              <div className="relative h-16 w-16 overflow-hidden rounded-lg">
-                {company.imageUrl ? (
-                  <Image
-                    src={company.imageUrl}
-                    alt={`${company.name} 이미지`}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-gray-100 px-1">
-                    <span className="text-xs text-gray-500">
-                      No preview available
-                    </span>
-                  </div>
-                )}
+            <div className="flex items-start justify-between">
+              <div className="mb-4 flex items-center">
+                <div className="relative h-16 w-16 overflow-hidden rounded-lg">
+                  {company.imageUrl ? (
+                    <Image
+                      src={company.imageUrl}
+                      alt={`${company.name} 이미지`}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gray-100 px-1">
+                      <span className="text-xs text-gray-500">
+                        No preview available
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div className="ml-4">
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    {company.name}
+                  </h1>
+                </div>
               </div>
-              <div className="ml-4">
-                <h1 className="text-2xl font-bold text-gray-900">
-                  {company.name}
-                </h1>
+              <div
+                className="ml-4 flex h-10 w-10 flex-shrink-0 cursor-pointer items-center justify-center rounded-lg bg-[#7db6fa] transition-colors hover:bg-[#6395ee]"
+                tabIndex={0}
+                aria-label="채용공고 링크 복사"
+                role="button"
+                onClick={handleCopyLink}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleCopyLink()
+                  }
+                }}
+              >
+                <CopyLinkIcon className="h-6 w-6" />
               </div>
             </div>
+
             <div className="flex flex-wrap gap-3">
               {company.tags.map((tag) => (
                 <span
@@ -510,6 +547,16 @@ export default function CompanyDetailContent() {
           </div>
         </div>
       </div>
+      {/* Toast/Modal: 링크 복사됨 */}
+      {toastVisible && (
+        <div
+          className={`fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center rounded-lg bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-lg transition-all ${toastActive ? 'animate-toast-in' : 'animate-toast-out'}`}
+          role="status"
+          aria-live="polite"
+        >
+          링크가 복사되었습니다
+        </div>
+      )}
     </>
   )
 }
