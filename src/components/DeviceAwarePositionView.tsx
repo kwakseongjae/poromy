@@ -130,9 +130,9 @@ export default function DeviceAwarePositionView({
     <div className="w-full bg-white p-4">
       <button
         type="button"
-        onClick={() => router.back()}
-        className="mb-4 flex items-center gap-2 rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-800"
-        aria-label="뒤로가기"
+        onClick={() => router.push('/position')}
+        className="mb-4 flex cursor-pointer items-center gap-2 rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-800"
+        aria-label="목록으로 가기"
       >
         <svg
           className="h-5 w-5"
@@ -147,7 +147,7 @@ export default function DeviceAwarePositionView({
             d="M15 19l-7-7 7-7"
           />
         </svg>
-        뒤로가기
+        목록으로 가기
       </button>
       {loading ? (
         <div className="flex min-h-screen w-full items-center justify-center">
