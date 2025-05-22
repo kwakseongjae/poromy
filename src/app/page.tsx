@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: 'Poromy',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
         width: 1200,
         height: 630,
         alt: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
@@ -39,7 +39,9 @@ export const metadata: Metadata = {
     title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
     description:
       'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
-    images: ['/images/og-image.jpg'],
+    images: [
+      `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
+    ],
   },
 }
 

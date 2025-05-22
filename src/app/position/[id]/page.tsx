@@ -83,7 +83,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         siteName: 'Poromy',
         images: [
           {
-            url: job.logoUrl || '/images/og-image.jpg',
+            url:
+              job.logoUrl ||
+              `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
             width: 1200,
             height: 630,
             alt: `${job.companyName} ${job.jobTitle} 채용공고 분석 및 AI 자소서 프롬프트`,
@@ -96,7 +98,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         card: 'summary_large_image',
         title,
         description,
-        images: [job.logoUrl || '/images/og-image.jpg'],
+        images: [
+          job.logoUrl ||
+            `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
+        ],
       },
       other: {
         'application/ld+json': JSON.stringify(jobPostingSchema),

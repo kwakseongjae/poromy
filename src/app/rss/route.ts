@@ -14,7 +14,7 @@ export async function GET() {
     id: siteUrl,
     link: siteUrl,
     language: 'ko',
-    image: `${siteUrl}/og-image.jpg`,
+    image: `${siteUrl}/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
     favicon: `${siteUrl}/favicon.svg`,
     copyright: `All rights reserved ${new Date().getFullYear()}, Poromy`,
     updated: new Date(),

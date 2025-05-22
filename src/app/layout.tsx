@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'Poromy',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
         width: 1200,
         height: 630,
         alt: 'Poromy - AI 프롬프트 아카이브',
@@ -42,7 +42,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Poromy - AI 프롬프트 아카이브',
     description: '채용 공고와 기업 분석을 위한 AI 프롬프트 아카이브',
-    images: ['/images/og-image.jpg'],
+    images: [
+      `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
+    ],
   },
   robots: {
     index: true,

@@ -28,7 +28,9 @@ export async function generateMetadata({
     : '기업 분석 및 GPT/Claude AI 자소서 프롬프트 - Poromy'
   const description =
     'ChatGPT, Claude 등 AI 모델을 활용한 기업별 맞춤형 자소서 프롬프트를 제공합니다. 기업 분석과 함께 AI 자기소개서 작성 가이드를 확인하세요.'
-  const imageUrl = company?.imageUrl || '/images/og-image.jpg'
+  const imageUrl =
+    company?.imageUrl ||
+    `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`
 
   return {
     title,
