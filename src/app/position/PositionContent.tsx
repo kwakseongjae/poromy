@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, Fragment } from 'react'
+import { useEffect, useState, Fragment, useRef, useLayoutEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { decrypt, encrypt } from '@/utils/crypto'
 import {
@@ -325,6 +325,9 @@ function DesktopPositionContent() {
   const [promptContent, setPromptContent] = useState<string>('')
   const [toastVisible, setToastVisible] = useState(false)
   const [toastActive, setToastActive] = useState(false)
+  const [hasScrolledToTarget, setHasScrolledToTarget] = useState(false)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const targetJobRef = useRef<HTMLAnchorElement>(null)
 
   const query = searchParams.get('query')
   const filteredJobs = query
@@ -357,6 +360,7 @@ function DesktopPositionContent() {
           setLoading(false)
           setJob(null)
           setPromptContent('')
+          setHasScrolledToTarget(false)
           return
         }
 
@@ -389,6 +393,110 @@ function DesktopPositionContent() {
     }
 
     fetchJobAndPrompt()
+  }, [searchParams])
+
+  // Set initial scroll position before paint
+  useLayoutEffect(() => {
+    const encryptedId = searchParams.get('id')
+    if (!encryptedId || !scrollContainerRef.current || hasScrolledToTarget) {
+      return
+    }
+
+    try {
+      const decryptedId = decrypt(encryptedId)
+
+      // If we have the target job element, use it for precise positioning
+      if (!loading && job && targetJobRef.current) {
+        const container = scrollContainerRef.current
+        const target = targetJobRef.current
+
+        // Get the previous sibling element (item above the selected one)
+        const previousItem = target.previousElementSibling as HTMLElement
+
+        if (previousItem) {
+          // Scroll to show the previous item at the top
+          container.scrollTop = previousItem.offsetTop
+        } else {
+          // If there's no previous item (selected is first), just show it at the top
+          container.scrollTop = 0
+        }
+      } else {
+        // Fallback: calculate position based on actual DOM elements
+        const jobIndex = filteredJobs.findIndex((j) => j.id === decryptedId)
+
+        if (jobIndex !== -1) {
+          // Get all job item elements in the container
+          const container = scrollContainerRef.current
+          const jobElements = container.querySelectorAll('a[href*="/position"]')
+
+          if (jobElements.length > 0) {
+            // If we have actual elements, use their real positions
+            const targetIndex = Math.min(jobIndex, jobElements.length - 1)
+            const targetElement = jobElements[targetIndex] as HTMLElement
+
+            // Show the previous item at the top (if exists)
+            if (targetIndex > 0) {
+              const previousElement = jobElements[
+                targetIndex - 1
+              ] as HTMLElement
+              container.scrollTop = previousElement.offsetTop
+            } else {
+              container.scrollTop = 0
+            }
+          } else {
+            // Last resort: use measured height of a single item if available
+            // Wait a bit for elements to render, then measure
+            requestAnimationFrame(() => {
+              const jobElements = container.querySelectorAll(
+                'a[href*="/position"]'
+              )
+              if (jobElements.length > 0) {
+                const firstElement = jobElements[0] as HTMLElement
+                const itemHeight = firstElement.offsetHeight
+                const computedStyle = window.getComputedStyle(firstElement)
+                const marginBottom = parseInt(computedStyle.marginBottom) || 0
+                const totalItemHeight = itemHeight + marginBottom + 8 // 8px gap from CSS
+
+                // Calculate scroll position based on measured height
+                const scrollPosition =
+                  jobIndex > 0 ? (jobIndex - 1) * totalItemHeight : 0
+                container.scrollTop = scrollPosition
+
+                // Mark as scrolled after measurement
+                setHasScrolledToTarget(true)
+              }
+            })
+            return // Exit early to let requestAnimationFrame handle it
+          }
+        }
+      }
+
+      // Mark that we've scrolled to prevent future automatic scrolls
+      setHasScrolledToTarget(true)
+    } catch (err) {
+      console.error('Error setting initial scroll:', err)
+    }
+  }, [loading, job, filteredJobs, searchParams, hasScrolledToTarget])
+
+  // Only reset scroll state on initial mount, not when searchParams change
+  useEffect(() => {
+    // This effect only runs once on mount
+    const encryptedId = searchParams.get('id')
+
+    // If there's no id on initial mount, mark as already scrolled
+    // This prevents scrolling when user clicks items after entering /position without id
+    setHasScrolledToTarget(!encryptedId)
+  }, []) // Empty dependency array - only runs on mount
+
+  // Handle URL changes - if id is removed, prevent future scrolling
+  useEffect(() => {
+    const encryptedId = searchParams.get('id')
+
+    // If id is removed (user clicked selected item to deselect),
+    // mark as scrolled to prevent scrolling when selecting new items
+    if (!encryptedId) {
+      setHasScrolledToTarget(true)
+    }
   }, [searchParams])
 
   useEffect(() => {
@@ -436,7 +544,7 @@ function DesktopPositionContent() {
     <>
       <div className="relative flex py-8 pr-4">
         <div
-          className="group sticky top-25 z-99 flex max-h-[75vh] w-60 flex-col items-start gap-2 px-4 transition-all duration-300 hover:w-1/3"
+          className="group sticky top-25 z-99 flex max-h-[75vh] w-60 flex-col items-start px-4 pt-2 transition-all duration-300 hover:w-1/3"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => {
             setIsHovered(false)
@@ -444,11 +552,14 @@ function DesktopPositionContent() {
             setPreviewJob(null)
           }}
         >
-          <div className="sticky top-0 z-10 w-full bg-white py-2">
+          <div className="sticky top-0 z-10 w-full bg-white pb-2">
             <SearchBar placeholder="관심있는 직무 혹은 기업을 검색해보세요" />
           </div>
 
-          <div className="flex w-full flex-col gap-2 overflow-y-auto">
+          <div
+            ref={scrollContainerRef}
+            className="flex w-full flex-col gap-2 overflow-y-auto pt-2"
+          >
             {filteredJobs.length === 0 ? (
               <div className="flex h-64 w-full flex-col items-center justify-center gap-2">
                 <p className="text-center text-sm whitespace-pre-line text-gray-500">
@@ -494,6 +605,7 @@ function DesktopPositionContent() {
                 return (
                   <Link
                     key={jobItem.id}
+                    ref={isCurrentJob ? targetJobRef : undefined}
                     href={`/position?${params.toString()}`}
                     className={`flex min-h-12 w-full items-center gap-2 rounded-lg px-4 ${
                       isCurrentJob
