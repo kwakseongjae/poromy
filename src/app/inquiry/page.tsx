@@ -4,6 +4,7 @@ import InquiryList from '@/components/inquiry/InquiryList'
 import { Inquiry } from '@/types/inquiry'
 import { EditIcon } from '@/assets'
 import { InquiryProcessModal } from '@/components/inquiry/InquiryProcessModal'
+import { NotificationMessage } from '@/components/common/NotificationMessage'
 import { Suspense } from 'react'
 
 interface Profile {
@@ -214,7 +215,7 @@ export default async function InquiriesPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         {/* 헤더 */}
-        <div className="mb-8 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-gray-900">문의 게시판</h1>
           <Link
             href="/inquiry/new"
@@ -224,13 +225,26 @@ export default async function InquiriesPage() {
           </Link>
         </div>
 
+        {/* 문의 프로세스 안내 */}
+        <div className="mb-6">
+          <div className="flex items-start gap-2 text-gray-500">
+            <InquiryProcessModal />
+
+            <p className="whitespace-pre-line">
+              요청하신 공고 및 기업 프롬프트 분석은{' '}
+              <span className="text-text-secondary">24시간 이내</span>에 검토 후
+              답변해 드립니다.
+              <br />
+              <span className="text-text-secondary">30초</span>만 투자하여 맞춤
+              공고 프롬프트를 받아보세요!
+            </p>
+          </div>
+        </div>
+
         {/* 문의 목록 */}
         <Suspense fallback={<InquiryPageSkeleton />}>
           <InquiryList initialInquiries={combinedInquiries} />
         </Suspense>
-
-        {/* 문의 처리 모달 */}
-        {isAdmin && <InquiryProcessModal />}
       </div>
     )
   } catch (error) {
