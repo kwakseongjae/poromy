@@ -1,12 +1,12 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import InquiryCard from '@/components/inquiry/InquiryCard'
 import { Inquiry } from '@/types/inquiry'
 import { useSupabase } from '@/contexts/SupabaseContext'
 import Link from 'next/link'
 import SearchBar from '@/components/common/SearchBar'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 
 interface InquiryListProps {
   initialInquiries: Inquiry[]
@@ -21,9 +21,40 @@ export default function InquiryList({ initialInquiries }: InquiryListProps) {
   const { user } = useSupabase()
   const searchParams = useSearchParams()
   const searchQuery = searchParams.get('query') || ''
+  const router = useRouter()
+  const prefetchedRef = useRef(new Set<string>())
 
   // 관리자 상태 확인
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
+
+  // Viewport 기반 프리패칭을 위한 Intersection Observer
+  const setupPrefetchObserver = useCallback(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const inquiryId = entry.target.getAttribute('data-inquiry-id')
+            if (inquiryId && !prefetchedRef.current.has(inquiryId)) {
+              router.prefetch(`/inquiry/${inquiryId}`)
+              prefetchedRef.current.add(inquiryId)
+              observer.unobserve(entry.target)
+            }
+          }
+        })
+      },
+      {
+        rootMargin: '100px', // 화면에 나타나기 100px 전에 프리패칭
+        threshold: 0.1,
+      }
+    )
+
+    // 모든 inquiry 카드에 observer 적용
+    document.querySelectorAll('[data-inquiry-id]').forEach((element) => {
+      observer.observe(element)
+    })
+
+    return observer
+  }, [router])
 
   // 관리자 권한 확인
   useEffect(() => {
@@ -44,6 +75,12 @@ export default function InquiryList({ initialInquiries }: InquiryListProps) {
   useEffect(() => {
     setInquiries(initialInquiries || [])
   }, [initialInquiries])
+
+  // 프리패칭 옵저버 설정
+  useEffect(() => {
+    const observer = setupPrefetchObserver()
+    return () => observer.disconnect()
+  }, [setupPrefetchObserver, inquiries])
 
   // 필터링된 문의 목록
   const filteredInquiries = inquiries.filter((inquiry) => {
@@ -225,7 +262,9 @@ export default function InquiryList({ initialInquiries }: InquiryListProps) {
       {visibleInquiries.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {visibleInquiries.map((inquiry) => (
-            <InquiryCard key={inquiry.id} inquiry={inquiry} />
+            <div key={inquiry.id} data-inquiry-id={inquiry.id}>
+              <InquiryCard inquiry={inquiry} />
+            </div>
           ))}
         </div>
       ) : (

@@ -3,21 +3,36 @@
 import Link from 'next/link'
 import { Inquiry } from '@/types/inquiry'
 import LinkPreviewThumbnail from '@/components/LinkPreviewThumbnail'
+import { useRouter } from 'next/navigation'
+import { useCallback } from 'react'
 
 interface InquiryCardProps {
   inquiry: Inquiry
 }
 
 export default function InquiryCard({ inquiry }: InquiryCardProps) {
+  const router = useRouter()
+
   // 날짜 포맷팅 함수 - 년월일만 표시
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`
   }
 
+  // 호버 시 프리패칭
+  const handleMouseEnter = useCallback(() => {
+    router.prefetch(`/inquiry/${inquiry.id}`)
+  }, [router, inquiry.id])
+
   return (
-    <Link href={`/inquiry/${inquiry.id}`}>
-      <div className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+    <Link
+      href={`/inquiry/${inquiry.id}`}
+      prefetch={false} // 수동 제어
+    >
+      <div
+        className="group overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
+        onMouseEnter={handleMouseEnter}
+      >
         {/* 문의 헤더 */}
         <div className="h-28 p-4">
           <div className="flex h-full">
