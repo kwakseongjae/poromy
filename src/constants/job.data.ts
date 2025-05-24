@@ -2182,6 +2182,278 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-21T08:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '70',
+    companyName: '국립중앙의료원',
+    jobTitle: '기술직 6급 전산행정(정보운영팀)',
+    conditions: ['시스템 운영', '경력 1년 이상', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '국립중앙의료원 정보운영팀에서 OCS/EMR 시스템 개발 및 운영 업무를 담당할 기술직 6급 전산행정 직원을 채용합니다. 종합병원 이상의 의료기관에서 의료정보시스템 개발 및 운영 경험이 필요한 공공기관 정규직 포지션입니다.',
+    mainTask:
+      'OCS/EMR 시스템 개발 및 운영, 의료정보시스템 관리 및 유지보수, 전산행정 업무 수행',
+    qualifications: [
+      '종합병원 이상의 의료기관에서 OCS/EMR 시스템 개발 및 운영 경력 1년 이상인 자',
+      '경력(재직)증명서에 OCS/EMR 시스템 개발 직무 내용이 포함된 경우에 한하여 인정',
+    ],
+    preferredQualifications: [
+      '웹 프로그래밍(JAVA, Trustform, XFlatform) 개발 경력자',
+      '장애인, 보훈대상자는 관계 법령에 따라 우대',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-09/c535dadf-7869-47c8-9f1a-fec3a8a1002a.png',
+    url: 'https://job.alio.go.kr/recruitview.do?idx=286318',
+    prompt: () => getPositionPrompt('70'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '2025-06-09T23:59:59+09:00',
+  },
+  {
+    id: '71',
+    companyName: '아이샵케어',
+    jobTitle: '[People팀] IT 인프라 엔지니어',
+    conditions: ['인프라 엔지니어', '경력 3-6년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '아이샵케어는 비바리퍼블리카(토스) 계열사로, People팀에서 IT 인프라 운영 및 관리를 담당할 엔지니어를 모집합니다. 네트워크 인프라 관리부터 사내 협업 환경 기획까지 폭넓은 IT 인프라 업무를 담당하는 포지션입니다.',
+    mainTask:
+      '네트워크 장비를 관리하며, 네트워크 인프라를 안정적으로 유지, 사내 단말기(PC, 노트북 등)와 장비를 효율적으로 관리하고, 사용자 환경이 원활히 유지될 수 있도록 지원, 인프라 보안 강화를 위해 취약점 진단을 수행하고, 필요한 보안 조치를 이행, 협업툴/메일/공유 시스템 등 사내 협업 환경을 기획하고 운영, 인프라 장애 발생 시 빠르게 원인을 파악하고, 관련 부서와 협업해 신속하게 대응, 내부 구축된 보안솔루션(백신, DLP, 방화벽)을 관리 및 운영, 모회사(비바리퍼블리카, 토스플레이스)의 IT 및 보안감사를 대응',
+    qualifications: [
+      'IT 인프라 운영 및 관리 경험 3년 이상을 보유하신 분',
+      'On-Premise 또는 AWS 환경 중 하나 이상에서의 인프라 운영 경험이 있으신 분',
+      '네트워크 및 내부 시스템(방화벽, 백신, DLP 등) 관리 경험이 있으신 분',
+      '보안 취약점 진단 및 대응 경험이 있으신 분',
+      '사내 협업툴 및 시스템 운영 경험이 있으신 분',
+      '문제 해결 능력과 커뮤니케이션 역량을 갖추신 분',
+    ],
+    preferredQualifications: [
+      '스타트업 또는 소규모 조직에서 IT 인프라를 직접 운영해 본 경험이 있는 분',
+      'AWS, Azure, GCP 등 클라우드 자격증을 보유하신 분',
+      '다양한 상황에서 주도적으로 문제를 해결하고, 유연하게 대응해본 경험이 있으신 분',
+      '사내 구성원들의 IT 환경을 개선하기 위해 스스로 고민하고 개선해 본 경험이 있는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-12-27/53ff4334-fe36-40f5-947e-21dad8075a23.png',
+    url: 'https://career.ishopcare.co.kr/job_posting/nO0HB0Hm',
+    prompt: () => getPositionPrompt('71'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '72',
+    companyName: '바리코퍼레이션',
+    jobTitle: 'Front-end Engineer',
+    conditions: ['프론트엔드 개발', '경력 1년 이상', '서울 서초구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '바리코퍼레이션은 모터사이클 라이더에게 필요한 슈퍼앱을 지향하는 기업입니다. 모터사이클 중고거래에 신뢰를 부여하고, 정비 서비스부터 라이더 커뮤니티까지 모터사이클 라이딩이 더 즐겁고 안전해질 수 있도록 돕는 일을 하고 있으며, 전기차, UAM을 포괄하는 모빌리티 기업을 목표로 성장하고 있습니다.',
+    mainTask: '라이트바겐 웹 및 네이티브 앱의 Front-end Engineering',
+    qualifications: [
+      'HTML, CSS, JavaScript에 익숙하신 분',
+      'TypeScript와 같은 정적 타이핑 툴 경험이 있으신 분',
+      'React 기반의 SPA 프로젝트 개발 경험이 있으신 분',
+      '사용자 중심적인 사고로 co-work 가능하신 분',
+    ],
+    preferredQualifications: [
+      'Webpack, Parcel 등 모듈 번들러에 대한 이해가 있으신 분',
+      'GraphQL 사용 경험이 있으신 분',
+      'Next.js, Remix.js 등 SPA framework 를 통한 SSR 경험이 있으신 분',
+      'UI/UX 개선과 관련된 고민을 좋아하시는 분',
+      '새로운 기술에 관심이 있고, 성장을 위해 노력하시는 분',
+      'React-Native를 통해 네이티브 어플리케이션을 개발한 경험이 있으신 분',
+      '모터사이클에 대한 관심과 애정을 가지신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-15/d8b4ec68-a56c-4c17-9a0b-f35a0f9a9d5d.png',
+    url: 'https://www.wanted.co.kr/wd/217852',
+    prompt: () => getPositionPrompt('72'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '73',
+    companyName: '놀유니버스',
+    jobTitle: '글로벌 R&D 프론트엔드 개발자',
+    conditions: ['프론트엔드 개발', '경력 3년 이상', '경기 성남시'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "놀유니버스는 여행·여가·문화의 경계 없이 다채로운 경험을 선사하는 플랫폼 기업입니다. 글로벌 R&D 조직은 한국을 찾는 외국인 관광객 대상 서비스인 '인터파크 글로벌'을 담당하며, 공연·뮤지컬·전시 예매부터 투어 및 액티비티 상품, 여행 정보까지 제공하는 종합 여행 플랫폼을 개발하고 있습니다.",
+    mainTask:
+      '글로벌 R&D 구성원 뿐만 아니라 놀유니버스의 다양한 팀과 협업하여 인터파크 글로벌 웹 페이지를 개발, 다양한 기기와 브라우저, 인터파크 글로벌 앱 내의 웹뷰 모두에서 잘 작동하는 웹서비스를 설계하고 구현, 글로벌 R&D 구성원이 인터파크 글로벌 서비스를 운영할 때 사용하는 관리 페이지를 개발, 다른 프론트엔드 개발자와 토의하며 프론트엔드 개발 환경을 개선',
+    qualifications: [
+      '프론트엔드 개발 경력 3년 이상이신 분',
+      'HTML, CSS, JavaScript, HTTP 등 웹 기술과 모던 브라우저 동작 방식에 대한 깊은 이해가 있으신 분',
+      '자료구조, 알고리즘 등 컴퓨터 과학 기초 지식과 TypeScript 같은 정적 타입 언어에 대한 경험과 이해가 있으신 분',
+      'Next.js 기반 개발 경험이 있고, 업무 목적에 맞는 해결책을 스스로 제안하실 수 있는 분',
+      '동료와 고민을 나누고, 실패 경험도 편하게 공유하실 수 있는 분',
+    ],
+    preferredQualifications: [
+      '앱 내 WebView 환경에서 서비스 개발 및 운영 경험이 있으신 분',
+      'Next.js App Router 기반 프로젝트에 CloudFront 캐시 적용 경험이 있으신 분',
+      'CSS-in-JS 사용, SEO 및 성능 최적화, 이벤트 트래커(GA 등) 개선 경험이 있으신 분',
+      '모노레포 기반 프론트엔드 앱 또는 라이브러리 운영, E2E 테스트 구성 경험이 있으신 분',
+      '오래된 코드를 점진적으로 개선하거나 리팩토링한 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-01-09/b4077d20-5683-4b39-9b28-7b932889b5d3.png',
+    url: 'https://www.wanted.co.kr/wd/285212',
+    prompt: () => getPositionPrompt('73'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '74',
+    companyName: '메디쿼터스',
+    jobTitle: 'HRIS 풀스택',
+    conditions: ['풀스택 개발', '경력 1-3년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '메디쿼터스는 글로벌 1등 패션&뷰티 커머스를 목표로 10개 이상의 글로벌 국가에서 20개 이상의 패션, 뷰티 브랜드와 플랫폼을 운영하고 있습니다. 누적 735억 원의 투자를 유치하였고, 창업 후 7년 만에 연 매출 2,000억 원, 글로벌 연 매출 500억 원을 달성한 기업입니다. 이 포지션은 인사본부 인사팀 HRIS파트에서 사내 인사 시스템을 개발하는 역할입니다.',
+    mainTask:
+      '사내 인사 시스템(HRIS) 신규 기능 설계·개발 및 기존 모듈 고도화, React + Vite 기반 프론트엔드 UI/UX 구현 및 렌더링 최적화, Golang gin, Java Spring 기반 REST API 설계·개발 및 서버 인프라 운영, PostgreSQL 데이터베이스 모델링·정규화 및 성능 튜닝, AWS(EC2·RDS·S3) 배포 및 GitHub Actions 기반 CI/CD 파이프라인 구축·관리, 대규모 인사 데이터 ETL 파이프라인 설계·구축',
+    qualifications: [
+      '4년제 학사 이상',
+      '1년 이상 ~ 3년 이하 경력',
+      '포트폴리오 / GitHub 링크 제출 우대',
+      '웹 서비스 개발 경력 1년 ~ 3년 또는 이에 준하는 역량을 보유하신 분',
+      'React, Vue, Angular 등 SPA 프레임워크/라이브러리 사용해 보신 분',
+      'PostgreSQL 등 관계형 DB 설계 및 구축해 보신 분',
+      'RESTful API를 설계하고 개발해 보신 분',
+      'JavaScript(TypeScript), Python, Golang 등 언어 중 1개 이상 능숙하신 분',
+      'Git 기반 협업 및 코드 리뷰에 익숙하신 분',
+      '사용자 중심 사고와 원활한 커뮤니케이션 역량을 갖추신 분',
+    ],
+    preferredQualifications: [
+      'AWS 운영 및 비용 최적화 경험을 보유하신 분',
+      'Docker 기반 컨테이너 오케스트레이션(Kubernetes·ECS) 경험을 보유하신 분',
+      'TypeScript를 기반으로 풀스택 개발을 수행해 보신 분',
+      '제품 기획 배포·운영 전 주기 경험을 보유하신 분',
+      'GitHub Actions 등 CI/CD 구축해 보신 분',
+      'HR·SaaS 도메인 서비스 개발 경험을 보유하신 분',
+      '컴퓨터공학 등 관련 전공을 이수하신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-27/d4abcc56-07d5-4831-a1fd-3c4a3f551894.png',
+    url: 'https://www.wanted.co.kr/wd/285197',
+    prompt: () => getPositionPrompt('74'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '2025-06-30T23:59:59+09:00',
+  },
+  {
+    id: '75',
+    companyName: '오케이포스',
+    jobTitle: 'POS 개발자',
+    conditions: ['소프트웨어 개발', '경력 2-5년', '서울 금천구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '오케이포스는 오프라인 결제데이터를 누구나 손쉽게 사용할 수 있는 형태의 데이터로 가공하여 Hardware Solution을 뛰어넘어 온라인 스토어, 배달, 스마트오더, CRM 등 경제활동에 필요한 모든 기술적 지원을 원스톱으로 해결하는 회사입니다. 이 포지션은 VB 6.0, C#, MFC, DBMS 등을 활용한 클라이언트 기반 POS 시스템 개발을 담당합니다.',
+    mainTask:
+      'POS 시스템 기능 개발, 외부 시스템과의 연동 기능 개발, POS 시스템의 유지 보수',
+    qualifications: [
+      '초대졸이상',
+      '클라이언트 개발 경력(2년 이상) 보유하신 분',
+      'VB 6.0, C#, MFC를 활용한 개발이 가능하신 분',
+      'MS-SQL DBMS를 활용한 개발이 가능하신 분',
+    ],
+    preferredQualifications: [
+      '컴퓨터공학 관련 전공 보유자',
+      'POS 시스템 개발 경험을 보유하신 분',
+      '기획자, 개발자와의 협업 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-03-28/88d8d26f-b6a5-4b8e-a5dc-4e3ada05706f.jpg',
+    url: 'https://www.wanted.co.kr/wd/285136',
+    prompt: () => getPositionPrompt('75'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '76',
+    companyName: '빗썸',
+    jobTitle: '보안정책 운영 담당자',
+    conditions: ['보안 전문가', '경력 3-5년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '빗썸은 매일 100만명이 방문하고 하루 평균 약 2조 2천억원에 달하는 가상자산이 거래되는 대한민국 최고의 가상자산 거래소입니다. 대용량 트래픽을 안정적으로 처리할 수 있는 고성능 체결엔진을 바탕으로 투명하고 공정한 검증을 거쳐 상장된 가상자산과 NFT를 포함한 다양한 블록체인 기반 콘텐츠 상품군을 통해 최적의 트레이딩 서비스를 제공하고 있습니다.',
+    mainTask:
+      '정보보호 관리체계 운영 활동 (내부 유출 예방 정책 운영 및 모니터링, 주기적 점검 활동 등), 정보시스템 보안성 검토 진행',
+    qualifications: [
+      '정보보호 관련 3년 이상의 경력을 보유하신 분',
+      '서버, DB, 네트워크, 개발환경, 클라우드 등 인프라 제반지식을 보유하신 분',
+      '능동적이고 적극적인 자세로 업무를 수행하시는 분',
+    ],
+    preferredQualifications: [
+      '정보보호 관련 자격(정보보안기사 등)을 보유하신 분',
+      '국가 유공자 · 장애인 등 취업보호대상자는 관계법령에 따라 우대',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-01/14042fa6-a6fb-482f-a940-b4f5b0e01faf.png',
+    url: 'https://www.wanted.co.kr/wd/285133',
+    prompt: () => getPositionPrompt('76'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '77',
+    companyName: '벙커키즈',
+    jobTitle: 'Tech - Frontend Engineer',
+    conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 서초구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '벙커키즈는 누적 투자금 32억 원을 유치한 AI 콘텐츠 스타트업으로, 2번의 EXIT 경험이 있는 창업자 출신 구성원들이 모인 소수 정예 팀입니다. AI 캐릭터 채팅 서비스를 중심으로 Next Contents를 가장 매력있게 전달하는 플랫폼을 목표로 하며, co-founding 멤버를 찾고 있습니다.',
+    mainTask:
+      'React, Nextjs, Capacitorjs(주로 웹뷰, 필요시 Native module)로 웹/앱 서비스 개발, Product Owner / Designer / Stakeholder 와 긴밀히 협업하여 복잡한 비즈니스 요구사항을 단순화 시키고, 이를 높은 수준의 Front-end 디자인으로 완성시켜 여러 번 반복되는 테스트를 최소의 개발비용으로 지원',
+    qualifications: [
+      '프론트엔드 개발 경험 3년 이상 보유',
+      'React 프레임워크를 활용한 웹 애플리케이션 개발 경험이 있는 분',
+      'React, Web Browser에 대한 높은 수준의 이해도를 가진 분',
+      'React/Nextjs 기술 트랜드를 따라가며 각 기술 스택의 장단점을 알고 적용 가능하신 분',
+      'PO가 작성한 제품 요구사항을 보고 의사소통을 통해 task를 정의하고 요구사항을 적절히 조율하여 비즈니스에 맞는 개발을 할 수 있는 분',
+    ],
+    preferredQualifications: [
+      '백엔드 개발 경험, end-to-end 프로덕트 개발 경험',
+      '스타트업 코파운더 / 초기 멤버 경험',
+      '최신 AI 테크 서비스(Cursor.AI 등)의 사용을 통해 생산성을 올리는데 거리낌이 없는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-04-07/928caffa-f612-4f5e-b994-6c7d2c462aa0.png',
+    url: 'https://www.wanted.co.kr/wd/285121',
+    prompt: () => getPositionPrompt('77'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '78',
+    companyName: '벙커키즈',
+    jobTitle: 'Tech - Backend Engineer',
+    conditions: ['백엔드 개발', '경력 3년 이상', '서울 서초구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '벙커키즈는 누적 투자금 32억 원을 유치한 AI 콘텐츠 스타트업으로, 2번의 EXIT 경험이 있는 창업자 출신 구성원들이 모인 소수 정예 팀입니다. AI 캐릭터 채팅 서비스를 중심으로 Next Contents를 가장 매력있게 전달하는 플랫폼을 목표로 하며, co-founding 멤버를 찾고 있습니다.',
+    mainTask:
+      '제품요구사항에 맞춰 AI 캐릭터 채팅 서비스의 코어 기능을 담당하는 Backend API를 설계하고 개발, LLM(Gemini, GPT 등)을 활용한 생성형 AI 기반 기능 구현을 주도, 기획자, 디자이너, 프론트엔드 개발자와의 긴밀한 협업을 통해 Web / App 전반의 서비스 품질을 높이는데 기여',
+    qualifications: [
+      'Python 기반 웹 개발 실무 경험 3년 이상이신 분',
+      '서비스 레벨의 API 설계 및 개발 경험이 있으신 분',
+      'Git, Docker 등의 환경에서의 배포 및 운영 자동화에 익숙하신 분',
+      '기획자/디자이너/개발팀원을 포함한 비개발직군과의 원활한 커뮤니케이션 능력을 갖춘 분',
+      '문제를 정의하고, 데이터 기반으로 구조적 해결책을 도출하는 역량을 갖춘 분',
+    ],
+    preferredQualifications: [
+      'LLM (GPT, Gemini 등) 기반 기능을 위한 API 설계 및 응답 구조 최적화 경험',
+      'Pandas, NumPy 등 데이터 분석 라이브러리 활용 경험',
+      '콘텐츠 기반 서비스(웹소설, 웹툰, 게임 등)에 대한 높은 이해 또는 애정이 있는 분',
+      'Prompt 엔지니어링, LLM 파이프라인 설계 등 생성형 AI 기술에 대한 기본 이해가 있는 분',
+      '기획과 설계에서 적극적으로 참여하신 분',
+      'AI를 활용한 작업 효율화에 관심이 있으신 분',
+      '사내 기술 스터디와 독서모임(클린 애자일, 훅 등)을 통해 자신을 성장시키려는 열망이 높은 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-04-07/928caffa-f612-4f5e-b994-6c7d2c462aa0.png',
+    url: 'https://www.wanted.co.kr/wd/285119',
+    prompt: () => getPositionPrompt('78'),
+    uploadedAt: '2025-05-25T00:00:00+09:00',
+    deadline: '상시 채용',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
