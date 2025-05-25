@@ -2454,6 +2454,165 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-25T00:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '79',
+    companyName: '라이너(Liner)',
+    jobTitle: 'DevOps Engineer',
+    conditions: ['인프라 엔지니어', '경력 3-15년', '서울 마포구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '라이너는 믿을 수 있는 AI로 정보 탐색을 혁신하는 AI 스타트업으로, 전세계 수백만 명이 사용하는 AI 검색 서비스를 제공합니다. 지금까지 438억 원의 투자를 유치했으며, 서울과 미국 오피스의 60여 명의 팀원들과 함께 세상에서 가장 정확한 AI Search를 만들고 있습니다. 100명 규모로 팀을 확장할 계획으로 빠르게 성장하는 AI 시장에서 글로벌 임팩트를 함께 만들어가고 있습니다.',
+    mainTask:
+      '지속적이고 안정적인 서비스 운영을 위해 인프라를 구축하고 모니터링, CI/CD 파이프라인을 포함하여 팀에 적합한 각종 환경과 Workflow를 설계하고 구축, 효율적인 운영을 위해 시스템 최적화 및 모니터링 방법을 제안하고 도입, Public Cloud 인프라 리소스를 설계하고, 생성하며, 비용을 관리하고 유지보수, 필요하면 특정 프로젝트 TF팀의 소프트웨어 개발자로 참여하여 활동',
+    qualifications: [
+      '만 3년 이상 Software Engineer로써 Java, Kotlin, Go, Python, Javascript 등의 언어로 상용 서비스를 개발해 본 경험이 있는 분',
+      '만 2년 이상 실제 GCP, AWS 같은 Public Cloud에 서비스를 배포하고 운영해 본 경험이 있는 분',
+      'Docker, Kubernetes, ArgoCD, Github Actions 등을 활용한 컨테이너 기반의 서비스 개발 및 운영 경험이 있는 분',
+      'Prometheus, Datadog 등의 모니터링 서비스를 구축 활용해 본 경험이 있는 분',
+    ],
+    preferredQualifications: [
+      '소규모 엔지니어링 팀 리드 경험이 있는 분',
+      '유니콘 이상의 스타트업에서 대규모 인프라 구축 및 운영 경험이 있는 분',
+      'Monolithic 서비스에서 MSA로 서비스 고도화 작업에 참여 경험이 있는 분',
+      '서비스 무중단 아키텍처에 대한 설계, 구축, 운영, 장애 대응 경험이 있는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-15/6de391fb-96ce-4523-a81a-c14643c0a793.png',
+    url: 'https://www.wanted.co.kr/wd/285192',
+    prompt: () => getPositionPrompt('79'),
+    uploadedAt: '2025-05-25T20:00:00+09:00',
+    deadline: '2025-05-31T23:59:59+09:00',
+  },
+  {
+    id: '80',
+    companyName: '라이너(Liner)',
+    jobTitle: 'Search Engineer (검색 엔지니어)',
+    conditions: ['검색 엔지니어', '경력 3년 이상', '서울 마포구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '라이너는 믿을 수 있는 AI로 정보 탐색을 혁신하는 AI 스타트업으로, 전세계 수백만 명이 사용하는 AI 검색 서비스를 제공합니다. 지금까지 438억 원의 투자를 유치했으며, 서울과 미국 오피스의 60여 명의 팀원들과 함께 세상에서 가장 정확한 AI Search를 만들고 있습니다. 이 포지션은 LLM RAG Agent를 위한 검색 시스템을 구축하고 최적화하는 역할입니다.',
+    mainTask:
+      'Liner 서비스 데이터 또는 크롤링 된 웹 문서를 활용한 검색 시스템을 구축, LLM RAG Agent를 위한 검색 서비스 Retrieval 및 Ranking을 최적화, 검색 시스템에 대한 안정적인 운영 및 모니터링 시스템을 구축, 검색 시스템 기술 동향 파악 및 Liner 검색 시스템 로드맵을 설정',
+    qualifications: [
+      '프론트엔드 개발 경력 3년 이상 또는 그에 준하는 경험을 가지신 분',
+      'Typescript, React, Next.js에 능숙하신 분',
+      '프론트엔드 기술과 트렌드를 꾸준히 학습하고 적절한 기술을 선택하여 제품에 적용해본 경험이 있으신 분',
+      '지속적인 배움과 지식 공유에 관심이 많으신 분',
+      '다양한 직군과 원활하게 소통하며 프로젝트를 성공적으로 배포해 본 경험이 있으신 분',
+      '1년 이상 하나의 제품을 꾸준히 개선하고 성장시킨 경험이 있으신 분',
+    ],
+    preferredQualifications: [
+      'LLM 및 RAG 기반 서비스에 대한 이해와 관심이 있으신 분',
+      'ANN (Approximate Nearest Neighbor) 및 Vector 기반 데이터베이스에 대한 이해도가 높으신 분',
+      '제품 직군 구성원들과 문제를 함께 정의하고 해결한 협업 경험이 있는 분',
+      '팀원들과의 소통이 원활하고 뛰어난 개발 역량을 지니신 분',
+      '산업기능요원(현역 및 보충역), 전문연구요원(전직 및 보충역) 지원 가능',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-15/6de391fb-96ce-4523-a81a-c14643c0a793.png',
+    url: 'https://www.wanted.co.kr/wd/285191',
+    prompt: () => getPositionPrompt('80'),
+    uploadedAt: '2025-05-25T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '81',
+    companyName: '우아한형제들(배달의민족)',
+    jobTitle: 'SCM팀 Business Analyst (3~7년이하)',
+    conditions: ['데이터 분석가', '경력 3-7년', '서울 송파구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '우아한형제들의 B마트는 고객이 당장 필요할 때 필요한 만큼 어떤 상품이든 1시간 이내로 배달 받을 수 있는 quick-commerce 서비스입니다. SCM팀은 고객이 원하는 상품을 구매가 가능하도록 적정 발주를 관리하며, 적정재고와 적정발주 관리를 통한 비용의 효율을 추구하고, 더 많은 사업 기회를 창출할 수 있도록 든든한 물류 인프라와 역량을 제공합니다.',
+    mainTask:
+      'B마트 SCM 운영 고도화를 위한 데이터 분석, SQL 등을 활용한 데이터 추출 및 분석 및 인사이트를 도출, 수요예측 고도화 및 행사 예측 모델링 고도화를 통한 업무 효율화 지원, 주요 지표 시각화를 통해 실시간 모니터링 툴 구축 및 운영',
+    qualifications: [
+      '데이터 분석을 통해 인사이트를 도출하고 논리적 사고와 뛰어난 문제 해결 능력을 보유한 분',
+      '원활한 소통 스킬을 바탕으로 유관 부서와 협업 능력을 보유한 분',
+      'SQL, Python, Zeppelin, Redash, Tableau, Airflow 등 데이터 분석 언어 및 도구에 전문성을 보유한 분',
+      '데이터 추출, 관리, 분석 경험이 풍부하며, 데이터 기반 프로젝트에서 성과를 도출한 경험이 있는 분',
+      '업무에 대한 높은 책임감과 변화에 대한 유연성을 갖춘 분',
+    ],
+    preferredQualifications: [
+      '유통,커머스, SCM 등에 대한 경험과 비지니스 이해도가 있는 분',
+      '행사 수요예측 오차율 개선/관리 경험이 있는 분',
+      '조직 목표를 수립하고 달성 관리를 수행한 경험이 있는 분',
+      '유관 부서와의 원활한 소통 및 업무 추진 능력을 보유한 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-23/c34da5aa-25b0-469e-b31e-f46f0ca00b85.png',
+    url: 'https://www.wanted.co.kr/wd/285187',
+    prompt: () => getPositionPrompt('81'),
+    uploadedAt: '2025-05-25T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '82',
+    companyName: '메가인포아이티',
+    jobTitle: '셀프플래너 플랫폼 Frontend 개발자(3년이상)',
+    conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 금천구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "메가인포는 18년간의 경험을 통해 국내 최고의 법인 컨설팅 업체로 성장한 회사입니다. 셀프플래너는 '보험 경험에 가치를 더하고, 보험여정에 혁신을 더하다'라는 미션 아래 보험 상품의 불투명함, 전화보험 영업의 나쁜 경험, 불완전판매 등을 해결하는 혁신적인 플랫폼입니다. 보험이 필요한 사람이 직접 보험설계사가 되어 자신의 보험을 설계하고 가입할 수 있는 플랫폼을 개발하고 있습니다.",
+    mainTask:
+      '서비스 고도화 프론트엔드 개발 및 운영, 파트너 서비스 고도화 프론트엔드 개발 및 운영, 어드민 고도화 및 운영, 신규 앱 개발 및 런칭, 웹 애플리케이션의 사용자 인터페이스 설계 및 구현, HTML, CSS, JavaScript를 활용한 웹 페이지 개발, 디자이너와 협력하여 사용자 경험 개선, 백엔드 개발자와 협업하여 API 연동 및 데이터 처리',
+    qualifications: [
+      'React 프레임워크를 깊이 이해하고 사용해 보신 분',
+      'HTML5, CSS3, Javascript 등 관련 기술에 능숙하신 분',
+      '새로운 기술에 적극적이고 능동적인 분',
+      '협업에 적극적이고, 커뮤니케이션을 유연하게 잘 하시는 분',
+      '5년 이상 react 개발 경력',
+      'HTML, CSS, JavaScript에 대한 깊은 이해',
+      '웹 성능 최적화 및 크로스 브라우저 호환성 문제 해결 능력',
+      'Git 등 버전 관리 시스템 사용 경험',
+    ],
+    preferredQualifications: [
+      '금융 및 보험 관련 프로젝트 경험을 보유하신 분',
+      '마이데이터 API 연동을 통한 APP 개발 프로젝트 경험을 보유하신 분',
+      'UI/UX 디자인에 대한 이해와 경험',
+      '웹 성능 최적화 및 보안 개발에 대한 경험을 보유하신 분',
+      '금융 및 보험 시장 동향과 기술에 대한 지속적인 관심과 학습 의지가 높으신 분',
+      '오픈 소스 프로젝트 기여 경험',
+      '컴퓨터 공학 또는 관련 분야 학사/학위 소지자',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-02-25/3127e2bf-ecdd-49b8-a03c-fc74803d460a.png',
+    url: 'https://www.wanted.co.kr/wd/285164',
+    prompt: () => getPositionPrompt('82'),
+    uploadedAt: '2025-05-25T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '83',
+    companyName: 'Shoplive',
+    jobTitle: 'Software Engineer (Android / 안드로이드)',
+    conditions: ['Android 개발', '경력 3년 이상', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'Shoplive는 라이브 커머스 및 쇼트폼 동영상 서비스를 제공하는 회사로, Android 플랫폼의 다양한 SDK와 모바일 애플리케이션을 개발하고 있습니다. 이 포지션은 Shoplive의 핵심 Android 제품들을 개발하고 운영하는 역할을 담당합니다.',
+    mainTask:
+      'Shoplive Android LivePlayer SDK 개발, Shoplive Android Short-form SDK 개발, Shoplive Android Studio SDK 개발, Shoplive B2C/B2B 모바일 어플리케이션 개발',
+    qualifications: [
+      '3년 이상의 Android 개발 경력자',
+      'Github 또는 참고될 만한 코드 제출',
+      'Java 또는 Kotlin 개발 언어에 능숙한 분',
+      '기획/디자인/비즈니스 등 타 직군과의 협업에 능동적이고 커뮤니케이션이 원활한 분',
+      '빠르게 변화하는 환경에 따라 유연하게 대처하고 사고할 수 있는 분',
+      '끈기를 가지고 집요하게 문제를 해결하는 분',
+      '문제를 스스로 정의하고 해결하는 분',
+    ],
+    preferredQualifications: [
+      'Git-flow를 활용하여 개발해 보신 분',
+      '아키텍쳐, 클린코드, 리펙토링, 코드리뷰에 경험이나 관심이 많으신 분',
+      '본인의 개발 코드의 line 단위 상세한 설명이 가능하신 분',
+      'Flutter 개발 경험 있는 분',
+    ],
+    logoUrl:
+      'https://groupby.kr/_next/image?url=https%3A%2F%2Fg…5deed999cf6435298ccdcf04962d500_P1.png&w=128&q=75',
+    url: 'https://groupby.kr/positions/5124',
+    prompt: () => getPositionPrompt('83'),
+    uploadedAt: '2025-05-25T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
