@@ -35,6 +35,9 @@
     📁 public/prompts/position/
       📄 public/prompts/position/1.md
       📄 public/prompts/position/10.md
+      📄 public/prompts/position/100.md
+      📄 public/prompts/position/101.md
+      📄 public/prompts/position/102.md
       📄 public/prompts/position/11.md
       📄 public/prompts/position/12.md
       📄 public/prompts/position/13.md
@@ -126,6 +129,12 @@
       📄 public/prompts/position/91.md
       📄 public/prompts/position/92.md
       📄 public/prompts/position/93.md
+      📄 public/prompts/position/94.md
+      📄 public/prompts/position/95.md
+      📄 public/prompts/position/96.md
+      📄 public/prompts/position/97.md
+      📄 public/prompts/position/98.md
+      📄 public/prompts/position/99.md
   📁 public/svg/
     📁 public/svg/company/
 📁 scripts/
