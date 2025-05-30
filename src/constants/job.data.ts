@@ -3623,6 +3623,196 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-29T08:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '116',
+    companyName: '네이버클라우드',
+    jobTitle: '[인턴] 이미지 생성 모델 개발 (체험형)',
+    conditions: ['AI/ML 개발', '신입', '경기 성남시', '인턴'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '본 부서는 이미지 생성 및 편집 서비스를 제공하기 위해 다양한 기술을 개발하고 있습니다. Detection, Segmentation (Salient object detection, interactive segmentation, image matting), Generation (text-to-image, inpaint, outpaint) 을 포함한 다양한 비전 분야에서 최신 기술 연구 및 서비스 적용을 진행하고 있습니다.',
+    mainTask:
+      'Diffusion model 을 활용한 비전 생성 모델 훈련 및 개발, Stable Diffusion FLUX 1 등 T2I 모델을 활용하여 downstream task 모델 개발, 이미지 생성 모델 학습을 위한 대규모 데이터 처리 파이프라인 구축, 다양한 Vision 모델과 결합한 이미지 편집 서비스 파이프라인 개발',
+    qualifications: [
+      'AI/ML 관련 프로젝트 경험 3년 이상인 국내/외 정규대학(학사) 재학생/기졸업자 또는 관련 분야 석/박사 과정 3년 이상',
+      '인턴십 기간(약 3개월) 동안 Full-Time 근무가 가능하신 분',
+      'Large Scale image or video 생성 모델링 프로젝트 수행 경험이 있으신 분',
+      '머신러닝, 딥러닝, 컴퓨터 비전 알고리즘에 대한 이해가 있으신 분',
+      '소프트웨어 개발(Python) 및 관리 프로세스 이해가 있으신 분',
+      'AI 관련 최신 논문의 이해, 구현 및 활용 능력이 있으신 분',
+    ],
+    preferredQualifications: [
+      'AI/ML 기술의 서비스화를 통해 주요 지표를 유의미하게 향상시켜 본 경험이 있으신 분',
+      'Large Scale Image / video generative model training 경험이 있으신 분',
+      'Text-to-Image 생성 모델을 활용한 어플리케이션 모델을 만들어 본 경험이 있으신 분',
+      '다양한 아키텍쳐를 사용한 숙련된 모델 학습 경험이 있으신 분',
+      '대형 이미지 / 비디오 생성 모델 학습 or finetuning 경험이 있으신 분',
+      '대규모 gpu 클러스터를 사용한 학습 경험이 있으신 분',
+      'Top-tier computer vision / AI conference 논문 주저자 (CVPR, ICCV, ECCV, NeurIPS, ICLR, AAAI, ICML 등)',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
+    url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003420',
+    prompt: () => getPositionPrompt('116'),
+    uploadedAt: '2025-05-31T08:00:00+09:00',
+    deadline: '2025-06-05T18:00:00+09:00',
+  },
+  {
+    id: '117',
+    companyName: '네이버클라우드',
+    jobTitle: '[NAVER Cloud] 대규모 언어모델 연구 (체험형 인턴)',
+    conditions: ['AI/ML 연구', '신입', '경기 성남시', '인턴'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '본 조직은 대규모 데이터와 연산을 기반으로 네이버 전용 Foundation Model 및 Agent 기술을 연구·개발하며, 생성형 AI 기술의 도입과 확산을 통해 사업 가치를 증대 시키는 역할을 담당합니다.',
+    mainTask:
+      '환각 완화를 위한 post-training 기법 연구, 강화학습을 통한 모델 alignment, LLM embedding의 representation 분석을 통해 언어 표현 능력 탐구, AI 서비스 개발을 위해 자연어처리 대규모 언어모델 기술에 대한 연구를 과학적으로 접근하고 실제 서비스까지 연동, 연구 계획 수립부터 실험 결과 분석에 이르기까지 연구 전 과정을 주도적으로 수행',
+    qualifications: [
+      '국내/외 정규 대학(학사) 재학생 또는 기 졸업자',
+      '인턴십 기간(약 3개월) 동안 Full-Time 근무가 가능하신 분',
+      '자연어처리, LLM, 딥러닝 알고리즘 연구/개발 경험이 있으신 분',
+      'Python 또는 이와 유사한 프로그래밍 언어 사용 경험이 있으신 분',
+      'Pytorch, Tensorflow, Huggingface 등 AI 프레임워크 활용 경험이 있으신 분',
+      'AI 논문을 빠르게 리뷰할 수 있고 작성 경험이 있으신 분',
+    ],
+    preferredQualifications: [
+      'AI, 컴퓨터 과학 또는 관련 기술 분야의 학위 취득자 또는 관련 전공 재학생',
+      'AI 관련 국제 학회 출판 기록이 있으신 분 (ACL, EMNLP, NAACL, NeurIPS, ICML, ICLR 등)',
+      '원활한 커뮤니케이션 역량 및 팀 협업 경험이 풍부한 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
+    url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003434',
+    prompt: () => getPositionPrompt('117'),
+    uploadedAt: '2025-05-31T08:00:00+09:00',
+    deadline: '2025-06-02T18:00:00+09:00',
+  },
+  {
+    id: '118',
+    companyName: '네이버클라우드',
+    jobTitle:
+      '[NAVER Cloud] HyperCLOVA X Multimodal Backbone 및 Multimodal LLM MLOps 개발 (체험형 인턴)',
+    conditions: ['AI/ML 개발', '신입', '경기 성남시', '인턴'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      'HyperCLOVA X VLOps 개발: Vision Model 학습에 있어서의 다양한 Engineering Challenge 들을 해결하고 인적인 공수를 줄여 더 고성능의 모델을 효율적으로 생산하는것을 목표로 합니다. HyperCLOVA X Multimodal Backbone 모델 개발: Vision Foundation Model 로써의 전반적 성능 향상에 도달하기 위하여 더 나은 Multimodal Backbone 을 생산하기 위한 노력을 하고 있습니다.',
+    mainTask:
+      '[VLOps 개발] SuperPod 을 이용한 Model 생산을 위한 F/W 도입과 관련된 Engineering, 데이터 정제 모델 학습 평가 서빙의 자동화를 지원하는 Event Driven Architecture의 시스템 구축, 사내 VLOps 대시보드 및 데이터 관리 툴 운영 보조 [Multimodal Backbone 모델 개발] SuperPod 자원을 활용한 Multimodal Backbone 의 Vision 능력 추가를 위한 모델 학습, SuperPod 을 통한 Backbone 생산을 위한 FW 도입과 관련된 Engineering, 다양한 Multimodal Backbone 이 최종 모델의 성능에 미치는 영향 탐색, 효과적인 Pretraining Recipe 탐색과 Pretraining Data 에 대한 Curation 및 Filtering 작업',
+    qualifications: [
+      '국내/외 정규 대학(학사)재학 또는 그 이상의 학력 보유자 (기졸업자 가능)',
+      '인턴십 기간(약 3개월) 동안 Full-Time 근무가 가능하신 분',
+      'Vision Language Model (LLaVA, Qwen VL, DeepSeek VL) 에 대한 기본적인 지식 및 학습 과정에 대한 이해가 있으신 분',
+      'Python 활용 능력이 있으신 분',
+      '[Multimodal Backbone 모델 개발 지원시] Distributed Training에 대한 이해가 있으신 분',
+    ],
+    preferredQualifications: [
+      '[VLOps 개발] Kubeflow, Argo Workflow 등의 오케스트레이션 툴 활용 경험이 있으신 분',
+      '[VLOps 개발] Kafka, RabbitMQ 등의 메시지큐 기반의 서비스 개발 경험이 있으신 분',
+      '[VLOps 개발] Microservice Architecture(MSA) 기반 아키텍처 설계 경험이 있으신 분',
+      '[VLOps 개발] Event-Driven Architecture(EDA)에 대한 이해 및 경험이 있으신 분',
+      '[VLOps 개발] Pytorch, Huggingface에 대한 높은 이해 및 Custom PretrainedModel 개발 경험이 있으신 분 (이 중 최소 2개 이상에 대한 실질적인 프로젝트 수행 경험 필수)',
+      '[Multimodal Backbone 모델 개발] Challenge 참가 경험 또는 상위 입상 경험이 있으신 분',
+      '[Multimodal Backbone 모델 개발] Deepspeed Zero 등의 학습 가속을 위한 지식이나 경험이 있으신 분',
+      '[Multimodal Backbone 모델 개발] 최소1개월 이상 소요된, 팀 프로젝트를 성공적으로 완료한 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
+    url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003430',
+    prompt: () => getPositionPrompt('118'),
+    uploadedAt: '2025-05-31T08:00:00+09:00',
+    deadline: '2025-06-02T18:00:00+09:00',
+  },
+  {
+    id: '119',
+    companyName: '네이버클라우드',
+    jobTitle: '[NAVER Cloud] AI Application 모델링 엔지니어 (경력)',
+    conditions: ['AI 모델링 엔지니어', '경력 3년 이상', '경기 성남시'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '저희 부서는 LLM을 활용한 다양한 응용 기술 중에서 검색 기술 고도화에 집중하는 부서입니다. 기업 내 검색기술 지원을 위한 솔루션을 개발하고, 검색의 다양한 요소에 LLM을 활용한 튜닝 모델들을 적용합니다. 데이터 수집, 추출, 가공, 색인 등 검색 전반에 걸친 파이프라인을 설계하여 네이버 클라우드에서 제공하는 다양한 SaaS 상품에 적용합니다.',
+    mainTask:
+      'RAG Solution 개발, 최신 Language Model 연구 및 검색서비스에 적용 로직 설계, FineTuning을 활용한 검색 특화 모델 개발',
+    qualifications: [
+      '검색 모델링 경력을 3년 이상 갖추신 분',
+      'Language Model 활용 경험이 있으신 분',
+      'Python 중급 이상이신 분',
+    ],
+    preferredQualifications: [
+      'K8S 환경에서의 어플리케이션 개발 경험이 있으신 분',
+      'FineTuning 경험이 있으신 분',
+      'RAG 및 검색 서비스 운영 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
+    url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003413',
+    prompt: () => getPositionPrompt('119'),
+    uploadedAt: '2025-05-29T08:00:00+09:00',
+    deadline: '2025-06-09T17:00:00+09:00',
+  },
+  {
+    id: '120',
+    companyName: '네이버클라우드',
+    jobTitle: '[NAVER Cloud] HyperCLOVA X 연구/개발 (경력)',
+    conditions: ['AI 연구/개발', '경력 3년 이상', '경기 성남시'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      'HyperCLOVA X의 다양한 역량 개발을 담당하는 4개 부문(Agentic 역량 개발 모델러, Agentic 역량 개발 리서치 엔지니어, 이미지/비디오 생성 역량 개발, 학습 시스템 개발/최적화)에서 AI 기술의 최전선에서 혁신적인 솔루션을 개발합니다.',
+    mainTask:
+      '[Agentic 모델러] LLM 기반 챗봇 자동화 워크플로우 대화형 시스템 등 에이전트 및 서비스 설계 개발 배포, 프롬프트 엔지니어링 및 LLM 파인튜닝으로 특정 태스크/도메인 최적화, 고품질 데이터셋 큐레이션 전처리 및 평가 메트릭 설계로 모델 성능 향상 [Agentic 리서치 엔지니어] Next.js TypeScript/JavaScript로 풀스택 웹 애플리케이션 설계 및 구현, Python 기반 API 서버 라이브러리 개발 및 LLM 연동, 프롬프트 엔지니어링으로 LLM 성능 최적화 [이미지/비디오 생성] 대규모 GPU 클러스터 활용 모델 학습, FSDP Deepspeed Pipeline Parallelism 등 분산학습 프레임워크/기술 도입 및 계산 최적화, Ray PySpark 기반 데이터 전처리 파이프라인 구축 [학습 시스템] 대규모 학습 데이터의 전처리 및 데이터 생산 시스템 개발, 대규모 GPU 분산 학습 시스템 분석 및 최적화, 새로운 학습 최적화 기법 발굴 및 내재화',
+    qualifications: [
+      '3년 이상의 유관 경력을 보유하신 분',
+      '[Agentic 모델러] LLM 활용 에이전트(챗봇, RAG 시스템, 자동화 등) 모델 학습 능력이 있으신 분',
+      '[Agentic 리서치 엔지니어] TypeScript/JavaScript, Python 기반 3년 이상 실무 경험이 있으신 분',
+      '[이미지/비디오 생성] 3년 이상 딥러닝 모델 개발 경험이 있으신 분, Python + PyTorch 실무에 능숙하신 분',
+      '[학습 시스템] 대규모 분산 학습 시스템 최적화를 다루거나 개발한 경험이 있는 3년 이상의 경력을 보유하신 분',
+    ],
+    preferredQualifications: [
+      '[Agentic 모델러] Python API 서버 개발 및 최적화 경험이 있으신 분, 웹 크롤링 도커 CI/CD 파이프라인 구축 경험이 있으신 분',
+      '[Agentic 리서치 엔지니어] LLM 프롬프트 엔지니어링 파인튜닝 경험이 있으신 분, AI/LLM Framework 사용 경험이 있으신 분',
+      '[이미지/비디오 생성] 대규모 GPU 클러스터 활용 분산 학습 경험이 있으신 분, Diffusion 모델 구현 튜닝 경험이 있으신 분',
+      '[학습 시스템] Large-scale Model 학습 시스템 개발/최적화를 위한 Parallelism에 대한 깊은 이해가 있으신 분, GPU architecture에 대한 높은 이해 및 cuda kernel 개발을 통한 최적화 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
+    url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003416',
+    prompt: () => getPositionPrompt('120'),
+    uploadedAt: '2025-05-29T08:00:00+09:00',
+    deadline: '2025-06-09T17:00:00+09:00',
+  },
+  {
+    id: '121',
+    companyName: '네이버클라우드',
+    jobTitle:
+      '[NAVER Cloud] NAVER WORKS 협업 서비스 및 NAVER 개인화 서비스 개발 (경력)',
+    conditions: ['개발', '경력 2년 이상', '경기 성남시'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'NAVER와 LINE WORKS의 다양한 협업 서비스 및 개인화 서비스 개발을 담당하는 6개 부문(Storage Client FE, Storage Server BE, IDP 서비스 FE/BE, 메일 개발/운영, Android 앱 개발)에서 대규모 서비스 개발 경험을 쌓을 수 있습니다.',
+    mainTask:
+      '[Storage Client FE] 네이버 MYBOX 서비스 신규 기능 개발 및 운영, MYBOX WAS서버 개발 및 운영, BFF Admin 등 API서버 개발 및 운영 [Storage Server BE] 파일 저장 및 전송 시스템의 백엔드 아키텍처 설계 및 개발, 대용량 파일 메타데이터 관리를 위한 API 및 서비스 개발 [IDP FE] IDP 서비스 FE 개발 및 운영, 메시지 화상회의 알림 서비스의 FE 개발 [IDP BE] IDP 서비스 back-end 개발 및 운영, 종이문서 디지털화와 데이터 분석을 통한 추천 검색 저장 기능 개발 [메일] 메일 서비스 관련 DBMS 기반 응용 기능 개발 및 운영, 대용량 데이터 및 트래픽 처리 로직 설계 개발 및 운영 [Android] 앱 서비스 과제 개발, App Architecture 개선, 코드 품질 개선',
+    qualifications: [
+      '[Storage Client FE] 프론트엔드 개발 분야 2년 이상의 경력을 보유하신 분, React 기반의 서비스 개발 경험이 있으신 분',
+      '[Storage Server BE] Java 및 Spring Boot 기반의 웹 애플리케이션 개발 경력 2년 이상 ~ 9년 미만',
+      '[IDP FE] FE 개발 경력이 3년 이상 있으신 분, React TypeScript를 사용한 웹 서비스 개발 경험 및 능숙한 활용 능력이 있으신 분',
+      '[IDP BE] Spring boot 및 Java/Kotlin 개발 관련 경험이 2년 이상인 분',
+      '[메일] Linux 환경에서의 C++ 애플리케이션 개발 및 운영 경험이 있으신 분 (경력 2년~7년차)',
+      '[Android] Android 앱 개발 3년 이상 경험이 있으신 분, Kotlin 활용 가능하신 분',
+    ],
+    preferredQualifications: [
+      '[Storage Client FE] Redux Mobx RTK 등 상태관리 라이브러리 사용 경험이 있으신 분, NextJS NestJS Express 등 nodeJS 기반의 서버 개발 경험이 있으신 분',
+      '[Storage Server BE] 대용량 트래픽 및 데이터 처리 운용 경험을 보유하신 분, 클라우드 환경에서의 애플리케이션 구축 및 운영 경험을 보유하신 분',
+      '[IDP FE] Vanilla JS HTML CSS 등 웹 표준에 대한 깊은 이해를 바탕으로 프레임워크나 라이브러리 도움 없이도 웹 페이지 구성 및 인터랙션 구현이 가능하신 분',
+      '[IDP BE] 클라우드 기반 컨테이너 클러스터 MSA 아키텍쳐 개발 및 운영 경험이 있으신 분',
+      '[메일] 대용량 데이터를 활용한 실시간 또는 배치 처리 서비스 개발 및 운영 경험이 있으신 분',
+      '[Android] Concurrency Programming 에 대한 이해도가 높으신 분, Jetpack Compose를 통한 개발 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/9709da8f-5648-444f-b23c-4b9f633b9e5f.png',
+    url: 'https://recruit.navercloudcorp.com/rcrt/view.do?annoId=30003408',
+    prompt: () => getPositionPrompt('121'),
+    uploadedAt: '2025-05-29T08:00:00+09:00',
+    deadline: '2025-06-09T17:00:00+09:00',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
