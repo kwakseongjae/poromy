@@ -4112,6 +4112,172 @@ export const jobs: Job[] = [
     uploadedAt: '2025-05-31T08:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '131',
+    companyName: '번개장터',
+    jobTitle: 'DevSecOps Engineer (DevOps / 데브옵스)',
+    conditions: ['DevOps', '경력 2-5년', '서울 서초구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '누적 가입자 2천만, DAU 100만의 C2C 리커머스 플랫폼 번개장터의 시스템을 관리하고 운영하는 DevSecOps Engineer',
+    mainTask:
+      'AWS 기반의 서비스 인프라를 운영하고 고도화, 인프라/어플리케이션 모니터링 시스템을 운영하고 고도화, CI/CD 자동 배포환경을 관리하고 고도화, HA/DR Infra Architecture를 설계, Performance Tuning 및 Troubleshooting을 진행, 서비스를 모니터링하고 장애에 대응',
+    qualifications: [
+      '컴퓨터공학 학사 학위 또는 이에 준하는 학위를 보유하신 분',
+      '2년 이상의 AWS 기반 인프라 설계 및 운영 경험을 보유하신 분',
+      'Java/Kotlin, Python 중 하나 이상의 언어를 이용한 서비스 개발 경험을 보유하신 분',
+      'OSI 7 Layer, CIDR, 표준 Protocol 등 네트워크 기본적인 지식을 보유하신 분',
+      '강한 책임감 및 주인의식을 보유하고 있으며, 서비스 가용성/무결성에 대한 중요성을 인식하고 계신 분',
+    ],
+    preferredQualifications: [
+      'AWS의 다양한 관리형 서비스 사용 경험이 있으신 분',
+      'Kubernetes 기반의 서비스 운영 경험이 있으신 분',
+      'Istio를 이용한 서비스 메쉬 운영 경험이 있으신 분',
+      '대용량 트래픽 서비스 운영 경험이 있으신 분',
+      'Micro Service 설계 및 운영 경험이 있으신 분',
+      '정보보호 및 개인정보보호 관리체계(ISMS-P)를 준수하는 인프라 및 네트워크 보안에 대해 깊은 이해를 갖고 계신 분',
+      'IaC(Terraform, CloudFormation 등) 경험이 있으신 분',
+      'RDBMS(MySQL) 에 대한 개발 및 운영 경험 보유',
+      'SRE / DevOps 문화에 경험이 있거나 관심이 있으신 분',
+      '신기술 학습을 좋아하고 시스템 개선에 적극 활용 가능하신 분',
+      '원활한 커뮤니케이션 능력을 갖추신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-27/b6afcbb7-de5e-4c5d-b2b8-774f5c24349e.png',
+    url: 'https://team.bgzt.co.kr/ko/o/159067',
+    prompt: () => getPositionPrompt('131'),
+    uploadedAt: '2025-06-01T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '132',
+    companyName: '야놀자',
+    jobTitle: '[Y-NEXT] Software Engineer - IAB',
+    conditions: ['AI/ML 개발', '경력 4년 이상', '서울 강남구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '야놀자 IAB(Innovate and Beyond) 조직에서 LLM 관련 인프라와 어플리케이션 개발을 담당하며 글로벌 AI 서비스를 강화하는 Software Engineer',
+    mainTask:
+      '대규모 언어 모델(LLM), 음성 인식 등 다양한 AI 모델의 개발 및 최적화, AI 모델을 활용한 응용 서비스 설계 및 구현 (예: 챗봇, 음성 기반 인터페이스 등), 모델 평가 지표 설계 및 성능 개선을 통한 서비스 품질 향상, AI 모델의 학습, 테스트, 추론을 위한 데이터 파이프라인 및 인프라 구축, AI 모델 서빙 및 운영을 위한 MLOps 파이프라인 설계 및 구축, 클라우드 기반(AWS, GCP 등) 환경에서의 모델 배포 및 운영 자동화, 최신 AI 기술 트렌드 분석 및 내부 공유를 통한 기술 내재화, 성능 모니터링, 로그 분석 등 안정적인 운영을 위한 시스템 설계',
+    qualifications: [
+      '자연어 처리(NLP), LLM 관련 프로젝트 경험이 있으신 분',
+      '문제 해결에 대한 체계적인 접근 방식과 분석 능력을 보유하고 계신 분',
+      '새로운 기술에 대한 학습 의지와 연구 정신이 있으신 분',
+      '기술적 내용을 명확하게 문서화하고 공유할 수 있는 능력을 보유하고 계신 분',
+    ],
+    preferredQualifications: [
+      'ICPC, KOI, IOI 등 problem-solving competition 참여 경험이 있으신 분',
+      '인공지능 관련 석사 이상 학위를 보유하고 계신 분',
+      'ML 관련 CI/CD 파이프라인 구축 경험이 있으신 분',
+      '대규모 언어 모델(LLM) 서빙 최적화 경험이 있으신 분',
+      'Kaggle 등 AI 경진대회 참가 경험이 있으신 분',
+      '프로그래밍 언어를 쉽게 배우며, 특정 언어나 프레임워크에 구애받지 않고 다양하게 활용하시는 분',
+      '오픈소스 프로젝트 기여 경험이 있으신 분',
+      '실시간 시스템의 성능 최적화 경험이 있으신 분',
+      '팀 내 지식 공유 및 세미나 발표 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-30/994c391c-676f-4c93-9c06-c30ea90e3477.png',
+    url: 'https://careers.yanolja.co/ko/o/158027',
+    prompt: () => getPositionPrompt('132'),
+    uploadedAt: '2025-06-01T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '133',
+    companyName: 'LINE Plus',
+    jobTitle: 'Cloud Storage Service Engineer',
+    conditions: ['클라우드 스토리지 개발', '경력 2년 이상', '경기 분당'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '전 세계적으로 확장 중인 LINE의 글로벌 서비스를 지원하기 위해 안정적이고 효율적인 스토리지를 제공하는 Cloud Storage Service Engineer',
+    mainTask:
+      '사내 Private Cloud를 위한 스토리지 서비스 개발 및 운영, 스토리지 서비스 운영 자동화, 모니터링, 알람 및 로그 분석 시스템 구축, 긴급 장애 대응',
+    qualifications: [
+      '2년 이상 OpenStack 혹은 Kubernetes 환경에서 오픈소스 스토리지(Ceph) 서비스를 제공한 경험이 있으신 분',
+      'Kubernetes CSI 및 Storage Operator를 활용한 운영 자동화 구축 경험이 있으신 분',
+      'CI/CD 운영 및 구축 경험이 있으신 분',
+      '해외 출장 및 근무에 결격 사유 없으신 분',
+    ],
+    preferredQualifications: [
+      'Private Cloud 서비스 개발 및 운영 경험이 있으신 분',
+      'Git을 통한 협업 경험이 있으신 분',
+      'C++, Go, Python 중 하나 이상의 프로그래밍 언어가 가능하신 분',
+      '오픈소스(Ceph) Contribution 경험이 있으신 분',
+      '비즈니스 수준의 일본어 혹은 영어 역량을 가지신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-03-27/afcf3c0f-7071-4df0-9c71-55fade06f777.png',
+    url: 'https://careers.linecorp.com/ko/jobs/2691',
+    prompt: () => getPositionPrompt('133'),
+    uploadedAt: '2025-06-01T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '134',
+    companyName: '피클플러스',
+    jobTitle: '주니어 프론트엔드 개발자 채용 (병역특례 가능)',
+    conditions: ['프론트엔드 개발', '경력 2-5년', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "대한민국 1위 공동구독 플랫폼에서 글로벌 시장을 향한 '구독 슈퍼앱'으로 성장중인 피클플러스의 프론트엔드 개발자",
+    mainTask:
+      'TypeScript, React, Next.js 기반 피클플러스의 웹 프론트엔드 시스템을 개발하고 개선, 서비스 운영을 위한 백오피스 시스템을 개발',
+    qualifications: [
+      '웹 프론트엔드 개발 업무 경력 2년 이상 혹은 유사한 경험이 있으신 분',
+      '한 가지 이상의 JavaScript 프레임워크 사용 경험이 있으신 분 (React 혹은 Vue)',
+      'HTTP 통신에 대한 기본적인 이해와 REST API 클라이언트 개발 경험이 있으신 분',
+      'Git 버전관리 시스템에 대한 이해와 사용 경험이 있으신 분',
+      '타 직군과의 협업 및 커뮤니케이션이 원활한 분',
+    ],
+    preferredQualifications: [
+      '성능 최적화와 테스트코드 작성 경험',
+      '코드리뷰를 통한 협업 경험',
+      '단위 테스트 및 UI 테스트 경험',
+      'SSR, 웹뷰 개발 경험',
+      'AWS를 이용한 배포와 운영 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-02-07/3b8414dd-e48d-4c36-ae70-746aa59adbff.webp',
+    url: 'https://pickleplus.ninehire.site/job_posting/mrbM01Um',
+    prompt: () => getPositionPrompt('134'),
+    uploadedAt: '2025-06-01T20:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '135',
+    companyName: '당근',
+    jobTitle: 'Software Engineer Intern, Frontend - Local Business(C2C)',
+    conditions: ['프론트엔드 개발', '경력/신입', '서울 서초구', '인턴'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '동네지도를 통해 동네 이웃과 동네업체의 활발한 연결을 만들어내는 Local Business C2C 팀의 Frontend 엔지니어 인턴',
+    mainTask:
+      '사용자 기여를 통해 당근의 3탭 동네지도에 가치를 만들기, 앱테크 미션 개발 및 런칭으로 사용자들이 동네지도에 더욱 쉽게 기여하며 재미와 동기를 느낄 수 있도록 다양한 앱 테크 미션을 설계, 새로운 기능과 미션을 속도감 있게 도입하고 빠른 피드백을 바탕으로 제품을 개선, 동네 탐험가 사회적 보상 시스템을 지속적으로 개선하여 사용자들이 기여하는 과정에서 성취감을 느끼고 더 많은 참여를 유도할 수 있도록 다양한 보상 매커니즘을 강화',
+    qualifications: [
+      '사용자 경험을 우선으로 생각하며, 주어진 역할을 책임감 있게 수행하고 성과를 만들어내는 분',
+      '다양한 직군의 동료들과 원활하게 소통하며 문제를 해결하고, 피드백을 수용해 개선에 반영할 수 있는 분',
+      '새로운 기술에 호기심을 가지고 문제를 해결하며, 프로덕트의 가치를 높이는 데 기여할 수 있는 분',
+      '가독성이 높고 유지 보수하기 쉬운 코드를 작성하는 것을 중요하게 생각하시는 분',
+      'HTML, CSS, JavaScript 기본 역량 - 웹 개발의 기본 기술 스택에 대한 깊은 이해를 하신 분',
+      'React.js를 활용하여 프로덕트를 개발한 경험이 있으신 분',
+      '타입 안정성과 코드 퀄리티 향상을 위해 TypeScript를 적극적으로 활용하시는 분',
+    ],
+    preferredQualifications: [
+      '모바일 앱 내 웹뷰 개발 경험이 있으신 분',
+      'SSR(Server-Side Rendering), BFF(Backend for Frontend) 등 서버사이드 개발 경험이 있으신 분',
+      'Webpack, Vite 등 번들러 사용에 능숙하신 분',
+      '리팩토링 및 테스트 코드 작성에 익숙하신 분',
+      '프론트엔드 개발부터 배포까지의 전체 프로세스를 경험해 보신 분',
+      '하나의 서비스에 대해 오너십을 가지고 운영해 보신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-31/10e1528b-520a-460f-bf72-b934c6c1807c.jpg',
+    url: 'https://about.daangn.com/jobs/6589261003/',
+    prompt: () => getPositionPrompt('135'),
+    uploadedAt: '2025-06-01T20:00:00+09:00',
+    deadline: '2025-06-08T23:59:59+09:00',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
