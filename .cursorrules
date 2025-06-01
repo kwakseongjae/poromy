@@ -302,6 +302,7 @@
     📄 src/types/supabase.ts
     📄 src/types/svg.d.ts
   📁 src/utils/
+    📄 src/utils/cookie.ts
     📄 src/utils/crypto.ts
     📄 src/utils/date.ts
     📄 src/utils/device.ts

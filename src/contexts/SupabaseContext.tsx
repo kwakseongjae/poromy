@@ -72,18 +72,18 @@ export default function SupabaseProvider({
       } else {
         setIsAdmin(false)
       }
-      router.refresh()
     })
 
     // On mount, fetch isAdmin for initial session
     if (initialSession?.user) {
       fetchIsAdmin(initialSession.user.id)
     }
+    setLoading(false)
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase, router])
+  }, [supabase])
 
   const signOut = async () => {
     setLoading(true)

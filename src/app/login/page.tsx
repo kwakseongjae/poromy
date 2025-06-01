@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useSupabase } from '@/contexts/SupabaseContext'
 import { createClient } from '@supabase/supabase-js'
+import { deleteCookie, getCookie } from '@/utils/cookie'
 
 export default function Login() {
   const [email, setEmail] = useState<string>('')
@@ -17,6 +18,25 @@ export default function Login() {
   const searchParams = useSearchParams()
   const supabase = createBrowserSupabaseClient()
   const { user } = useSupabase()
+
+  // returnUrl을 확인하고 리다이렉트하는 헬퍼 함수
+  const handleRedirectWithReturnUrl = () => {
+    const returnUrlFromCookie = getCookie('returnUrl')
+    const returnUrlFromStorage = localStorage.getItem('returnUrl')
+
+    // 쿠키와 localStorage 정리
+    if (returnUrlFromCookie) {
+      deleteCookie('returnUrl')
+    }
+    if (returnUrlFromStorage) {
+      localStorage.removeItem('returnUrl')
+    }
+
+    // 우선순위: 쿠키 > localStorage > 홈
+    const redirectUrl = returnUrlFromCookie || returnUrlFromStorage || '/'
+
+    router.push(redirectUrl)
+  }
 
   useEffect(() => {
     // URL 파라미터에서 메시지와 에러 처리
@@ -52,14 +72,7 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      const returnUrl = localStorage.getItem('returnUrl')
-      localStorage.removeItem('returnUrl')
-
-      if (returnUrl) {
-        router.push(returnUrl)
-      } else {
-        router.push('/')
-      }
+      handleRedirectWithReturnUrl()
     }
   }, [user, router])
 
@@ -188,8 +201,8 @@ export default function Login() {
           return
         }
 
-        // 인증된 경우 홈으로 리다이렉트
-        router.push('/')
+        // 인증된 경우 적절한 페이지로 리다이렉트
+        handleRedirectWithReturnUrl()
       }
     } catch (error) {
       console.error('Login error:', error)
