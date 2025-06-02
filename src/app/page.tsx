@@ -1,16 +1,18 @@
 import { HomeContainer } from '@/components/home/HomeContainer'
 import { Section } from '@/components/home/Section'
-import JobList from '@/components/position/JobList'
-import CompanyCarousel from '@/components/company/CompanyCarousel'
 import { sortedJobs as jobs } from '@/constants/job.data'
 import { companies } from '@/constants/company.data'
 import Script from 'next/script'
 import HomeCarousel from '@/components/home/HomeCarousel'
-import { HomeInquiry } from '@/components/home/HomeInquiry'
 import { Metadata } from 'next'
 import { encrypt } from '@/utils/crypto'
-import EngagementTracker from '@/components/analytics/EngagementTracker'
 import { getAllKeywords } from '@/constants/seo-keywords'
+import {
+  DynamicJobList,
+  DynamicCompanyCarousel,
+  DynamicHomeInquiry,
+  DynamicEngagementTracker,
+} from '@/components/home/DynamicHomeComponents'
 
 export const metadata: Metadata = {
   title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
@@ -142,18 +144,18 @@ export default function Home() {
       <HomeCarousel />
       <HomeContainer>
         <Section title="채용 공고 별 프롬프트" viewAllLink="/position">
-          <JobList />
+          <DynamicJobList />
         </Section>
 
         <Section title="인기 기업 분석 프롬프트" viewAllLink="/company">
-          <CompanyCarousel />
+          <DynamicCompanyCarousel />
         </Section>
 
         <Section title="채용공고 분석요청" viewAllLink="/inquiry">
-          <HomeInquiry />
+          <DynamicHomeInquiry />
         </Section>
       </HomeContainer>
-      <EngagementTracker />
+      <DynamicEngagementTracker />
     </>
   )
 }
