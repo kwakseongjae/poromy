@@ -5,8 +5,7 @@ import { CursorProvider } from '@/contexts/CursorContext'
 import CustomCursor from '@/components/CustomCursor'
 import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
-import Script from 'next/script'
+import { GoogleAnalytics as NextGoogleAnalytics } from '@next/third-parties/google'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -99,22 +98,6 @@ export default async function RootLayout({
           name="naver-site-verification"
           content="9934f90db2f107b504163e05d916ab579541c6b0"
         />
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
-            `,
-          }}
-        />
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -130,7 +113,11 @@ export default async function RootLayout({
             <main>{children}</main>
           </CursorProvider>
         </SupabaseProvider>
-        <GoogleAnalytics />
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <NextGoogleAnalytics
+            gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
+          />
+        )}
       </body>
     </html>
   )
