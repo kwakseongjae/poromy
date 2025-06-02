@@ -16,7 +16,12 @@ import { useSupabase } from '@/contexts/SupabaseContext'
 import Image from 'next/image'
 import ProfileModal from '@/components/modal/ProfileModal'
 import Sidebar from './Sidebar'
-import { trackNavigationClick } from '@/lib/gtag'
+
+// gtag 함수를 동적으로 임포트
+const trackNavigationClick = async (linkName: string, linkUrl: string) => {
+  const { trackNavigationClick: track } = await import('@/lib/gtag')
+  track(linkName, linkUrl)
+}
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
