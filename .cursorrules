@@ -261,15 +261,18 @@
     📄 src/assets/index.ts
   📁 src/components/
     📁 src/components/analytics/
+      📄 src/components/analytics/ClientAnalytics.tsx
       📄 src/components/analytics/EngagementTracker.tsx
     📁 src/components/common/
       📄 src/components/common/HelpModal.tsx
       📄 src/components/common/NotificationMessage.tsx
+      📄 src/components/common/PerformanceOptimizer.tsx
       📄 src/components/common/PromptContainer.tsx
       📄 src/components/common/SearchBar.tsx
     📁 src/components/company/
       📄 src/components/company/CompanyCarousel.tsx
     📁 src/components/home/
+      📄 src/components/home/DynamicHomeComponents.tsx
       📄 src/components/home/HomeCarousel.tsx
       📄 src/components/home/HomeContainer.tsx
       📄 src/components/home/HomeInquiry.tsx
@@ -294,7 +297,6 @@
     📄 src/components/ClientRedirect.tsx
     📄 src/components/CustomCursor.tsx
     📄 src/components/DeviceAwarePositionView.tsx
-    📄 src/components/GoogleAnalytics.tsx
     📄 src/components/LinkPreview.tsx
     📄 src/components/LinkPreviewThumbnail.tsx
   📁 src/constants/
