@@ -218,7 +218,7 @@ const Navbar = () => {
                   alt="문의하기"
                   width={120}
                   height={20}
-                  className="h-4"
+                  className="h-4 w-30"
                 />
                 <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
                   Free
