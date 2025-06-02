@@ -1,6 +1,21 @@
 import type { NextConfig } from 'next'
 
+// 번들 분석기 설정
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const nextConfig: NextConfig = {
+  // 컴파일러 최적화
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // 실험적 기능
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+
   images: {
     domains: [],
     formats: ['image/avif', 'image/webp'],
@@ -11,7 +26,17 @@ const nextConfig: NextConfig = {
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  webpack(config) {
+
+  webpack(config, { dev, isServer }) {
+    // 프로덕션 빌드에서 번들 크기 최적화
+    if (!dev && !isServer) {
+      config.optimization = {
+        ...config.optimization,
+        usedExports: true,
+        sideEffects: false,
+      }
+    }
+
     // Configuration to convert SVG files to React components
     config.module.rules.push({
       test: /\.svg$/,
@@ -28,4 +53,4 @@ const nextConfig: NextConfig = {
   },
 }
 
-export default nextConfig
+export default withBundleAnalyzer(nextConfig)
