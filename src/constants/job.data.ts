@@ -4597,6 +4597,256 @@ export const jobs: Job[] = [
     uploadedAt: '2025-06-02T18:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '146',
+    companyName: '라포랩스',
+    jobTitle: '서버 엔지니어 (비즈니스 트라이브)',
+    conditions: ['백엔드 개발', '경력 1-6년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "X세대를 위한 패션 플랫폼 '퀸잇'을 운영하는 라포랩스의 비즈니스 트라이브 서버 엔지니어",
+    mainTask:
+      '라포랩스의 비즈니스를 함께 만들어 가는 조직의 서버 엔지니어로서 임팩트를 창출 - 비즈니스와 가장 밀접한 도메인을 개발하며 내/외부 고객의 니즈에 부합하는 인프라를 구축, 플랫폼이 지속적으로 성장할 수 있는 구조를 만들어 갑니다, 백엔드 챕터에 속한 엔지니어로서 기술적인 고도화와 도전을 지속 - 트래픽이 빠르게 늘어나는 상황에서 지속 가능한 기술 개발을 위해 안정적인 시스템을 설계하고 운영, 다양한 도메인의 관점에서 MSA 구조를 더 효율적이고 유연하게 개발, 다양한 자동화 도구를 개발하여 동료들의 업무 효율을 향상시킵니다',
+    qualifications: [
+      '1년 뒤에는 지금보다 10배 이상으로 성장하고 싶은, 성장에 대한 갈증이 크신 분',
+      'Java / Kotlin Spring 사용경험이 있으신 분',
+      'RDBMS를 성능과 트랜잭션을 모두 고려하며 다루실 수 있는 분',
+      '장애를 경험하고 문제를 해결해 보신 경험이 있는 분',
+      '서버(백엔드) 개발 경력이 1년 이상이거나 그에 준하는 실력이 있는 분들을 모시고 있어요',
+      '기술적인 성장 뿐만 아니라, 내가 만드는 서비스를 성공으로 이끄는 것에서 동기부여 받는 분들을 위한 공고예요',
+    ],
+    preferredQualifications: [
+      '창업을 꿈꾸시거나 창업 경험이 있으신 분',
+      '제품 또는 서비스를 주도적으로 개발하신 경험을 갖고 계신 분',
+      '대용량 트래픽을 처리하는 시스템 개발을 경험해보신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-25/624bc6e6-010a-478e-80f5-b443f6c6823e.png',
+    url: 'https://www.wanted.co.kr/wd/286919',
+    prompt: () => getPositionPrompt('146'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '147',
+    companyName: '한국결제네트웍스유한회사',
+    jobTitle: '온라인 결제 서비스 개발',
+    conditions: ['백엔드 개발', '신입', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'VAN, PG, 펌뱅킹 등 다양한 결제 솔루션을 제공하는 핀테크 기업의 eComm솔루션팀 온라인 결제 서비스 개발자',
+    mainTask:
+      '온라인 결제 서비스 개발, JAVA, SPRING 기반 웹 서비스, 카드사 매입 관리, 제휴사 입금정산 및 거래대사, 가맹점 정산 및 매출관리, 배치 프로그램',
+    qualifications: [
+      '경력 : 신입',
+      '학력 : 대졸이상 (4년) 컴퓨터 공학, 웹 개발 등의 전산 관련 전공하신 분',
+      'JAVA 개발 및 RDB를 이해하고 요구사항에 따라 개발할 수 있는 분',
+    ],
+    preferredQualifications: [
+      '성실함, 책임감, 협업 능력을 보유하신 분',
+      'Spring에 대해 이해하고 계신 분',
+      'PG/VAN/핀테크 업계 개발 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-05-28/97dd7f75-b567-4dbf-9eb0-956512ac95e9.png',
+    url: 'https://www.wanted.co.kr/wd/287027',
+    prompt: () => getPositionPrompt('147'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '148',
+    companyName: '제이어스',
+    jobTitle: '웹 프론트엔드 개발 (부산)',
+    conditions: ['프론트엔드 개발', '경력 3-5년', '부산 사상구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '시뮬레이션 기반 AI로 파킨슨병을 예측하고 헬스케어 서비스를 개발하는 제이어스의 웹 프론트엔드 개발자',
+    mainTask:
+      '회사 주요 서비스의 웹 프론트엔드 개발 및 유지보수, 최신 프론트엔드 기술 적용 및 성능 최적화, 웹 접근성 및 사용자 경험 개선, 프론트엔드 개발 프로세스 개선 및 자동화, 프론트엔드 아키텍처 설계 및 구현, 웹 성능 최적화 및 사용자 경험 개선, 백엔드 개발자와 협업하여 RESTful API 연동',
+    qualifications: [
+      'HTML5, CSS3, JavaScript (ES6+)에 대한 깊이 있는 이해',
+      'React, Next.js 기반의 웹 서비스 개발 및 운영',
+      'Styled-components, Emotion 등 CSS-in-JS 활용',
+      'Chart.js, AG Grid 등 차트, 그리드 라이브러리 사용',
+      'Zustand, React Query 등을 이용한 상태 관리',
+      'Git을 이용한 버전 관리 및 협업 능력',
+    ],
+    preferredQualifications: [
+      '웹 성능 최적화 관련 지식 및 경험 (Core Web Vitals, Lighthouse)',
+      'webpack , rollup , esbuild , vite 등 모듈 번들러 사용 경험',
+      'React Server Components(RSC) 등 최신 SSR/SSG 경험',
+      'MFE (Micro Frontends) 아키텍처 적용 경험',
+      '단위 테스트, 통합 테스트 작성 경험',
+      'TypeScript를 활용한 실무 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-04-23/27f51a00-1762-4b2c-97e8-d53b6e96fcf7.jpg',
+    url: 'https://www.wanted.co.kr/wd/181425',
+    prompt: () => getPositionPrompt('148'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '149',
+    companyName: '넥세라',
+    jobTitle: '프론트엔드 개발자 (Frontend Developer)',
+    conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 구로구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'AI 기술과 자동화를 접목한 자체 인재 서치 시스템을 개발하는 채용 컨설팅 서치펌의 프론트엔드 개발자',
+    mainTask:
+      'AI 채용 ERP 프론트엔드 개발 전반, 링크드인 API, OpenAI GPT API, GitHub 등의 외부 API 연동 프론트 설계 및 구현, 검색/필터링, 후보자 프로파일링, 컨택 워크플로우 UI 구성, 내부 백엔드/AI 엔진과의 연동을 고려한 데이터 흐름 설계, 반응형 웹 UI 구현 및 사용자 경험 개선',
+    qualifications: [
+      'React.js 및 TypeScript 기반 SPA 개발 경험 2년 이상',
+      'RESTful API 및 OAuth 기반 API 연동 경험 (예: LinkedIn, OpenAI)',
+      '상태 관리 라이브러리 (Redux, Recoil 등) 활용 경험',
+      '컴포넌트 단위 개발과 Storybook 등 UI 문서화 툴 활용 가능자',
+      'Git 기반 협업 및 CI/CD 경험',
+    ],
+    preferredQualifications: [
+      'Next.js 경험 (SSR, SEO 대응 등)',
+      'Framer Motion 또는 GSAP 등 인터랙션 라이브러리 경험',
+      'Tailwind CSS 또는 디자인 시스템 도입 경험',
+      '검색 UI/UX, 대용량 데이터 테이블 구성 경험',
+      'AI 기반 SaaS 또는 리크루팅 서비스 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-04-29/a3607739-a51c-446f-824d-8be524c85e2b.jpg',
+    url: 'https://www.wanted.co.kr/wd/280711',
+    prompt: () => getPositionPrompt('149'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '150',
+    companyName: '레브잇',
+    jobTitle: '[산업기능요원]Software Engineer(Frontend)',
+    conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 관악구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      "100% 고객신뢰로 경제적인 소비의 가치를 전달하는 초저가 커머스 플랫폼 '올웨이즈'의 Frontend Engineer",
+    mainTask:
+      '올웨이즈 Growth Feature/Commerce Platform 제품의 웹/앱 컴포넌트 설계, 개발, 테스트 및 운영을 담당, 서비스 아키텍처 설계부터 출시까지 전 과정에 참여, Frontend 개발 환경을 구축하고 개선하여, 뛰어난 사용자 경험(UX)과 높은 개발 생산성을 목표합니다',
+    qualifications: [
+      '만 2년 이상의 Frontend 개발 경력에 준하는 역량을 보유하신 분이 필요합니다',
+      'HTML, CSS, TypeScript/JavaScript 에 대한 깊은 이해를 보유하신 분이 필요합니다',
+      'React/Vue/Angular 와 같은 모던 프레임워크 사용에 능숙하신 분이 필요합니다',
+      '사용자 경험(UX)에 대한 관심을 바탕으로 전사적인 관점에서 임팩트를 추구하시는 분이 필요합니다',
+      '빠르게 개발하고 배포하는 조직에서 주도적으로 일해 보신 분이 필요합니다',
+      '단순히 주어진 개발을 해내는 것보다, 주도적으로 문제를 발견하고 분석해 팀에 솔루션을 제안할 수 있는 분이 필요합니다',
+    ],
+    preferredQualifications: [
+      '게임/앱테크/커머스/플랫폼 관련 도메인 경험이 있는 분을 선호합니다',
+      '업무 비효율을 줄이고 자동화와 최적화로 팀의 생산성을 높일 수 있는 분을 선호합니다',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-09-25/98552c2c-0a50-41d3-aea5-40a7b2fcee09.png',
+    url: 'https://www.wanted.co.kr/wd/286688',
+    prompt: () => getPositionPrompt('150'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '151',
+    companyName: '세일즈맵',
+    jobTitle: 'B2B SaaS 풀스택 웹개발자',
+    conditions: ['풀스택 개발', '인턴', '서울 강남구', '인턴'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'B2B 마케터/세일즈를 위한 CRM(B2B SaaS)을 만드는 KAIST 졸업생 팀의 풀스택 웹개발자 인턴',
+    mainTask:
+      '고객 피드백 기반 실시간 개선 - VOC(Voice of Customer) 접수 즉시 개선 작업 착수, 고객 경험 개선 사항을 가장 빠른 시간 내 적용, 개선 효과를 데이터로 측정하고 검증, 기존 개발팀과의 협업 - 기존 개발자(풀스택 6인)와 협업, 기존 코드베이스 인수인계 및 학습, 실제 서비스 운영 중인 기능들의 개선 작업 참여, UX/UI 개선 작업 - 디자이너 2명과 협업하여 사용자 경험 개선, CX팀 2명과 함께 고객 불편사항 해결, Remix (React.js) 기반 프론트엔드 개선, 백엔드 최적화 - Remix (Node.js) 기반 API 성능 개선, PostgreSQL 데이터베이스 쿼리 최적화, 실제 고객 데이터 기반 성능 튜닝',
+    qualifications: [
+      'React 기반 프론트엔드 개발: React, JavaScript/TypeScript를 활용한 웹 애플리케이션 개발 경험',
+      '백엔드 개발 기초: Node.js, Express 또는 유사 프레임워크를 활용한 API 개발 경험',
+      '데이터베이스 활용: PostgreSQL, MySQL 등 관계형 데이터베이스 사용 경험',
+      'Git 협업: GitHub를 통한 코드 버전 관리 및 협업 경험',
+    ],
+    preferredQualifications: [
+      '과거 스타트업 인턴/근무 경험이 있으신 분',
+      '풀스택 웹 개발 프로젝트를 처음부터 끝까지 완성해본 경험이 있으신 분',
+      'SaaS 또는 CRM 도메인에 대한 전반적인 지식이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-01-23/d9f0f933-ab10-4d6d-841f-ae4667fa73e6.png',
+    url: 'https://groupby.kr/positions/5230',
+    prompt: () => getPositionPrompt('151'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '152',
+    companyName: '픽소(PIXO)',
+    jobTitle: '프론트엔드 엔지니어 (주니어)',
+    conditions: ['프론트엔드 개발', '경력 3년', '서울 마포구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '글로벌 앱스토어 누적 다운로드 2000만의 글로벌 SaaS 서비스를 개발하는 프론트엔드 엔지니어',
+    mainTask:
+      '픽소의 글로벌 서비스의 프론트엔드 설계 및 개발 업무를 수행, 픽소의 글로벌 서비스의 사용자 경험 향상을 위한 서비스의 신규 기능을 구축하고 개선, 사용자 중심의 사고를 기반으로 다양한 직군과 협력하여 결과물을 만듭니다',
+    qualifications: [
+      '픽소의 미션과 비전을 이해하고, 공감하실 수 있는 분',
+      'IT 스타트업에서 3년 이상의 프론트엔드 개발 경험 혹은 그에 준하는 역량을 보유하신 분',
+      'HTML5, CSS3, Typescript, ECMAScript의 스펙에 대한 이해가 깊으신 분',
+      'React와 Next.js 프레임워크 활용에 능숙하신 분',
+      '반응형 디자인, 웹 접근성, 웹 표준을 고려한 UI 개발 경험이 있으신 분',
+      '코드/컴포넌트 재사용성에 대한 관심과 생산성 향상에 관심이 많은 분',
+      '다양한 직군의 팀원들과 원활한 커뮤니케이션과 협업이 가능하신 분',
+    ],
+    preferredQualifications: [
+      '난이도 높은 기술 문제를 발견하고 분석해 솔루션을 제안한 경험이 있으신 분',
+      '글로벌 서비스 개발 경험이 있으신 분',
+      '브라우저 렌더링 성능을 고려하여 성능 최적화를 경험 해보신 분',
+      '높은 복잡도의 Single-page Application을 개발한 경험이 있으신 분',
+      'FSD Architecture 에 대해 알고 현업에서 적용해본 경험이 있으신 분',
+      '렌더링 최적화 등 프론트엔드 성능 개선 경험을 보유한 분',
+      '빠르게 개발하고 출시하는 경험을 좋아하시는 분',
+      'AI 기술을 적절히 활용하면서도 전문성을 유지하시는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-11-18/44a8698d-55ea-415a-afe2-73c838557b93.png',
+    url: 'https://www.wanted.co.kr/wd/286971',
+    prompt: () => getPositionPrompt('152'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '153',
+    companyName: 'NHN Injeinc',
+    jobTitle: 'Cloud Platform 개발',
+    conditions: ['풀스택 개발', '경력 3년 이상', '위치 미명시'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '클라우드 분야에서 신뢰성을 인정받고 있는 IT 전문 기업 NHN Injeinc의 Cloud Platform 개발자',
+    mainTask:
+      '하이브리드 클라우드 관리 솔루션 개발, MSA 관련 오픈소스와 연동 개발, 공공 사업 클라우드 관련 R&D 사업 진행',
+    qualifications: [
+      '개발 경력 3년 이상',
+      'FullStack 개발 가능',
+      'Java Backend 개발 및 REST API 클라이언트 개발 경험',
+      'Vue.js 또는 React.js를 사용한 서비스 개발 및 배포 경험',
+      'HTML/CSS/SCSS 활용',
+      'GIT을 통한 버전 관리 경험',
+    ],
+    preferredQualifications: [
+      '협업 툴 사용 경험(Dooray 또는 기타 협업 툴)',
+      'CI/CD 경험',
+      '서버 사이드 개발 경험 또는 백엔드에 대한 기본 이해',
+      '코드 리뷰를 즐기는 분',
+      'Cloud 기술(OpenStack, OpeShift, Kubernetes, Docker 등)에 대한 이해',
+      'Spring Batch 개발 경험',
+      'RabbitMQ, Kafka 개발 경험',
+      'Notification 개발 경험',
+      '모니터링, APM 개발 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-21/7d4f6cac-00c6-4d32-b2f1-7ce92b675c78.png',
+    url: 'https://careers.nhn.com/recruits/4081345147473129339',
+    prompt: () => getPositionPrompt('153'),
+    uploadedAt: '2025-06-03T08:00:00+09:00',
+    deadline: '상시 채용',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
