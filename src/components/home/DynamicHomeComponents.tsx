@@ -7,7 +7,7 @@ export const DynamicJobList = dynamic(
   () => import('@/components/position/JobList'),
   {
     loading: () => (
-      <div className="h-64 animate-pulse rounded-lg bg-gray-200" />
+      <div className="h-64 animate-pulse rounded-lg bg-gray-100" />
     ),
     ssr: false,
   }
@@ -17,7 +17,7 @@ export const DynamicCompanyCarousel = dynamic(
   () => import('@/components/company/CompanyCarousel'),
   {
     loading: () => (
-      <div className="h-48 animate-pulse rounded-lg bg-gray-200" />
+      <div className="h-48 animate-pulse rounded-lg bg-gray-100" />
     ),
     ssr: false,
   }
@@ -30,7 +30,7 @@ export const DynamicHomeInquiry = dynamic(
     })),
   {
     loading: () => (
-      <div className="h-32 animate-pulse rounded-lg bg-gray-200" />
+      <div className="h-32 animate-pulse rounded-lg bg-gray-100" />
     ),
     ssr: false,
   }
