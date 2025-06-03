@@ -225,8 +225,8 @@ const Navbar = () => {
                 <Image
                   src={InquiryTextImage}
                   alt="문의하기"
-                  width={120}
-                  height={20}
+                  width={256}
+                  height={29}
                   className="h-4 w-30"
                 />
                 <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
