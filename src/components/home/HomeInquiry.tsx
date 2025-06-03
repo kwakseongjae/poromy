@@ -72,7 +72,7 @@ export const HomeInquiry = () => {
           <div className="flex justify-end">
             <Link
               href="/inquiry/new"
-              className="flex items-center rounded-md bg-[#3182f6] px-4 py-2 text-white transition-colors hover:bg-blue-600 hover:text-gray-200"
+              className="flex items-center rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700"
             >
               <EditIcon className="mr-1 h-5 w-5" />
               분석요청 등록
