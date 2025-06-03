@@ -21,6 +21,7 @@ export const SectionHeader = ({
         <Link
           href={viewAllLink}
           className="text-text-secondary cursor-pointer text-sm font-semibold"
+          aria-label={`${title} 전체 보기`}
         >
           {viewAllText}
         </Link>
