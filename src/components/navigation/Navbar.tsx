@@ -124,7 +124,11 @@ const Navbar = () => {
           <div className="flex items-center gap-8">
             {/* Logo */}
             <div className="flex items-center">
-              <Link href="/" onClick={() => handleNavigationClick('Logo', '/')}>
+              <Link
+                href="/"
+                onClick={() => handleNavigationClick('Logo', '/')}
+                aria-label="Poromy 홈페이지로 이동"
+              >
                 <LogoIcon className="w-25 sm:w-28 lg:w-32" />
               </Link>
             </div>
