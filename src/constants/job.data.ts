@@ -5081,8 +5081,7 @@ export const jobs: Job[] = [
       '보안 시스템 또는 컨설팅 프로젝트 PM 수행 경험',
       'IT 거버넌스 또는 내부통제 조직 근무 경험',
     ],
-    logoUrl:
-      'https://d2juy7qzamcf56.cloudfront.net/2025-02-20/cba46058-9929-42a9-880f-aa430a81506f.webp',
+    logoUrl: 'https://static.wanted.co.kr/images/wdes/0_4.ab1f0688.png',
     url: 'https://www.wanted.co.kr/wd/286999',
     prompt: () => getPositionPrompt('161'),
     uploadedAt: '2025-06-03T18:00:00+09:00',
