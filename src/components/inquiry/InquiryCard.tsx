@@ -38,9 +38,9 @@ export default function InquiryCard({ inquiry }: InquiryCardProps) {
           <div className="flex h-full">
             <div className="flex min-w-0 flex-1 flex-col justify-between">
               <div className="flex items-start justify-between">
-                <h3 className="group-hover:text-text-secondary line-clamp-2 max-w-full overflow-hidden text-lg font-medium transition-colors">
+                <h4 className="group-hover:text-text-secondary line-clamp-2 max-w-full overflow-hidden text-lg font-medium transition-colors">
                   {inquiry.title}
-                </h3>
+                </h4>
                 <span
                   className={`ml-2 flex flex-shrink-0 items-center justify-center rounded-full px-3 py-2 text-center text-xs leading-none whitespace-nowrap ${
                     inquiry.status === 'pending'

@@ -69,9 +69,9 @@ export default function JobList() {
                 {/* 콘텐츠 영역 - 고정 높이와 내부 flex 구조 */}
                 <div className="flex min-h-0 flex-1 flex-col justify-between p-4">
                   <div className="flex-1">
-                    <h2 className="group-hover:text-text-secondary mb-1 line-clamp-2 text-lg font-semibold text-gray-900">
+                    <h3 className="group-hover:text-text-secondary mb-1 line-clamp-2 text-lg font-semibold text-gray-900">
                       {job.jobTitle}
-                    </h2>
+                    </h3>
                     <div className="mb-4 inline-flex items-center text-sm text-gray-500">
                       <span>{job.companyName}</span>
                       {isNew && (
@@ -127,9 +127,9 @@ export default function JobList() {
                     />
                   </div>
                   <div className="ml-4 min-w-0 flex-1 overflow-hidden">
-                    <h2 className="group-hover:text-text-secondary line-clamp-2 text-lg font-semibold text-gray-900">
+                    <h3 className="group-hover:text-text-secondary line-clamp-2 text-lg font-semibold text-gray-900">
                       {job.jobTitle}
-                    </h2>
+                    </h3>
                     <div className="inline-flex items-center text-sm text-gray-500">
                       <span>{job.companyName}</span>
                       {isNew && (

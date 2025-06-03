@@ -141,6 +141,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <h1 className="sr-only">Poromy - AI 자소서 프롬프트 아카이브 홈페이지</h1>
       <HomeCarousel />
       <HomeContainer>
         <Section title="채용 공고 별 프롬프트" viewAllLink="/position">
