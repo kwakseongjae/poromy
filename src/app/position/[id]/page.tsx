@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       }
     }
 
-    const title = `${job.jobTitle} - ${job.companyName} 채용 공고 분석 및 AI 자소서 프롬프트 - Poromy`
+    const title = `${job.companyName} 채용 - ${job.jobTitle} | Poromy`
     const description = `${job.companyName}의 ${job.jobTitle} 채용 공고 분석과 맞춤형 AI 자소서 프롬프트를 제공합니다. ${job.qualifications.join(', ')} ${job.preferredQualifications.join(', ')} 자격요건에 맞는 최적화된 자기소개서 작성 가이드를 확인하세요.`
 
     const jobPostingSchema = {
