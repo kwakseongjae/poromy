@@ -134,9 +134,9 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden sm:flex sm:items-center sm:gap-4">
+            <div className="hidden sm:flex sm:items-center">
               <div
-                className="group relative cursor-default"
+                className="px-2 py-2"
                 onMouseEnter={() => {
                   setIsModalOpen(true)
                   setHoveredCategory('prompt')
@@ -145,94 +145,106 @@ const Navbar = () => {
                   setIsModalOpen(false)
                   setHoveredCategory(null)
                 }}
-                onClick={handlePromptClick}
               >
-                <div className="flex items-center gap-1 px-2 py-2">
-                  {hoveredCategory && hoveredCategory !== 'prompt' ? (
-                    <DisabledHamburgerIcon className="h-5 w-5" />
+                <div
+                  className="group relative cursor-default"
+                  onClick={handlePromptClick}
+                >
+                  <div className="flex items-center gap-1 px-2 py-2">
+                    {hoveredCategory && hoveredCategory !== 'prompt' ? (
+                      <DisabledHamburgerIcon className="h-5 w-5" />
+                    ) : (
+                      <HamburgerIcon className="h-5 w-5" />
+                    )}
+                    <span
+                      className={`font-semibold select-none ${
+                        hoveredCategory && hoveredCategory !== 'prompt'
+                          ? 'text-text-disabled'
+                          : ''
+                      }`}
+                    >
+                      프롬프트
+                    </span>
+                  </div>
+                  <div
+                    className={`absolute top-full left-0 z-50 ml-2 w-48 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 ${
+                      isModalOpen ? 'block' : 'hidden'
+                    }`}
+                  >
+                    <Link
+                      href="/position"
+                      className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => {
+                        setIsModalOpen(false)
+                        handleNavigationClick(
+                          '채용 공고 분석 프롬프트',
+                          '/position'
+                        )
+                      }}
+                    >
+                      채용 공고 분석 프롬프트
+                    </Link>
+                    <Link
+                      href="/company"
+                      className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => {
+                        setIsModalOpen(false)
+                        handleNavigationClick('기업 분석 프롬프트', '/company')
+                      }}
+                    >
+                      기업 분석 프롬프트
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="px-2 py-2"
+                onMouseEnter={() => setHoveredCategory('guide')}
+                onMouseLeave={() => setHoveredCategory(null)}
+              >
+                <Link
+                  href="/guide"
+                  className="flex items-center gap-1 px-2 py-2"
+                  onClick={() => handleNavigationClick('적용 가이드', '/guide')}
+                >
+                  {hoveredCategory && hoveredCategory !== 'guide' ? (
+                    <DisabledBulbIcon className="h-5 w-5" />
                   ) : (
-                    <HamburgerIcon className="h-5 w-5" />
+                    <BulbIcon className="h-5 w-5" />
                   )}
                   <span
-                    className={`font-semibold select-none ${
-                      hoveredCategory && hoveredCategory !== 'prompt'
+                    className={`font-semibold ${
+                      hoveredCategory && hoveredCategory !== 'guide'
                         ? 'text-text-disabled'
                         : ''
                     }`}
                   >
-                    프롬프트
+                    적용 가이드
                   </span>
-                </div>
-                <div
-                  className={`absolute top-full left-0 z-50 ml-2 w-48 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 ${
-                    isModalOpen ? 'block' : 'hidden'
-                  }`}
-                >
-                  <Link
-                    href="/position"
-                    className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      setIsModalOpen(false)
-                      handleNavigationClick(
-                        '채용 공고 분석 프롬프트',
-                        '/position'
-                      )
-                    }}
-                  >
-                    채용 공고 분석 프롬프트
-                  </Link>
-                  <Link
-                    href="/company"
-                    className="flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={() => {
-                      setIsModalOpen(false)
-                      handleNavigationClick('기업 분석 프롬프트', '/company')
-                    }}
-                  >
-                    기업 분석 프롬프트
-                  </Link>
-                </div>
+                </Link>
               </div>
-              <Link
-                href="/guide"
-                className="flex items-center gap-1 px-2 py-2"
-                onMouseEnter={() => setHoveredCategory('guide')}
-                onMouseLeave={() => setHoveredCategory(null)}
-                onClick={() => handleNavigationClick('적용 가이드', '/guide')}
-              >
-                {hoveredCategory && hoveredCategory !== 'guide' ? (
-                  <DisabledBulbIcon className="h-5 w-5" />
-                ) : (
-                  <BulbIcon className="h-5 w-5" />
-                )}
-                <span
-                  className={`font-semibold ${
-                    hoveredCategory && hoveredCategory !== 'guide'
-                      ? 'text-text-disabled'
-                      : ''
-                  }`}
-                >
-                  적용 가이드
-                </span>
-              </Link>
-              <Link
-                href="/inquiry"
+              <div
+                className="px-2 py-2"
                 onMouseEnter={() => setHoveredCategory('inquiry')}
                 onMouseLeave={() => setHoveredCategory(null)}
-                className="flex"
-                onClick={() => handleNavigationClick('문의하기', '/inquiry')}
               >
-                <Image
-                  src={InquiryTextImage}
-                  alt="문의하기"
-                  width={256}
-                  height={29}
-                  className="h-4 w-30"
-                />
-                <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
-                  Free
-                </span>
-              </Link>
+                <Link
+                  href="/inquiry"
+                  className="flex"
+                  onClick={() => handleNavigationClick('문의하기', '/inquiry')}
+                >
+                  <Image
+                    src={InquiryTextImage}
+                    alt="문의하기"
+                    width={256}
+                    height={29}
+                    className="h-4 w-30"
+                  />
+                  <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
+                    Free
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
 
