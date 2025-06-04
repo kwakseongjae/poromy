@@ -288,8 +288,10 @@
       📄 src/components/common/HelpModal.tsx
       📄 src/components/common/NotificationMessage.tsx
       📄 src/components/common/PerformanceOptimizer.tsx
+      📄 src/components/common/PreloadResources.tsx
       📄 src/components/common/PromptContainer.tsx
       📄 src/components/common/SearchBar.tsx
+      📄 src/components/common/StructuredData.tsx
     📁 src/components/company/
       📄 src/components/company/CompanyCarousel.tsx
     📁 src/components/home/
@@ -322,6 +324,7 @@
     📄 src/components/LinkPreviewThumbnail.tsx
   📁 src/constants/
     📄 src/constants/company.data.ts
+    📄 src/constants/faq.ts
     📄 src/constants/job.data.ts
     📄 src/constants/seo-keywords.ts
   📁 src/contexts/
@@ -354,6 +357,7 @@
     📄 src/utils/device.ts
     📄 src/utils/image.ts
     📄 src/utils/prompt.ts
+    📄 src/utils/structured-data.ts
   📄 src/middleware.ts
 📄 frontend-design-guideline.md
 📄 next-env.d.ts
