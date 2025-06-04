@@ -2,7 +2,6 @@ import { HomeContainer } from '@/components/home/HomeContainer'
 import { Section } from '@/components/home/Section'
 import { sortedJobs as jobs } from '@/constants/job.data'
 import { companies } from '@/constants/company.data'
-import Script from 'next/script'
 import HomeCarousel from '@/components/home/HomeCarousel'
 import { Metadata } from 'next'
 import { encrypt } from '@/utils/crypto'
@@ -13,6 +12,9 @@ import {
   DynamicHomeInquiry,
   DynamicEngagementTracker,
 } from '@/components/home/DynamicHomeComponents'
+import StructuredData from '@/components/common/StructuredData'
+import { generateFAQSchema } from '@/utils/structured-data'
+import { faqs } from '@/constants/faq'
 
 export const metadata: Metadata = {
   title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
@@ -47,7 +49,8 @@ export const metadata: Metadata = {
   },
 }
 
-const structuredData = {
+// 메인 구조화된 데이터
+const mainStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'WebPage',
   name: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
@@ -57,65 +60,33 @@ const structuredData = {
     {
       '@type': 'ItemList',
       name: '채용 공고 별 AI 프롬프트',
-      itemListElement: jobs.map((job, index) => ({
+      numberOfItems: jobs.length,
+      itemListElement: jobs.slice(0, 10).map((job, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         item: {
           '@type': 'JobPosting',
           title: job.jobTitle,
-          description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다. ${job.qualifications.join(' ')} ${job.preferredQualifications.join(' ')}`,
-          datePosted: new Date().toISOString(),
+          description: `${job.companyName}의 ${job.jobTitle} 채용 공고 분석 프롬프트`,
           hiringOrganization: {
             '@type': 'Organization',
             name: job.companyName,
-            logo: job.logoUrl,
-            sameAs: job.url,
           },
-          jobLocation: {
-            '@type': 'Place',
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality:
-                job.conditions.find(
-                  (c) =>
-                    c.includes('서울') ||
-                    c.includes('성남') ||
-                    c.includes('수원') ||
-                    c.includes('대전') ||
-                    c.includes('제주') ||
-                    c.includes('판교')
-                ) || '미지정',
-            },
-          },
-          employmentType:
-            job.conditions.find(
-              (c) => c.includes('신입') || c.includes('경력')
-            ) || '미지정',
-          educationRequirements:
-            job.conditions.find(
-              (c) =>
-                c.includes('대졸') || c.includes('석사') || c.includes('박사')
-            ) || '미지정',
           url: `https://poromy.ai.kr/position/${encrypt(job.id)}`,
-          validThrough: new Date(
-            Date.now() + 30 * 24 * 60 * 60 * 1000
-          ).toISOString(), // 30 days from now
         },
       })),
     },
     {
       '@type': 'ItemList',
       name: '기업별 AI 프롬프트',
-      itemListElement: companies.map((company, index) => ({
+      numberOfItems: companies.length,
+      itemListElement: companies.slice(0, 10).map((company, index) => ({
         '@type': 'ListItem',
         position: index + 1,
         item: {
           '@type': 'Organization',
           name: company.name,
-          description: company.description,
-          industry: company.industry,
-          employeeCount: company.employeeCount,
-          foundingDate: company.founded,
+          description: `${company.name} 기업 분석 프롬프트`,
           url: `https://poromy.ai.kr/company/${encrypt(company.id)}`,
         },
       })),
@@ -123,9 +94,9 @@ const structuredData = {
   ],
   about: {
     '@type': 'Thing',
-    name: 'AI 프롬프트',
+    name: 'AI 프롬프트 아카이브',
     description:
-      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성과 기업 분석을 위한 프롬프트 모음',
+      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성과 기업 분석을 위한 전문 프롬프트 모음',
   },
   mainEntityOfPage: {
     '@type': 'WebPage',
@@ -134,13 +105,15 @@ const structuredData = {
 }
 
 export default function Home() {
+  // FAQ 스키마 생성
+  const faqSchema = generateFAQSchema(faqs)
+
+  // 모든 스키마를 배열로 결합
+  const schemas = [mainStructuredData, faqSchema]
+
   return (
     <>
-      <Script
-        id="structured-data"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <StructuredData schema={schemas} />
       <h1 className="sr-only">Poromy - AI 자소서 프롬프트 아카이브 홈페이지</h1>
       <HomeCarousel />
       <HomeContainer>

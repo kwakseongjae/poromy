@@ -7,6 +7,12 @@ import { headers } from 'next/headers'
 import { getAllKeywords } from '@/constants/seo-keywords'
 import DeviceAwarePositionView from '@/components/DeviceAwarePositionView'
 import { isMobileDevice } from '@/utils/device'
+import StructuredData from '@/components/common/StructuredData'
+import {
+  generateJobPostingSchema,
+  generateBreadcrumbSchema,
+  generateArticleSchema,
+} from '@/utils/structured-data'
 
 interface Props {
   params: Promise<{ id: string }>
@@ -27,47 +33,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const title = `${job.companyName} 채용 - ${job.jobTitle} | Poromy`
     const description = `${job.companyName}의 ${job.jobTitle} 채용 공고 분석과 맞춤형 AI 자소서 프롬프트를 제공합니다. ${job.qualifications.join(', ')} ${job.preferredQualifications.join(', ')} 자격요건에 맞는 최적화된 자기소개서 작성 가이드를 확인하세요.`
-
-    const jobPostingSchema = {
-      '@context': 'https://schema.org',
-      '@type': 'JobPosting',
-      title: job.jobTitle,
-      description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다. ${job.qualifications.join(' ')} ${job.preferredQualifications.join(' ')}`,
-      datePosted: new Date().toISOString(),
-      hiringOrganization: {
-        '@type': 'Organization',
-        name: job.companyName,
-        logo: job.logoUrl,
-        sameAs: job.url,
-      },
-      jobLocation: {
-        '@type': 'Place',
-        address: {
-          '@type': 'PostalAddress',
-          addressLocality:
-            job.conditions.find(
-              (c) =>
-                c.includes('서울') ||
-                c.includes('성남') ||
-                c.includes('수원') ||
-                c.includes('대전') ||
-                c.includes('제주') ||
-                c.includes('판교')
-            ) || '미지정',
-        },
-      },
-      employmentType:
-        job.conditions.find((c) => c.includes('신입') || c.includes('경력')) ||
-        '미지정',
-      educationRequirements:
-        job.conditions.find(
-          (c) => c.includes('대졸') || c.includes('석사') || c.includes('박사')
-        ) || '미지정',
-      url: `https://poromy.ai.kr/position/${resolvedParams.id}`,
-      validThrough: new Date(
-        Date.now() + 30 * 24 * 60 * 60 * 1000
-      ).toISOString(), // 30 days from now
-    }
 
     return {
       title,
@@ -103,9 +68,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
         ],
       },
-      other: {
-        'application/ld+json': JSON.stringify(jobPostingSchema),
-      },
     }
   } catch (error) {
     return {
@@ -133,11 +95,58 @@ export default async function PositionPage({ params }: Props) {
     const userAgent = headersList.get('user-agent') || ''
     const isMobileUA = isMobileDevice(userAgent)
 
+    // 구조화된 데이터 스키마 생성
+    const jobPostingSchema = generateJobPostingSchema({
+      title: job.jobTitle,
+      company: job.companyName,
+      location:
+        job.conditions.find(
+          (c) =>
+            c.includes('서울') ||
+            c.includes('성남') ||
+            c.includes('수원') ||
+            c.includes('대전') ||
+            c.includes('제주') ||
+            c.includes('판교')
+        ) || '미지정',
+      description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다. 필요 자격: ${job.qualifications.join(', ')} 우대사항: ${job.preferredQualifications.join(', ')}`,
+      datePosted: new Date().toISOString(),
+      validThrough: new Date(
+        Date.now() + 30 * 24 * 60 * 60 * 1000
+      ).toISOString(),
+      employmentType:
+        job.conditions.find((c) => c.includes('신입') || c.includes('경력')) ||
+        'FULL_TIME',
+    })
+
+    const breadcrumbSchema = generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://poromy.ai.kr' },
+      { name: '채용공고 프롬프트', url: 'https://poromy.ai.kr/position' },
+      {
+        name: `${job.companyName} ${job.jobTitle}`,
+        url: `https://poromy.ai.kr/position/${resolvedParams.id}`,
+      },
+    ])
+
+    const articleSchema = generateArticleSchema({
+      headline: `${job.companyName} ${job.jobTitle} 채용공고 분석`,
+      description: `${job.companyName}의 ${job.jobTitle} 포지션에 대한 상세 분석과 AI 기반 자기소개서 작성 가이드`,
+      author: 'Poromy Team',
+      datePublished: new Date().toISOString(),
+      image: job.logoUrl,
+      url: `https://poromy.ai.kr/position/${resolvedParams.id}`,
+    })
+
+    const schemas = [jobPostingSchema, breadcrumbSchema, articleSchema]
+
     return (
-      <DeviceAwarePositionView
-        redirectTo={`/position?id=${resolvedParams.id}`}
-        isMobileUA={isMobileUA}
-      />
+      <>
+        <StructuredData schema={schemas} />
+        <DeviceAwarePositionView
+          redirectTo={`/position?id=${resolvedParams.id}`}
+          isMobileUA={isMobileUA}
+        />
+      </>
     )
   } catch (error) {
     notFound()
