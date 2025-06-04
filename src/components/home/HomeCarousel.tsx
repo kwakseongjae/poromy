@@ -34,7 +34,7 @@ const slides = [
       'AI 프롬프트를 활용하여\n채용공고와 기업 정보를 효율적으로 분석하세요.',
     backgroundColor: 'bg-[#171A33]',
     textColor: 'text-white',
-    link: null,
+    link: '/position',
   },
   {
     image: HomeCarouselImage3,
