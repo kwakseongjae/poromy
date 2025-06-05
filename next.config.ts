@@ -98,30 +98,6 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
-      {
-        source: '/position',
-        has: [
-          {
-            type: 'query',
-            key: 'id',
-            value: '(?<id>.*)',
-          },
-        ],
-        destination: '/position/:id',
-        permanent: true,
-      },
-      {
-        source: '/company',
-        has: [
-          {
-            type: 'query',
-            key: 'id',
-            value: '(?<id>.*)',
-          },
-        ],
-        destination: '/company/:id',
-        permanent: true,
-      },
     ]
   },
 
