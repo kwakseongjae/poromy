@@ -121,7 +121,7 @@ const fetchLinkPreviewWithRetry = async (
           'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
         'accept-language': 'en-US,en;q=0.5',
         'accept-encoding': 'gzip, deflate',
-        'cache-control': 'no-cache',
+        'cache-control': 'max-age=300', // 5분 캐시로 변경하여 bfcache 개선
       },
       timeout: TIMEOUT,
       followRedirects: 'follow', // 리디렉션 자동 처리 (manual에서 변경)

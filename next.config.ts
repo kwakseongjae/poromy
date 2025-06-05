@@ -9,11 +9,15 @@ const nextConfig: NextConfig = {
   // 컴파일러 최적화
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+    // bfcache 최적화를 위한 설정
+    styledComponents: false, // styled-components 사용하지 않음을 명시
   },
 
   // 실험적 기능
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    // bfcache 최적화를 위한 설정
+    webVitalsAttribution: ['CLS', 'LCP'],
   },
 
   images: {
@@ -52,6 +56,20 @@ const nextConfig: NextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      // API routes에 대한 별도 캐시 정책
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=300, stale-while-revalidate=600',
           },
         ],
       },
