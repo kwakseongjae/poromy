@@ -5772,7 +5772,7 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2024-09-29/7f283330-716e-4324-a3fa-e5ed6a6f32d4.png',
     url: 'https://recruit.cj.net/recruit/ko/recruit/recruit/bestDetail.fo?zz_jo_num=J20250604030538',
     prompt: () => getPositionPrompt('183'),
-    uploadedAt: '2025-01-27T14:30:00+09:00',
+    uploadedAt: '2025-06-05T18:00:00+09:00',
     deadline: '상시 채용',
   },
   {
