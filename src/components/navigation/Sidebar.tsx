@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useSupabase } from '@/contexts/SupabaseContext'
 import { useCursor } from '@/contexts/CursorContext'
+import { useSupabase } from '@/contexts/SupabaseContext'
 import {
   HamburgerIcon,
   BulbIcon,
@@ -13,12 +13,6 @@ import {
 } from '@/assets'
 import Image from 'next/image'
 import { useState } from 'react'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 interface SidebarProps {
   isOpen: boolean
@@ -27,7 +21,7 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const router = useRouter()
-  const { user, loading } = useSupabase()
+  const { user, loading, signOut } = useSupabase()
   const { incrementClickCount } = useCursor()
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [isPromptExpanded, setIsPromptExpanded] = useState(false)
@@ -42,8 +36,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   }
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
-    router.push('/login')
+    await signOut()
     onClose()
   }
 
