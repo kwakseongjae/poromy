@@ -1,7 +1,7 @@
 'use client'
 
 import { useCustomEmblaCarousel } from '@/hooks/useEmblaCarousel'
-import { companies } from '@/constants/company.data'
+import { companies, getLogoDimensions } from '@/constants/company.data'
 import type { Company } from '@/types/company'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -53,15 +53,21 @@ const CompanyCard = ({ company }: { company: Company }) => {
               className={`${company.textColor} mb-4 text-2xl font-bold md:text-3xl`}
             >
               {company.logoUrl ? (
-                <Image
-                  src={company.logoUrl}
-                  alt={`${company.name} logo`}
-                  width={120}
-                  height={40}
-                  className="h-7 object-contain md:h-8 lg:h-10"
-                  style={{ width: 'auto' }}
-                  priority
-                />
+                (() => {
+                  const { width, height } = getLogoDimensions(company.logoUrl)
+                  return (
+                    <Image
+                      src={company.logoUrl}
+                      alt={`${company.name} logo`}
+                      width={width}
+                      height={height}
+                      className="h-7 object-contain md:h-8 lg:h-10"
+                      style={{ width: 'auto' }}
+                      unoptimized
+                      priority
+                    />
+                  )
+                })()
               ) : (
                 <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl">
                   {company.name}

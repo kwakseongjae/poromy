@@ -357,3 +357,25 @@ export const companies: Company[] = [
     prompt: () => getCompanyPrompt('naver'),
   },
 ]
+
+// SVG 로고별 실제 크기 정의
+export const getLogoDimensions = (logoUrl: string) => {
+  const logoName = logoUrl.split('/').pop()?.replace('.svg', '')
+
+  const dimensions: Record<string, { width: number; height: number }> = {
+    hanwha_solutions: { width: 1423, height: 419 },
+    sk_hynix: { width: 108, height: 57 },
+    krafton: { width: 120, height: 20 },
+    hyundai_motors: { width: 1000, height: 129 },
+    gs_construction: { width: 1000, height: 336 },
+    samsung_display: { width: 1750, height: 160 },
+    hana_bank: { width: 111, height: 30 },
+    lg_electronics: { width: 64, height: 17 },
+    samsung_sds: { width: 181, height: 30 },
+    samsung_sdi: { width: 170, height: 30 },
+    kakao: { width: 24, height: 8 },
+    naver: { width: 521, height: 100 },
+  }
+
+  return dimensions[logoName!] || { width: 120, height: 40 }
+}
