@@ -2,7 +2,6 @@
  * PreloadResources Component
  * 중요한 리소스들을 프리로드하여 초기 페이지 로딩 성능을 개선합니다.
  * - 폰트 파일 프리로드
- * - 중요 이미지 프리로드
  * - 외부 도메인 DNS 프리페치
  */
 export const PreloadResources = () => {
@@ -36,28 +35,6 @@ export const PreloadResources = () => {
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
-      />
-
-      {/* 메인 페이지 캐러셀 이미지 프리로드 */}
-      <link
-        rel="preload"
-        as="image"
-        href="/images/home-carousel-1.png"
-        fetchPriority="high"
-      />
-      <link
-        rel="preload"
-        as="image"
-        href="/images/home-carousel-2.png"
-        fetchPriority="high"
-      />
-
-      {/* OG 이미지 프리로드 (소셜 미디어 공유 시 빠른 로딩) */}
-      <link
-        rel="preload"
-        as="image"
-        href={`/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`}
-        fetchPriority="low"
       />
 
       {/* DNS 프리페치 - 외부 서비스 도메인 */}
