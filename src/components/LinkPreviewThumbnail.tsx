@@ -30,8 +30,6 @@ const fetchLinkPreview = async (
   // 새로운 요청 생성
   const requestPromise = (async () => {
     try {
-      console.log('Fetching link preview for:', url) // 디버깅용 로그
-
       const response = await fetch('/api/link-preview', {
         method: 'POST',
         headers: {
@@ -50,10 +48,8 @@ const fetchLinkPreview = async (
       }
 
       const data = await response.json()
-      console.log('Link preview response:', data) // 디버깅용 로그
 
       if (!data.hasPreview) {
-        console.log('No preview available for:', url)
         return null
       }
 
