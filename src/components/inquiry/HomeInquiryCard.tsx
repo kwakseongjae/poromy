@@ -59,9 +59,9 @@ export const HomeInquiryCard = ({ inquiry }: HomeInquiryCardProps) => {
         )}
       </div>
       <div className="p-4">
-        <h4 className="mb-2 line-clamp-2 h-14 overflow-hidden text-lg font-semibold text-gray-900">
+        <h3 className="mb-2 line-clamp-2 h-14 overflow-hidden text-lg font-semibold text-gray-900">
           {inquiry.title}
-        </h4>
+        </h3>
         <div className="flex items-center justify-between text-sm text-gray-500">
           <span className="whitespace-nowrap">
             {formatDate(inquiry.created_at)}
