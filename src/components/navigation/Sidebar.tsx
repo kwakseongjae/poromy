@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useCursor } from '@/contexts/CursorContext'
 import { useSupabase } from '@/contexts/SupabaseContext'
 import {
   HamburgerIcon,
@@ -22,13 +21,11 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const router = useRouter()
   const { user, loading, signOut } = useSupabase()
-  const { incrementClickCount } = useCursor()
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [isPromptExpanded, setIsPromptExpanded] = useState(false)
 
   const handlePromptClick = () => {
     setIsPromptExpanded(!isPromptExpanded)
-    incrementClickCount()
   }
 
   const handleClose = () => {

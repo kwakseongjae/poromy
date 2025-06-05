@@ -328,7 +328,6 @@
     📁 src/components/ui/
       📄 src/components/ui/Dialog.tsx
     📄 src/components/ClientRedirect.tsx
-    📄 src/components/CustomCursor.tsx
     📄 src/components/DeviceAwarePositionView.tsx
     📄 src/components/LinkPreview.tsx
     📄 src/components/LinkPreviewThumbnail.tsx
@@ -338,7 +337,6 @@
     📄 src/constants/job.data.ts
     📄 src/constants/seo-keywords.ts
   📁 src/contexts/
-    📄 src/contexts/CursorContext.tsx
     📄 src/contexts/SupabaseContext.tsx
   📁 src/emails/
     📄 src/emails/answer-notification.tsx

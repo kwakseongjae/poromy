@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Navbar from '@/components/navigation/Navbar'
-import { CursorProvider } from '@/contexts/CursorContext'
-import CustomCursor from '@/components/CustomCursor'
 import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
 import { GoogleAnalytics as NextGoogleAnalytics } from '@next/third-parties/google'
@@ -193,11 +191,8 @@ export default async function RootLayout({
       </head>
       <body>
         <SupabaseProvider initialSession={session}>
-          <CursorProvider>
-            <CustomCursor />
-            <Navbar />
-            <main>{children}</main>
-          </CursorProvider>
+          <Navbar />
+          <main>{children}</main>
         </SupabaseProvider>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <NextGoogleAnalytics

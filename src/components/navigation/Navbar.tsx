@@ -11,7 +11,6 @@ import {
   InquiryTextImage,
 } from '@/assets'
 import { useEffect, useState } from 'react'
-import { useCursor } from '@/contexts/CursorContext'
 import { useSupabase } from '@/contexts/SupabaseContext'
 import Image from 'next/image'
 import ProfileModal from '@/components/modal/ProfileModal'
@@ -29,7 +28,6 @@ const Navbar = () => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const { incrementClickCount } = useCursor()
   const { user, loading } = useSupabase()
 
   // 사용자 UI 상태를 관리하는 상태 변수
@@ -56,10 +54,6 @@ const Navbar = () => {
       setAuthUIState('unauthenticated')
     }
   }, [loading, user])
-
-  const handlePromptClick = () => {
-    incrementClickCount()
-  }
 
   const handleProfileClick = () => {
     setIsProfileModalOpen(true)
@@ -146,10 +140,7 @@ const Navbar = () => {
                   setHoveredCategory(null)
                 }}
               >
-                <div
-                  className="group relative cursor-default"
-                  onClick={handlePromptClick}
-                >
+                <div className="group relative cursor-default">
                   <div className="flex items-center gap-1 px-2 py-2">
                     {hoveredCategory && hoveredCategory !== 'prompt' ? (
                       <DisabledHamburgerIcon className="h-5 w-5" />
