@@ -1,8 +1,9 @@
-import { sortedJobs as jobs } from '@/constants/job.data'
+import { sortedJobs as jobs, homePageJobs } from '@/constants/job.data'
 import Link from 'next/link'
 import Image from 'next/image'
 import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
+import { usePathname } from 'next/navigation'
 
 // Helper to calculate D-day or show '상시채용'
 const getDeadlineLabel = (deadline: string) => {
@@ -19,9 +20,13 @@ const getDeadlineLabel = (deadline: string) => {
 }
 
 export default function JobList() {
+  const pathname = usePathname()
+
+  // 홈페이지에서는 성능 최적화를 위해 경량 데이터 사용
+  const jobsData = pathname === '/' ? homePageJobs : jobs
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-      {jobs.map((job, idx) => {
+      {jobsData.map((job, idx) => {
         // Tailwind로 3줄만 보이게 제어
         let visibility = ''
         if (idx >= 6 && idx < 9) {

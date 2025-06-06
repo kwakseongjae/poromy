@@ -5999,3 +5999,6 @@ export const getJobTypeDisplayName = (jobType: JobType) => {
   }
   return displayNames[jobType] || jobType
 }
+
+// 홈페이지용 최신 10개 경량 데이터 (성능 최적화)
+export const homePageJobs = sortedJobs.slice(0, 10)

@@ -1,17 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import JobList from '@/components/position/JobList'
 
-// 동적 임포트로 컴포넌트들을 지연 로딩
-export const DynamicJobList = dynamic(
-  () => import('@/components/position/JobList'),
-  {
-    loading: () => (
-      <div className="h-64 animate-pulse rounded-lg bg-gray-100" />
-    ),
-    ssr: false,
-  }
-)
+// 홈페이지용 JobList는 성능 최적화를 위해 직접 렌더링 (dynamic import 제거)
+export const DynamicJobList = JobList
 
 export const DynamicCompanyCarousel = dynamic(
   () => import('@/components/company/CompanyCarousel'),
