@@ -5810,6 +5810,145 @@ export const jobs: Job[] = [
     uploadedAt: '2025-06-05T18:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '185',
+    companyName: '참치상사',
+    jobTitle: '프론트엔드 (Frontend / FE) 개발자',
+    conditions: ['프론트엔드 개발', '경력 1-5년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '정치 테크 스타트업에서 정치인과 유권자 간 소통을 혁신하는 플랫폼의 프론트엔드를 개발하는 포지션입니다.',
+    mainTask:
+      'React 기반 반응형 웹 / Flutter 기반 앱 개발 / Figma 기반 UI/UX 개선, 사용자 편의성 증대를 위한 기능 구현 및 성능 최적화, 디자인/기획/백엔드와의 긴밀한 협업을 통한 효율적인 개발 프로세스 구축, 웹 표준 및 트렌드를 고려한 최적의 프론트엔드 환경 조성',
+    qualifications: [
+      '성격이 밝고 센스가 있으며, 동료와 원활한 커뮤니케이션이 가능한 분',
+      '서비스 방향성을 함께 고민하고 개선 방안을 제시할 수 있는 분',
+      '새로운 기술 및 트렌드에 대한 학습과 적용에 적극적인 분',
+    ],
+    preferredQualifications: [
+      '실무 3년차 이상',
+      '커머스, SNS, 게임, OTT, 엔터테인먼트 등 도파민 산업 경험자',
+      '대규모 트래픽 서비스 개발·운영 경험자',
+      '정치 및 사회적 이슈에 평소 관심이 많으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-03-17/21f88e1e-2b1d-45c9-9d23-8a6e820fd9f7.png',
+    url: 'https://www.wanted.co.kr/wd/287296',
+    prompt: () => getPositionPrompt('185'),
+    uploadedAt: '2025-06-06T10:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '186',
+    companyName: '참치상사',
+    jobTitle: '백엔드 (Backend/BE) 개발자',
+    conditions: ['백엔드 개발', '경력 1-5년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '정치 테크 스타트업에서 대규모 트래픽을 처리하는 정치 소통 플랫폼의 백엔드 시스템을 개발하는 포지션입니다.',
+    mainTask:
+      '실시간 동시접속자 10만명 + 트래픽 서버 시스템 아키텍처 설계, Java Spring 기반 서버 개발, 서비스 요구사항 분석 및 기술 스펙 정의, 성능 최적화 및 안정적인 운영을 위한 코드 및 인프라 개선, 팀 내 협업을 통한 서비스 방향성 논의 및 기술적 제안',
+    qualifications: [
+      '성격이 밝고 센스가 있으며, 동료와 원활한 커뮤니케이션이 가능한 분',
+      '서비스 방향성을 함께 고민하고 개선 방안을 제시할 수 있는 분',
+      '새로운 기술 및 트렌드에 대한 학습과 적용에 적극적인 분',
+    ],
+    preferredQualifications: [
+      '실무 3년차 이상',
+      '커머스, SNS, 게임, OTT, 엔터테인먼트 등 도파민 산업 경험자',
+      '대규모 트래픽 서비스 개발·운영 경험자',
+      '정치 및 사회적 이슈에 평소 관심이 많으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-03-17/21f88e1e-2b1d-45c9-9d23-8a6e820fd9f7.png',
+    url: 'https://www.wanted.co.kr/wd/287293',
+    prompt: () => getPositionPrompt('186'),
+    uploadedAt: '2025-06-06T10:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '187',
+    companyName: '피에프씨테크놀로지스',
+    jobTitle: 'Generative AI Engineer',
+    conditions: ['AI 엔지니어', '신입~10년', '서울 서초구'],
+    jobType: 'AI-데이터',
+    positionDescription:
+      '금융 분야에서 생성형 AI 기술을 활용하여 업무 생산성을 혁신하고 임직원들의 잠재력을 AI로 증폭시키는 포지션입니다.',
+    mainTask:
+      'LLM 기반 데이터 처리 파이프라인을 설계하고 구현하여 최적화 해요, 비정형 데이터(문서, 이메일, 채팅 등)에서 구조화된 인사이트를 추출하고 분석해요, 도메인 특화 프롬프트 엔지니어링 및 RAG(Retrieval Augmented Generation) 시스템을 개발해요, 최신 AI 기술 리서치 및 실무 적용 가능성을 검증해요',
+    qualifications: [
+      '컴퓨터 과학, 인공지능, 데이터 사이언스 또는 관련 분야 학위 취득(예정)자이신 분',
+      'Python 프로그래밍 능력 및 데이터 처리 라이브러리(Pandas, NumPy 등) 활용 경험이 있으신 분',
+      '생성형 AI의 기본 원리(Transformer 아키텍처, 임베딩, 프롬프트 엔지니어링 등)에 대한 이해가 있으신 분',
+      '문제 해결 중심의 사고방식과 새로운 기술에 대한 학습 의지가 있으신 분',
+      '효과적인 커뮤니케이션 능력 및 팀 협업 역량이 있으신 분',
+    ],
+    preferredQualifications: [
+      'LangChain, LlamaIndex 등 LLM 애플리케이션 프레임워크 활용 경험이 있으신 분',
+      'RAG(Retrieval Augmented Generation) 시스템 설계 및 구현 경험이 있으신 분',
+      '벡터 데이터베이스(Pinecone, Weaviate, Chroma 등) 활용 경험이 있으신 분',
+      'Apache Airflow, Prefect 등 워크플로우 오케스트레이션 도구 사용 경험이 있으신 분',
+      '관련 프로젝트 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-02-21/18cd0d9f-2ccf-42ec-b708-da6318939b53.webp',
+    url: 'https://www.wanted.co.kr/wd/287268',
+    prompt: () => getPositionPrompt('187'),
+    uploadedAt: '2025-06-06T10:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '188',
+    companyName: 'NHN Dooray',
+    jobTitle: '두레이 서비스 백엔드 개발 및 운영',
+    conditions: ['백엔드 개발', '경력', '경기 성남'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '올인원 협업 도구 두레이의 프로젝트, 메일, 캘린더, 메신저, AI 등 협업 서비스를 개발하고 운영하는 백엔드 개발자 포지션입니다.',
+    mainTask: 'Dooray! 서비스 백엔드 개발 및 운영',
+    qualifications: [
+      'Java/Spring 프레임워크를 이용한 웹서비스 개발이 가능하신 분',
+    ],
+    preferredQualifications: [
+      'Backoffice 개발 및 운영 경험을 보유하신 분',
+      'Java 외 Go. Python 등 언어 사용 경험을 보유하신 분',
+      'Kubernetes 환경에서 1년 이상 서비스 개발 및 운영 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-21/8990f595-0627-4a69-8610-4a6a26915bf1.png',
+    url: 'https://careers.nhn.com/recruits/4082879664259151496',
+    prompt: () => getPositionPrompt('188'),
+    uploadedAt: '2025-06-06T10:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '189',
+    companyName: '몬드리안에이아이',
+    jobTitle: 'AI 컨설턴트',
+    conditions: ['AI 컨설팅', '신입~10년', '서울 영등포구'],
+    jobType: '기획-전략',
+    positionDescription:
+      '정부, 연구기관, 민간기업을 대상으로 AI 솔루션을 설계하고 컨설팅하며, AI 사업을 개발하고 제안하는 포지션입니다.',
+    mainTask:
+      '정부, 연구 기관, 민간 기업 및 해외 수요처 대상으로 다양한 AI 사업 개발 및 제안, 고객의 요구사항을 분석하고, AI 기술을 활용한 솔루션 설계 및 컨설팅, 내부 연구, 개발팀과 협업하여 AI 연구 및 개발 사업 관리, AI 도입 및 활용 관련 시장 조사, 사례 분석, 리서치 보고서 작성',
+    qualifications: [
+      '[신입] 학사 졸업자 (졸업 예정자 가능)',
+      '[경력] 3년 이상의 경력을 보유하신 분',
+      'AI를 활용해 다양한 산업군의 문제를 해결하는 데 관심과 역량이 있으신 분',
+      '제안서, 발표자료, 보고서 작성 역량이 있으신 분',
+      '본인이 직접 작성한 제안서, 보고',
+    ],
+    preferredQualifications: [
+      'IT, AI, 경영, 통계 등 관련 학과 전공자 및 석사 이상이신 분',
+      '글로벌 프로젝트 경험 보유, 영어 커뮤니케이션이 가능하신 분',
+    ],
+    logoUrl:
+      '	https://d2juy7qzamcf56.cloudfront.net/2024-10-23/d8c1ef46-0b1d-4165-a13d-7602f99fba34.png',
+    url: 'https://www.wanted.co.kr/wd/287327',
+    prompt: () => getPositionPrompt('189'),
+    uploadedAt: '2025-06-06T10:00:00+09:00',
+    deadline: '상시 채용',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
