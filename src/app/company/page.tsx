@@ -155,7 +155,8 @@ export default function CompanyPage() {
                             alt={`${company.name} 로고`}
                             fill
                             className="rounded-lg object-contain"
-                            sizes="40px"
+                            sizes="64px"
+                            unoptimized
                           />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center bg-gray-100">

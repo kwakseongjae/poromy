@@ -65,6 +65,7 @@ const CompanyCard = ({ company }: { company: Company }) => {
                       style={{ width: 'auto' }}
                       unoptimized
                       priority
+                      sizes="160px"
                     />
                   )
                 })()

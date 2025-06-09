@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { getProxyImageUrl } from '@/utils/image'
+import { getProxyImageUrl, getMinimalBlurDataURL } from '@/utils/image'
 
 interface LinkPreviewData {
   url: string
@@ -189,11 +189,12 @@ const LinkPreviewThumbnail = ({
           alt="Link thumbnail"
           fill
           className="!h-full !w-full object-cover object-center"
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+          sizes="120px"
           style={{ objectFit: 'cover' }}
           loading="lazy"
           placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0A"
+          blurDataURL={getMinimalBlurDataURL()}
+          quality={50}
           onError={() => {
             // 이미지 로드 실패 시 에러 상태로 변경
             setError('Image load failed')
