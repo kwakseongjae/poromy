@@ -8,6 +8,7 @@ import { useSupabase } from '@/contexts/SupabaseContext'
 export default function SignUp() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [passwordConfirm, setPasswordConfirm] = useState<string>('')
   const [nickname, setNickname] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
@@ -29,11 +30,23 @@ export default function SignUp() {
     }
   }, [user, router])
 
-  async function handleSignUp(e: FormEvent<HTMLFormElement>) {
+  // 비밀번호 일치 여부 확인
+  const isPasswordMatch = password === passwordConfirm
+  const isFormValid =
+    email && password && passwordConfirm && nickname && isPasswordMatch
+
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
     setSuccess(null)
+
+    // 비밀번호 확인 검증
+    if (!isPasswordMatch) {
+      setError('비밀번호가 일치하지 않습니다.')
+      setLoading(false)
+      return
+    }
 
     try {
       // 1. 사용자 생성 (이메일 인증 포함)
@@ -82,6 +95,7 @@ export default function SignUp() {
       setSuccess('이메일 인증 링크를 발송했습니다. 이메일을 확인해주세요.')
       setEmail('')
       setPassword('')
+      setPasswordConfirm('')
       setNickname('')
 
       // 3. 이메일 인증 페이지로 리다이렉트
@@ -136,6 +150,42 @@ export default function SignUp() {
         </div>
         <div className="mb-4">
           <label
+            htmlFor="passwordConfirm"
+            className="text-text-disabled mb-2 block text-xs font-bold"
+          >
+            비밀번호 확인
+          </label>
+          <input
+            id="passwordConfirm"
+            type="password"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
+            className={`w-full rounded border p-2 text-sm font-semibold ${
+              passwordConfirm && !isPasswordMatch
+                ? 'border-red-500'
+                : 'border-gray-300'
+            }`}
+            placeholder="비밀번호를 다시 입력해주세요."
+            required
+            aria-describedby={
+              passwordConfirm && !isPasswordMatch
+                ? 'password-mismatch-error'
+                : undefined
+            }
+          />
+          {passwordConfirm && !isPasswordMatch && (
+            <p
+              id="password-mismatch-error"
+              className="mt-1 text-xs text-red-500"
+              role="alert"
+              aria-live="polite"
+            >
+              비밀번호가 일치하지 않습니다.
+            </p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
             htmlFor="nickname"
             className="text-text-disabled mb-2 block text-xs font-bold"
           >
@@ -157,8 +207,15 @@ export default function SignUp() {
         <div className="mt-12">
           <button
             type="submit"
-            className="w-full cursor-pointer rounded bg-blue-500 p-2 font-bold text-white hover:bg-blue-600"
-            disabled={loading}
+            className={`w-full rounded p-2 font-bold text-white transition-colors ${
+              isFormValid && !loading
+                ? 'cursor-pointer bg-blue-500 hover:bg-blue-600'
+                : 'cursor-not-allowed bg-gray-400'
+            }`}
+            disabled={loading || !isFormValid}
+            aria-label={
+              !isFormValid ? '모든 필드를 올바르게 입력해주세요' : '회원가입'
+            }
           >
             {loading ? '처리 중...' : '회원가입'}
           </button>
