@@ -5949,6 +5949,259 @@ export const jobs: Job[] = [
     uploadedAt: '2025-06-06T10:00:00+09:00',
     deadline: '상시 채용',
   },
+  {
+    id: '190',
+    companyName: '브레인즈컴퍼니',
+    jobTitle: '소프트웨어 엔지니어 (2년이상)',
+    conditions: ['소프트웨어 개발', '경력 2-15년', '서울 성동구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      'IT 인프라 통합관리 소프트웨어 분야에서 차세대 솔루션 개발에 참여하는 포지션으로, Frontend, Backend, AI/ML, Database 등 다양한 분야의 개발을 담당합니다.',
+    mainTask:
+      '자사 주력 차세대 솔루션 확보 위해 다음과 같은 다양한 분야의 개발에 참여 - Vue를 이용한 frontend 개발 - Java 기반 backend 개발 - AI/ML solution 개발 - Database Core 시스템 개발, 신규 기능 구현 및 코드 리뷰',
+    qualifications: [
+      '경력 : 2-15년 (석사 경력 인정)',
+      '학력 : 대졸 (4년제) 졸업 이상',
+      '데이터 스트럭처, 알고리즘, 컴퓨터 구조 관련 지식 보유',
+      'Frontend 개발자의 경우 Vue 혹은 React를 사용한 SPA 개발 프로젝트 경험 필수',
+      'C/Java/Python/JS 중 최소 하나의 언어에 능숙 (Frontend 개발자의 경우 JS 필수)',
+      '팀원과 원활한 소통 및 협업 능력',
+    ],
+    preferredQualifications: [
+      '전산 관련 전공자 우대',
+      'AI/ML 개발자의 경우 석사 전공자 우대',
+      'Web 개발의 경우 패키지 소프트웨어 개발 리드 경험자 우대',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-02-07/ea2d1875-2bf3-441c-912b-12c7e5d9133c.webp',
+    url: 'https://www.wanted.co.kr/wd/287926',
+    prompt: () => getPositionPrompt('190'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '2025-06-22T23:59:59+09:00',
+  },
+  {
+    id: '191',
+    companyName: '코드잇(codeit)',
+    jobTitle: '콘텐츠 프로듀서 (AI 엔지니어링 교육)',
+    conditions: ['콘텐츠 기획/제작', '신입~10년', '서울 중구'],
+    jobType: '교육',
+    positionDescription:
+      'AI 분야의 온라인 교육 콘텐츠를 제작하는 포지션으로, 머신러닝, 딥러닝, 생성형 AI 등의 교육 콘텐츠를 기획하고 제작합니다.',
+    mainTask:
+      'AI 분야의 교육 콘텐츠를 제작합니다, 콘텐츠 제작을 위한 리서치, 커리큘럼 기획, 영상, 노트, 실습, 퀴즈 제작, 콘텐츠에 대한 피드백과 반영',
+    qualifications: [
+      '머신러닝, 딥러닝 및 생성형 AI 전반에 대한 뛰어난 역량과 지식을 갖추신 분',
+      '전통적인 머신러닝 이론과 알고리즘을 이해하고 있습니다',
+      'CNN, RNN 계열부터 Transformer 기반 모델까지 다양한 딥러닝 모델의 구조와 원리를 이해하고 있습니다',
+      'LLM을 포함한 생성형 AI 기술의 원리와 최신 트렌드를 파악하고 있습니다',
+      'Scikit-learn, PyTorch, LangChain, Hugging Face 등을 능숙하게 활용할 수 있습니다',
+      '실제 동작하는 AI 애플리케이션을 설계하고 구현할 수 있습니다',
+      '이해하기 쉽고 간결한 글을 작성합니다',
+      '새로운 내용을 빠르고 정확하게 리서치할 수 있습니다',
+      '설명에 있어서 절대 틀리지 않을 자신이 있습니다',
+      '사람들이 어떤 것을 어렵게 느끼고, 어떤 것을 궁금해 하는지 잘 파악합니다',
+      '피드백을 이해하고 반영할 자신이 있습니다',
+      '또 반대로, 좋은 피드백을 줄 수 있습니다',
+      '효율적이고 깔끔한 커뮤니케이션에 자신이 있습니다',
+    ],
+    preferredQualifications: [
+      '교육 분야에 관심이 많은 분',
+      'AI 분야에서 연구 또는 엔지니어링 실무 경험이 있으신 분',
+      '데이터 사이언스 분야 실무 경험이 있는 분',
+      '디자인 감각이나 영상 기획력이 있는 분',
+      '자신있게 촬영에 임할 수 있는 분',
+      '코드잇을 수강한 적이 있으신 분',
+      '머신러닝, 딥러닝, 컴퓨터 비전, 자연어 처리, LLM 애플리케이션 개발, MLOps, 수학과 통계학 등의 교육 콘텐츠를 자신 있게 만들 수 있는 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-25/ed095191-6d02-45a5-80a7-df1f29e6d17b.png',
+    url: 'https://www.wanted.co.kr/wd/218263',
+    prompt: () => getPositionPrompt('191'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '192',
+    companyName: '비상교육',
+    jobTitle: 'Front End 개발자(AllviA)',
+    conditions: ['프론트엔드 개발', '경력 3년 이상', '경기 과천시'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '에듀테크 기업 비상교육에서 교육 통합 플랫폼 AllviA의 티칭툴과 매스툴을 개발하는 프론트엔드 개발자 포지션입니다.',
+    mainTask: 'Frontend 개발(티칭툴, 매스툴 개발 및 유지보수)',
+    qualifications: [
+      'React 기반 프로젝트 다수 경험자(최소 2년 이상)',
+      'Redux/Mobx 등 상태 관리 개발 경험자',
+      'Next.js, Javascript/Typescript, Sass, HTML5/CSS와 웹콘텐츠 프로그램 개발 경험',
+      '웹/앱 서비스 및 어플리케이션 개발 경험자',
+      'Git 환경 개발 경험자',
+    ],
+    preferredQualifications: [
+      '프론트엔드 프로젝트 전반에 대한 설계, 개발, 배포 및 운영 환경 구성 경험',
+      '테스트 및 CI/CD 환경 구성 경험',
+      '컴퓨터 개발 관련 전공자 또는 컴퓨터 기사 자격증 소유자',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2025-02-05/26e708b4-ac9c-4c0f-baf8-8b645035ac8a.png',
+    url: 'https://www.wanted.co.kr/wd/288051',
+    prompt: () => getPositionPrompt('192'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '193',
+    companyName: '하이퍼커넥트',
+    jobTitle: 'Site Reliability Engineer',
+    conditions: ['SRE', '경력 2-15년', '서울 강남구'],
+    jobType: '엔지니어링-R&D',
+    positionDescription:
+      'Azar, Hakuna Live 등 하이퍼커넥트의 모든 서비스를 안정적으로 유지하고, 고가용성 인프라를 구축하며, 실시간 시스템의 신뢰성을 향상시키는 SRE 포지션입니다.',
+    mainTask:
+      'Public 클라우드 환경에서의 고가용성 시스템 인프라 구축 및 운영, 시스템/애플리케이션 로깅, 모니터링 및 자동화, 서비스 장애 대응 및 포스트모텀 문화 리딩, SLO/SLI 기반 서비스 개선 포인트 및 문제점 발굴, 최적화, 신기술 PoC 및 프로덕션 적용',
+    qualifications: [
+      'Linux 및 Network를 중심으로 하는 CS 전반에 대한 이해가 있으신 분',
+      'Container 기술 전반에 대한 이해가 있으신 분',
+      'Python, Golang 등 프로그래밍 언어를 사용한 기본적인 개발이 가능한 분',
+      'AWS 등 public cloud 환경에서 Linux 계열 서버 관련 실무 경험이 있으신 분',
+      '다양한 조직과 협업에 필요한 뛰어난 커뮤니케이션 스킬과 문서 정리 능력을 갖추신 분',
+      '서비스에서 발생하는 다양한 문제점을 인지하고, 주도적으로 해결책을 제시하는 분',
+      '기술 트렌드를 따라, 새로운 기술을 학습하는 것에 즐거움을 느끼시는 분',
+    ],
+    preferredQualifications: [
+      'Kubernetes에 대한 기본적인 이해 및 실무 경험',
+      'Infrastructure-as-a-Code 도구 사용 경험 및 실무 경험',
+      'Java/Kotlin, Spring Framework 관련 문제 해결 경험',
+      '실시간 시스템/확장성이 높은 시스템을 운영해본 경험',
+      '프로덕션 환경에서 발생하는 다양한 장애에 대한 트러블슈팅 경험',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-27/8747e2e9-46d4-470c-9e13-c362ab5ae5a1.png',
+    url: 'https://www.wanted.co.kr/wd/202044',
+    prompt: () => getPositionPrompt('193'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '194',
+    companyName: '빗썸',
+    jobTitle: 'Back End - 거래 플랫폼 개발 (3년 이상)',
+    conditions: ['백엔드 개발', '경력 3-7년', '서울 강남구'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '대한민국 대표 가상자산 거래소에서 하루 평균 2조 2천억원 규모의 대용량 트래픽을 처리하는 고성능 거래 플랫폼을 개발하는 포지션입니다.',
+    mainTask:
+      '국내 최대 수준의 트래픽을 처리하며 정확하고 신속하게 가상자산 거래를 체결하는 플랫폼 구축, 안정성과 장기적 유지보수성을 고려하여 최적의 trade-off를 결정하고 확장 가능한 아키텍처 도출, 시스템 성능을 향상시키고 팀 생산성을 극대화하며 리스크를 최소화할 수 있는 기회 발굴',
+    qualifications: [
+      '3년 이상의 소프트웨어 개발 경험이 있으신 분',
+      '주어진 요구사항에 따라 기능 단위의 설계 및 구현이 가능하신 분',
+      '테스트 가능한 코드를 작성하고, 코드 리뷰 프로세스에 참여한 경험이 있으신 분',
+      '문제 상황을 능동적으로 파악하고 책임감 있게 해결하신 경험이 있으신 분',
+      'Java/Kotlin, Go, Rust 중 하나 이상의 언어에 익숙하신 분',
+      'Kafka 또는 데이터 스트리밍 기술 활용 경험이 있으신 분',
+    ],
+    preferredQualifications: [
+      '3년 이상의 low-latency, large-scale 분산 시스템 개발 경험이 있으신 분',
+      '고도의 동시성을 처리하는 시스템에 대한 이해와 경험이 있으신 분',
+      '다양한 부서와 협업하여 대규모 기술 프로젝트를 성공적으로 수행한 경험이 있으신 분',
+      '팀의 기술 스택(Oracle, Redis, Java, Spring Boot)에 대한 이해가 있으신 분',
+      'AWS, Azure, GCP와 같은 클라우드 기술 경험이 있으신 분',
+      '컴퓨터공학 또는 관련 분야의 석사 이상 학위를 보유하신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-01/14042fa6-a6fb-482f-a940-b4f5b0e01faf.png',
+    url: 'https://www.wanted.co.kr/wd/287858',
+    prompt: () => getPositionPrompt('194'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '상시 채용',
+  },
+  {
+    id: '195',
+    companyName: 'NAVER',
+    jobTitle:
+      '실시간 협업 서비스의 분산 시스템 및 CRDT 알고리즘 리서치 및 개발 체험형 인턴',
+    conditions: ['분산 시스템 개발', '인턴', '서울', '인턴'],
+    jobType: '엔지니어링-R&D',
+    positionDescription:
+      '실시간 협업을 위한 엔진 및 SDK를 개발하는 팀에서 CRDT 알고리즘을 연구하고 구현하는 체험형 인턴 포지션입니다.',
+    mainTask:
+      '프로젝트 기본 학습 및 GFI(Good First Issue) 처리, 동시편집 CRDT 알고리즘 및 퍼포먼스 벤치마크 및 튜닝, Multi-User Undo/Redo 알고리즘 리서치 및 구현: Text, Tree, CRDT Tree.Move 알고리즘 리서치 및 구현, Epoll 및 Zero-copy 기반 연결형 프레임 워크 리서치 및 프로토 타입 구현',
+    qualifications: [
+      '자료구조, 알고리즘, 프로그래밍 언어, OS 등 전산 기초를 공부하신 분',
+      '의사소통이 원활하며 동료들과 좋은 관계를 유지하고 의견이 엇갈리는 상황에도 건설적인 대화가 가능하신 분',
+    ],
+    preferredQualifications: [
+      '논리 시계나 CRDT를 이용한 대규모 분산 시스템 개발에 관심이 있으신 분',
+      '대용량 데이터 혹은 대규모 트래픽을 처리하는 시스템 개발에 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-08-01/1eb52f78-ee3c-436c-a16b-fb1d6e9e61d1.png',
+    url: 'https://recruit.navercorp.com/rcrt/view.do?annoId=30003469&lang=ko',
+    prompt: () => getPositionPrompt('195'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '2025-06-16T18:00:00+09:00',
+  },
+  {
+    id: '196',
+    companyName: '쿠팡이츠',
+    jobTitle: '2025 쿠팡이츠 테크 신입 개발자 (통합 지원)',
+    conditions: ['소프트웨어 개발', '신입', '서울'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '쿠팡이츠의 Software Engineer로서 Back-end 또는 Mobile 개발 직군에서 근무하는 신입 개발자 포지션입니다. 서류 접수 시 통합 지원 후 면접을 통해 최종 부서 및 직무가 결정됩니다.',
+    mainTask:
+      '[Back-end] Java, Spring 기반의 고 가용성 시스템 개발 및 운영, 모니터링 및 분석을 통한 시스템 성능 개선과 서비스 품질 개선, 검색/스토리지/모니터링/배포 등을 위한 차세대 인프라 설계 및 구축, [Mobile] 최고의 고객 경험을 위한 Android/iOS/Flutter 앱 기능 개발 및 운영, 재사용이 가능한 공통 모듈 및 프레임워크 개발, 안정적인 서비스와 확장성을 위한 앱 아키텍쳐 설계 및 개선',
+    qualifications: [
+      '기졸업자 혹은 2025년 8월 졸업 예정이신 분 (학/석사)',
+      '최종 합격 후, 2025년 7월 중순부터 풀타임 근무 가능하신 분',
+      '경력 2년 미만이신 분',
+      '컴퓨터 과학 혹은 동등한 분야의 학위 소유하신 분',
+      'Java 언어로 코딩테스트 진행이 가능하신 분',
+      '병역필 또는 면제자이며, 해외여행에 결격 사유가 없으신 분',
+      '자기주도적이며 복잡한 문제 해결을 좋아하시는 분',
+      '서비스 개선에 대한 열의와 적극적 태도가 있으신 분',
+      '팀으로서 협업할 수 있는 분',
+    ],
+    preferredQualifications: [
+      '영어 커뮤니케이션이 가능하신 분',
+      '개인 프로젝트 진행 경험이 있으신 분 (github link 등)',
+    ],
+    logoUrl:
+      '	https://d2juy7qzamcf56.cloudfront.net/2024-10-27/e2add120-1124-407d-842a-25f0a52ce451.png',
+    url: 'https://www.coupang.jobs/kr/jobs/6896321/2025-%EC%BF%A0%ED%8C%A1%EC%9D%B4%EC%B8%A0-%ED%85%8C%ED%81%AC-%EC%8B%A0%EC%9E%85-%EA%B0%9C%EB%B0%9C%EC%9E%90-%EA%B3%B5%EA%B0%9C-%EC%B1%84%EC%9A%A9/?gh_jid=6896321',
+    prompt: () => getPositionPrompt('196'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '2025-06-20T23:59:59+09:00',
+  },
+  {
+    id: '197',
+    companyName: '네이버페이',
+    jobTitle: '채용연계형 FE 인턴십',
+    conditions: ['프론트엔드 개발', '인턴', '서울', '인턴'],
+    jobType: 'IT-개발',
+    positionDescription:
+      '네이버페이의 결제, 송금, 금융 제휴, 글로벌 결제 등 핀테크 서비스의 프론트엔드를 개발하는 채용연계형 인턴 포지션입니다.',
+    mainTask:
+      '네이버페이 결제/금융 서비스 프론트엔드 개발 - 결제, 송금, 금융 제휴, 글로벌 결제 등',
+    qualifications: [
+      '학사 졸업 또는 ~ 26년 2월 졸업 예정이신 분(9월 1일 자로 정규직 입사 가능하신 분)',
+      '병역필 또는 면제자이며, 해외여행에 결격사유가 없는 분',
+      'Javascript(최소 ES5 이상) 기본 지식을 보유하신 분',
+      'CS 기본 지식을 보유하신 분',
+      'HTML/CSS를 이해하여 업무에서 활용이 가능하신 분',
+      'React를 사용한 개발 경험이 있으신 분',
+    ],
+    preferredQualifications: [
+      '최신 Framework를 사용한 SPA 개발 경험이 있으신 분',
+      'State 관리 라이브러리 개발 경험이 있으신 분',
+      'NodeJS 개발 경험이 있으신 분',
+    ],
+    logoUrl:
+      'https://d2juy7qzamcf56.cloudfront.net/2024-10-21/39052ad7-45d5-4e99-b8ed-52ba1f0fdf8b.png',
+    url: 'https://recruit.navercorp.com/rcrt/view.do?annoId=30003471&lang=ko',
+    prompt: () => getPositionPrompt('197'),
+    uploadedAt: '2025-06-09T18:00:00+09:00',
+    deadline: '2025-06-15T23:59:59+09:00',
+  },
 ]
 
 export const sortedJobs: Job[] = jobs
