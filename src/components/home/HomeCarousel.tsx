@@ -151,9 +151,10 @@ export default function HomeCarousel() {
                   width={400}
                   height={400}
                   className="aspect-square h-full object-cover"
-                  priority={index === 0}
+                  priority
                   fetchPriority={index === 0 ? 'high' : 'auto'}
-                  sizes="(max-width: 768px) 300px, 400px"
+                  sizes="400px"
+                  unoptimized
                 />
               </div>
             ))}
@@ -223,7 +224,8 @@ export default function HomeCarousel() {
                     className="object-cover"
                     priority={index === 0}
                     fetchPriority={index === 0 ? 'high' : 'auto'}
-                    sizes="(max-width: 768px) 300px, 400px"
+                    sizes="300px"
+                    unoptimized
                   />
                 </div>
               </div>
