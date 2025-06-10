@@ -86,6 +86,7 @@ export default function ProfileModal({
             width={80}
             height={80}
             className="rounded-full"
+            unoptimized
           />
           <div className="text-center">
             {isEditing ? (
