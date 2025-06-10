@@ -24,7 +24,9 @@
     "cursorrules:setup": "node scripts/update-cursorrules.js --hook",
     "dev:auto": "pnpm cursorrules:update && next dev",
     "predev": "pnpm cursorrules:update",
-    "postinstall": "pnpm cursorrules:update"
+    "postinstall": "pnpm cursorrules:update",
+    "migrate-jobs": "node scripts/migrate-jobs-to-supabase.js",
+    "migrate-job": "node scripts/migrate-jobs-to-supabase.js --single"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.0",
