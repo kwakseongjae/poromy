@@ -34,29 +34,9 @@ export async function GET(request: NextRequest) {
       const limitNum = limit ? parseInt(limit) : 10
       jobs = await getLatestJobs(limitNum)
       cacheTags.push('jobs-latest')
-      const response = NextResponse.json({ jobs })
-
-      // Cache Tags 설정
-      response.headers.set(
-        'Cache-Control',
-        's-maxage=3600, stale-while-revalidate=86400'
-      )
-
-      // 개발 환경에서는 캐싱 비활성화
-      if (process.env.NODE_ENV === 'development') {
-        response.headers.set(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, proxy-revalidate'
-        )
-        response.headers.set('Pragma', 'no-cache')
-        response.headers.set('Expires', '0')
-      }
-
-      return response
     }
-
     // 오프셋 기반 페이지네이션 처리
-    if (offset && !search && !type && !company) {
+    else if (offset && !search && !type && !company) {
       const offsetNum = parseInt(offset)
       const limitNum = limit ? parseInt(limit) : 10
       const result = await getJobsWithOffset(offsetNum, limitNum)
@@ -96,13 +76,7 @@ export async function GET(request: NextRequest) {
 
     const response = NextResponse.json(responseData)
 
-    // Cache Tags 설정 - Next.js가 태그 기반으로 캐시를 관리할 수 있게 함
-    response.headers.set(
-      'Cache-Control',
-      's-maxage=3600, stale-while-revalidate=86400'
-    )
-
-    // 개발 환경에서는 캐싱 비활성화
+    // 개발 환경에서는 캐싱 완전 비활성화
     if (process.env.NODE_ENV === 'development') {
       response.headers.set(
         'Cache-Control',
@@ -110,6 +84,12 @@ export async function GET(request: NextRequest) {
       )
       response.headers.set('Pragma', 'no-cache')
       response.headers.set('Expires', '0')
+    } else {
+      // 프로덕션에서는 캐시 설정
+      response.headers.set(
+        'Cache-Control',
+        's-maxage=3600, stale-while-revalidate=86400'
+      )
     }
 
     return response
