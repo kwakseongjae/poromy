@@ -10,8 +10,8 @@ import {
 } from '@/lib/supabase-jobs'
 import type { JobType } from '@/types/job'
 
-// 정적 캐싱을 활용하되, 태그 기반 무효화 가능하도록 설정
-export const revalidate = 3600 // 1시간 캐싱
+// 캐싱 비활성화 - revalidate 문제 우회를 위해 임시로 캐싱 완전 비활성화
+export const revalidate = 0 // 캐싱 비활성화
 
 export async function GET(request: NextRequest) {
   try {
@@ -76,21 +76,13 @@ export async function GET(request: NextRequest) {
 
     const response = NextResponse.json(responseData)
 
-    // 개발 환경에서는 캐싱 완전 비활성화
-    if (process.env.NODE_ENV === 'development') {
-      response.headers.set(
-        'Cache-Control',
-        'no-store, no-cache, must-revalidate, proxy-revalidate'
-      )
-      response.headers.set('Pragma', 'no-cache')
-      response.headers.set('Expires', '0')
-    } else {
-      // 프로덕션에서는 캐시 설정
-      response.headers.set(
-        'Cache-Control',
-        's-maxage=3600, stale-while-revalidate=86400'
-      )
-    }
+    // 모든 환경에서 캐싱 완전 비활성화 (revalidate 문제 우회)
+    response.headers.set(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate, proxy-revalidate'
+    )
+    response.headers.set('Pragma', 'no-cache')
+    response.headers.set('Expires', '0')
 
     return response
   } catch (error) {

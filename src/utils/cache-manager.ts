@@ -3,7 +3,7 @@
  * 클라이언트 사이드에서 캐시 무효화 및 갱신을 처리
  */
 
-interface CacheInvalidationOptions {
+export interface CacheInvalidationOptions {
   tags?: string[]
   paths?: string[]
   secret?: string
@@ -18,15 +18,39 @@ export const invalidateServerCache = async (
   try {
     const { tags = ['jobs'], paths = ['/'], secret } = options
 
+    // 서버 사이드와 클라이언트 사이드 모두 지원
+    const revalidationSecret =
+      secret ||
+      (typeof window === 'undefined'
+        ? process.env.REVALIDATION_SECRET // 서버 사이드
+        : process.env.NEXT_PUBLIC_REVALIDATION_SECRET) // 클라이언트 사이드
+
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    }
+
+    // 클라이언트 사이드에서 호출하는 경우 인증 토큰 추가
+    if (typeof window !== 'undefined') {
+      const { createBrowserSupabaseClient } = await import(
+        '@/lib/supabase-client'
+      )
+      const supabase = createBrowserSupabaseClient()
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`
+      }
+    }
+
     const response = await fetch('/api/revalidate', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         tags,
         paths,
-        secret: secret || process.env.NEXT_PUBLIC_REVALIDATION_SECRET,
+        secret: revalidationSecret,
       }),
     })
 

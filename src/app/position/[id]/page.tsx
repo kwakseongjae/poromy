@@ -13,6 +13,9 @@ import {
   generateArticleSchema,
 } from '@/utils/structured-data'
 
+// 동적 렌더링 설정
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: Promise<{ id: string }>
 }
@@ -28,8 +31,10 @@ async function fetchJob(id: string) {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/jobs/${jobId}`,
       {
-        cache: 'force-cache',
-        next: { revalidate: 3600 }, // Revalidate every hour
+        cache: 'no-store', // 캐시 완전 비활성화
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       }
     )
 
@@ -51,8 +56,10 @@ async function fetchAllJobs() {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/jobs`,
       {
-        cache: 'force-cache',
-        next: { revalidate: 3600 }, // Revalidate every hour
+        cache: 'no-store', // 캐시 완전 비활성화
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       }
     )
 
@@ -128,23 +135,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  // In development or if API is not available, return empty array to allow dynamic generation
-  if (
-    process.env.NODE_ENV === 'development' ||
-    !process.env.NEXT_PUBLIC_APP_URL
-  ) {
-    return []
-  }
-
-  try {
-    const jobs = await fetchAllJobs()
-    return jobs.map((job: any) => ({
-      id: encrypt(job.id),
-    }))
-  } catch (error) {
-    console.error('Error generating static params:', error)
-    return []
-  }
+  // 캐시 문제 우회를 위해 static params 생성 비활성화
+  // 모든 position 페이지를 동적으로 생성
+  return []
 }
 
 export default async function PositionPage({ params }: Props) {

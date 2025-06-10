@@ -9,11 +9,14 @@ export async function POST(request: NextRequest) {
     const { tags, paths, secret } = body
 
     // API 보안을 위한 secret key 검증
-    if (secret !== process.env.REVALIDATION_SECRET) {
+    const serverSecret = process.env.REVALIDATION_SECRET
+    const publicSecret = process.env.NEXT_PUBLIC_REVALIDATION_SECRET
+
+    if (secret !== serverSecret && secret !== publicSecret) {
       return NextResponse.json({ error: 'Invalid secret' }, { status: 401 })
     }
 
-    // 사용자 권한 확인 (관리자만 캐시 무효화 가능)
+    // Authorization 헤더가 있는 경우에만 사용자 권한 확인 (클라이언트 사이드 호출)
     const authHeader = request.headers.get('authorization')
     if (authHeader) {
       const token = authHeader.replace('Bearer ', '')
@@ -49,6 +52,7 @@ export async function POST(request: NextRequest) {
         )
       }
     }
+    // Authorization 헤더가 없는 경우 서버 사이드 호출로 간주하고 secret만으로 인증
 
     // 태그 기반 캐시 무효화
     if (tags && Array.isArray(tags)) {

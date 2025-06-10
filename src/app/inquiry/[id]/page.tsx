@@ -49,23 +49,13 @@ interface Inquiry {
 
 // Static params generation with optimizations
 export async function generateStaticParams() {
-  const supabase = createBrowserSupabaseClient()
-  const { data: inquiries } = await supabase
-    .from('inquiries')
-    .select('id')
-    .order('created_at', { ascending: false })
-    .limit(100) // 최근 100개만 미리 빌드
-
-  return (
-    inquiries?.map((inquiry: any) => ({
-      id: inquiry.id,
-    })) || []
-  )
+  // 캐시 문제 우회를 위해 static params 생성 비활성화
+  // 모든 inquiry 페이지를 동적으로 생성
+  return []
 }
 
-// 동적 라우트 설정 - ISR 활용
-export const dynamic = 'auto'
-export const revalidate = 300 // 5분마다 재검증
+// 동적 라우트 설정
+export const dynamic = 'force-dynamic'
 
 // 데이터 fetching 최적화 함수
 const fetchInquiryData = async (supabase: any, id: string) => {

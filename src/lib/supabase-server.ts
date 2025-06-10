@@ -21,6 +21,14 @@ export async function createClient() {
           } catch {}
         },
       },
+      db: {
+        schema: 'public',
+      },
+      global: {
+        headers: {
+          'X-Timezone': 'Asia/Seoul',
+        },
+      },
     }
   )
 
@@ -35,6 +43,14 @@ export const createAdminClient = () => {
       auth: {
         autoRefreshToken: false,
         persistSession: false,
+      },
+      db: {
+        schema: 'public',
+      },
+      global: {
+        headers: {
+          'X-Timezone': 'Asia/Seoul',
+        },
       },
     }
   )
