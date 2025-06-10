@@ -156,8 +156,8 @@ export default async function RootLayout({
 }) {
   const supabase = await createClient()
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
   // 구조화된 데이터 스키마 생성
   const organizationSchema = generateOrganizationSchema()
@@ -190,7 +190,7 @@ export default async function RootLayout({
         <script {...createJsonLdScript(softwareApplicationSchema)} />
       </head>
       <body>
-        <SupabaseProvider initialSession={session}>
+        <SupabaseProvider initialUser={user}>
           <Navbar />
           <main>{children}</main>
         </SupabaseProvider>

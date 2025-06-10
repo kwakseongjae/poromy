@@ -9,38 +9,35 @@ import {
 } from 'react'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
-import { Session, User } from '@supabase/supabase-js'
+import { User } from '@supabase/supabase-js'
 
 type SupabaseContextType = {
   user: User | null
-  session: Session | null
   loading: boolean
   isAdmin: boolean
   signOut: () => Promise<void>
-  refreshSession: () => Promise<void>
+  refreshUser: () => Promise<void>
 }
 
 const SupabaseContext = createContext<SupabaseContextType>({
   user: null,
-  session: null,
   loading: true,
   isAdmin: false,
   signOut: async () => {},
-  refreshSession: async () => {},
+  refreshUser: async () => {},
 })
 
 export const useSupabase = () => useContext(SupabaseContext)
 
 export default function SupabaseProvider({
   children,
-  initialSession,
+  initialUser,
 }: {
   children: ReactNode
-  initialSession: Session | null
+  initialUser: User | null
 }) {
   const [supabase] = useState(() => createBrowserSupabaseClient())
-  const [session, setSession] = useState<Session | null>(initialSession)
-  const [user, setUser] = useState<User | null>(initialSession?.user || null)
+  const [user, setUser] = useState<User | null>(initialUser)
   const [loading, setLoading] = useState<boolean>(true)
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const router = useRouter()
@@ -64,26 +61,26 @@ export default function SupabaseProvider({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, newSession) => {
-      setSession(newSession)
-      setUser(newSession?.user || null)
+      const newUser = newSession?.user || null
+      setUser(newUser)
       setLoading(false)
-      if (newSession?.user) {
-        fetchIsAdmin(newSession.user.id)
+      if (newUser) {
+        fetchIsAdmin(newUser.id)
       } else {
         setIsAdmin(false)
       }
     })
 
-    // On mount, fetch isAdmin for initial session
-    if (initialSession?.user) {
-      fetchIsAdmin(initialSession.user.id)
+    // On mount, fetch isAdmin for initial user
+    if (initialUser) {
+      fetchIsAdmin(initialUser.id)
     }
     setLoading(false)
 
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [supabase, initialUser])
 
   const signOut = async () => {
     setLoading(true)
@@ -93,15 +90,15 @@ export default function SupabaseProvider({
     setLoading(false)
   }
 
-  const refreshSession = async () => {
+  const refreshUser = async () => {
     setLoading(true)
     const {
-      data: { session: newSession },
-    } = await supabase.auth.getSession()
-    setSession(newSession)
-    setUser(newSession?.user || null)
-    if (newSession?.user) {
-      await fetchIsAdmin(newSession.user.id)
+      data: { user: newUser },
+    } = await supabase.auth.getUser()
+
+    setUser(newUser || null)
+    if (newUser) {
+      await fetchIsAdmin(newUser.id)
     } else {
       setIsAdmin(false)
     }
@@ -110,7 +107,7 @@ export default function SupabaseProvider({
 
   return (
     <SupabaseContext.Provider
-      value={{ user, session, loading, isAdmin, signOut, refreshSession }}
+      value={{ user, loading, isAdmin, signOut, refreshUser }}
     >
       {children}
     </SupabaseContext.Provider>

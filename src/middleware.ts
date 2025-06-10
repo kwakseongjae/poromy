@@ -12,16 +12,16 @@ export async function middleware(request: NextRequest) {
   const supabase = await createClient()
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    data: { user },
+  } = await supabase.auth.getUser()
 
   let isAdmin = false
-  if (session?.user) {
+  if (user) {
     // profiles 테이블에서 is_admin 확인
     const { data: profile } = await supabase
       .from('profiles')
       .select('is_admin')
-      .eq('id', session.user.id)
+      .eq('id', user.id)
       .single()
 
     isAdmin = !!profile?.is_admin
@@ -41,7 +41,7 @@ export async function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith('/login') ||
     request.nextUrl.pathname.startsWith('/signup')
   ) {
-    if (session) {
+    if (user) {
       const returnUrl = request.cookies.get('returnUrl')?.value
       const redirectUrl = returnUrl || '/'
 
@@ -58,7 +58,7 @@ export async function middleware(request: NextRequest) {
   if (
     protectedRoutes.some((route) => request.nextUrl.pathname.startsWith(route))
   ) {
-    if (!session) {
+    if (!user) {
       // 현재 URL을 returnUrl로 저장
       response.cookies.set({
         name: 'returnUrl',

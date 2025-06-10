@@ -13,7 +13,7 @@ export default function ProfileModal({
   isOpen: boolean
   onClose: () => void
 }) {
-  const { user, signOut, refreshSession } = useSupabase()
+  const { user, signOut, refreshUser } = useSupabase()
   const [isEditing, setIsEditing] = useState(false)
   const [newNickname, setNewNickname] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -57,7 +57,7 @@ export default function ProfileModal({
 
       if (profileError) throw profileError
 
-      await refreshSession()
+      await refreshUser()
       setIsEditing(false)
     } catch (error) {
       console.error('닉네임 업데이트 오류:', error)
