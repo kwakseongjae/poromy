@@ -234,6 +234,7 @@
     📁 public/svg/company/
 📁 scripts/
   📄 scripts/generate-data.js
+  📄 scripts/migrate-jobs-to-supabase.js
   📄 scripts/structure-injector.ts
   📄 scripts/update-cursorrules.js
 📁 src/
@@ -244,6 +245,7 @@
       📄 src/app/account/page.tsx
     📁 src/app/admin/
       📁 src/app/admin/add-test-users/
+      📁 src/app/admin/jobs/
       📄 src/app/admin/page.tsx
     📁 src/app/api/
       📁 src/app/api/admin/
@@ -252,6 +254,7 @@
       📁 src/app/api/email/
       📁 src/app/api/image-proxy/
       📁 src/app/api/inquiry/
+      📁 src/app/api/jobs/
       📁 src/app/api/link-preview/
       📁 src/app/api/prompts/
       📁 src/app/api/update-profile/
@@ -361,6 +364,7 @@
   📁 src/lib/
     📄 src/lib/gtag.ts
     📄 src/lib/supabase-client.ts
+    📄 src/lib/supabase-jobs.ts
     📄 src/lib/supabase-server.ts
     📄 src/lib/utils.ts
   📁 src/types/
@@ -377,6 +381,7 @@
     📄 src/utils/date.ts
     📄 src/utils/device.ts
     📄 src/utils/image.ts
+    📄 src/utils/job.ts
     📄 src/utils/prompt.ts
     📄 src/utils/structured-data.ts
   📄 src/middleware.ts

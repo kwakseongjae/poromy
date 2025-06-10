@@ -2640,7 +2640,7 @@ export const jobs: Job[] = [
       'https://d2juy7qzamcf56.cloudfront.net/2025-01-23/f379bfb2-d9e9-497d-a53f-98dcdf9e1f93.png',
     url: 'https://groupby.kr/positions/5092',
     prompt: () => getPositionPrompt('84'),
-    uploadedAt: '2025-05-27T98:00:00+09:00',
+    uploadedAt: '2025-05-27T08:00:00+09:00',
     deadline: '상시 채용',
   },
   {
