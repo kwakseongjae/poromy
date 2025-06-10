@@ -87,6 +87,7 @@ const Navbar = () => {
               width={32}
               height={32}
               className="aspect-square w-8 rounded-full object-cover shadow-md hover:ring-6 hover:ring-gray-100"
+              unoptimized
             />
           </button>
         </div>
