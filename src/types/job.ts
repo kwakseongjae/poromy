@@ -3,7 +3,7 @@
  * Represents a job posting entity with its properties
  */
 export type Job = {
-  id: string
+  id: number
   companyName: string
   jobTitle: string
   conditions: string[]

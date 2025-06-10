@@ -108,6 +108,62 @@ export interface Database {
           },
         ]
       }
+      jobs: {
+        Row: {
+          id: number
+          company_name: string
+          job_title: string
+          conditions: string[]
+          job_type: string
+          position_description: string
+          main_task: string
+          qualifications: string[]
+          preferred_qualifications: string[]
+          logo_url: string | null
+          url: string | null
+          prompt_content: string | null
+          uploaded_at: string
+          deadline: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          company_name: string
+          job_title: string
+          conditions: string[]
+          job_type: string
+          position_description: string
+          main_task: string
+          qualifications: string[]
+          preferred_qualifications: string[]
+          logo_url?: string | null
+          url?: string | null
+          prompt_content?: string | null
+          uploaded_at: string
+          deadline: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          company_name?: string
+          job_title?: string
+          conditions?: string[]
+          job_type?: string
+          position_description?: string
+          main_task?: string
+          qualifications?: string[]
+          preferred_qualifications?: string[]
+          logo_url?: string | null
+          url?: string | null
+          prompt_content?: string | null
+          uploaded_at?: string
+          deadline?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           id: string

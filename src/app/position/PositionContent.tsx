@@ -2,23 +2,18 @@
 
 import { useEffect, useState, Fragment, useRef, useLayoutEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import { decrypt, encrypt } from '@/utils/crypto'
-import {
-  sortedJobs as jobs,
-  getAvailableJobTypes,
-  getJobTypeDisplayName,
-} from '@/constants/job.data'
-import type { JobType } from '@/types/job'
+import type { JobType, Job } from '@/types/job'
 import Image from 'next/image'
 import Link from 'next/link'
-import { CheckIcon, CopyLinkIcon, LinkIcon } from '@/assets'
+import { CheckIcon, CopyLinkIcon, LinkIcon, ChevronIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
-import { useIsMobile } from '@/hooks/useIsMobile'
 
 interface PreviewJob {
-  id: string
+  id: number
   companyName: string
   jobTitle: string
   logoUrl: string
@@ -71,44 +66,160 @@ const getDeadlineLabel = (deadline: string) => {
   return `D-${diff}`
 }
 
+// Get available job types from jobs data
+const getAvailableJobTypes = (jobs: Job[]): JobType[] => {
+  return Array.from(new Set(jobs.map((job) => job.jobType))) as JobType[]
+}
+
+// Get job type display name
+const getJobTypeDisplayName = (jobType: JobType): string => {
+  return jobType
+}
+
+// 일반적인 게시판 스타일 페이지네이션을 위한 헬퍼 함수
+const getBoardStylePagination = (currentPage: number, totalPages: number) => {
+  const pageSize = 5 // 한 번에 보여줄 페이지 번호 개수
+  const pageGroup = Math.floor((currentPage - 1) / pageSize) // 현재 페이지가 속한 그룹 (0부터 시작)
+  const startPage = pageGroup * pageSize + 1 // 그룹의 시작 페이지
+  const endPage = Math.min(startPage + pageSize - 1, totalPages) // 그룹의 끝 페이지
+
+  const pages = []
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i)
+  }
+
+  const hasPrev = currentPage > 1 // 첫 페이지가 아닌지
+  const hasNext = currentPage < totalPages // 마지막 페이지가 아닌지
+
+  return {
+    pages,
+    hasPrev,
+    hasNext,
+    prevPage: currentPage - 1, // 이전 페이지
+    nextPage: currentPage + 1, // 다음 페이지
+  }
+}
+
 // Mobile JobList Component (inspired by company page UI)
 function MobilePositionContent() {
   const searchParams = useSearchParams()
   const [currentPage, setCurrentPage] = useState(1)
   const [jobTypeFilter, setJobTypeFilter] = useState<JobType | 'all'>('all')
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [availableJobTypes, setAvailableJobTypes] = useState<JobType[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [totalCount, setTotalCount] = useState(0)
+  const [hasMore, setHasMore] = useState(false)
   const itemsPerPage = 10
 
   const searchQuery = searchParams.get('query') || ''
 
-  // Get available job types from actual data
-  const availableJobTypes = getAvailableJobTypes()
+  // Fetch jobs from server with pagination
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true)
 
-  // Filter jobs based on search query and job type
-  const filteredJobs = jobs.filter((job) => {
-    const matchesSearch = searchQuery
-      ? job.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.conditions.some((condition) =>
-          condition.toLowerCase().includes(searchQuery.toLowerCase())
-        ) ||
-        job.qualifications.some((qualification) =>
-          qualification.toLowerCase().includes(searchQuery.toLowerCase())
-        ) ||
-        job.preferredQualifications.some((qualification) =>
-          qualification.toLowerCase().includes(searchQuery.toLowerCase())
+        // 검색 쿼리나 필터가 있는 경우 전체 데이터 가져오기
+        if (searchQuery || jobTypeFilter !== 'all') {
+          const response = await fetch('/api/jobs', {
+            cache: 'no-store',
+            headers: {
+              'Cache-Control': 'no-cache',
+            },
+          })
+          if (!response.ok) {
+            throw new Error('Failed to fetch jobs')
+          }
+          const data = await response.json()
+          setJobs(data.jobs || [])
+          setTotalCount(data.jobs?.length || 0)
+          setHasMore(false)
+
+          // Extract unique job types from the jobs
+          const jobTypes = Array.from(
+            new Set(data.jobs?.map((job: Job) => job.jobType) || [])
+          ) as JobType[]
+          setAvailableJobTypes(jobTypes)
+        } else {
+          // 쿼리나 필터가 없는 경우 페이지네이션 사용
+          const response = await fetch(
+            `/api/jobs?page=${currentPage}&limit=${itemsPerPage}`,
+            {
+              cache: 'no-store',
+              headers: {
+                'Cache-Control': 'no-cache',
+              },
+            }
+          )
+          if (!response.ok) {
+            throw new Error('Failed to fetch jobs')
+          }
+          const data = await response.json()
+          setJobs(data.jobs || [])
+          setTotalCount(data.totalCount || 0)
+          setHasMore(data.hasMore || false)
+
+          // Extract unique job types from the jobs
+          const jobTypes = Array.from(
+            new Set(data.jobs?.map((job: Job) => job.jobType) || [])
+          ) as JobType[]
+          setAvailableJobTypes(jobTypes)
+        }
+      } catch (err) {
+        console.error('Error fetching jobs:', err)
+        setJobs([])
+        setAvailableJobTypes([])
+        setTotalCount(0)
+        setHasMore(false)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchJobs()
+  }, [currentPage, searchQuery, jobTypeFilter])
+
+  // Filter jobs based on search query and job type (client-side filtering for search/filter)
+  const filteredJobs =
+    searchQuery || jobTypeFilter !== 'all'
+      ? jobs.filter((job) => {
+          const matchesSearch = searchQuery
+            ? job.companyName
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              job.conditions.some((condition) =>
+                condition.toLowerCase().includes(searchQuery.toLowerCase())
+              ) ||
+              job.qualifications.some((qualification) =>
+                qualification.toLowerCase().includes(searchQuery.toLowerCase())
+              ) ||
+              job.preferredQualifications.some((qualification) =>
+                qualification.toLowerCase().includes(searchQuery.toLowerCase())
+              )
+            : true
+
+          // Filter by job type
+          if (jobTypeFilter === 'all') return matchesSearch
+          return matchesSearch && job.jobType === jobTypeFilter
+        })
+      : jobs
+
+  // Calculate pagination for filtered results
+  const totalPages =
+    searchQuery || jobTypeFilter !== 'all'
+      ? Math.ceil(filteredJobs.length / itemsPerPage)
+      : Math.ceil(totalCount / itemsPerPage)
+
+  const currentJobs =
+    searchQuery || jobTypeFilter !== 'all'
+      ? filteredJobs.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
         )
-      : true
-
-    // Filter by job type
-    if (jobTypeFilter === 'all') return matchesSearch
-    return matchesSearch && job.jobType === jobTypeFilter
-  })
-
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredJobs.length / itemsPerPage)
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const currentJobs = filteredJobs.slice(startIndex, endIndex)
+      : filteredJobs
 
   // Handle page change
   const handlePageChange = (page: number) => {
@@ -127,6 +238,16 @@ function MobilePositionContent() {
     return null
   }
 
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Search Section */}
@@ -143,7 +264,7 @@ function MobilePositionContent() {
       </section>
 
       {/* Filter Section */}
-      <section className="mb-8">
+      {/* <section className="mb-8">
         <div className="flex flex-wrap justify-center gap-2">
           <button
             onClick={() => setJobTypeFilter('all')}
@@ -171,7 +292,7 @@ function MobilePositionContent() {
             </button>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Job Grid */}
       <section className="mb-8">
@@ -186,7 +307,7 @@ function MobilePositionContent() {
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {currentJobs.map((job) => {
-              const encryptedId = encrypt(job.id)
+              const encryptedId = encrypt(String(job.id))
               const deadlineLabel = getDeadlineLabel(job.deadline)
 
               // Check if job is new (uploaded within 24 hours)
@@ -276,34 +397,57 @@ function MobilePositionContent() {
       {/* Pagination */}
       {totalPages > 1 && (
         <section className="flex justify-center">
-          <div className="flex gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="rounded-full border border-gray-200 px-4 py-2 text-sm disabled:opacity-50"
-            >
-              &lt;
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`rounded-full border px-4 py-2 text-sm ${
-                  currentPage === page
-                    ? 'border-blue-500 bg-blue-500 text-white'
-                    : 'border-gray-200 hover:bg-gray-100'
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="rounded-full border border-gray-200 px-4 py-2 text-sm disabled:opacity-50"
-            >
-              &gt;
-            </button>
+          <div className="flex items-center gap-2">
+            {(() => {
+              const pagination = getBoardStylePagination(
+                currentPage,
+                totalPages
+              )
+
+              return (
+                <>
+                  {/* 이전 그룹 버튼 */}
+                  <button
+                    onClick={() => handlePageChange(pagination.prevPage)}
+                    disabled={!pagination.hasPrev}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
+                    aria-label="이전 페이지 그룹"
+                  >
+                    <ChevronIcon
+                      className="h-5 w-5 rotate-270"
+                      fill="#6B7280"
+                    />
+                  </button>
+
+                  {/* 페이지 번호 버튼들 */}
+                  {pagination.pages.map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`h-12 w-12 rounded font-medium transition-colors ${
+                        currentPage === page
+                          ? 'border border-blue-500 bg-blue-500 text-white'
+                          : 'border border-gray-200 text-gray-700 hover:bg-gray-100'
+                      }`}
+                      aria-label={`${page}페이지`}
+                      aria-current={currentPage === page ? 'page' : undefined}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  {/* 다음 그룹 버튼 */}
+                  <button
+                    onClick={() => handlePageChange(pagination.nextPage)}
+                    disabled={!pagination.hasNext}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
+                    aria-label="다음 페이지 그룹"
+                  >
+                    <ChevronIcon className="h-5 w-5 rotate-90" fill="#6B7280" />
+                  </button>
+                </>
+              )
+            })()}
           </div>
         </section>
       )}
@@ -311,25 +455,178 @@ function MobilePositionContent() {
   )
 }
 
-// Desktop PositionContent Component (existing)
 function DesktopPositionContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [job, setJob] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [isHovered, setIsHovered] = useState(false)
-  const [isVisible, setIsVisible] = useState(false)
-  const [previewJob, setPreviewJob] = useState<PreviewJob | null>(null)
-  const [previewPosition, setPreviewPosition] = useState({ x: 0, y: 0 })
-  const [promptContent, setPromptContent] = useState<string>('')
-  const [toastVisible, setToastVisible] = useState(false)
-  const [toastActive, setToastActive] = useState(false)
-  const [hasScrolledToTarget, setHasScrolledToTarget] = useState(false)
+  const query = searchParams.get('query') || ''
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const targetJobRef = useRef<HTMLAnchorElement>(null)
+  const loadingRequestRef = useRef<boolean>(false) // 중복 요청 방지용 ref
 
-  const query = searchParams.get('query')
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobsLoading, setJobsLoading] = useState<boolean>(true)
+  const [job, setJob] = useState<Job | null>(null)
+  const [promptContent, setPromptContent] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
+  const [hasScrolledToTarget, setHasScrolledToTarget] = useState<boolean>(false)
+  const [loadingMore, setLoadingMore] = useState<boolean>(false)
+  const [hasMore, setHasMore] = useState<boolean>(true)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [previewJob, setPreviewJob] = useState<PreviewJob | null>(null)
+  const [previewPosition, setPreviewPosition] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState<boolean>(false)
+  const [isVisible, setIsVisible] = useState<boolean>(false)
+  const [toastVisible, setToastVisible] = useState<boolean>(false)
+  const [toastActive, setToastActive] = useState<boolean>(false)
+
+  // Fetch jobs from server with pagination for infinite scroll
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setJobsLoading(true)
+
+        // 검색 쿼리가 있는 경우 전체 데이터 가져오기
+        if (query) {
+          const response = await fetch('/api/jobs', {
+            cache: 'no-store',
+            headers: {
+              'Cache-Control': 'no-cache',
+            },
+          })
+          if (!response.ok) {
+            throw new Error('Failed to fetch jobs')
+          }
+          const data = await response.json()
+          setJobs(data.jobs || [])
+          setHasMore(false)
+        } else {
+          // 검색 쿼리가 없는 경우 첫 페이지는 20개로 시작 (스크롤바 생성을 위해)
+          const response = await fetch('/api/jobs?page=1&limit=20', {
+            cache: 'no-store',
+            headers: {
+              'Cache-Control': 'no-cache',
+            },
+          })
+          if (!response.ok) {
+            throw new Error('Failed to fetch jobs')
+          }
+          const data = await response.json()
+          setJobs(data.jobs || [])
+          setHasMore(data.hasMore || false)
+          setCurrentPage(2) // 다음 페이지는 2페이지부터 (20개 이후부터)
+        }
+      } catch (err) {
+        console.error('Error fetching jobs:', err)
+        setJobs([])
+        setHasMore(false)
+      } finally {
+        setJobsLoading(false)
+      }
+    }
+
+    fetchJobs()
+
+    // 검색 쿼리가 변경되면 무한스크롤 상태 초기화
+    setHasMore(false)
+    setLoadingMore(false)
+  }, [query])
+
+  // Load more jobs for infinite scroll
+  const loadMoreJobs = async () => {
+    // 더 강력한 중복 요청 방지 - ref를 사용한 추가 체크
+    if (loadingMore || !hasMore || query || loadingRequestRef.current) return
+
+    try {
+      loadingRequestRef.current = true
+      setLoadingMore(true)
+
+      // 현재 jobs 배열 길이를 기반으로 offset 계산
+      const currentOffset = jobs.length
+      const response = await fetch(
+        `/api/jobs?offset=${currentOffset}&limit=10`,
+        {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        }
+      )
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch more jobs')
+      }
+
+      const data = await response.json()
+
+      // 중복 제거 로직 - 기존 jobs의 id와 비교하여 중복 제거
+      const existingIds = new Set(jobs.map((job) => job.id))
+      const newJobs = (data.jobs || []).filter(
+        (job: any) => !existingIds.has(job.id)
+      )
+
+      // 새로운 jobs가 없으면 hasMore를 false로 설정
+      if (newJobs.length === 0) {
+        setHasMore(false)
+        return
+      }
+
+      setJobs((prevJobs) => {
+        // 이중 체크: prevJobs 기준으로 한번 더 중복 제거
+        const prevIds = new Set(prevJobs.map((job) => job.id))
+        const finalNewJobs = newJobs.filter((job: any) => !prevIds.has(job.id))
+
+        // 중복이 제거된 후에도 새로운 jobs가 없으면 그대로 반환
+        if (finalNewJobs.length === 0) {
+          return prevJobs
+        }
+
+        return [...prevJobs, ...finalNewJobs]
+      })
+
+      setHasMore(data.hasMore || false)
+    } catch (err) {
+      console.error('Error loading more jobs:', err)
+    } finally {
+      loadingRequestRef.current = false
+      setLoadingMore(false)
+    }
+  }
+
+  // Handle scroll for infinite scroll
+  useEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container || query) return // 검색 모드에서는 무한스크롤 비활성화
+
+    let scrollTimeout: NodeJS.Timeout | null = null
+
+    const handleScroll = () => {
+      // 디바운싱으로 스크롤 이벤트 제한
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+
+      scrollTimeout = setTimeout(() => {
+        const { scrollTop, scrollHeight, clientHeight } = container
+        const isNearBottom = scrollTop + clientHeight >= scrollHeight - 100
+
+        // loadingMore 상태와 hasMore 상태를 현재 값으로 체크
+        if (isNearBottom && hasMore && !loadingMore) {
+          loadMoreJobs()
+        }
+      }, 100) // 100ms 디바운싱
+    }
+
+    container.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll)
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout)
+      }
+    }
+  }, [hasMore, loadingMore, query]) // jobs.length 제거
+
   const filteredJobs = query
     ? jobs.filter((job) => {
         const searchLower = query.toLowerCase()
@@ -365,18 +662,19 @@ function DesktopPositionContent() {
         }
 
         const decryptedId = decrypt(encryptedId)
-        const foundJob = jobs.find((job) => job.id === decryptedId)
+
+        // Fetch specific job from API
+        const response = await fetch(`/api/jobs/${decryptedId}`)
+        if (!response.ok) {
+          throw new Error('Job not found')
+        }
+
+        const { job: foundJob } = await response.json()
 
         if (foundJob) {
           setJob(foundJob)
           setError(null)
-          try {
-            const prompt = await foundJob.prompt()
-            setPromptContent(prompt)
-          } catch (err) {
-            console.error('Error fetching prompt:', err)
-            setPromptContent('')
-          }
+          setPromptContent(foundJob.prompt || '')
         } else {
           setError('해당 채용 공고를 찾을 수 없습니다.')
           setJob(null)
@@ -384,7 +682,7 @@ function DesktopPositionContent() {
         }
       } catch (err) {
         setError('잘못된 URL입니다.')
-        console.error('Error decrypting job ID:', err)
+        console.error('Error fetching job:', err)
         setJob(null)
         setPromptContent('')
       } finally {
@@ -422,7 +720,9 @@ function DesktopPositionContent() {
         }
       } else {
         // Fallback: calculate position based on actual DOM elements
-        const jobIndex = filteredJobs.findIndex((j) => j.id === decryptedId)
+        const jobIndex = filteredJobs.findIndex(
+          (j) => j.id === Number(decryptedId)
+        )
 
         if (jobIndex !== -1) {
           // Get all job item elements in the container
@@ -560,7 +860,11 @@ function DesktopPositionContent() {
             ref={scrollContainerRef}
             className="flex w-full flex-col gap-2 overflow-y-auto pt-2"
           >
-            {filteredJobs.length === 0 ? (
+            {jobsLoading ? (
+              <div className="flex h-64 w-full items-center justify-center">
+                <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+              </div>
+            ) : filteredJobs.length === 0 ? (
               <div className="flex h-64 w-full flex-col items-center justify-center gap-2">
                 <p className="text-center text-sm whitespace-pre-line text-gray-500">
                   <span className="text-[#252525]">
@@ -592,7 +896,7 @@ function DesktopPositionContent() {
               </div>
             ) : (
               filteredJobs.map((jobItem) => {
-                const encryptedId = encrypt(jobItem.id)
+                const encryptedId = encrypt(String(jobItem.id))
                 const isCurrentJob = job?.id === jobItem.id
 
                 const params = new URLSearchParams(searchParams.toString())
@@ -658,6 +962,13 @@ function DesktopPositionContent() {
                 )
               })
             )}
+
+            {/* Loading indicator for infinite scroll */}
+            {loadingMore && (
+              <div className="flex w-full items-center justify-center py-4">
+                <div className="border-primary h-6 w-6 animate-spin rounded-full border-2 border-t-transparent"></div>
+              </div>
+            )}
           </div>
 
           {previewJob && (
@@ -675,6 +986,7 @@ function DesktopPositionContent() {
                     alt={previewJob.companyName}
                     fill
                     className="object-cover"
+                    sizes="48px"
                   />
                 </div>
                 <div>
@@ -898,17 +1210,45 @@ function DesktopPositionContent() {
 export default function PositionContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const isMobile = useIsMobile()
+  const [isMobile, setIsMobile] = useState<boolean | null>(null)
 
   // Check if there's an id parameter in the URL
   const encryptedId = searchParams.get('id')
 
+  // Determine if device is mobile after hydration
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    // Initial check
+    checkMobile()
+
+    // Add resize listener
+    window.addEventListener('resize', checkMobile)
+
+    return () => {
+      window.removeEventListener('resize', checkMobile)
+    }
+  }, [])
+
   // Redirect to /position/[id] if mobile and id exists
   useEffect(() => {
-    if (isMobile && encryptedId) {
+    if (isMobile === true && encryptedId) {
       router.replace(`/position/${encryptedId}`)
     }
   }, [isMobile, encryptedId, router])
+
+  // Show loading screen during hydration to prevent mismatch
+  if (isMobile === null) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+        </div>
+      </div>
+    )
+  }
 
   // Render mobile or desktop view based on screen size
   return isMobile ? <MobilePositionContent /> : <DesktopPositionContent />

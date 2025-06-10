@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { sortedJobs as jobs } from '@/constants/job.data'
 import { decrypt } from '@/utils/crypto'
+import type { Job, JobType } from '@/types/job'
 import Image from 'next/image'
 import { CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useIsMobile } from '@/hooks/useIsMobile'
-import { getJobTypeDisplayName } from '@/constants/job.data'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
@@ -53,18 +52,25 @@ export default function DeviceAwarePositionView({
         }
 
         const decryptedId = decrypt(encryptedId)
-        const foundJob = jobs.find((job) => job.id === decryptedId)
+        const jobId = parseInt(decryptedId, 10)
+
+        if (isNaN(jobId)) {
+          throw new Error('Invalid job ID')
+        }
+
+        // Fetch specific job from API
+        const response = await fetch(`/api/jobs/${jobId}`)
+        if (!response.ok) {
+          throw new Error('Job not found')
+        }
+
+        const data = await response.json()
+        const foundJob = data.job
 
         if (foundJob) {
           setJob(foundJob)
           setError(null)
-          try {
-            const prompt = await foundJob.prompt()
-            setPromptContent(prompt)
-          } catch (err) {
-            console.error('Error fetching prompt:', err)
-            setPromptContent('')
-          }
+          setPromptContent(foundJob.prompt || '')
         } else {
           setError('해당 채용 공고를 찾을 수 없습니다.')
           setJob(null)
@@ -72,7 +78,7 @@ export default function DeviceAwarePositionView({
         }
       } catch (err) {
         setError('잘못된 URL입니다.')
-        console.error('Error decrypting job ID:', err)
+        console.error('Error fetching job:', err)
         setJob(null)
         setPromptContent('')
       } finally {
@@ -149,6 +155,11 @@ export default function DeviceAwarePositionView({
       (endMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24)
     )
     return `D-${diff}`
+  }
+
+  // Get job type display name
+  const getJobTypeDisplayName = (jobType: JobType): string => {
+    return jobType
   }
 
   return (

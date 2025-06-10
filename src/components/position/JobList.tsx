@@ -1,9 +1,12 @@
-import { sortedJobs as jobs, homePageJobs } from '@/constants/job.data'
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
 import { usePathname } from 'next/navigation'
+import type { Job } from '@/types/job'
 
 // Helper to calculate D-day or show '상시채용'
 const getDeadlineLabel = (deadline: string) => {
@@ -21,9 +24,46 @@ const getDeadlineLabel = (deadline: string) => {
 
 export default function JobList() {
   const pathname = usePathname()
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [loading, setLoading] = useState(true)
 
-  // 홈페이지에서는 성능 최적화를 위해 경량 데이터 사용
-  const jobsData = pathname === '/' ? homePageJobs : jobs
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        // 메인 페이지에서는 최신 10개만 가져오기
+        const response = await fetch('/api/jobs?latest=true&limit=10', {
+          cache: 'no-store',
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        })
+        const data = await response.json()
+        setJobs(data.jobs || [])
+      } catch (error) {
+        console.error('Error fetching jobs:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchJobs()
+  }, [])
+
+  // 홈페이지에서는 성능 최적화를 위해 제한된 수의 데이터 사용
+  const jobsData = pathname === '/' ? jobs.slice(0, 12) : jobs
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+        {Array.from({ length: 12 }).map((_, index) => (
+          <div
+            key={index}
+            className="h-64 animate-pulse rounded-lg bg-gray-100"
+          />
+        ))}
+      </div>
+    )
+  }
   return (
     <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
       {jobsData.map((job, idx) => {
@@ -35,7 +75,7 @@ export default function JobList() {
           visibility = 'hidden'
         }
         // Encrypt the ID for use in the URL
-        const encryptedId = encrypt(job.id)
+        const encryptedId = encrypt(String(job.id))
         const deadlineLabel = getDeadlineLabel(job.deadline)
         // 오늘 날짜와 업로드 날짜 비교 → 24시간 이내 업로드 비교로 변경
         const uploadedAtDate = new Date(job.uploadedAt)
@@ -45,7 +85,7 @@ export default function JobList() {
 
         return (
           <article
-            key={job.id}
+            key={String(job.id)}
             className={
               visibility +
               ' group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md lg:overflow-hidden'

@@ -1,5 +1,4 @@
 import { Metadata } from 'next'
-import { sortedJobs as jobs } from '@/constants/job.data'
 import { decrypt, encrypt } from '@/utils/crypto'
 import { notFound } from 'next/navigation'
 import { headers } from 'next/headers'
@@ -18,11 +17,62 @@ interface Props {
   params: Promise<{ id: string }>
 }
 
+// Helper function to fetch job data
+async function fetchJob(id: string) {
+  try {
+    const jobId = parseInt(id, 10)
+    if (isNaN(jobId)) {
+      return null
+    }
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/jobs/${jobId}`,
+      {
+        cache: 'force-cache',
+        next: { revalidate: 3600 }, // Revalidate every hour
+      }
+    )
+
+    if (!response.ok) {
+      return null
+    }
+
+    const data = await response.json()
+    return data.job
+  } catch (error) {
+    console.error('Error fetching job:', error)
+    return null
+  }
+}
+
+// Helper function to fetch all jobs for static params
+async function fetchAllJobs() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/jobs`,
+      {
+        cache: 'force-cache',
+        next: { revalidate: 3600 }, // Revalidate every hour
+      }
+    )
+
+    if (!response.ok) {
+      return []
+    }
+
+    const data = await response.json()
+    return data.jobs || []
+  } catch (error) {
+    console.error('Error fetching jobs:', error)
+    return []
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const resolvedParams = await params
     const decryptedId = decrypt(resolvedParams.id)
-    const job = jobs.find((job) => job.id === decryptedId)
+    const job = await fetchJob(decryptedId)
 
     if (!job) {
       return {
@@ -78,16 +128,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  return jobs.map((job) => ({
-    id: encrypt(job.id),
-  }))
+  // In development or if API is not available, return empty array to allow dynamic generation
+  if (
+    process.env.NODE_ENV === 'development' ||
+    !process.env.NEXT_PUBLIC_APP_URL
+  ) {
+    return []
+  }
+
+  try {
+    const jobs = await fetchAllJobs()
+    return jobs.map((job: any) => ({
+      id: encrypt(job.id),
+    }))
+  } catch (error) {
+    console.error('Error generating static params:', error)
+    return []
+  }
 }
 
 export default async function PositionPage({ params }: Props) {
   try {
     const resolvedParams = await params
     const decryptedId = decrypt(resolvedParams.id)
-    const job = jobs.find((job) => job.id === decryptedId)
+    const job = await fetchJob(decryptedId)
+
     if (!job) notFound()
 
     // 서버에서 User-Agent 확인
@@ -101,7 +166,7 @@ export default async function PositionPage({ params }: Props) {
       company: job.companyName,
       location:
         job.conditions.find(
-          (c) =>
+          (c: string) =>
             c.includes('서울') ||
             c.includes('성남') ||
             c.includes('수원') ||
@@ -115,8 +180,9 @@ export default async function PositionPage({ params }: Props) {
         Date.now() + 30 * 24 * 60 * 60 * 1000
       ).toISOString(),
       employmentType:
-        job.conditions.find((c) => c.includes('신입') || c.includes('경력')) ||
-        'FULL_TIME',
+        job.conditions.find(
+          (c: string) => c.includes('신입') || c.includes('경력')
+        ) || 'FULL_TIME',
     })
 
     const breadcrumbSchema = generateBreadcrumbSchema([

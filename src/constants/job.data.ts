@@ -19,7 +19,7 @@ import { getPositionPrompt } from '@/utils/prompt'
  */
 export const jobs: Job[] = [
   {
-    id: '1',
+    id: 1,
     companyName: '크리에이트립',
     jobTitle: '프론트엔드 엔지니어',
     conditions: ['프론트엔드', '경력 2-5년', '서울 강남구'],
@@ -54,7 +54,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '2',
+    id: 2,
     companyName: '피카부랩스',
     jobTitle: 'ML 엔지니어',
     conditions: ['ML엔지니어', '경력 2년 이상', '서울 강남구'],
@@ -87,7 +87,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '3',
+    id: 3,
     companyName: '산군',
     jobTitle: '웹 백엔드 개발자',
     conditions: ['백엔드', '신입~10년차', '서울'],
@@ -121,7 +121,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '4',
+    id: 4,
     companyName: '솔로트립',
     jobTitle: '[교육파트] 프론트엔드 개발자 (Cursor AI)',
     conditions: ['프론트엔드', '경력 1-3년', '서울 강동구'],
@@ -151,7 +151,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '5',
+    id: 5,
     companyName: 'NAVER Cloud',
     jobTitle: '환자향 진료기록 생성 모델 개발 (체험형 인턴)',
     conditions: ['AI/ML', '신입', '성남', '인턴'],
@@ -183,7 +183,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-26T18:00:00+09:00',
   },
   {
-    id: '6',
+    id: 6,
     companyName: '넵튠(Neptune)',
     jobTitle: '플랫폼개발팀 백엔드개발자',
     conditions: ['백엔드', '경력 2-5년', '서울 강남구'],
@@ -218,7 +218,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '7',
+    id: 7,
     companyName: '피카부랩스',
     jobTitle: '[인턴] AI 엔지니어',
     conditions: ['AI엔지니어', '신입', '서울 강남구', '인턴'],
@@ -251,7 +251,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '8',
+    id: 8,
     companyName: '아시아나IDT',
     jobTitle:
       'AI/빅데이터 연구개발 - 인공지능 엔지니어(AE) 및 데이터 과학자(DS)',
@@ -287,7 +287,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-21T23:59:00+09:00',
   },
   {
-    id: '9',
+    id: 9,
     companyName: '딥세일즈',
     jobTitle: '[인턴] 웹 크롤링/스크래핑 엔지니어',
     conditions: ['데이터엔지니어', '신입', '서울 강남구', '인턴'],
@@ -321,7 +321,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '10',
+    id: 10,
     companyName: '마이리얼트립',
     jobTitle: 'Product Manager, FTN',
     conditions: ['PM', '경력 3년 이상', '서울'],
@@ -356,7 +356,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '11',
+    id: 11,
     companyName: '모요',
     jobTitle: 'Frontend Developer - Product',
     conditions: ['프론트엔드', '경력 3-10년', '서울 서초구'],
@@ -390,7 +390,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '12',
+    id: 12,
     companyName: '넥스트그라운드',
     jobTitle: '[인턴] 백엔드 개발자',
     conditions: ['백엔드', '신입', '서울 강남구', '인턴'],
@@ -425,7 +425,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-30T23:59:59+09:00',
   },
   {
-    id: '13',
+    id: 13,
     companyName: '애드쉴드',
     jobTitle: 'Frontend Engineer',
     conditions: ['프론트엔드', '경력 1년 이상', '서울 강남구'],
@@ -457,7 +457,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '14',
+    id: 14,
     companyName: 'Allganize',
     jobTitle: 'Python Back-end Engineer (문서처리 파이프라인 / RAG)',
     conditions: ['백엔드 개발', '경력 2-5년', '서울 강남구'],
@@ -486,7 +486,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '15',
+    id: 15,
     companyName: 'CJ올리브영',
     jobTitle: '커머스플랫폼유닛 Back-end 개발자',
     conditions: ['백엔드 개발', '경력 5년 이상', '서울'],
@@ -521,7 +521,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '16',
+    id: 16,
     companyName: 'CJ올리브영',
     jobTitle: '커머스플랫폼유닛 Front-end 개발자',
     conditions: ['프론트엔드 개발', '경력 5년 이상', '서울'],
@@ -553,7 +553,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '17',
+    id: 17,
     companyName: 'CJ올리브영',
     jobTitle: '인터널플랫폼유닛 Back-end 개발자',
     conditions: ['백엔드 개발', '경력 5년 이상', '서울'],
@@ -584,7 +584,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '18',
+    id: 18,
     companyName: 'CJ올리브영',
     jobTitle: '인터널플랫폼유닛 Front-end 개발자',
     conditions: ['프론트엔드 개발', '경력 5년 이상', '서울'],
@@ -617,7 +617,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '19',
+    id: 19,
     companyName: 'CJ올리브영',
     jobTitle: '코어플랫폼유닛 Back-end 개발자',
     conditions: ['백엔드 개발', '경력 7-12년', '서울'],
@@ -646,7 +646,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '20',
+    id: 20,
     companyName: 'CJ올리브영',
     jobTitle: '코어플랫폼유닛 Front-end 개발자',
     conditions: ['프론트엔드 개발', '경력 7-12년', '서울'],
@@ -675,7 +675,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '21',
+    id: 21,
     companyName: '현대자동차',
     jobTitle: '제조로보틱스 모바일로봇 제조 애플리케이션 SW 개발',
     conditions: ['모바일로봇 SW 개발', '경력 3년 이상', '경기도 의왕'],
@@ -706,7 +706,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-29T17:00:00+09:00',
   },
   {
-    id: '22',
+    id: 22,
     companyName: '로민',
     jobTitle: '데이터 매니저',
     conditions: ['데이터 관리', '경력 1년 이상(신입 가능)', '서울 서초구'],
@@ -737,7 +737,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '23',
+    id: 23,
     companyName: '로민',
     jobTitle: '솔루션운영 엔지니어',
     conditions: ['시스템 운영', '경력 1년 이상(신입 가능)', '서울 서초구'],
@@ -768,7 +768,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '24',
+    id: 24,
     companyName: '카카오',
     jobTitle: 'Multimodal LLM Research Engineer',
     conditions: ['AI 연구개발', '경력 2년 이상', '판교'],
@@ -795,7 +795,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '25',
+    id: 25,
     companyName: '카카오',
     jobTitle: '장소플랫폼 서버 개발자',
     conditions: ['백엔드 개발', '경력 3년 이상', '판교'],
@@ -817,7 +817,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '26',
+    id: 26,
     companyName: '웨이브릿지',
     jobTitle: 'Back-end Developer (국내 서비스)',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 중구'],
@@ -853,7 +853,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '27',
+    id: 27,
     companyName: '케이뱅크',
     jobTitle: '혁신서비스 개발 및 운영 담당자',
     conditions: ['서비스 개발', '경력', '서울 중구'],
@@ -882,7 +882,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-29T17:00:00+09:00',
   },
   {
-    id: '28',
+    id: 28,
     companyName: '모멘티',
     jobTitle: '백엔드 개발자',
     conditions: ['백엔드 개발', '경력 1-4년', '서울 강남구'],
@@ -905,7 +905,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-08T23:59:59+09:00',
   },
   {
-    id: '29',
+    id: 29,
     companyName: '르몽',
     jobTitle: '프론트엔드(F/E) 개발자 (배움몽)',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 마포구'],
@@ -934,7 +934,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '30',
+    id: 30,
     companyName: '르몽',
     jobTitle: '백엔드(B/E) 개발자 (배움몽)',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 마포구'],
@@ -965,7 +965,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '31',
+    id: 31,
     companyName: 'NAVER',
     jobTitle: 'XR 서비스/기술 개발',
     conditions: ['XR 개발', '경력 3년 이상'],
@@ -995,7 +995,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-27T18:00:00+09:00',
   },
   {
-    id: '32',
+    id: 32,
     companyName: 'kt cs',
     jobTitle: 'SW개발 경력직',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울/부산/대구/광주/대전'],
@@ -1028,7 +1028,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-03T23:59:59+09:00',
   },
   {
-    id: '33',
+    id: 33,
     companyName: 'TPC인터넷',
     jobTitle: 'iOS 개발자 / iOS Developer',
     conditions: ['iOS 개발', '경력 3년 이상', '서울 강남구'],
@@ -1057,7 +1057,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '34',
+    id: 34,
     companyName: 'NHN Cloud',
     jobTitle: '시스템 엔지니어링',
     conditions: ['인프라 엔지니어링', '경력 3년 이상', '경기도 성남시 판교'],
@@ -1082,7 +1082,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '35',
+    id: 35,
     companyName: '신세계디에프',
     jobTitle: '데이터분석 경력직',
     conditions: ['데이터 분석', '경력 2-7년', '서울 중구'],
@@ -1112,7 +1112,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '36',
+    id: 36,
     companyName: '네오위즈',
     jobTitle: '신규 프로젝트 UI/UX 디자이너',
     conditions: ['UI/UX 디자인', '경력 3년 이상', '경기도 판교'],
@@ -1138,7 +1138,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '37',
+    id: 37,
     companyName: '알파자산운용',
     jobTitle: '투자관리팀 경력직원',
     conditions: ['투자관리', '경력 3년 이상'],
@@ -1163,7 +1163,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-13T23:59:59+09:00',
   },
   {
-    id: '38',
+    id: 38,
     companyName: '와이어트',
     jobTitle: '국내 물류 담당자',
     conditions: ['물류 관리', '경력 1-4년', '서울 강남구'],
@@ -1191,7 +1191,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '39',
+    id: 39,
     companyName: '와이어트',
     jobTitle: '개발구매 담당자',
     conditions: ['구매', '경력 1-3년', '서울 강남구'],
@@ -1220,7 +1220,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '40',
+    id: 40,
     companyName: '케이씨텍',
     jobTitle: '미래소재 생산직',
     conditions: ['생산직', '신입', '경기 안성시'],
@@ -1249,7 +1249,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-22T23:59:59+09:00',
   },
   {
-    id: '41',
+    id: 41,
     companyName: '현대글로비스',
     jobTitle: '인천공항 물류센터 운영 담당자',
     conditions: ['물류 센터 운영', '경력 3년 이상', '인천'],
@@ -1278,7 +1278,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-25T23:59:59+09:00',
   },
   {
-    id: '42',
+    id: 42,
     companyName: '뉴빌리티',
     jobTitle: 'AI Robotics Engineer',
     conditions: ['AI 로봇 엔지니어', '경력 3년 이상', '서울 성동구'],
@@ -1308,7 +1308,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '43',
+    id: 43,
     companyName: '클라썸(CLASSUM)',
     jobTitle: '백엔드(Node.js) 개발자',
     conditions: ['백엔드 개발', '경력 2년 이상', '서울 강남구'],
@@ -1345,7 +1345,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '44',
+    id: 44,
     companyName: '넷마블(Netmarble)',
     jobTitle: '웹 프론트엔드 개발자',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 구로구'],
@@ -1378,7 +1378,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '45',
+    id: 45,
     companyName: '넷마블(Netmarble)',
     jobTitle: '웹 백엔드 개발자',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 구로구'],
@@ -1412,7 +1412,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '46',
+    id: 46,
     companyName: '하나금융융합기술원',
     jobTitle: 'Data Science 직무',
     conditions: ['데이터 사이언티스트', '신입', '서울 강남구', '인턴'],
@@ -1441,7 +1441,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-29T23:59:59+09:00',
   },
   {
-    id: '47',
+    id: 47,
     companyName: '하나금융융합기술원',
     jobTitle: 'Computer Vision 직무',
     conditions: ['AI 엔지니어', '신입', '서울 강남구', '인턴'],
@@ -1469,7 +1469,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-29T23:59:59+09:00',
   },
   {
-    id: '48',
+    id: 48,
     companyName: '하나금융융합기술원',
     jobTitle: 'Natural Language Processing (자연어처리) 직무',
     conditions: ['AI 엔지니어', '신입', '서울 강남구', '인턴'],
@@ -1501,7 +1501,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-29T23:59:59+09:00',
   },
   {
-    id: '49',
+    id: 49,
     companyName: '마이리얼트립',
     jobTitle:
       '온디맨드 현지 가이드 매칭 플랫폼 풀스택 개발자(Product Engineer)',
@@ -1528,7 +1528,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '50',
+    id: 50,
     companyName: '다음설립준비법인(카카오)',
     jobTitle: 'Mobile App(iOS) Developer',
     conditions: ['iOS 개발', '경력 3-10년', '경기 성남시'],
@@ -1553,7 +1553,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '51',
+    id: 51,
     companyName: '더즌(dozn)',
     jobTitle: '시스템개발2팀 백엔드(JAVA) 개발자',
     conditions: ['백엔드 개발', '신입', '서울 서초구'],
@@ -1582,7 +1582,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '52',
+    id: 52,
     companyName: '커넥트웨이브',
     jobTitle: '[메이크샵] 백엔드 개발자(APM)',
     conditions: ['백엔드 개발', '신입-경력 7년', '서울 금천구'],
@@ -1618,7 +1618,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '53',
+    id: 53,
     companyName: '데이터메이커',
     jobTitle: '[경력] AI사업 백엔드 개발자',
     conditions: ['백엔드 개발', '경력 3년 이상', '대전 유성구'],
@@ -1653,7 +1653,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '54',
+    id: 54,
     companyName: '에스아이에이(SIA)',
     jobTitle: 'Frontend Engineer (2년 이상)',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 강남구'],
@@ -1684,7 +1684,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '55',
+    id: 55,
     companyName: '피트릭스(Fittrix)',
     jobTitle: '백엔드 개발자',
     conditions: ['백엔드 개발', '경력 5년 이상', '서울 강남구'],
@@ -1720,7 +1720,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '56',
+    id: 56,
     companyName: '커넥트웨이브',
     jobTitle: '[메이크샵] 백엔드 개발자(Data실)',
     conditions: ['백엔드 개발', '경력 2년 이상', '서울 금천구'],
@@ -1748,7 +1748,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '57',
+    id: 57,
     companyName: '데이터메이커',
     jobTitle: '[경력] AI사업 프론트엔드 개발자',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '대전 유성구'],
@@ -1781,7 +1781,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '58',
+    id: 58,
     companyName: '카카오뱅크',
     jobTitle: '모의해킹 및 취약점분석 담당자',
     conditions: ['보안 엔지니어', '경력 2년 이상', '경기 성남시'],
@@ -1810,7 +1810,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '59',
+    id: 59,
     companyName: '윤회(CARE ID)',
     jobTitle: '[풀스택] 프론트엔드·백엔드',
     conditions: ['풀스택 개발', '경력 3년 이상', '서울 서대문구'],
@@ -1850,7 +1850,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '60',
+    id: 60,
     companyName: '코드잇(codeit)',
     jobTitle: '백엔드 엔지니어',
     conditions: ['백엔드 개발', '경력 3-10년', '서울 중구'],
@@ -1881,7 +1881,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '61',
+    id: 61,
     companyName: '셀레트립(Celetrip)',
     jobTitle: 'Backend Developer',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 종로구'],
@@ -1916,7 +1916,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-26T23:59:59+09:00',
   },
   {
-    id: '62',
+    id: 62,
     companyName: '애즈위메이크',
     jobTitle: 'iOS 개발자 (3년~7년)',
     conditions: ['iOS 개발', '경력 3-7년', '서울 마포구'],
@@ -1950,7 +1950,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-25T23:59:59+09:00',
   },
   {
-    id: '63',
+    id: 63,
     companyName: '슬로그업',
     jobTitle: '프론트엔드 프로덕트 엔지니어 (2년 이상)',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 강남구'],
@@ -1987,7 +1987,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '64',
+    id: 64,
     companyName: '커넥트웨이브',
     jobTitle: '[메이크샵] 백엔드 개발자',
     conditions: ['백엔드 개발', '경력 1년 이상', '서울 금천구'],
@@ -2015,7 +2015,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '65',
+    id: 65,
     companyName: '메디트(Medit)',
     jobTitle: 'UI개발자(프론트엔드)',
     conditions: ['프론트엔드 개발', '경력 3-10년', '서울 영등포구'],
@@ -2047,7 +2047,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '66',
+    id: 66,
     companyName: '메디트(Medit)',
     jobTitle: 'AI 개발자',
     conditions: ['AI 엔지니어', '경력 3-15년', '서울 영등포구'],
@@ -2081,7 +2081,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '67',
+    id: 67,
     companyName: '한국딥러닝(KDL)',
     jobTitle: 'AI 엔지니어',
     conditions: ['AI 엔지니어', '경력 3년 이상', '서울 서초구'],
@@ -2110,7 +2110,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '68',
+    id: 68,
     companyName: '한국딥러닝(KDL)',
     jobTitle: '백엔드 엔지니어',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 서초구'],
@@ -2148,7 +2148,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '69',
+    id: 69,
     companyName: '메사쿠어컴퍼니',
     jobTitle: 'FrontEnd 개발자',
     conditions: ['프론트엔드 개발', '경력 3-7년', '서울 강남구'],
@@ -2183,7 +2183,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '70',
+    id: 70,
     companyName: '국립중앙의료원',
     jobTitle: '기술직 6급 전산행정(정보운영팀)',
     conditions: ['시스템 운영', '경력 1년 이상', '서울'],
@@ -2208,7 +2208,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-09T23:59:59+09:00',
   },
   {
-    id: '71',
+    id: 71,
     companyName: '아이샵케어',
     jobTitle: '[People팀] IT 인프라 엔지니어',
     conditions: ['인프라 엔지니어', '경력 3-6년', '서울 강남구'],
@@ -2239,7 +2239,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '72',
+    id: 72,
     companyName: '바리코퍼레이션',
     jobTitle: 'Front-end Engineer',
     conditions: ['프론트엔드 개발', '경력 1년 이상', '서울 서초구'],
@@ -2270,7 +2270,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '73',
+    id: 73,
     companyName: '놀유니버스',
     jobTitle: '글로벌 R&D 프론트엔드 개발자',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '경기 성남시'],
@@ -2301,7 +2301,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '74',
+    id: 74,
     companyName: '메디쿼터스',
     jobTitle: 'HRIS 풀스택',
     conditions: ['풀스택 개발', '경력 1-3년', '서울 강남구'],
@@ -2339,7 +2339,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '75',
+    id: 75,
     companyName: '오케이포스',
     jobTitle: 'POS 개발자',
     conditions: ['소프트웨어 개발', '경력 2-5년', '서울 금천구'],
@@ -2367,7 +2367,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '76',
+    id: 76,
     companyName: '빗썸',
     jobTitle: '보안정책 운영 담당자',
     conditions: ['보안 전문가', '경력 3-5년', '서울 강남구'],
@@ -2393,7 +2393,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '77',
+    id: 77,
     companyName: '벙커키즈',
     jobTitle: 'Tech - Frontend Engineer',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 서초구'],
@@ -2422,7 +2422,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '78',
+    id: 78,
     companyName: '벙커키즈',
     jobTitle: 'Tech - Backend Engineer',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 서초구'],
@@ -2455,7 +2455,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '79',
+    id: 79,
     companyName: '라이너(Liner)',
     jobTitle: 'DevOps Engineer',
     conditions: ['인프라 엔지니어', '경력 3-15년', '서울 마포구'],
@@ -2484,7 +2484,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '80',
+    id: 80,
     companyName: '라이너(Liner)',
     jobTitle: 'Search Engineer (검색 엔지니어)',
     conditions: ['검색 엔지니어', '경력 3년 이상', '서울 마포구'],
@@ -2516,7 +2516,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '81',
+    id: 81,
     companyName: '우아한형제들(배달의민족)',
     jobTitle: 'SCM팀 Business Analyst (3~7년이하)',
     conditions: ['데이터 분석가', '경력 3-7년', '서울 송파구'],
@@ -2546,7 +2546,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '82',
+    id: 82,
     companyName: '메가인포아이티',
     jobTitle: '셀프플래너 플랫폼 Frontend 개발자(3년이상)',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 금천구'],
@@ -2582,7 +2582,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '83',
+    id: 83,
     companyName: 'Shoplive',
     jobTitle: 'Software Engineer (Android / 안드로이드)',
     conditions: ['Android 개발', '경력 3년 이상', '서울 강남구'],
@@ -2614,7 +2614,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '84',
+    id: 84,
     companyName: '북아이피스',
     jobTitle: 'Jr. Backend Engineer (6개월 인턴십 프로그램, 정규직 전환형)',
     conditions: ['백엔드 개발', '신입', '서울 서초구', '인턴'],
@@ -2644,7 +2644,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '85',
+    id: 85,
     companyName: '뷰런테크놀로지',
     jobTitle: 'Quality Engineer(VO)',
     conditions: ['품질 엔지니어', '신입-경력 4년', '서울 서초구'],
@@ -2673,7 +2673,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '86',
+    id: 86,
     companyName: '콕스웨이브',
     jobTitle: '[Align] 백엔드 엔지니어',
     conditions: ['백엔드 개발', '경력 3년 이상', '서울 영등포구'],
@@ -2701,7 +2701,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '87',
+    id: 87,
     companyName: '미스릴',
     jobTitle: '데이터 라벨러',
     conditions: ['데이터 라벨링', '경력 1년 이상', '서울 송파구'],
@@ -2732,7 +2732,7 @@ export const jobs: Job[] = [
     deadline: '2025-07-08T23:59:59+09:00',
   },
   {
-    id: '88',
+    id: 88,
     companyName: '파인디지털헬스',
     jobTitle: '[딥테크팁스] 디지털헬스케어 프론트엔드 개발자',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 성동구'],
@@ -2763,7 +2763,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-25T23:59:59+09:00',
   },
   {
-    id: '89',
+    id: 89,
     companyName: '미러로이드',
     jobTitle: '모바일 웹 프론트엔드 개발자',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '경기 성남시'],
@@ -2793,7 +2793,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-13T23:59:59+09:00',
   },
   {
-    id: '90',
+    id: 90,
     companyName: '미러로이드',
     jobTitle: '클라이언트 Unity 개발자 (XR, 스마트 미러, 포토스튜디오)',
     conditions: ['Unity 개발', '경력 2년 이상', '경기 성남시'],
@@ -2825,7 +2825,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-21T23:59:59+09:00',
   },
   {
-    id: '91',
+    id: 91,
     companyName: '라포랩스',
     jobTitle: 'QA 엔지니어',
     conditions: ['QA 엔지니어', '경력 3년 이상', '서울 강남구'],
@@ -2860,7 +2860,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '92',
+    id: 92,
     companyName: '심플사파리(아모트래블)',
     jobTitle: '풀스택 개발자',
     conditions: ['풀스택 개발', '경력 2-10년', '서울 강남구'],
@@ -2891,7 +2891,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-27T23:59:59+09:00',
   },
   {
-    id: '93',
+    id: 93,
     companyName: '오렌지아이',
     jobTitle: '삼성 웹 시스템(Java) 운영&개발 업무(수원/기흥)',
     conditions: ['백엔드 개발', '경력 3-4년', '경기 수원시'],
@@ -2922,7 +2922,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-01T23:59:59+09:00',
   },
   {
-    id: '94',
+    id: 94,
     companyName: '리클',
     jobTitle: '프론트엔드 개발자 채용',
     conditions: ['프론트엔드 개발', '경력 3년 이하', '경기 남양주시'],
@@ -2956,7 +2956,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '95',
+    id: 95,
     companyName: '티피씨인터넷',
     jobTitle: '안드로이드 개발자 / Android Developer',
     conditions: ['Android 개발', '경력 3년 이하', '서울 강남구'],
@@ -2985,7 +2985,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '96',
+    id: 96,
     companyName: '티피씨인터넷',
     jobTitle: '웹 프론트 개발자 (Vue.js) / Web Frontend Developer',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 강남구'],
@@ -3015,7 +3015,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '97',
+    id: 97,
     companyName: '바이오리서치에이아이',
     jobTitle: 'Web Backend Engineer(신입가능)',
     conditions: ['백엔드 개발', '신입', '서울 강남구'],
@@ -3055,7 +3055,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '98',
+    id: 98,
     companyName: '에이아이트릭스(AITRICS)',
     jobTitle: 'Solution Engineer',
     conditions: ['솔루션 엔지니어', '경력 1-7년', '서울 강남구'],
@@ -3089,7 +3089,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '99',
+    id: 99,
     companyName: '메이크스타',
     jobTitle: 'DevOps Engineer (3년 이상)',
     conditions: ['DevOps 엔지니어', '경력 3-10년', '서울 강남구'],
@@ -3117,7 +3117,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '100',
+    id: 100,
     companyName: '단비교육',
     jobTitle: '[Python] Back-end Developer',
     conditions: ['백엔드 개발', '경력 3-7년', '서울 강남구'],
@@ -3152,7 +3152,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '101',
+    id: 101,
     companyName: '모빌린트',
     jobTitle: '[AI반도체] Software Engineer (NPU SDK)',
     conditions: ['소프트웨어 엔지니어', '신입', '서울 강남구'],
@@ -3181,7 +3181,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-27T23:59:59+09:00',
   },
   {
-    id: '102',
+    id: 102,
     companyName: '빗썸',
     jobTitle: '클라우드 네트워크 보안 담당자',
     conditions: ['네트워크 보안', '경력 3-10년', '서울 강남구'],
@@ -3210,7 +3210,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '103',
+    id: 103,
     companyName: '뤼이드(Riiid)',
     jobTitle: '산타 BE Engineer (3년 이상)',
     conditions: ['백엔드 개발', '경력 3-10년', '서울 강남구'],
@@ -3245,7 +3245,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '104',
+    id: 104,
     companyName: '슬로그업',
     jobTitle: '백엔드 개발자',
     conditions: ['백엔드 개발', '경력 2-6년', '서울 강남구'],
@@ -3281,7 +3281,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '105',
+    id: 105,
     companyName: '슬로그업',
     jobTitle: '프론트엔드 프로덕트 엔지니어',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 강남구'],
@@ -3322,7 +3322,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '106',
+    id: 106,
     companyName: 'NCSOFT',
     jobTitle: '데이터플랫폼 웹/모바일 서비스 개발자',
     conditions: ['풀스택 개발', '경력 2-5년', '서울'],
@@ -3358,7 +3358,7 @@ export const jobs: Job[] = [
     deadline: '2025-07-27T23:59:59+09:00',
   },
   {
-    id: '107',
+    id: 107,
     companyName: '카카오',
     jobTitle: '카카오디벨로퍼스 프론트/서버 개발자 (경력)',
     conditions: ['프론트/서버 개발', '경력 3년 이상', '경기 성남시'],
@@ -3384,7 +3384,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '108',
+    id: 108,
     companyName: 'Secta9ine',
     jobTitle: '[Secta9ine] 플랫폼 운영 담당자 수시 채용',
     conditions: ['프로모션 기획/운영', '경력 3년 이상', '서울 강남구'],
@@ -3412,7 +3412,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-11T23:59:59+09:00',
   },
   {
-    id: '109',
+    id: 109,
     companyName: '아이알큐더스',
     jobTitle: '[개발] 풀스택 개발 (JAVA, VUE)',
     conditions: ['풀스택 개발', '경력 3-8년', '서울 영등포구'],
@@ -3443,7 +3443,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '110',
+    id: 110,
     companyName: '크로스이엔에프',
     jobTitle: '[CROSS SHOP] Python Backend Developer',
     conditions: ['백엔드 개발', '경력 3-8년', '서울 강남구'],
@@ -3474,7 +3474,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '111',
+    id: 111,
     companyName: '메디트(Medit)',
     jobTitle: 'Software QA',
     conditions: ['QA 엔지니어', '경력 3-12년', '서울 영등포구'],
@@ -3506,7 +3506,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '112',
+    id: 112,
     companyName: '바카티오(Vacatio)',
     jobTitle: '[인턴] Frontend Engineer',
     conditions: ['프론트엔드 개발', '신입', '서울 서대문구', '인턴'],
@@ -3535,7 +3535,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '113',
+    id: 113,
     companyName: '바카티오(Vacatio)',
     jobTitle: '[인턴] Backend Engineer',
     conditions: ['백엔드 개발', '신입', '서울 서대문구', '인턴'],
@@ -3566,7 +3566,7 @@ export const jobs: Job[] = [
     deadline: '2025-05-31T23:59:59+09:00',
   },
   {
-    id: '114',
+    id: 114,
     companyName: '크라우드웍스',
     jobTitle: 'CTO staff Engineer',
     conditions: ['CTO staff Engineer', '경력 3년 이상', '서울 강남구'],
@@ -3597,7 +3597,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '115',
+    id: 115,
     companyName: '에누마',
     jobTitle: '클라우드 엔지니어 (3년 이상)',
     conditions: ['클라우드 엔지니어', '경력 3-15년', '서울 성동구'],
@@ -3624,7 +3624,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '116',
+    id: 116,
     companyName: '네이버클라우드',
     jobTitle: '[인턴] 이미지 생성 모델 개발 (체험형)',
     conditions: ['AI/ML 개발', '신입', '경기 성남시', '인턴'],
@@ -3658,7 +3658,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-05T18:00:00+09:00',
   },
   {
-    id: '117',
+    id: 117,
     companyName: '네이버클라우드',
     jobTitle: '[NAVER Cloud] 대규모 언어모델 연구 (체험형 인턴)',
     conditions: ['AI/ML 연구', '신입', '경기 성남시', '인턴'],
@@ -3688,7 +3688,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-02T18:00:00+09:00',
   },
   {
-    id: '118',
+    id: 118,
     companyName: '네이버클라우드',
     jobTitle:
       '[NAVER Cloud] HyperCLOVA X Multimodal Backbone 및 Multimodal LLM MLOps 개발 (체험형 인턴)',
@@ -3723,7 +3723,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-02T18:00:00+09:00',
   },
   {
-    id: '119',
+    id: 119,
     companyName: '네이버클라우드',
     jobTitle: '[NAVER Cloud] AI Application 모델링 엔지니어 (경력)',
     conditions: ['AI 모델링 엔지니어', '경력 3년 이상', '경기 성남시'],
@@ -3750,7 +3750,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-09T17:00:00+09:00',
   },
   {
-    id: '120',
+    id: 120,
     companyName: '네이버클라우드',
     jobTitle: '[NAVER Cloud] HyperCLOVA X 연구/개발 (경력)',
     conditions: ['AI 연구/개발', '경력 3년 이상', '경기 성남시'],
@@ -3780,7 +3780,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-09T17:00:00+09:00',
   },
   {
-    id: '121',
+    id: 121,
     companyName: '네이버클라우드',
     jobTitle:
       '[NAVER Cloud] NAVER WORKS 협업 서비스 및 NAVER 개인화 서비스 개발 (경력)',
@@ -3814,7 +3814,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-09T17:00:00+09:00',
   },
   {
-    id: '122',
+    id: 122,
     companyName: '네이버클라우드',
     jobTitle: '[NAVER Cloud] MLOps 엔지니어 (경력)',
     conditions: ['MLOps 엔지니어', '경력 3년 이상', '경기 성남시'],
@@ -3850,7 +3850,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-09T17:00:00+09:00',
   },
   {
-    id: '123',
+    id: 123,
     companyName: '네이버클라우드',
     jobTitle: '[NAVER Cloud] AI Agent 개발 엔지니어 (경력)',
     conditions: ['AI Agent 개발', '경력 3년 이상', '경기 성남시'],
@@ -3888,7 +3888,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-09T17:00:00+09:00',
   },
   {
-    id: '124',
+    id: 124,
     companyName: '아이포트폴리오',
     jobTitle: 'iOS 개발자',
     conditions: ['iOS 개발', '경력 1년 이상', '서울 강서구'],
@@ -3918,7 +3918,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '125',
+    id: 125,
     companyName: '버즈빌(buzzvil)',
     jobTitle: '[Business Growth팀] 프론트 엔드 개발 (1년 이상)',
     conditions: ['프론트엔드 개발', '경력 1년 이상', '서울 송파구'],
@@ -3954,7 +3954,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '126',
+    id: 126,
     companyName: '엔콕',
     jobTitle: '백엔드 개발자 (Back-End Developer)',
     conditions: ['백엔드 개발', '신입-경력 2년', '서울 광진구'],
@@ -3986,7 +3986,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '127',
+    id: 127,
     companyName: '고트헤이븐',
     jobTitle: 'AI 디지털 플랫폼 앱개발자',
     conditions: ['앱 개발', '경력 2-7년', '서울 금천구'],
@@ -4015,7 +4015,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '128',
+    id: 128,
     companyName: '케이티피',
     jobTitle: '[핀테크] 프론트엔드 개발자',
     conditions: ['프론트엔드 개발', '경력 2-8년', '서울 서초구'],
@@ -4048,7 +4048,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '129',
+    id: 129,
     companyName: '두나무(업비트/증권플러스)',
     jobTitle: 'DevOps Engineer_블록체인 관련 서비스 개발',
     conditions: ['DevOps', '신입 이상', '서울 서초구'],
@@ -4082,7 +4082,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '130',
+    id: 130,
     companyName: '스마일드래곤',
     jobTitle: 'Backend Engineer(3년이상)',
     conditions: ['백엔드 개발', '경력 3년 이상', '경기 고양시'],
@@ -4113,7 +4113,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '131',
+    id: 131,
     companyName: '번개장터',
     jobTitle: 'DevSecOps Engineer (DevOps / 데브옵스)',
     conditions: ['DevOps', '경력 2-5년', '서울 서초구'],
@@ -4150,7 +4150,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '132',
+    id: 132,
     companyName: '야놀자',
     jobTitle: '[Y-NEXT] Software Engineer - IAB',
     conditions: ['AI/ML 개발', '경력 4년 이상', '서울 강남구'],
@@ -4184,7 +4184,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '133',
+    id: 133,
     companyName: 'LINE Plus',
     jobTitle: 'Cloud Storage Service Engineer',
     conditions: ['클라우드 스토리지 개발', '경력 2년 이상', '경기 분당'],
@@ -4214,7 +4214,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '134',
+    id: 134,
     companyName: '피클플러스',
     jobTitle: '주니어 프론트엔드 개발자 채용 (병역특례 가능)',
     conditions: ['프론트엔드 개발', '경력 2-5년', '서울'],
@@ -4245,7 +4245,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '135',
+    id: 135,
     companyName: '당근',
     jobTitle: 'Software Engineer Intern, Frontend - Local Business(C2C)',
     conditions: ['프론트엔드 개발', '경력/신입', '서울 서초구', '인턴'],
@@ -4279,7 +4279,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-08T23:59:59+09:00',
   },
   {
-    id: '136',
+    id: 136,
     companyName: '모두닥',
     jobTitle: '[채용전환형] 모두닥 풀스택 엔지니어 인턴 채용',
     conditions: ['풀스택 개발', '인턴', '서울 강남구', '인턴'],
@@ -4316,7 +4316,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '137',
+    id: 137,
     companyName: '픽소(PIXO)',
     jobTitle: '프론트엔드 엔지니어 (주니어/병역특례 보충역)',
     conditions: ['프론트엔드 개발', '신입', '서울 마포구'],
@@ -4352,7 +4352,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '138',
+    id: 138,
     companyName: '와이즐리컴퍼니',
     jobTitle: '신입 백엔드/프론트엔드 개발자',
     conditions: ['백엔드/프론트엔드 개발', '신입', '서울 서초구'],
@@ -4378,7 +4378,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '139',
+    id: 139,
     companyName: '호미에이아이',
     jobTitle: '프론트앤드 개발자',
     conditions: ['프론트엔드 개발', '경력 3-5년', '서울 강남구'],
@@ -4405,7 +4405,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '140',
+    id: 140,
     companyName: '구름',
     jobTitle: 'EDU 풀스택 개발자',
     conditions: ['풀스택 개발', '경력 1-8년', '경기 성남시'],
@@ -4431,7 +4431,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '141',
+    id: 141,
     companyName: '우리은행',
     jobTitle: '우리은행 직원만족센터 전문직 채용공고',
     conditions: ['디지털/IT 개발', '경력 3년 이상', '서울 중구'],
@@ -4462,7 +4462,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-16T23:59:59+09:00',
   },
   {
-    id: '142',
+    id: 142,
     companyName: '쿠팡',
     jobTitle: 'Sr~Staff, Backend Engineer (Core Business)',
     conditions: ['백엔드 개발', '경력 3-15년', '서울 강남구'],
@@ -4501,7 +4501,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '143',
+    id: 143,
     companyName: '핀다(FINDA)',
     jobTitle: '백엔드 개발자 (신사업)',
     conditions: ['백엔드 개발', '경력 1-5년', '서울 강남구'],
@@ -4532,7 +4532,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '144',
+    id: 144,
     companyName: '구름',
     jobTitle: '클라우드 보안 엔지니어',
     conditions: ['클라우드 보안', '경력 1-8년', '경기 성남시'],
@@ -4565,7 +4565,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '145',
+    id: 145,
     companyName: '코너',
     jobTitle: '파이썬 개발자 (3년 이상)',
     conditions: ['파이썬 개발', '경력 3-10년', '서울 용산구'],
@@ -4598,7 +4598,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '146',
+    id: 146,
     companyName: '라포랩스',
     jobTitle: '서버 엔지니어 (비즈니스 트라이브)',
     conditions: ['백엔드 개발', '경력 1-6년', '서울 강남구'],
@@ -4628,7 +4628,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '147',
+    id: 147,
     companyName: '한국결제네트웍스유한회사',
     jobTitle: '온라인 결제 서비스 개발',
     conditions: ['백엔드 개발', '신입', '서울 강남구'],
@@ -4655,7 +4655,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '148',
+    id: 148,
     companyName: '제이어스',
     jobTitle: '웹 프론트엔드 개발 (부산)',
     conditions: ['프론트엔드 개발', '경력 3-5년', '부산 사상구'],
@@ -4688,7 +4688,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '149',
+    id: 149,
     companyName: '넥세라',
     jobTitle: '프론트엔드 개발자 (Frontend Developer)',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 구로구'],
@@ -4719,7 +4719,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '150',
+    id: 150,
     companyName: '레브잇',
     jobTitle: '[산업기능요원]Software Engineer(Frontend)',
     conditions: ['프론트엔드 개발', '경력 2년 이상', '서울 관악구'],
@@ -4748,7 +4748,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '151',
+    id: 151,
     companyName: '세일즈맵',
     jobTitle: 'B2B SaaS 풀스택 웹개발자',
     conditions: ['풀스택 개발', '인턴', '서울 강남구', '인턴'],
@@ -4776,7 +4776,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '152',
+    id: 152,
     companyName: '픽소(PIXO)',
     jobTitle: '프론트엔드 엔지니어 (주니어)',
     conditions: ['프론트엔드 개발', '경력 3년', '서울 마포구'],
@@ -4812,7 +4812,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '153',
+    id: 153,
     companyName: 'NHN Injeinc',
     jobTitle: 'Cloud Platform 개발',
     conditions: ['풀스택 개발', '경력 3년 이상', '서울'],
@@ -4848,7 +4848,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '154',
+    id: 154,
     companyName: '플래티어',
     jobTitle: '[EC솔루션사업본부] 풀스택 개발자',
     conditions: ['풀스택 개발', '경력 2-10년', '서울 송파구'],
@@ -4876,7 +4876,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '155',
+    id: 155,
     companyName: '맘편한세상(맘시터)',
     jobTitle: '백엔드 개발자',
     conditions: ['백엔드 개발', '경력 1년 이상', '서울 서초구'],
@@ -4907,7 +4907,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '156',
+    id: 156,
     companyName: '호각',
     jobTitle: '프론트앤드 개발자',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '서울 강남구'],
@@ -4943,7 +4943,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '157',
+    id: 157,
     companyName: '뷰컴즈',
     jobTitle: '웹 서비스 풀스택 개발자',
     conditions: ['풀스택 개발', '신입', '서울 영등포구', '인턴'],
@@ -4967,7 +4967,7 @@ export const jobs: Job[] = [
     deadline: '2025-09-02T23:59:59+09:00',
   },
   {
-    id: '158',
+    id: 158,
     companyName: '에잇퍼센트(8PERCENT)',
     jobTitle: '코어뱅킹 개발자',
     conditions: ['백엔드 개발', '경력 3-10년', '서울 영등포구'],
@@ -4995,7 +4995,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '159',
+    id: 159,
     companyName: '에잇퍼센트(8PERCENT)',
     jobTitle: '파이썬(Python) 개발자',
     conditions: ['파이썬 개발', '경력 3-7년', '서울 영등포구'],
@@ -5024,7 +5024,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '160',
+    id: 160,
     companyName: 'NAVER Cloud',
     jobTitle: '[NAVER Cloud] 데이터 보호 서비스 BE개발 (경력)',
     conditions: ['백엔드 개발', '경력 3년 이상', '경기 성남시'],
@@ -5060,7 +5060,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-16T17:00:00+09:00',
   },
   {
-    id: '161',
+    id: 161,
     companyName: '넥스트증권',
     jobTitle: 'Security Policy Engineer',
     conditions: ['보안 정책', '경력 3년 이상', '서울 영등포구'],
@@ -5088,7 +5088,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '162',
+    id: 162,
     companyName: '웨이브릿지',
     jobTitle: 'QA Engineer',
     conditions: ['QA', '경력 3년 이상', '서울 중구'],
@@ -5128,7 +5128,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '163',
+    id: 163,
     companyName: '커넥트웨이브 (플레이오토)',
     jobTitle: '[플레이오토] 쇼핑몰 연동(API)개발 (신입 ~ 3년 이하)',
     conditions: ['풀스택 개발', '신입~3년', '서울'],
@@ -5157,7 +5157,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '164',
+    id: 164,
     companyName: '에이스웍스코리아',
     jobTitle: '소프트웨어 엔지니어 (신입)',
     conditions: ['소프트웨어 개발', '신입', '서울 강남구'],
@@ -5181,7 +5181,7 @@ export const jobs: Job[] = [
     deadline: '2025-07-13T23:59:59+09:00',
   },
   {
-    id: '165',
+    id: 165,
     companyName: '더즌(dozn)',
     jobTitle: '웹서비스개발팀 카카오 연계 시스템 개발자',
     conditions: ['백엔드 개발', '신입~3년', '서울 서초구'],
@@ -5212,7 +5212,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '166',
+    id: 166,
     companyName: '여기어때컴퍼니',
     jobTitle: 'Frontend Engineer [파트너서비스]',
     conditions: ['프론트엔드 개발', '경력 3-6년', '서울 강남구'],
@@ -5243,7 +5243,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '167',
+    id: 167,
     companyName: '카페24',
     jobTitle: 'AI 에이전트 및 자동화시스템 개발자',
     conditions: ['AI/자동화 개발', '경력 2년 이상', '서울'],
@@ -5272,7 +5272,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '168',
+    id: 168,
     companyName: '광고인',
     jobTitle: '퍼블리셔 (프론트엔드 개발자)',
     conditions: ['퍼블리셔', '신입', '광주 북구'],
@@ -5303,7 +5303,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '169',
+    id: 169,
     companyName: '마드라스체크',
     jobTitle: '엔터프라이즈개발자',
     conditions: ['엔터프라이즈 개발', '신입~3년', '서울 영등포구'],
@@ -5346,7 +5346,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '170',
+    id: 170,
     companyName: '알세미',
     jobTitle: '[인턴] Software Engineer',
     conditions: ['소프트웨어 개발', '신입', '서울 강남구', '인턴'],
@@ -5379,7 +5379,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '171',
+    id: 171,
     companyName: '블리츠다이나믹스',
     jobTitle: '주니어 풀스택 개발자 (신입 ~ 4년차)',
     conditions: ['풀스택 개발', '신입~4년', '서울 관악구'],
@@ -5407,7 +5407,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '172',
+    id: 172,
     companyName: '더즌(dozn)',
     jobTitle: '웹서비스개발팀 금융데이터 중계 시스템 개발자',
     conditions: ['백엔드 개발', '신입~3년', '서울 서초구'],
@@ -5437,7 +5437,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '173',
+    id: 173,
     companyName: '모두의플래닛',
     jobTitle: 'Flutter App 개발자(인턴)',
     conditions: ['Flutter 개발', '인턴', '경기 성남시', '인턴'],
@@ -5465,7 +5465,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '174',
+    id: 174,
     companyName: '토글캠퍼스',
     jobTitle: 'Full-Stack Developer [Intern]',
     conditions: ['풀스택 개발', '인턴', '서울 영등포구', '인턴'],
@@ -5501,7 +5501,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '175',
+    id: 175,
     companyName: '블링코',
     jobTitle: '[인턴] 디자이너 (K디자인 파워업 연계사업)',
     conditions: ['패션 디자이너', '인턴', '서울 금천구', '인턴'],
@@ -5526,7 +5526,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '176',
+    id: 176,
     companyName: '안랩',
     jobTitle: 'Web개발 (Java)',
     conditions: ['웹 개발', '경력 3-12년', '서울'],
@@ -5561,7 +5561,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-15T23:59:59+09:00',
   },
   {
-    id: '177',
+    id: 177,
     companyName: '피트크루',
     jobTitle: 'iOS 개발자',
     conditions: ['iOS 개발', '경력 1-10년', '서울 성동구'],
@@ -5595,7 +5595,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '178',
+    id: 178,
     companyName: '안랩',
     jobTitle: 'Web 개발_보안관제플랫폼',
     conditions: ['웹 개발', '경력 3년 이상', '서울'],
@@ -5623,7 +5623,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-15T23:59:59+09:00',
   },
   {
-    id: '179',
+    id: 179,
     companyName: '안랩',
     jobTitle: '디자인 직무 채용',
     conditions: ['디자이너', '경력 5년 이하', '서울'],
@@ -5653,7 +5653,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-15T23:59:59+09:00',
   },
   {
-    id: '180',
+    id: 180,
     companyName: '위대한상상(요기요)',
     jobTitle: '[Tech] Android Developer (2년 이상)',
     conditions: ['Android 개발', '경력 2-10년', '서울 서초구'],
@@ -5684,7 +5684,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '181',
+    id: 181,
     companyName: '위대한상상(요기요)',
     jobTitle: '[Tech] DevOps Engineer (3년 이상)',
     conditions: ['DevOps', '경력 3-7년', '서울 서초구'],
@@ -5717,7 +5717,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '182',
+    id: 182,
     companyName: '카카오뱅크',
     jobTitle: '서비스 기획자 - 홈서비스',
     conditions: ['서비스 기획', '경력 3년 이상', '경기 성남'],
@@ -5747,7 +5747,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-30T23:59:59+09:00',
   },
   {
-    id: '183',
+    id: 183,
     companyName: 'CJ올리브영',
     jobTitle: '디지털 마케팅 전략 담당자',
     conditions: ['디지털 마케팅', '경력', '서울'],
@@ -5776,7 +5776,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '184',
+    id: 184,
     companyName: '컬리',
     jobTitle: 'CRM 마케터 (3년 이상)',
     conditions: ['CRM 마케팅', '경력 3년 이상', '서울 강남구'],
@@ -5811,7 +5811,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '185',
+    id: 185,
     companyName: '참치상사',
     jobTitle: '프론트엔드 (Frontend / FE) 개발자',
     conditions: ['프론트엔드 개발', '경력 1-5년', '서울 강남구'],
@@ -5839,7 +5839,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '186',
+    id: 186,
     companyName: '참치상사',
     jobTitle: '백엔드 (Backend/BE) 개발자',
     conditions: ['백엔드 개발', '경력 1-5년', '서울 강남구'],
@@ -5867,7 +5867,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '187',
+    id: 187,
     companyName: '피에프씨테크놀로지스',
     jobTitle: 'Generative AI Engineer',
     conditions: ['AI 엔지니어', '신입~10년', '서울 서초구'],
@@ -5898,7 +5898,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '188',
+    id: 188,
     companyName: 'NHN Dooray',
     jobTitle: '두레이 서비스 백엔드 개발 및 운영',
     conditions: ['백엔드 개발', '경력', '경기 성남'],
@@ -5922,7 +5922,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '189',
+    id: 189,
     companyName: '몬드리안에이아이',
     jobTitle: 'AI 컨설턴트',
     conditions: ['AI 컨설팅', '신입~10년', '서울 영등포구'],
@@ -5950,7 +5950,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '190',
+    id: 190,
     companyName: '브레인즈컴퍼니',
     jobTitle: '소프트웨어 엔지니어 (2년이상)',
     conditions: ['소프트웨어 개발', '경력 2-15년', '서울 성동구'],
@@ -5980,7 +5980,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-22T23:59:59+09:00',
   },
   {
-    id: '191',
+    id: 191,
     companyName: '코드잇(codeit)',
     jobTitle: '콘텐츠 프로듀서 (AI 엔지니어링 교육)',
     conditions: ['콘텐츠 기획/제작', '신입~10년', '서울 중구'],
@@ -6021,7 +6021,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '192',
+    id: 192,
     companyName: '비상교육',
     jobTitle: 'Front End 개발자(AllviA)',
     conditions: ['프론트엔드 개발', '경력 3년 이상', '경기 과천시'],
@@ -6049,7 +6049,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '193',
+    id: 193,
     companyName: '하이퍼커넥트',
     jobTitle: 'Site Reliability Engineer',
     conditions: ['SRE', '경력 2-15년', '서울 강남구'],
@@ -6082,7 +6082,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '194',
+    id: 194,
     companyName: '빗썸',
     jobTitle: 'Back End - 거래 플랫폼 개발 (3년 이상)',
     conditions: ['백엔드 개발', '경력 3-7년', '서울 강남구'],
@@ -6115,7 +6115,7 @@ export const jobs: Job[] = [
     deadline: '상시 채용',
   },
   {
-    id: '195',
+    id: 195,
     companyName: 'NAVER',
     jobTitle:
       '실시간 협업 서비스의 분산 시스템 및 CRDT 알고리즘 리서치 및 개발 체험형 인턴',
@@ -6141,7 +6141,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-16T18:00:00+09:00',
   },
   {
-    id: '196',
+    id: 196,
     companyName: '쿠팡이츠',
     jobTitle: '2025 쿠팡이츠 테크 신입 개발자 (통합 지원)',
     conditions: ['소프트웨어 개발', '신입', '서울'],
@@ -6173,7 +6173,7 @@ export const jobs: Job[] = [
     deadline: '2025-06-20T23:59:59+09:00',
   },
   {
-    id: '197',
+    id: 197,
     companyName: '네이버페이',
     jobTitle: '채용연계형 FE 인턴십',
     conditions: ['프론트엔드 개발', '인턴', '서울', '인턴'],
