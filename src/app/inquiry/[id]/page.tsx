@@ -233,6 +233,7 @@ export default async function InquiryDetailPage({
                           width={40}
                           height={40}
                           className="aspect-square h-10 w-10 rounded-full object-cover shadow-md"
+                          unoptimized
                         />
                         <span className="text-sm font-medium text-gray-900">
                           {answer.admin?.nickname}
