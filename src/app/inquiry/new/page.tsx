@@ -69,7 +69,7 @@ export default function CreateInquiry() {
 
       // 성공 메시지 표시 및 리다이렉션
       alert(
-        '문의가 성공적으로 등록되었습니다. 답변이 등록되면 이메일로 알려드립니다.'
+        '문의가 성공적으로 등록되었습니다. 채용공고 분석 후 이메일로 알려드리겠습니다 🚀'
       )
       router.push('/inquiry')
     } catch (error) {
