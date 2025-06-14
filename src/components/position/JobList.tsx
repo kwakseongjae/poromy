@@ -5,22 +5,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
+import { getDeadlineLabel, isJobNew } from '@/utils/job'
 import { usePathname } from 'next/navigation'
 import type { Job } from '@/types/job'
-
-// Helper to calculate D-day or show '상시채용'
-const getDeadlineLabel = (deadline: string) => {
-  if (deadline === '상시 채용') return '상시채용'
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const end = new Date(deadline)
-  end.setHours(0, 0, 0, 0)
-  const diff = Math.ceil(
-    (end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-  )
-  if (diff < 0) return '마감'
-  return `D-${diff}`
-}
 
 export default function JobList() {
   const pathname = usePathname()
@@ -77,11 +64,8 @@ export default function JobList() {
         // Encrypt the ID for use in the URL
         const encryptedId = encrypt(String(job.id))
         const deadlineLabel = getDeadlineLabel(job.deadline)
-        // 오늘 날짜와 업로드 날짜 비교 → 24시간 이내 업로드 비교로 변경
-        const uploadedAtDate = new Date(job.uploadedAt)
-        const now = new Date()
-        const diffMs = now.getTime() - uploadedAtDate.getTime()
-        const isNew = diffMs >= 0 && diffMs < 24 * 60 * 60 * 1000
+        // 기존 utils 함수 사용
+        const isNew = isJobNew(job.uploadedAt)
 
         return (
           <article
