@@ -184,7 +184,10 @@ export default async function HomePage() {
     <>
       <StructuredData schema={schemas} />
       <h1 className="sr-only">Poromy - AI 자소서 프롬프트 아카이브 홈페이지</h1>
+      {/* 홈페이지 상단 케러셀 */}
       <HomeCarousel />
+
+      {/* 홈페이지  컨테이너 */}
       <HomeContainer>
         <Section title="채용 공고 별 프롬프트" viewAllLink="/position">
           <DynamicJobList />
