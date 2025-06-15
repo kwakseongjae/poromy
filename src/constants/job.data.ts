@@ -1,5 +1,4 @@
-import type { Job, JobType } from '@/types/job'
-import { getPositionPrompt } from '@/utils/prompt'
+import type { JobType } from '@/types/job'
 
 /**
  * Job data
