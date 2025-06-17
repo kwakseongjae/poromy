@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
@@ -8,7 +8,7 @@ import { useSupabase } from '@/contexts/SupabaseContext'
 import { createClient } from '@supabase/supabase-js'
 import { deleteCookie, getCookie } from '@/utils/cookie'
 
-export default function Login() {
+function LoginContent() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
@@ -285,5 +285,42 @@ export default function Login() {
         </div>
       </form>
     </div>
+  )
+}
+
+function LoginLoader() {
+  return (
+    <div className="mx-auto mt-16 max-w-md rounded-lg border border-gray-200 bg-white p-6 shadow-md">
+      <div className="mx-auto mt-4 mb-8 h-6 w-32 animate-pulse rounded bg-gray-200"></div>
+
+      <div className="space-y-4">
+        <div>
+          <div className="mb-2 h-4 w-16 animate-pulse rounded bg-gray-200"></div>
+          <div className="h-10 w-full animate-pulse rounded bg-gray-200"></div>
+        </div>
+        <div>
+          <div className="mb-2 h-4 w-20 animate-pulse rounded bg-gray-200"></div>
+          <div className="h-10 w-full animate-pulse rounded bg-gray-200"></div>
+        </div>
+      </div>
+
+      <div className="mt-10 space-y-2">
+        <div className="h-10 w-full animate-pulse rounded bg-gray-200"></div>
+        <div className="my-2 flex items-center">
+          <div className="flex-grow border-t border-gray-300"></div>
+          <span className="mx-4 text-sm text-gray-500">또는</span>
+          <div className="flex-grow border-t border-gray-300"></div>
+        </div>
+        <div className="h-10 w-full animate-pulse rounded bg-gray-200"></div>
+      </div>
+    </div>
+  )
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<LoginLoader />}>
+      <LoginContent />
+    </Suspense>
   )
 }
