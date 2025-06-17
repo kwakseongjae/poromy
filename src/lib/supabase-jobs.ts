@@ -534,10 +534,12 @@ export const getAvailableJobTypes = async (): Promise<JobType[]> => {
       return []
     }
 
+    if (!data) return []
+
     // Set을 사용하여 중복 제거 후 배열로 변환
-    const uniqueTypes = Array.from(
-      new Set(data.map((item) => item.job_type))
-    ) as JobType[]
+    const uniqueTypes = [
+      ...new Set(data.map((item: { job_type: string }) => item.job_type)),
+    ] as JobType[]
 
     return uniqueTypes
   } catch (error) {
@@ -570,7 +572,7 @@ export const getCompanyNames = async (): Promise<string[]> => {
     // Set을 사용하여 중복 제거 후 배열로 변환
     const uniqueCompanies = Array.from(
       new Set(data.map((item: { company_name: string }) => item.company_name))
-    )
+    ) as string[]
 
     return uniqueCompanies
   } catch (error) {
