@@ -351,6 +351,191 @@ export const searchJobs = async (query: string): Promise<Job[]> => {
 }
 
 /**
+ * 검색어로 채용공고를 페이지네이션하여 조회하는 함수
+ * - 페이지 기반 검색 (모바일용)
+ * @param {string} query - 검색어
+ * @param {number} page - 페이지 번호 (1부터 시작)
+ * @param {number} limit - 페이지당 아이템 수
+ * @returns {Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }>}
+ */
+export const searchJobsPaginated = async (
+  query: string,
+  page: number = 1,
+  limit: number = 10
+): Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }> => {
+  try {
+    const supabase = await getSupabaseClient()
+    const offset = (page - 1) * limit
+
+    // 전체 데이터를 가져와서 클라이언트 사이드에서 포괄적 검색 수행
+    const { data: allData, error: searchError } = await supabase
+      .from('jobs')
+      .select('*')
+      .order('id', { ascending: false })
+
+    if (searchError) {
+      console.error('Error searching jobs with pagination:', searchError)
+      return { jobs: [], totalCount: 0, hasMore: false }
+    }
+
+    // 모든 필드를 포함하여 클라이언트 사이드에서 포괄적 검색 필터링
+    const filteredData = (allData || []).filter((job: any) => {
+      const queryLower = query.toLowerCase()
+
+      // 기본 텍스트 필드 검색
+      const textFieldMatch =
+        job.company_name?.toLowerCase().includes(queryLower) ||
+        job.job_title?.toLowerCase().includes(queryLower) ||
+        job.position_description?.toLowerCase().includes(queryLower) ||
+        job.main_task?.toLowerCase().includes(queryLower)
+
+      // 배열 필드 검색 - 각 배열의 요소들을 개별적으로 확인
+      const conditionsMatch =
+        job.conditions && Array.isArray(job.conditions)
+          ? job.conditions.some(
+              (condition: string) =>
+                condition &&
+                typeof condition === 'string' &&
+                condition.toLowerCase().includes(queryLower)
+            )
+          : false
+
+      const qualificationsMatch =
+        job.qualifications && Array.isArray(job.qualifications)
+          ? job.qualifications.some(
+              (qualification: string) =>
+                qualification &&
+                typeof qualification === 'string' &&
+                qualification.toLowerCase().includes(queryLower)
+            )
+          : false
+
+      const preferredQualificationsMatch =
+        job.preferred_qualifications &&
+        Array.isArray(job.preferred_qualifications)
+          ? job.preferred_qualifications.some(
+              (qualification: string) =>
+                qualification &&
+                typeof qualification === 'string' &&
+                qualification.toLowerCase().includes(queryLower)
+            )
+          : false
+
+      return (
+        textFieldMatch ||
+        conditionsMatch ||
+        qualificationsMatch ||
+        preferredQualificationsMatch
+      )
+    })
+
+    // 페이지네이션 적용
+    const data = filteredData.slice(offset, offset + limit)
+    const totalCount = filteredData.length
+    const hasMore = offset + limit < totalCount
+
+    const jobs = data?.map(convertSupabaseJobToJob) || []
+
+    return { jobs, totalCount, hasMore }
+  } catch (error) {
+    console.error('Error in searchJobsPaginated:', error)
+    return { jobs: [], totalCount: 0, hasMore: false }
+  }
+}
+
+/**
+ * 검색어로 채용공고를 오프셋 기반으로 조회하는 함수
+ * - 오프셋 기반 검색 (데스크탑 무한스크롤용)
+ * @param {string} query - 검색어
+ * @param {number} offset - 시작 오프셋
+ * @param {number} limit - 가져올 아이템 수
+ * @returns {Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }>}
+ */
+export const searchJobsWithOffset = async (
+  query: string,
+  offset: number = 0,
+  limit: number = 20
+): Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }> => {
+  try {
+    const supabase = await getSupabaseClient()
+
+    // 전체 데이터를 가져와서 클라이언트 사이드에서 포괄적 검색 수행
+    const { data: allData, error: searchError } = await supabase
+      .from('jobs')
+      .select('*')
+      .order('id', { ascending: false })
+
+    if (searchError) {
+      console.error('Error searching jobs with offset:', searchError)
+      return { jobs: [], totalCount: 0, hasMore: false }
+    }
+
+    // 모든 필드를 포함하여 클라이언트 사이드에서 포괄적 검색 필터링
+    const filteredData = (allData || []).filter((job: any) => {
+      const queryLower = query.toLowerCase()
+
+      // 기본 텍스트 필드 검색
+      const textFieldMatch =
+        job.company_name?.toLowerCase().includes(queryLower) ||
+        job.job_title?.toLowerCase().includes(queryLower) ||
+        job.position_description?.toLowerCase().includes(queryLower) ||
+        job.main_task?.toLowerCase().includes(queryLower)
+
+      // 배열 필드 검색 - 각 배열의 요소들을 개별적으로 확인
+      const conditionsMatch =
+        job.conditions && Array.isArray(job.conditions)
+          ? job.conditions.some(
+              (condition: string) =>
+                condition &&
+                typeof condition === 'string' &&
+                condition.toLowerCase().includes(queryLower)
+            )
+          : false
+
+      const qualificationsMatch =
+        job.qualifications && Array.isArray(job.qualifications)
+          ? job.qualifications.some(
+              (qualification: string) =>
+                qualification &&
+                typeof qualification === 'string' &&
+                qualification.toLowerCase().includes(queryLower)
+            )
+          : false
+
+      const preferredQualificationsMatch =
+        job.preferred_qualifications &&
+        Array.isArray(job.preferred_qualifications)
+          ? job.preferred_qualifications.some(
+              (qualification: string) =>
+                qualification &&
+                typeof qualification === 'string' &&
+                qualification.toLowerCase().includes(queryLower)
+            )
+          : false
+
+      return (
+        textFieldMatch ||
+        conditionsMatch ||
+        qualificationsMatch ||
+        preferredQualificationsMatch
+      )
+    })
+
+    // 오프셋 기반 페이지네이션 적용
+    const data = filteredData.slice(offset, offset + limit)
+    const totalCount = filteredData.length
+    const hasMore = offset + limit < totalCount
+
+    const jobs = data?.map(convertSupabaseJobToJob) || []
+
+    return { jobs, totalCount, hasMore }
+  } catch (error) {
+    console.error('Error in searchJobsWithOffset:', error)
+    return { jobs: [], totalCount: 0, hasMore: false }
+  }
+}
+
+/**
  * 새로운 채용공고를 데이터베이스에 추가하는 함수 (관리자 전용)
  * - 관리자만 접근 가능한 기능
  * - Admin 클라이언트를 사용하여 권한 확인 없이 직접 삽입

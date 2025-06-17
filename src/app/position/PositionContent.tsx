@@ -1,8 +1,14 @@
 'use client'
 
-import { useEffect, useState, Fragment, useRef, useLayoutEffect } from 'react'
+import {
+  useEffect,
+  useState,
+  Fragment,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+} from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import dynamic from 'next/dynamic'
 import { decrypt, encrypt } from '@/utils/crypto'
 import type { JobType, Job } from '@/types/job'
 import Image from 'next/image'
@@ -121,30 +127,32 @@ function MobilePositionContent() {
       try {
         setLoading(true)
 
-        // 검색 쿼리나 필터가 있는 경우 전체 데이터 가져오기
-        if (searchQuery || jobTypeFilter !== 'all') {
-          const response = await fetch('/api/jobs', {
+        let response
+
+        // 검색 쿼리가 있는 경우 검색 API 사용 (페이지네이션 지원)
+        if (searchQuery) {
+          response = await fetch(
+            `/api/jobs?query=${encodeURIComponent(searchQuery)}&page=${currentPage}&limit=${itemsPerPage}`,
+            {
+              cache: 'no-store',
+              headers: {
+                'Cache-Control': 'no-cache',
+              },
+            }
+          )
+        }
+        // 필터가 있는 경우 전체 데이터 가져오기 (클라이언트 사이드 필터링)
+        else if (jobTypeFilter !== 'all') {
+          response = await fetch('/api/jobs', {
             cache: 'no-store',
             headers: {
               'Cache-Control': 'no-cache',
             },
           })
-          if (!response.ok) {
-            throw new Error('Failed to fetch jobs')
-          }
-          const data = await response.json()
-          setJobs(data.jobs || [])
-          setTotalCount(data.jobs?.length || 0)
-          setHasMore(false)
-
-          // Extract unique job types from the jobs
-          const jobTypes = Array.from(
-            new Set(data.jobs?.map((job: Job) => job.jobType) || [])
-          ) as JobType[]
-          setAvailableJobTypes(jobTypes)
-        } else {
-          // 쿼리나 필터가 없는 경우 페이지네이션 사용
-          const response = await fetch(
+        }
+        // 기본 페이지네이션
+        else {
+          response = await fetch(
             `/api/jobs?page=${currentPage}&limit=${itemsPerPage}`,
             {
               cache: 'no-store',
@@ -153,20 +161,22 @@ function MobilePositionContent() {
               },
             }
           )
-          if (!response.ok) {
-            throw new Error('Failed to fetch jobs')
-          }
-          const data = await response.json()
-          setJobs(data.jobs || [])
-          setTotalCount(data.totalCount || 0)
-          setHasMore(data.hasMore || false)
-
-          // Extract unique job types from the jobs
-          const jobTypes = Array.from(
-            new Set(data.jobs?.map((job: Job) => job.jobType) || [])
-          ) as JobType[]
-          setAvailableJobTypes(jobTypes)
         }
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch jobs')
+        }
+
+        const data = await response.json()
+        setJobs(data.jobs || [])
+        setTotalCount(data.totalCount || data.jobs?.length || 0)
+        setHasMore(data.hasMore || false)
+
+        // Extract unique job types from the jobs
+        const jobTypes = Array.from(
+          new Set(data.jobs?.map((job: Job) => job.jobType) || [])
+        ) as JobType[]
+        setAvailableJobTypes(jobTypes)
       } catch (err) {
         console.error('Error fetching jobs:', err)
         setJobs([])
@@ -181,45 +191,27 @@ function MobilePositionContent() {
     fetchJobs()
   }, [currentPage, searchQuery, jobTypeFilter])
 
-  // Filter jobs based on search query and job type (client-side filtering for search/filter)
+  // Filter jobs based on job type (only for job type filter, search is handled server-side)
   const filteredJobs =
-    searchQuery || jobTypeFilter !== 'all'
-      ? jobs.filter((job) => {
-          const matchesSearch = searchQuery
-            ? job.companyName
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase()) ||
-              job.jobTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              job.conditions.some((condition) =>
-                condition.toLowerCase().includes(searchQuery.toLowerCase())
-              ) ||
-              job.qualifications.some((qualification) =>
-                qualification.toLowerCase().includes(searchQuery.toLowerCase())
-              ) ||
-              job.preferredQualifications.some((qualification) =>
-                qualification.toLowerCase().includes(searchQuery.toLowerCase())
-              )
-            : true
-
-          // Filter by job type
-          if (jobTypeFilter === 'all') return matchesSearch
-          return matchesSearch && job.jobType === jobTypeFilter
-        })
+    jobTypeFilter !== 'all'
+      ? jobs.filter((job) => job.jobType === jobTypeFilter)
       : jobs
 
   // Calculate pagination for filtered results
-  const totalPages =
-    searchQuery || jobTypeFilter !== 'all'
-      ? Math.ceil(filteredJobs.length / itemsPerPage)
-      : Math.ceil(totalCount / itemsPerPage)
+  const totalPages = searchQuery
+    ? Math.ceil(totalCount / itemsPerPage) // 검색 시 서버에서 받은 totalCount 사용
+    : jobTypeFilter !== 'all'
+      ? Math.ceil(filteredJobs.length / itemsPerPage) // 필터링 시 클라이언트 사이드 계산
+      : Math.ceil(totalCount / itemsPerPage) // 기본 서버 페이지네이션
 
-  const currentJobs =
-    searchQuery || jobTypeFilter !== 'all'
+  const currentJobs = searchQuery
+    ? jobs // 검색 시 서버에서 이미 페이지네이션된 결과
+    : jobTypeFilter !== 'all'
       ? filteredJobs.slice(
           (currentPage - 1) * itemsPerPage,
           currentPage * itemsPerPage
-        )
-      : filteredJobs
+        ) // 필터링 시 클라이언트 사이드 페이지네이션
+      : filteredJobs // 기본 서버 페이지네이션
 
   // Handle page change
   const handlePageChange = (page: number) => {
@@ -485,37 +477,40 @@ function DesktopPositionContent() {
     const fetchJobs = async () => {
       try {
         setJobsLoading(true)
+        setLoadingMore(false) // 로딩 상태 초기화
+        setHasMore(true) // 초기화
 
-        // 검색 쿼리가 있는 경우 전체 데이터 가져오기
+        let response
+
+        // 검색 쿼리가 있는 경우 검색 API 사용 (오프셋 기반)
         if (query) {
-          const response = await fetch('/api/jobs', {
-            cache: 'no-store',
-            headers: {
-              'Cache-Control': 'no-cache',
-            },
-          })
-          if (!response.ok) {
-            throw new Error('Failed to fetch jobs')
-          }
-          const data = await response.json()
-          setJobs(data.jobs || [])
-          setHasMore(false)
-        } else {
-          // 검색 쿼리가 없는 경우 첫 페이지는 20개로 시작 (스크롤바 생성을 위해)
-          const response = await fetch('/api/jobs?page=1&limit=20', {
-            cache: 'no-store',
-            headers: {
-              'Cache-Control': 'no-cache',
-            },
-          })
-          if (!response.ok) {
-            throw new Error('Failed to fetch jobs')
-          }
-          const data = await response.json()
-          setJobs(data.jobs || [])
-          setHasMore(data.hasMore || false)
-          setCurrentPage(2) // 다음 페이지는 2페이지부터 (20개 이후부터)
+          response = await fetch(
+            `/api/jobs?query=${encodeURIComponent(query)}&offset=0&limit=20`,
+            {
+              cache: 'no-store',
+              headers: {
+                'Cache-Control': 'no-cache',
+              },
+            }
+          )
         }
+        // 검색 쿼리가 없는 경우 offset 기반으로 20개 시작
+        else {
+          response = await fetch('/api/jobs?offset=0&limit=20', {
+            cache: 'no-store',
+            headers: {
+              'Cache-Control': 'no-cache',
+            },
+          })
+        }
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch jobs')
+        }
+
+        const data = await response.json()
+        setJobs(data.jobs || [])
+        setHasMore(data.hasMore || false)
       } catch (err) {
         console.error('Error fetching jobs:', err)
         setJobs([])
@@ -526,16 +521,14 @@ function DesktopPositionContent() {
     }
 
     fetchJobs()
-
-    // 검색 쿼리가 변경되면 무한스크롤 상태 초기화
-    setHasMore(false)
-    setLoadingMore(false)
   }, [query])
 
   // Load more jobs for infinite scroll
-  const loadMoreJobs = async () => {
+  const loadMoreJobs = useCallback(async () => {
     // 더 강력한 중복 요청 방지 - ref를 사용한 추가 체크
-    if (loadingMore || !hasMore || query || loadingRequestRef.current) return
+    if (loadingMore || !hasMore || loadingRequestRef.current) {
+      return
+    }
 
     try {
       loadingRequestRef.current = true
@@ -543,15 +536,30 @@ function DesktopPositionContent() {
 
       // 현재 jobs 배열 길이를 기반으로 offset 계산
       const currentOffset = jobs.length
-      const response = await fetch(
-        `/api/jobs?offset=${currentOffset}&limit=10`,
-        {
+
+      let response
+
+      // 검색 쿼리가 있는 경우 검색 API 사용
+      if (query) {
+        response = await fetch(
+          `/api/jobs?query=${encodeURIComponent(query)}&offset=${currentOffset}&limit=20`,
+          {
+            cache: 'no-store',
+            headers: {
+              'Cache-Control': 'no-cache',
+            },
+          }
+        )
+      }
+      // 기본 무한스크롤
+      else {
+        response = await fetch(`/api/jobs?offset=${currentOffset}&limit=20`, {
           cache: 'no-store',
           headers: {
             'Cache-Control': 'no-cache',
           },
-        }
-      )
+        })
+      }
 
       if (!response.ok) {
         throw new Error('Failed to fetch more jobs')
@@ -591,12 +599,12 @@ function DesktopPositionContent() {
       loadingRequestRef.current = false
       setLoadingMore(false)
     }
-  }
+  }, [loadingMore, hasMore, query, jobs.length])
 
   // Handle scroll for infinite scroll
   useEffect(() => {
     const container = scrollContainerRef.current
-    if (!container || query) return // 검색 모드에서는 무한스크롤 비활성화
+    if (!container) return // 무한스크롤 활성화 (검색 시에도 동작)
 
     let scrollTimeout: NodeJS.Timeout | null = null
 
@@ -625,26 +633,10 @@ function DesktopPositionContent() {
         clearTimeout(scrollTimeout)
       }
     }
-  }, [hasMore, loadingMore, query]) // jobs.length 제거
+  }, [hasMore, loadingMore, loadMoreJobs]) // query 의존성 제거 (검색 시에도 무한스크롤 동작)
 
-  const filteredJobs = query
-    ? jobs.filter((job) => {
-        const searchLower = query.toLowerCase()
-        return (
-          job.companyName.toLowerCase().includes(searchLower) ||
-          job.jobTitle.toLowerCase().includes(searchLower) ||
-          job.conditions.some((condition) =>
-            condition.toLowerCase().includes(searchLower)
-          ) ||
-          job.qualifications.some((qualification) =>
-            qualification.toLowerCase().includes(searchLower)
-          ) ||
-          job.preferredQualifications.some((qualification) =>
-            qualification.toLowerCase().includes(searchLower)
-          )
-        )
-      })
-    : jobs
+  // 검색 시에는 서버에서 이미 필터링된 결과를 받아오므로 클라이언트 필터링 불필요
+  const filteredJobs = jobs
 
   useEffect(() => {
     const fetchJobAndPrompt = async () => {

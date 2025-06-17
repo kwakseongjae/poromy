@@ -15,12 +15,11 @@ const SearchBarContent = ({
   const pathname = usePathname()
   const [searchQuery, setSearchQuery] = useState('')
 
+  // URL의 query 파라미터를 input에 반영
   useEffect(() => {
-    // 페이지 새로고침 시 URL 파라미터 초기화
-    if (searchParams.get('query')) {
-      router.replace(pathname)
-    }
-  }, [])
+    const currentQuery = searchParams.get('query') || ''
+    setSearchQuery(currentQuery)
+  }, [searchParams])
 
   const handleSearch = () => {
     const params = new URLSearchParams()
