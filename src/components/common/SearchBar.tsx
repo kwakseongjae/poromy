@@ -1,12 +1,12 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useState, KeyboardEvent, useEffect } from 'react'
+import { useState, KeyboardEvent, useEffect, Suspense } from 'react'
 
 interface SearchBarProps {
   placeholder?: string
   size?: 'medium' | 'large'
 }
 
-const SearchBar = ({
+const SearchBarContent = ({
   placeholder = '검색어를 입력하세요',
   size = 'medium',
 }: SearchBarProps) => {
@@ -83,6 +83,42 @@ const SearchBar = ({
         </svg>
       </button>
     </div>
+  )
+}
+
+// 로딩 상태 컴포넌트
+const SearchBarFallback = ({
+  size = 'medium',
+}: {
+  size?: 'medium' | 'large'
+}) => {
+  const sizeClasses = {
+    medium: {
+      container: 'max-w-md',
+      input: 'py-2 text-sm h-10',
+    },
+    large: {
+      container: 'max-w-3xl',
+      input: 'py-3 text-base h-12',
+    },
+  }
+
+  return (
+    <div
+      className={`relative w-full overflow-hidden ${sizeClasses[size].container}`}
+    >
+      <div
+        className={`w-full animate-pulse rounded-lg border-2 border-gray-200 bg-gray-100 ${sizeClasses[size].input}`}
+      />
+    </div>
+  )
+}
+
+const SearchBar = (props: SearchBarProps) => {
+  return (
+    <Suspense fallback={<SearchBarFallback size={props.size} />}>
+      <SearchBarContent {...props} />
+    </Suspense>
   )
 }
 

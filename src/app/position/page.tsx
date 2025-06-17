@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 import PositionContent from './PositionContent'
 
 export const metadata: Metadata = {
@@ -33,6 +34,19 @@ export const metadata: Metadata = {
   },
 }
 
+// 로딩 컴포넌트
+function PositionLoadingFallback() {
+  return (
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-600"></div>
+    </div>
+  )
+}
+
 export default function PositionPage() {
-  return <PositionContent />
+  return (
+    <Suspense fallback={<PositionLoadingFallback />}>
+      <PositionContent />
+    </Suspense>
+  )
 }
