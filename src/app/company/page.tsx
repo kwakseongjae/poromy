@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { companies } from '@/constants/company.data'
 import SearchBar from '@/components/common/SearchBar'
 import Image from 'next/image'
@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation'
 
 type CompanyType = 'all' | 'large' | 'medium' | 'small' | 'startup'
 
-export default function CompanyPage() {
+function CompanyPageContent() {
   const searchParams = useSearchParams()
   const [companyType, setCompanyType] = useState<CompanyType>('all')
   const [currentPage, setCurrentPage] = useState(1)
@@ -229,5 +229,51 @@ export default function CompanyPage() {
         </section>
       )}
     </div>
+  )
+}
+
+function CompanyPageLoader() {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      {/* Search Section Skeleton */}
+      <section className="mb-6">
+        <div className="mx-auto mb-6 h-8 w-96 animate-pulse rounded bg-gray-200"></div>
+        <div className="mx-auto flex justify-center">
+          <div className="h-12 w-96 animate-pulse rounded-lg bg-gray-200"></div>
+        </div>
+      </section>
+
+      {/* Filter Section Skeleton */}
+      <section className="mb-8">
+        <div className="flex flex-wrap justify-center gap-2">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-8 w-16 animate-pulse rounded-full bg-gray-200"
+            ></div>
+          ))}
+        </div>
+      </section>
+
+      {/* Company Grid Skeleton */}
+      <section className="mb-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-32 animate-pulse rounded-lg bg-gray-200"
+            ></div>
+          ))}
+        </div>
+      </section>
+    </div>
+  )
+}
+
+export default function CompanyPage() {
+  return (
+    <Suspense fallback={<CompanyPageLoader />}>
+      <CompanyPageContent />
+    </Suspense>
   )
 }
