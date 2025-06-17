@@ -155,9 +155,7 @@ export default async function HomePage() {
       <StructuredData schema={faqSchema} />
 
       {/* 🎨 헤로 섹션 - 정적 콘텐츠로 즉시 렌더링 */}
-      <div className="mt-4">
-        <HomeCarousel />
-      </div>
+      <HomeCarousel />
 
       <HomeContainer>
         {/* 📋 최신 채용공고 - 동적 로딩 (클라이언트 컴포넌트) */}
