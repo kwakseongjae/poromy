@@ -126,6 +126,13 @@ const nextConfig: NextConfig = {
 
     return config
   },
+
+  // 🚀 API 라우트 최적화
+  env: {
+    // Supabase connection pooling 설정
+    SUPABASE_CONNECTION_POOL_SIZE: '20',
+    SUPABASE_CONNECTION_TIMEOUT: '10000',
+  },
 }
 
 export default withBundleAnalyzer(nextConfig)

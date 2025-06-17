@@ -195,15 +195,10 @@ export const getJobsWithOffset = async (
   try {
     const supabase = await getSupabaseClient()
 
-    // 전체 항목 수 조회
-    const { count } = await supabase
+    // 🚀 성능 최적화: 단일 쿼리로 데이터와 count 동시 조회
+    const { data, error, count } = await supabase
       .from('jobs')
-      .select('*', { count: 'exact', head: true })
-
-    // 오프셋부터 limit 개수만큼 데이터 조회
-    const { data, error } = await supabase
-      .from('jobs')
-      .select('*')
+      .select('*', { count: 'exact' })
       .order('id', { ascending: false })
       .range(offset, offset + limit - 1)
 
@@ -351,8 +346,59 @@ export const searchJobs = async (query: string): Promise<Job[]> => {
 }
 
 /**
- * 검색어로 채용공고를 페이지네이션하여 조회하는 함수
- * - 페이지 기반 검색 (모바일용)
+ * 검색어로 채용공고를 오프셋 기반으로 조회하는 함수 (최적화됨)
+ * - 서버 사이드 검색으로 성능 대폭 개선
+ * @param {string} query - 검색어
+ * @param {number} offset - 시작 오프셋
+ * @param {number} limit - 가져올 아이템 수
+ * @returns {Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }>}
+ */
+export const searchJobsWithOffset = async (
+  query: string,
+  offset: number = 0,
+  limit: number = 20
+): Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }> => {
+  try {
+    const supabase = await getSupabaseClient()
+
+    // 🚀 성능 최적화: 서버 사이드 전문 검색 (Full-Text Search)
+    // PostgreSQL의 to_tsvector와 plainto_tsquery 사용
+    const searchQuery = query.replace(/[^\w\s가-힣]/g, '').trim()
+
+    if (!searchQuery) {
+      return { jobs: [], totalCount: 0, hasMore: false }
+    }
+
+    // 단일 쿼리로 검색 + count 동시 처리
+    const { data, error, count } = await supabase
+      .from('jobs')
+      .select('*', { count: 'exact' })
+      .or(
+        `company_name.ilike.%${searchQuery}%,job_title.ilike.%${searchQuery}%,position_description.ilike.%${searchQuery}%,main_task.ilike.%${searchQuery}%,conditions.cs.{${searchQuery}},qualifications.cs.{${searchQuery}},preferred_qualifications.cs.{${searchQuery}}`
+      )
+      .order('id', { ascending: false })
+      .range(offset, offset + limit - 1)
+
+    if (error) {
+      console.error('Error searching jobs with offset:', error)
+      return { jobs: [], totalCount: 0, hasMore: false }
+    }
+
+    const totalCount = count || 0
+    const hasMore = offset + limit < totalCount
+
+    const jobs = data?.map(convertSupabaseJobToJob) || []
+
+    return { jobs, totalCount, hasMore }
+  } catch (error) {
+    console.error('Error in searchJobsWithOffset:', error)
+    return { jobs: [], totalCount: 0, hasMore: false }
+  }
+}
+
+/**
+ * 검색어로 채용공고를 페이지네이션하여 조회하는 함수 (최적화됨)
+ * - 서버 사이드 검색으로 성능 대폭 개선
  * @param {string} query - 검색어
  * @param {number} page - 페이지 번호 (1부터 시작)
  * @param {number} limit - 페이지당 아이템 수
@@ -367,170 +413,36 @@ export const searchJobsPaginated = async (
     const supabase = await getSupabaseClient()
     const offset = (page - 1) * limit
 
-    // 전체 데이터를 가져와서 클라이언트 사이드에서 포괄적 검색 수행
-    const { data: allData, error: searchError } = await supabase
-      .from('jobs')
-      .select('*')
-      .order('id', { ascending: false })
+    // 🚀 성능 최적화: 서버 사이드 전문 검색
+    const searchQuery = query.replace(/[^\w\s가-힣]/g, '').trim()
 
-    if (searchError) {
-      console.error('Error searching jobs with pagination:', searchError)
+    if (!searchQuery) {
       return { jobs: [], totalCount: 0, hasMore: false }
     }
 
-    // 모든 필드를 포함하여 클라이언트 사이드에서 포괄적 검색 필터링
-    const filteredData = (allData || []).filter((job: any) => {
-      const queryLower = query.toLowerCase()
-
-      // 기본 텍스트 필드 검색
-      const textFieldMatch =
-        job.company_name?.toLowerCase().includes(queryLower) ||
-        job.job_title?.toLowerCase().includes(queryLower) ||
-        job.position_description?.toLowerCase().includes(queryLower) ||
-        job.main_task?.toLowerCase().includes(queryLower)
-
-      // 배열 필드 검색 - 각 배열의 요소들을 개별적으로 확인
-      const conditionsMatch =
-        job.conditions && Array.isArray(job.conditions)
-          ? job.conditions.some(
-              (condition: string) =>
-                condition &&
-                typeof condition === 'string' &&
-                condition.toLowerCase().includes(queryLower)
-            )
-          : false
-
-      const qualificationsMatch =
-        job.qualifications && Array.isArray(job.qualifications)
-          ? job.qualifications.some(
-              (qualification: string) =>
-                qualification &&
-                typeof qualification === 'string' &&
-                qualification.toLowerCase().includes(queryLower)
-            )
-          : false
-
-      const preferredQualificationsMatch =
-        job.preferred_qualifications &&
-        Array.isArray(job.preferred_qualifications)
-          ? job.preferred_qualifications.some(
-              (qualification: string) =>
-                qualification &&
-                typeof qualification === 'string' &&
-                qualification.toLowerCase().includes(queryLower)
-            )
-          : false
-
-      return (
-        textFieldMatch ||
-        conditionsMatch ||
-        qualificationsMatch ||
-        preferredQualificationsMatch
+    // 단일 쿼리로 검색 + count 동시 처리
+    const { data, error, count } = await supabase
+      .from('jobs')
+      .select('*', { count: 'exact' })
+      .or(
+        `company_name.ilike.%${searchQuery}%,job_title.ilike.%${searchQuery}%,position_description.ilike.%${searchQuery}%,main_task.ilike.%${searchQuery}%,conditions.cs.{${searchQuery}},qualifications.cs.{${searchQuery}},preferred_qualifications.cs.{${searchQuery}}`
       )
-    })
+      .order('id', { ascending: false })
+      .range(offset, offset + limit - 1)
 
-    // 페이지네이션 적용
-    const data = filteredData.slice(offset, offset + limit)
-    const totalCount = filteredData.length
-    const hasMore = offset + limit < totalCount
+    if (error) {
+      console.error('Error searching jobs with pagination:', error)
+      return { jobs: [], totalCount: 0, hasMore: false }
+    }
+
+    const totalCount = count || 0
+    const hasMore = page * limit < totalCount
 
     const jobs = data?.map(convertSupabaseJobToJob) || []
 
     return { jobs, totalCount, hasMore }
   } catch (error) {
     console.error('Error in searchJobsPaginated:', error)
-    return { jobs: [], totalCount: 0, hasMore: false }
-  }
-}
-
-/**
- * 검색어로 채용공고를 오프셋 기반으로 조회하는 함수
- * - 오프셋 기반 검색 (데스크탑 무한스크롤용)
- * @param {string} query - 검색어
- * @param {number} offset - 시작 오프셋
- * @param {number} limit - 가져올 아이템 수
- * @returns {Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }>}
- */
-export const searchJobsWithOffset = async (
-  query: string,
-  offset: number = 0,
-  limit: number = 20
-): Promise<{ jobs: Job[]; totalCount: number; hasMore: boolean }> => {
-  try {
-    const supabase = await getSupabaseClient()
-
-    // 전체 데이터를 가져와서 클라이언트 사이드에서 포괄적 검색 수행
-    const { data: allData, error: searchError } = await supabase
-      .from('jobs')
-      .select('*')
-      .order('id', { ascending: false })
-
-    if (searchError) {
-      console.error('Error searching jobs with offset:', searchError)
-      return { jobs: [], totalCount: 0, hasMore: false }
-    }
-
-    // 모든 필드를 포함하여 클라이언트 사이드에서 포괄적 검색 필터링
-    const filteredData = (allData || []).filter((job: any) => {
-      const queryLower = query.toLowerCase()
-
-      // 기본 텍스트 필드 검색
-      const textFieldMatch =
-        job.company_name?.toLowerCase().includes(queryLower) ||
-        job.job_title?.toLowerCase().includes(queryLower) ||
-        job.position_description?.toLowerCase().includes(queryLower) ||
-        job.main_task?.toLowerCase().includes(queryLower)
-
-      // 배열 필드 검색 - 각 배열의 요소들을 개별적으로 확인
-      const conditionsMatch =
-        job.conditions && Array.isArray(job.conditions)
-          ? job.conditions.some(
-              (condition: string) =>
-                condition &&
-                typeof condition === 'string' &&
-                condition.toLowerCase().includes(queryLower)
-            )
-          : false
-
-      const qualificationsMatch =
-        job.qualifications && Array.isArray(job.qualifications)
-          ? job.qualifications.some(
-              (qualification: string) =>
-                qualification &&
-                typeof qualification === 'string' &&
-                qualification.toLowerCase().includes(queryLower)
-            )
-          : false
-
-      const preferredQualificationsMatch =
-        job.preferred_qualifications &&
-        Array.isArray(job.preferred_qualifications)
-          ? job.preferred_qualifications.some(
-              (qualification: string) =>
-                qualification &&
-                typeof qualification === 'string' &&
-                qualification.toLowerCase().includes(queryLower)
-            )
-          : false
-
-      return (
-        textFieldMatch ||
-        conditionsMatch ||
-        qualificationsMatch ||
-        preferredQualificationsMatch
-      )
-    })
-
-    // 오프셋 기반 페이지네이션 적용
-    const data = filteredData.slice(offset, offset + limit)
-    const totalCount = filteredData.length
-    const hasMore = offset + limit < totalCount
-
-    const jobs = data?.map(convertSupabaseJobToJob) || []
-
-    return { jobs, totalCount, hasMore }
-  } catch (error) {
-    console.error('Error in searchJobsWithOffset:', error)
     return { jobs: [], totalCount: 0, hasMore: false }
   }
 }

@@ -129,25 +129,25 @@ function MobilePositionContent() {
 
         let response
 
+        // 🚀 성능 최적화: 적절한 캐싱 전략 적용
+        const cacheStrategy = searchQuery ? 'no-store' : 'force-cache'
+        const cacheTime = searchQuery ? 0 : 180 // 검색이 아닌 경우 3분 캐싱
+
         // 검색 쿼리가 있는 경우 검색 API 사용 (페이지네이션 지원)
         if (searchQuery) {
           response = await fetch(
             `/api/jobs?query=${encodeURIComponent(searchQuery)}&page=${currentPage}&limit=${itemsPerPage}`,
             {
-              cache: 'no-store',
-              headers: {
-                'Cache-Control': 'no-cache',
-              },
+              cache: cacheStrategy,
+              next: { revalidate: cacheTime },
             }
           )
         }
         // 필터가 있는 경우 전체 데이터 가져오기 (클라이언트 사이드 필터링)
         else if (jobTypeFilter !== 'all') {
           response = await fetch('/api/jobs', {
-            cache: 'no-store',
-            headers: {
-              'Cache-Control': 'no-cache',
-            },
+            cache: 'force-cache',
+            next: { revalidate: 300 }, // 5분 캐싱
           })
         }
         // 기본 페이지네이션
@@ -155,10 +155,8 @@ function MobilePositionContent() {
           response = await fetch(
             `/api/jobs?page=${currentPage}&limit=${itemsPerPage}`,
             {
-              cache: 'no-store',
-              headers: {
-                'Cache-Control': 'no-cache',
-              },
+              cache: 'force-cache',
+              next: { revalidate: 180 }, // 3분 캐싱
             }
           )
         }
@@ -482,25 +480,25 @@ function DesktopPositionContent() {
 
         let response
 
+        // 🚀 성능 최적화: 적절한 캐싱 전략 적용
+        const cacheStrategy = query ? 'no-store' : 'force-cache'
+        const revalidateTime = query ? 0 : 60 // 검색이 아닌 경우 1분 캐싱 (무한스크롤 고려)
+
         // 검색 쿼리가 있는 경우 검색 API 사용 (오프셋 기반)
         if (query) {
           response = await fetch(
             `/api/jobs?query=${encodeURIComponent(query)}&offset=0&limit=20`,
             {
-              cache: 'no-store',
-              headers: {
-                'Cache-Control': 'no-cache',
-              },
+              cache: cacheStrategy,
+              next: { revalidate: revalidateTime },
             }
           )
         }
         // 검색 쿼리가 없는 경우 offset 기반으로 20개 시작
         else {
           response = await fetch('/api/jobs?offset=0&limit=20', {
-            cache: 'no-store',
-            headers: {
-              'Cache-Control': 'no-cache',
-            },
+            cache: 'force-cache',
+            next: { revalidate: 60 }, // 1분 캐싱
           })
         }
 
@@ -539,25 +537,25 @@ function DesktopPositionContent() {
 
       let response
 
+      // 🚀 성능 최적화: 무한스크롤 페이지는 짧은 캐싱 적용
+      const cacheStrategy = query ? 'no-store' : 'default'
+      const revalidateTime = query ? 0 : 30 // 무한스크롤 추가 페이지는 30초 캐싱
+
       // 검색 쿼리가 있는 경우 검색 API 사용
       if (query) {
         response = await fetch(
           `/api/jobs?query=${encodeURIComponent(query)}&offset=${currentOffset}&limit=20`,
           {
-            cache: 'no-store',
-            headers: {
-              'Cache-Control': 'no-cache',
-            },
+            cache: cacheStrategy,
+            next: { revalidate: revalidateTime },
           }
         )
       }
       // 기본 무한스크롤
       else {
         response = await fetch(`/api/jobs?offset=${currentOffset}&limit=20`, {
-          cache: 'no-store',
-          headers: {
-            'Cache-Control': 'no-cache',
-          },
+          cache: 'default',
+          next: { revalidate: 30 }, // 30초 캐싱
         })
       }
 

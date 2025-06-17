@@ -19,6 +19,7 @@ export const revalidate = 180 // 3분 캐싱
 // 📊 메모리 캐시 (동일한 요청에 대한 즉시 응답)
 const memoryCache = new Map<string, { data: any; timestamp: number }>()
 const MEMORY_CACHE_TTL = 60 * 1000 // 1분으로 단축 (무한스크롤 개선)
+const MAX_CACHE_SIZE = 100 // 캐시 크기 증가
 
 // 📈 캐시 키 생성 함수
 const generateCacheKey = (searchParams: URLSearchParams): string => {
@@ -43,17 +44,20 @@ const getFromMemoryCache = (key: string) => {
 
 // 📈 메모리 캐시 저장 함수
 const setMemoryCache = (key: string, data: any) => {
-  // 캐시 크기 제한 (최대 50개 항목)
-  if (memoryCache.size >= 50) {
-    const firstKey = memoryCache.keys().next().value
-    if (firstKey) {
-      memoryCache.delete(firstKey)
+  // 캐시 크기 제한 (최대 100개 항목으로 증가)
+  if (memoryCache.size >= MAX_CACHE_SIZE) {
+    // LRU 방식으로 가장 오래된 항목 제거
+    const oldestKey = memoryCache.keys().next().value
+    if (oldestKey) {
+      memoryCache.delete(oldestKey)
     }
   }
   memoryCache.set(key, { data, timestamp: Date.now() })
 }
 
 export async function GET(request: NextRequest) {
+  const startTime = Date.now() // 🚀 성능 측정 시작
+
   try {
     const { searchParams } = new URL(request.url)
     const cacheKey = generateCacheKey(searchParams)
@@ -63,10 +67,13 @@ export async function GET(request: NextRequest) {
     if (!isOffsetRequest) {
       const cachedData = getFromMemoryCache(cacheKey)
       if (cachedData) {
+        const responseTime = Date.now() - startTime
+
         return NextResponse.json(cachedData, {
           headers: {
             'Cache-Control': 'public, s-maxage=180, stale-while-revalidate=300',
             'X-Cache': 'HIT-MEMORY',
+            'X-Response-Time': `${responseTime}ms`,
           },
         })
       }
@@ -188,7 +195,18 @@ export async function GET(request: NextRequest) {
     }
 
     // 📊 타임아웃과 함께 데이터 페칭
+    const dbStartTime = Date.now() // DB 쿼리 시간 측정
     const result = await Promise.race([dataPromise, timeout])
+    const dbTime = Date.now() - dbStartTime
+    const totalTime = Date.now() - startTime
+
+    // 🚀 성능 로깅
+    console.log(`📊 DB Query: ${dbTime}ms, Total: ${totalTime}ms - ${cacheKey}`)
+
+    // 응답 시간이 1초 이상인 경우 경고
+    if (totalTime > 1000) {
+      console.warn(`⚠️ Slow response detected: ${totalTime}ms - ${cacheKey}`)
+    }
 
     if (typeof result === 'object' && 'jobs' in result) {
       jobs = result.jobs
@@ -217,10 +235,15 @@ export async function GET(request: NextRequest) {
         'Cache-Control': cacheControl,
         'X-Cache': isOffsetRequest ? 'BYPASS' : 'MISS',
         'X-Cache-Tags': cacheTags.join(','),
+        'X-Response-Time': `${totalTime}ms`,
+        'X-DB-Time': `${dbTime}ms`,
         Vary: 'Accept-Encoding',
       },
     })
   } catch (error) {
+    const errorTime = Date.now() - startTime
+    console.error(`❌ API Error in ${errorTime}ms:`, error)
+
     // 📊 에러 발생 시 빈 데이터로 응답 (서비스 안정성 보장)
     console.error('API Error (returning fallback):', error)
 
