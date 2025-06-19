@@ -40,6 +40,7 @@ const getAdminClient = () => {
  * @param {any} supabaseJob - Supabase에서 가져온 원시 job 데이터
  * @returns {Job} 타입 안전성이 보장된 Job 객체
  */
+// 🚀 성능 최적화: 불필요한 Promise 래핑 제거
 const convertSupabaseJobToJob = (supabaseJob: any): Job => {
   return {
     id: supabaseJob.id,
@@ -57,12 +58,8 @@ const convertSupabaseJobToJob = (supabaseJob: any): Job => {
     url: supabaseJob.url || '',
     uploadedAt: supabaseJob.uploaded_at,
     deadline: supabaseJob.deadline,
-    // 프롬프트를 함수로 래핑하여 필요할 때만 로드되도록 구현
-    // 이는 메모리 효율성을 위한 지연 로딩 패턴
-    prompt: () =>
-      Promise.resolve(
-        supabaseJob.prompt_content || '아직 등록된 프롬프트가 없습니다.'
-      ),
+    // 🚀 성능 개선: 직접 문자열로 할당하여 불필요한 함수 호출 제거
+    prompt: supabaseJob.prompt_content || '아직 등록된 프롬프트가 없습니다.',
   }
 }
 
@@ -267,9 +264,10 @@ export const getJobsWithOffset = async (
 }
 
 /**
- * 특정 ID의 채용공고를 가져오는 함수
+ * 특정 ID의 채용공고를 가져오는 함수 (최적화됨)
  * - 채용공고 상세 페이지에서 사용
- * - 단일 레코드 조회이므로 .single() 메서드 사용
+ * - 필요한 필드만 선택 조회하여 성능 최적화
+ * - 프롬프트 내용도 함께 조회하여 추가 요청 방지
  * @param {number} id - 조회할 채용공고의 ID
  * @returns {Promise<Job | null>} 해당 채용공고 또는 null (없는 경우)
  */
@@ -277,10 +275,27 @@ export const getJobById = async (id: number): Promise<Job | null> => {
   try {
     const supabase = await getSupabaseClient()
 
-    // ID가 일치하는 단일 레코드 조회
+    // 🚀 성능 최적화: 필요한 필드만 선택하여 조회 (프롬프트 포함)
     const { data, error } = await supabase
       .from('jobs')
-      .select('*')
+      .select(
+        `
+        id,
+        company_name,
+        job_title,
+        conditions,
+        job_type,
+        position_description,
+        main_task,
+        qualifications,
+        preferred_qualifications,
+        logo_url,
+        url,
+        uploaded_at,
+        deadline,
+        prompt_content
+      `
+      )
       .eq('id', id)
       .single()
 

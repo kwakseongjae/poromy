@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import {
-  getAllJobs,
   getJobsByType,
   getJobsByCompany,
   searchJobs,

@@ -13,7 +13,7 @@ export type Job = {
   preferredQualifications: string[]
   logoUrl: string
   url: string
-  prompt: () => Promise<string>
+  prompt: string
   uploadedAt: string // ISO date string
   deadline: string // ISO date string or '상시 채용'
   jobType: JobType
