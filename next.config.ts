@@ -18,8 +18,7 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react'],
     // bfcache 최적화를 위한 설정
     webVitalsAttribution: ['CLS', 'LCP'],
-    // 🚀 추가 성능 최적화
-    optimizeCss: true,
+    // 🚀 안전한 성능 최적화만 유지
     esmExternals: true,
   },
 
@@ -126,18 +125,8 @@ const nextConfig: NextConfig = {
         ...config.optimization,
         usedExports: true,
         sideEffects: false,
-        // 🚀 추가 최적화
+        // 🚀 안전한 최적화만 유지
         moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-        splitChunks: {
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              chunks: 'all',
-            },
-          },
-        },
       }
     }
 

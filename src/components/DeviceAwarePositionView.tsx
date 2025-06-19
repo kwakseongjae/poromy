@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { decrypt } from '@/utils/crypto'
-import type { Job, JobType } from '@/types/job'
+import type { JobType } from '@/types/job'
 import Image from 'next/image'
 import { CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
@@ -29,17 +29,46 @@ export default function DeviceAwarePositionView({
   const [toastVisible, setToastVisible] = useState(false)
   const [toastActive, setToastActive] = useState(false)
 
-  // 🚀 페이지 로드 시 스크롤을 최상단으로 이동
+  // 🚀 강화된 스크롤 제어: 페이지 진입 시 항상 상단으로 이동
   useEffect(() => {
-    // 페이지 진입 시 즉시 스크롤을 맨 위로 이동
-    window.scrollTo(0, 0)
+    const handleScrollToTop = () => {
+      // 즉시 스크롤을 상단으로 이동
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
 
-    // 추가 보장을 위해 짧은 지연 후 한 번 더 실행
-    const timeoutId = setTimeout(() => {
-      window.scrollTo(0, 0)
-    }, 100)
+      // 브라우저 호환성을 위한 대체 방법
+      if (window.scrollY !== 0) {
+        window.scrollTo(0, 0)
+      }
 
-    return () => clearTimeout(timeoutId)
+      // document.body와 document.documentElement 모두 제어
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+    }
+
+    // 컴포넌트 마운트 즉시 실행
+    handleScrollToTop()
+
+    // 페이지 로드 완료 후에도 실행
+    const timeoutIds = [
+      setTimeout(handleScrollToTop, 50),
+      setTimeout(handleScrollToTop, 100),
+      setTimeout(handleScrollToTop, 200),
+    ]
+
+    // 페이지 가시성 변경 시에도 실행 (모바일에서 탭 전환 등)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        handleScrollToTop()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    // cleanup
+    return () => {
+      timeoutIds.forEach(clearTimeout)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
   }, [])
 
   useEffect(() => {
@@ -98,7 +127,7 @@ export default function DeviceAwarePositionView({
         setLoading(false)
         // 🚀 데이터 로딩 완료 후에도 스크롤 위치 확인
         setTimeout(() => {
-          window.scrollTo(0, 0)
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
         }, 50)
       }
     }
