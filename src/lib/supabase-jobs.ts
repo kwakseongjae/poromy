@@ -118,15 +118,27 @@ export const getJobsPaginated = async (
     const from = (page - 1) * limit
     const to = from + limit - 1
 
-    // 전체 항목 수를 먼저 조회 (헤드 온리 요청으로 데이터는 가져오지 않음)
-    const { count } = await supabase
+    // 🚀 성능 최적화: 단일 쿼리로 데이터와 count 동시 조회
+    const { data, error, count } = await supabase
       .from('jobs')
-      .select('*', { count: 'exact', head: true })
-
-    // 계산된 범위에 해당하는 데이터만 조회
-    const { data, error } = await supabase
-      .from('jobs')
-      .select('*')
+      .select(
+        `
+        id,
+        company_name,
+        job_title,
+        conditions,
+        job_type,
+        position_description,
+        main_task,
+        qualifications,
+        preferred_qualifications,
+        logo_url,
+        url,
+        uploaded_at,
+        deadline
+      `,
+        { count: 'exact' }
+      )
       .order('id', { ascending: false })
       .range(from, to)
 
@@ -161,10 +173,26 @@ export const getLatestJobs = async (limit: number = 10): Promise<Job[]> => {
   try {
     const supabase = await getSupabaseClient()
 
-    // 최신순 정렬 후 제한된 개수만 조회
+    // 🚀 성능 최적화: 필요한 필드만 선택하여 조회
     const { data, error } = await supabase
       .from('jobs')
-      .select('*')
+      .select(
+        `
+        id,
+        company_name,
+        job_title,
+        conditions,
+        job_type,
+        position_description,
+        main_task,
+        qualifications,
+        preferred_qualifications,
+        logo_url,
+        url,
+        uploaded_at,
+        deadline
+      `
+      )
       .order('id', { ascending: false })
       .limit(limit)
 
@@ -195,10 +223,27 @@ export const getJobsWithOffset = async (
   try {
     const supabase = await getSupabaseClient()
 
-    // 🚀 성능 최적화: 단일 쿼리로 데이터와 count 동시 조회
+    // 🚀 성능 최적화: 단일 쿼리로 데이터와 count 동시 조회, 필요한 필드만 선택
     const { data, error, count } = await supabase
       .from('jobs')
-      .select('*', { count: 'exact' })
+      .select(
+        `
+        id,
+        company_name,
+        job_title,
+        conditions,
+        job_type,
+        position_description,
+        main_task,
+        qualifications,
+        preferred_qualifications,
+        logo_url,
+        url,
+        uploaded_at,
+        deadline
+      `,
+        { count: 'exact' }
+      )
       .order('id', { ascending: false })
       .range(offset, offset + limit - 1)
 
@@ -208,7 +253,6 @@ export const getJobsWithOffset = async (
     }
 
     const totalCount = count || 0
-    // 더 가져올 데이터가 있는지 확인
     const hasMore = offset + limit < totalCount
 
     return {

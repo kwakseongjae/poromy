@@ -143,13 +143,6 @@ function MobilePositionContent() {
             }
           )
         }
-        // 필터가 있는 경우 전체 데이터 가져오기 (클라이언트 사이드 필터링)
-        else if (jobTypeFilter !== 'all') {
-          response = await fetch('/api/jobs', {
-            cache: 'force-cache',
-            next: { revalidate: 300 }, // 5분 캐싱
-          })
-        }
         // 기본 페이지네이션
         else {
           response = await fetch(
@@ -310,6 +303,7 @@ function MobilePositionContent() {
                 <Link
                   key={job.id}
                   href={`/position/${encryptedId}`}
+                  scroll={false}
                   className="group block overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:border-blue-500 hover:shadow-lg"
                 >
                   <div className="p-4">
