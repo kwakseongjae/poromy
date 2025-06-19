@@ -29,6 +29,19 @@ export default function DeviceAwarePositionView({
   const [toastVisible, setToastVisible] = useState(false)
   const [toastActive, setToastActive] = useState(false)
 
+  // 🚀 페이지 로드 시 스크롤을 최상단으로 이동
+  useEffect(() => {
+    // 페이지 진입 시 즉시 스크롤을 맨 위로 이동
+    window.scrollTo(0, 0)
+
+    // 추가 보장을 위해 짧은 지연 후 한 번 더 실행
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 100)
+
+    return () => clearTimeout(timeoutId)
+  }, [])
+
   useEffect(() => {
     const isMobile = isMobileUA || isScreenMobile
     if (isMobile) {
@@ -83,6 +96,10 @@ export default function DeviceAwarePositionView({
         setPromptContent('')
       } finally {
         setLoading(false)
+        // 🚀 데이터 로딩 완료 후에도 스크롤 위치 확인
+        setTimeout(() => {
+          window.scrollTo(0, 0)
+        }, 50)
       }
     }
 
