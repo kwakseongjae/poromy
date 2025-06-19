@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react'],
     // bfcache 최적화를 위한 설정
     webVitalsAttribution: ['CLS', 'LCP'],
+    // 🚀 추가 성능 최적화
+    optimizeCss: true,
+    esmExternals: true,
   },
 
   images: {
@@ -56,6 +59,20 @@ const nextConfig: NextConfig = {
           {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
+          },
+        ],
+      },
+      // 🚀 폰트 파일에 대한 강화된 캐시 정책
+      {
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+          {
+            key: 'Cross-Origin-Resource-Policy',
+            value: 'cross-origin',
           },
         ],
       },
@@ -109,6 +126,18 @@ const nextConfig: NextConfig = {
         ...config.optimization,
         usedExports: true,
         sideEffects: false,
+        // 🚀 추가 최적화
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+        splitChunks: {
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: 'vendors',
+              chunks: 'all',
+            },
+          },
+        },
       }
     }
 
@@ -125,13 +154,6 @@ const nextConfig: NextConfig = {
     })
 
     return config
-  },
-
-  // 🚀 API 라우트 최적화
-  env: {
-    // Supabase connection pooling 설정
-    SUPABASE_CONNECTION_POOL_SIZE: '20',
-    SUPABASE_CONNECTION_TIMEOUT: '10000',
   },
 }
 

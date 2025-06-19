@@ -1,14 +1,16 @@
 @import 'tailwindcss';
 
-/* Font optimization */
+/* 🚀 Font optimization - 강화된 폰트 로딩 전략 */
 @font-face {
   font-family: 'Pretendard';
   src:
     url('/fonts/Pretendard-Regular.woff2') format('woff2'),
     url('/fonts/Pretendard-Regular.woff') format('woff');
   font-weight: 300;
-  font-display: swap;
+  font-display: optional; /* 첫 방문에서 FOIT 방지, 이후 캐시 활용 */
   font-style: normal;
+  unicode-range:
+    U+0020-007E, U+00A0-00FF, U+0100-017F, U+AC00-D7AF, U+1100-11FF, U+3130-318F;
 }
 
 @font-face {
@@ -17,8 +19,10 @@
     url('/fonts/Pretendard-Medium.woff2') format('woff2'),
     url('/fonts/Pretendard-Medium.woff') format('woff');
   font-weight: 400;
-  font-display: swap;
+  font-display: optional;
   font-style: normal;
+  unicode-range:
+    U+0020-007E, U+00A0-00FF, U+0100-017F, U+AC00-D7AF, U+1100-11FF, U+3130-318F;
 }
 
 @font-face {
@@ -27,8 +31,10 @@
     url('/fonts/Pretendard-SemiBold.woff2') format('woff2'),
     url('/fonts/Pretendard-SemiBold.woff') format('woff');
   font-weight: 500;
-  font-display: swap;
+  font-display: optional;
   font-style: normal;
+  unicode-range:
+    U+0020-007E, U+00A0-00FF, U+0100-017F, U+AC00-D7AF, U+1100-11FF, U+3130-318F;
 }
 
 @font-face {
@@ -37,8 +43,10 @@
     url('/fonts/Pretendard-Bold.woff2') format('woff2'),
     url('/fonts/Pretendard-Bold.woff') format('woff');
   font-weight: 600;
-  font-display: swap;
+  font-display: optional;
   font-style: normal;
+  unicode-range:
+    U+0020-007E, U+00A0-00FF, U+0100-017F, U+AC00-D7AF, U+1100-11FF, U+3130-318F;
 }
 
 /* Tailwind v4 theme configuration */
@@ -129,6 +137,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: var(--color-text-black);
+    /* 🚀 폰트 렌더링 최적화 */
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
   }
 }
 
