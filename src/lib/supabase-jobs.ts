@@ -275,7 +275,7 @@ export const getJobById = async (id: number): Promise<Job | null> => {
   try {
     const supabase = await getSupabaseClient()
 
-    // 🚀 성능 최적화: 필요한 필드만 선택하여 조회 (프롬프트 포함)
+    // 🚀 성능 최적화: 인덱스 힌트와 필요한 필드만 선택하여 조회
     const { data, error } = await supabase
       .from('jobs')
       .select(
@@ -297,6 +297,7 @@ export const getJobById = async (id: number): Promise<Job | null> => {
       `
       )
       .eq('id', id)
+      .limit(1)
       .single()
 
     if (error) {

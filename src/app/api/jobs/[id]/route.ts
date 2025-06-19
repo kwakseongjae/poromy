@@ -6,8 +6,8 @@ export const revalidate = 300 // 5분 캐싱
 
 // 📊 메모리 캐시 (동일한 job 요청에 대한 즉시 응답)
 const memoryCache = new Map<string, { data: any; timestamp: number }>()
-const MEMORY_CACHE_TTL = 3 * 60 * 1000 // 3분
-const MAX_CACHE_SIZE = 50 // 최대 50개 job 캐시
+const MEMORY_CACHE_TTL = 5 * 60 * 1000 // 5분으로 증가
+const MAX_CACHE_SIZE = 100 // 100개로 증가
 
 // 📊 메모리 캐시 확인 함수
 const getFromMemoryCache = (key: string) => {
@@ -18,7 +18,7 @@ const getFromMemoryCache = (key: string) => {
   return null
 }
 
-// 📈 메모리 캐시 저장 함수
+// 📈 메모리 캐시 저장 함수 (LRU 방식)
 const setMemoryCache = (key: string, data: any) => {
   // 캐시 크기 제한
   if (memoryCache.size >= MAX_CACHE_SIZE) {
@@ -57,6 +57,7 @@ export async function GET(
           'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
           'X-Cache': 'HIT-MEMORY',
           'X-Response-Time': `${responseTime}ms`,
+          'Access-Control-Max-Age': '300',
         },
       })
     }
@@ -64,7 +65,7 @@ export async function GET(
     // 📈 타임아웃 설정으로 응답 시간 보장
     const timeout = new Promise(
       (_, reject) =>
-        setTimeout(() => reject(new Error('Request timeout')), 2000) // 2초 타임아웃
+        setTimeout(() => reject(new Error('Request timeout')), 3000) // 3초로 증가
     )
 
     const dbStartTime = Date.now() // DB 쿼리 시간 측정
@@ -88,6 +89,8 @@ export async function GET(
         'X-Cache': 'MISS',
         'X-Response-Time': `${responseTime}ms`,
         'X-DB-Time': `${dbTime}ms`,
+        'Access-Control-Max-Age': '300',
+        Vary: 'Accept-Encoding',
       },
     })
 
