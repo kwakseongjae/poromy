@@ -43,8 +43,6 @@
   📁 src/app/
     📁 src/app/403/
       📄 src/app/403/page.tsx
-    📁 src/app/account/
-      📄 src/app/account/page.tsx
     📁 src/app/admin/
       📁 src/app/admin/add-test-users/
       📁 src/app/admin/jobs/
