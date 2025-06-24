@@ -17,6 +17,7 @@ import { CheckIcon, CopyLinkIcon, LinkIcon, ChevronIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
+import { useMediaQuery } from 'react-responsive'
 
 interface PreviewJob {
   id: number
@@ -1194,27 +1195,10 @@ function DesktopPositionContent() {
 export default function PositionContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [isMobile, setIsMobile] = useState<boolean | null>(null)
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
   // Check if there's an id parameter in the URL
   const encryptedId = searchParams.get('id')
-
-  // Determine if device is mobile after hydration
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-
-    // Initial check
-    checkMobile()
-
-    // Add resize listener
-    window.addEventListener('resize', checkMobile)
-
-    return () => {
-      window.removeEventListener('resize', checkMobile)
-    }
-  }, [])
 
   // Redirect to /position/[id] if mobile and id exists
   useEffect(() => {

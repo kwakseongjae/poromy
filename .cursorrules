@@ -162,7 +162,6 @@
     📄 src/emails/verification.tsx
   📁 src/hooks/
     📄 src/hooks/useEmblaCarousel.ts
-    📄 src/hooks/useIsMobile.ts
   📁 src/lib/
     📄 src/lib/gtag.ts
     📄 src/lib/supabase-client.ts

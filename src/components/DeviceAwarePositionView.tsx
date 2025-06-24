@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
-import { useIsMobile } from '@/hooks/useIsMobile'
+import { useMediaQuery } from 'react-responsive'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
@@ -20,7 +20,7 @@ export default function DeviceAwarePositionView({
   isMobileUA,
 }: DeviceAwarePositionViewProps) {
   const router = useRouter()
-  const isScreenMobile = useIsMobile()
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const [shouldRender, setShouldRender] = useState(false)
   const [job, setJob] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -72,13 +72,12 @@ export default function DeviceAwarePositionView({
   }, [])
 
   useEffect(() => {
-    const isMobile = isMobileUA || isScreenMobile
-    if (isMobile) {
+    if (isMobileUA || isMobile) {
       setShouldRender(true)
     } else {
       router.replace(redirectTo)
     }
-  }, [isMobileUA, isScreenMobile, router, redirectTo])
+  }, [isMobileUA, isMobile, router, redirectTo])
 
   useEffect(() => {
     const fetchJobAndPrompt = async () => {
@@ -159,23 +158,6 @@ export default function DeviceAwarePositionView({
         <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
       </div>
     )
-  }
-
-  // 마감일을 '5월 18일 17:00' 형태로 포맷팅하는 함수
-  const formatDeadline = (deadline: string) => {
-    if (deadline === '상시 채용' || deadline === '마감') return deadline
-    const dateMatch = deadline.match(
-      /(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/
-    )
-    if (!dateMatch) return deadline
-    const [, , month, day, hour, minute] = dateMatch
-    const monthNum = Number(month)
-    const dayNum = Number(day)
-    let result = `${monthNum}월 ${dayNum}일`
-    if (hour && minute) {
-      result += ` ${hour}:${minute}`
-    }
-    return result
   }
 
   // Helper to calculate D-day or show '상시채용'

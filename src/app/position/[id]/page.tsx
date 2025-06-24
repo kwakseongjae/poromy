@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { decrypt, encrypt } from '@/utils/crypto'
+import { decrypt } from '@/utils/crypto'
 import { notFound } from 'next/navigation'
 import { headers } from 'next/headers'
 
@@ -132,12 +132,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: '잘못된 URL입니다.',
     }
   }
-}
-
-export async function generateStaticParams() {
-  // 캐시 문제 우회를 위해 static params 생성 비활성화
-  // 모든 position 페이지를 동적으로 생성
-  return []
 }
 
 export default async function PositionPage({ params }: Props) {
