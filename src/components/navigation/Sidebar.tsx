@@ -9,6 +9,7 @@ import {
   DisabledBulbIcon,
   DisabledHamburgerIcon,
   InquiryTextImage,
+  LogoutIcon,
 } from '@/assets'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -20,7 +21,7 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const router = useRouter()
-  const { user, loading, signOut } = useSupabase()
+  const { user, signOut } = useSupabase()
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
   const [isPromptExpanded, setIsPromptExpanded] = useState(false)
 
@@ -30,6 +31,9 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
   const handleClose = () => {
     onClose()
+    setTimeout(() => {
+      setIsPromptExpanded(false)
+    }, 300)
   }
 
   const handleLogout = async () => {
@@ -43,155 +47,148 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   }
 
   const renderAuthUI = () => {
-    if (loading) {
-      return <div className="h-9 w-24 animate-pulse rounded-lg bg-gray-50" />
-    }
-
     if (user) {
       return (
         <button
           onClick={handleLogout}
-          className="w-full cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-red-400 hover:bg-red-50"
+          className="flex h-[60px] w-full cursor-pointer items-center border-gray-300 bg-white pl-[20px] text-[14px] font-semibold text-[#6B6B6B]"
         >
-          로그아웃
+          <LogoutIcon className="h-[20px] w-[20px]" />
+          <span className="ml-[10px]">로그아웃</span>
         </button>
       )
     }
 
     return (
-      <button
-        onClick={handleLogin}
-        className="w-full cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
-      >
-        회원가입/로그인
-      </button>
+      <div className="flex flex-col gap-[16px] bg-[#3182F6]/7 p-[20px]">
+        <span className="text-[14px] font-semibold whitespace-pre-line text-[#171717]">
+          {`회원가입만 하면\nPoromy가 추천하는 최적의 프롬프트 제공!`}
+        </span>
+        <button
+          onClick={handleLogin}
+          className="flex w-full cursor-pointer items-center justify-center rounded-[5px] border-gray-300 bg-[#3182F6] py-[14px]"
+        >
+          <span className="text-[14px] font-semibold text-white">회원가입</span>
+        </button>
+      </div>
     )
   }
 
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        className={`fixed inset-0 z-999 bg-black/50 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
-        }`}
-        onClick={handleClose}
-      />
-
-      {/* Sidebar */}
-      <div
-        className={`fixed top-0 right-0 z-1000 h-full w-64 transform bg-white pt-[44px] transition-transform duration-300 ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex h-full flex-col">
-          {/* Navigation Items */}
-          <div className="flex-1 overflow-y-auto p-4">
-            <div className="space-y-2">
-              {/* Prompt Section */}
-              <div
-                className="group relative"
-                onMouseEnter={() => setHoveredCategory('prompt')}
-                onMouseLeave={() => setHoveredCategory(null)}
+    <div
+      className={`fixed top-0 right-0 z-1000 block h-full w-full transform bg-white pt-[44px] transition-transform duration-300 sm:hidden ${
+        isOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="flex h-full flex-col">
+        {/* Navigation Items */}
+        <div className="flex-1 overflow-y-auto pt-4">
+          <div>
+            {/* Prompt Section */}
+            <div
+              className="group relative"
+              onMouseEnter={() => setHoveredCategory('prompt')}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <button
+                className="flex w-full cursor-pointer items-center gap-[8px] p-[20px] text-[16px]"
+                onClick={handlePromptClick}
               >
-                <button
-                  className="flex w-full cursor-pointer items-center gap-1 px-2 py-2"
-                  onClick={handlePromptClick}
-                >
-                  {hoveredCategory && hoveredCategory !== 'prompt' ? (
-                    <DisabledHamburgerIcon className="h-5 w-5" />
-                  ) : (
-                    <HamburgerIcon className="h-5 w-5" />
-                  )}
-                  <span
-                    className={`font-semibold select-none ${
-                      hoveredCategory && hoveredCategory !== 'prompt'
-                        ? 'text-text-disabled'
-                        : ''
-                    }`}
-                  >
-                    프롬프트
-                  </span>
-                </button>
-                <div
-                  className={`mt-1 space-y-1 overflow-hidden transition-all duration-300 ease-in-out ${
-                    isPromptExpanded
-                      ? 'max-h-24 opacity-100'
-                      : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <Link
-                    href="/company"
-                    className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={handleClose}
-                  >
-                    기업 분석 프롬프트
-                  </Link>
-                  <Link
-                    href="/position"
-                    className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    onClick={handleClose}
-                  >
-                    채용 공고 분석 프롬프트
-                  </Link>
-                </div>
-              </div>
-
-              <div className="border-t border-gray-100" />
-
-              <Link
-                href="/guide"
-                className="flex items-center gap-1 px-2 py-2"
-                onMouseEnter={() => setHoveredCategory('guide')}
-                onMouseLeave={() => setHoveredCategory(null)}
-                onClick={handleClose}
-              >
-                {hoveredCategory && hoveredCategory !== 'guide' ? (
-                  <DisabledBulbIcon className="h-5 w-5" />
+                {hoveredCategory && hoveredCategory !== 'prompt' ? (
+                  <DisabledHamburgerIcon className="h-[20px] w-[20px]" />
                 ) : (
-                  <BulbIcon className="h-5 w-5" />
+                  <HamburgerIcon className="h-[20px] w-[20px]" />
                 )}
                 <span
-                  className={`font-semibold ${
-                    hoveredCategory && hoveredCategory !== 'guide'
+                  className={`font-semibold select-none ${
+                    hoveredCategory && hoveredCategory !== 'prompt'
                       ? 'text-text-disabled'
                       : ''
                   }`}
                 >
-                  적용 가이드
+                  프롬프트
                 </span>
-              </Link>
-
-              <div className="border-t border-gray-100" />
-
-              <Link
-                href="/inquiry"
-                className="flex items-center gap-1 px-2 py-2"
-                onMouseEnter={() => setHoveredCategory('inquiry')}
-                onMouseLeave={() => setHoveredCategory(null)}
-                onClick={handleClose}
+              </button>
+              <div
+                className={`ml-[20px] overflow-hidden transition-all duration-300 ease-in-out ${
+                  isPromptExpanded
+                    ? 'max-h-[120px] opacity-100'
+                    : 'max-h-0 opacity-0'
+                }`}
               >
-                <Image
-                  src={InquiryTextImage}
-                  alt="문의하기"
-                  width={378}
-                  height={43}
-                  className="h-4"
-                  style={{ width: 'auto' }}
-                />
-                <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
+                <Link
+                  href="/company"
+                  className="block rounded-[5px] py-[20px] pl-[30px] text-[14px] font-semibold text-[#6B6B6B] hover:bg-[#EFEFEF]"
+                  onClick={handleClose}
+                >
+                  기업 분석
+                </Link>
+                <Link
+                  href="/position"
+                  className="block rounded-[5px] py-[20px] pl-[30px] text-[14px] font-semibold text-[#6B6B6B] hover:bg-[#EFEFEF]"
+                  onClick={handleClose}
+                >
+                  채용 공고 분석
+                </Link>
+              </div>
+            </div>
+
+            <div className="border-t border-gray-100" />
+
+            <Link
+              href="/guide"
+              className="flex items-center gap-[8px] p-[20px] text-[16px]"
+              onMouseEnter={() => setHoveredCategory('guide')}
+              onMouseLeave={() => setHoveredCategory(null)}
+              onClick={handleClose}
+            >
+              {hoveredCategory && hoveredCategory !== 'guide' ? (
+                <DisabledBulbIcon className="h-[20px] w-[20px]" />
+              ) : (
+                <BulbIcon className="h-[20px] w-[20px]" />
+              )}
+              <span
+                className={`font-semibold ${
+                  hoveredCategory && hoveredCategory !== 'guide'
+                    ? 'text-text-disabled'
+                    : ''
+                }`}
+              >
+                적용 가이드
+              </span>
+            </Link>
+
+            <div className="border-t border-gray-100" />
+
+            <Link
+              href="/inquiry"
+              className="flex items-center p-[20px]"
+              onMouseEnter={() => setHoveredCategory('inquiry')}
+              onMouseLeave={() => setHoveredCategory(null)}
+              onClick={handleClose}
+            >
+              <Image
+                src={InquiryTextImage}
+                alt="문의하기"
+                width={378}
+                height={43}
+                className="h-[18px]"
+                style={{ width: 'auto' }}
+              />
+              <div className="ml-0.5 flex h-[18px] items-start">
+                <span className="text-600 text-xs leading-none font-semibold">
                   Free
                 </span>
-              </Link>
-            </div>
+              </div>
+            </Link>
           </div>
-
-          {/* Auth Button */}
-          <div className="border-t border-gray-200 p-4">{renderAuthUI()}</div>
         </div>
+
+        {/* Auth Button */}
+        <div className="border-t border-gray-200">{renderAuthUI()}</div>
       </div>
-    </>
+    </div>
   )
 }
 

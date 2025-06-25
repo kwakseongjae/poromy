@@ -9,6 +9,7 @@ import {
   DisabledHamburgerIcon,
   ProfileImage,
   InquiryTextImage,
+  CloseIcon,
 } from '@/assets'
 import { useEffect, useState } from 'react'
 import { useSupabase } from '@/contexts/SupabaseContext'
@@ -97,12 +98,15 @@ const Navbar = () => {
     return (
       <Link
         href="/login"
-        className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100"
-        aria-label="로그인 또는 회원가입"
+        className="rounded-[5px] bg-[#3182F6]/14 px-[16px] py-[10px] text-[14px] font-semibold text-[#3182F6]"
+        aria-label="로그인"
         tabIndex={0}
-        onClick={() => handleNavigationClick('로그인/회원가입', '/login')}
+        onClick={() => {
+          handleNavigationClick('로그인/회원가입', '/login')
+          setIsSidebarOpen(false)
+        }}
       >
-        회원가입/로그인
+        로그인
       </Link>
     )
   }
@@ -114,7 +118,7 @@ const Navbar = () => {
           isScrolled ? 'border-b border-gray-200' : ''
         }`}
       >
-        <div className="mx-auto flex min-h-[44px] items-center justify-between px-4 sm:min-h-16 sm:px-6 lg:px-8">
+        <div className="mx-auto flex h-[60px] items-center justify-between py-[10px] pr-[8px] pl-[16px] sm:px-[20px] lg:px-[30px]">
           {/* Left Side */}
           <div className="flex items-center gap-8">
             {/* Logo */}
@@ -124,7 +128,7 @@ const Navbar = () => {
                 onClick={() => handleNavigationClick('Logo', '/')}
                 aria-label="Poromy 홈페이지로 이동"
               >
-                <LogoIcon className="w-25 sm:w-28 lg:w-32" />
+                <LogoIcon className="h-[22px] w-[84px]" />
               </Link>
             </div>
 
@@ -142,14 +146,14 @@ const Navbar = () => {
                 }}
               >
                 <div className="group relative cursor-default">
-                  <div className="flex items-center gap-1 px-2 py-2">
+                  <div className="flex items-center gap-[8px] px-[8px] py-[12px]">
                     {hoveredCategory && hoveredCategory !== 'prompt' ? (
-                      <DisabledHamburgerIcon className="h-5 w-5" />
+                      <DisabledHamburgerIcon className="h-[18pxpx] w-[18pxpx]" />
                     ) : (
-                      <HamburgerIcon className="h-5 w-5" />
+                      <HamburgerIcon className="h-[18pxpx] w-[18pxpx]" />
                     )}
                     <span
-                      className={`font-semibold select-none ${
+                      className={`text-[14px] font-semibold select-none ${
                         hoveredCategory && hoveredCategory !== 'prompt'
                           ? 'text-text-disabled'
                           : ''
@@ -196,16 +200,16 @@ const Navbar = () => {
               >
                 <Link
                   href="/guide"
-                  className="flex items-center gap-1 px-2 py-2"
+                  className="flex items-center gap-[8px] px-[8px] py-[12px]"
                   onClick={() => handleNavigationClick('적용 가이드', '/guide')}
                 >
                   {hoveredCategory && hoveredCategory !== 'guide' ? (
-                    <DisabledBulbIcon className="h-5 w-5" />
+                    <DisabledBulbIcon className="h-[18px] w-[18px]" />
                   ) : (
-                    <BulbIcon className="h-5 w-5" />
+                    <BulbIcon className="h-[18px] w-[18px]" />
                   )}
                   <span
-                    className={`font-semibold ${
+                    className={`text-[14px] font-semibold ${
                       hoveredCategory && hoveredCategory !== 'guide'
                         ? 'text-text-disabled'
                         : ''
@@ -230,7 +234,7 @@ const Navbar = () => {
                     alt="문의하기"
                     width={378}
                     height={43}
-                    className="h-4"
+                    className="h-[16px]"
                     style={{ width: 'auto' }}
                   />
                   <span className="text-600 ml-0.5 text-xs leading-none font-semibold">
@@ -242,10 +246,11 @@ const Navbar = () => {
           </div>
 
           {/* Right Side */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-[8px]">
+            <div>{renderAuthUI()}</div>
             {/* Mobile Menu Button */}
             <button
-              className="cursor-pointer sm:hidden"
+              className="flex h-[40px] w-[40px] cursor-pointer items-center justify-center sm:hidden"
               onClick={() => {
                 if (isSidebarOpen) {
                   setIsSidebarOpen(false)
@@ -255,11 +260,12 @@ const Navbar = () => {
               }}
               aria-label="Toggle menu"
             >
-              <HamburgerIcon className="h-6 w-6" />
+              {isSidebarOpen ? (
+                <CloseIcon className="h-[24px] w-[24px]" />
+              ) : (
+                <HamburgerIcon className="h-[24px] w-[24px]" />
+              )}
             </button>
-
-            {/* Desktop Auth UI */}
-            <div className="hidden sm:block">{renderAuthUI()}</div>
           </div>
         </div>
       </nav>
