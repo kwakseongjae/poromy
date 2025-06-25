@@ -16,6 +16,7 @@ export { default as HelpIcon } from './icons/HelpIcon'
 export { default as CopyLinkIcon } from './icons/CopyLinkIcon'
 export { default as CheckIcon } from './icons/CheckIcon'
 export { default as CloseIcon } from './icons/CloseIcon'
+export { default as LogoutIcon } from './icons/LogoutIcon'
 
 // Image
 export { default as ProfileImage } from '../../public/images/profile.jpg'
