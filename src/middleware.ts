@@ -18,13 +18,25 @@ export async function middleware(request: NextRequest) {
   let isAdmin = false
   if (user) {
     // profiles 테이블에서 is_admin 확인
-    const { data: profile } = await supabase
+    const { data: profile, error } = await supabase
       .from('profiles')
       .select('is_admin')
       .eq('id', user.id)
       .single()
 
     isAdmin = !!profile?.is_admin
+
+    // 디버깅용 로그 (개발 환경에서만)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Middleware admin check:', {
+        userId: user.id,
+        email: user.email,
+        profile,
+        isAdmin,
+        error,
+        requestPath: request.nextUrl.pathname,
+      })
+    }
   }
 
   // 관리자 상태를 쿠키에 저장
@@ -33,6 +45,11 @@ export async function middleware(request: NextRequest) {
   // /admin 보호: is_admin이 true가 아니면 접근 불가
   if (request.nextUrl.pathname.startsWith('/admin') && !isAdmin) {
     // 403 페이지로 리다이렉트
+    console.log('Access denied to admin route:', {
+      path: request.nextUrl.pathname,
+      userId: user?.id,
+      isAdmin,
+    })
     return NextResponse.redirect(new URL('/403', request.url))
   }
 
