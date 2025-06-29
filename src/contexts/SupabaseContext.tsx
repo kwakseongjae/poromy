@@ -16,6 +16,7 @@ type SupabaseContextType = {
   user: User | null
   loading: boolean
   isAdmin: boolean
+  adminLoading: boolean
   signOut: () => Promise<void>
   refreshUser: () => Promise<void>
 }
@@ -24,6 +25,7 @@ const SupabaseContext = createContext<SupabaseContextType>({
   user: null,
   loading: true,
   isAdmin: false,
+  adminLoading: true,
   signOut: async () => {},
   refreshUser: async () => {},
 })
@@ -41,13 +43,17 @@ export default function SupabaseProvider({
   const [user, setUser] = useState<User | null>(initialUser)
   const [loading, setLoading] = useState<boolean>(true)
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
+  const [adminLoading, setAdminLoading] = useState<boolean>(true)
   const router = useRouter()
 
   // Helper to fetch is_admin from profiles table and sync with cookie
   const fetchIsAdmin = async (userId: string | undefined | null) => {
+    setAdminLoading(true)
+
     if (!userId) {
       setIsAdmin(false)
       deleteCookie('is-admin')
+      setAdminLoading(false)
       return
     }
 
@@ -58,31 +64,38 @@ export default function SupabaseProvider({
         .eq('id', userId)
         .single()
 
-      if (error) {
+      if (error || !profile) {
         console.error('Error fetching admin status:', error)
         setIsAdmin(false)
         deleteCookie('is-admin')
+        setAdminLoading(false)
         return
       }
 
-      const adminStatus = !!profile?.is_admin
+      const adminStatus = !!profile.is_admin
       setIsAdmin(adminStatus)
 
-      // 쿠키와 상태 동기화
+      // 쿠키와 상태 동기화 (미들웨어와 동일한 설정)
       setCookie('is-admin', adminStatus.toString(), {
         path: '/',
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
       })
 
-      console.log('Admin status updated:', {
-        userId,
-        isAdmin: adminStatus,
-        profile,
-      })
+      // 개발 환경에서만 로깅
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Admin status updated:', {
+          userId,
+          isAdmin: adminStatus,
+          profile,
+        })
+      }
     } catch (error) {
       console.error('Error in fetchIsAdmin:', error)
       setIsAdmin(false)
       deleteCookie('is-admin')
+    } finally {
+      setAdminLoading(false)
     }
   }
 
@@ -98,6 +111,7 @@ export default function SupabaseProvider({
         fetchIsAdmin(newUser.id)
       } else {
         setIsAdmin(false)
+        setAdminLoading(false)
         deleteCookie('is-admin')
       }
     })
@@ -133,6 +147,7 @@ export default function SupabaseProvider({
       await fetchIsAdmin(newUser.id)
     } else {
       setIsAdmin(false)
+      setAdminLoading(false)
       deleteCookie('is-admin')
     }
     setLoading(false)
@@ -140,7 +155,7 @@ export default function SupabaseProvider({
 
   return (
     <SupabaseContext.Provider
-      value={{ user, loading, isAdmin, signOut, refreshUser }}
+      value={{ user, loading, isAdmin, adminLoading, signOut, refreshUser }}
     >
       {children}
     </SupabaseContext.Provider>

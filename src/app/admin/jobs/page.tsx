@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { invalidateJobsCache } from '@/utils/cache-manager'
+import { useSupabase } from '@/contexts/SupabaseContext'
 import type { Job, JobType } from '@/types/job'
 
 // 빠른 업로드용 데이터 타입
@@ -27,7 +28,6 @@ interface QuickUploadData {
 export default function AdminJobsPage() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [message, setMessage] = useState('')
   const [quickUploadData, setQuickUploadData] = useState('')
   const [quickUploadPrompt, setQuickUploadPrompt] = useState('')
@@ -36,37 +36,42 @@ export default function AdminJobsPage() {
     null
   )
   const router = useRouter()
+  const { user, isAdmin, loading, adminLoading } = useSupabase()
 
-  // 관리자 권한 확인
+  // 권한 체크 및 초기 데이터 로드
+  // TODO: 권한 체크 로직 middleware 로 이동 필요
   useEffect(() => {
-    const checkAuth = async () => {
-      const supabase = createBrowserSupabaseClient()
-      const {
-        data: { user },
-      } = await supabase.auth.getUser()
-
-      if (!user) {
-        router.push('/login')
-        return
-      }
-
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('id', user.id)
-        .single()
-
-      if (!profile?.is_admin) {
-        router.push('/403')
-        return
-      }
-
-      setIsAuthenticated(true)
-      await loadJobs()
+    // 개발 환경에서 상태 로깅
+    if (process.env.NODE_ENV === 'development') {
+      console.log('AdminJobsPage state:', {
+        loading,
+        adminLoading,
+        user: user ? { id: user.id, email: user.email } : null,
+        isAdmin,
+      })
     }
 
-    checkAuth()
-  }, [router])
+    // 인증 또는 admin 상태 로딩 중이면 대기
+    if (loading || adminLoading) return
+
+    // 로그인하지 않은 경우
+    if (!user) {
+      console.log('No user, redirecting to login')
+      router.push('/login')
+      return
+    }
+
+    // admin이 아닌 경우 (admin 상태 확인이 완료된 후)
+    if (!isAdmin) {
+      console.log('User is not admin, redirecting to 403')
+      router.push('/403')
+      return
+    }
+
+    // admin인 경우 채용공고 데이터 로드
+    console.log('Loading jobs for admin user')
+    loadJobs()
+  }, [user, isAdmin, loading, adminLoading, router])
 
   // 채용공고 목록 로드
   const loadJobs = async () => {
@@ -233,12 +238,15 @@ export default function AdminJobsPage() {
     setParsedJobData(null)
   }
 
-  if (!isAuthenticated) {
+  // 로딩 중인 경우 로딩 화면 표시
+  if (loading || adminLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="mx-auto h-32 w-32 animate-spin rounded-full border-b-2 border-gray-900"></div>
-          <p className="mt-4 text-gray-600">권한을 확인하는 중...</p>
+          <p className="mt-4 text-gray-600">
+            {loading ? '인증을 확인하는 중...' : '권한을 확인하는 중...'}
+          </p>
         </div>
       </div>
     )

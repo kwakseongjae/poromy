@@ -9,48 +9,75 @@ export async function middleware(request: NextRequest) {
     },
   })
 
+  // TODO: middleware admin check 로직 개선 필요
   const supabase = await createClient()
 
   const {
     data: { user },
+    error: userError,
   } = await supabase.auth.getUser()
 
   let isAdmin = false
-  if (user) {
-    // profiles 테이블에서 is_admin 확인
-    const { data: profile, error } = await supabase
-      .from('profiles')
-      .select('is_admin')
-      .eq('id', user.id)
-      .single()
 
-    isAdmin = !!profile?.is_admin
+  if (user && !userError) {
+    try {
+      // profiles 테이블에서 is_admin 확인 (더 안정적인 쿼리)
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', user.id)
+        .single()
 
-    // 디버깅용 로그 (개발 환경에서만)
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Middleware admin check:', {
-        userId: user.id,
-        email: user.email,
-        profile,
-        isAdmin,
-        error,
-        requestPath: request.nextUrl.pathname,
-      })
+      if (!error && profile) {
+        isAdmin = !!profile.is_admin
+      }
+
+      // 디버깅용 로그 (개발 환경에서만)
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Middleware admin check:', {
+          userId: user.id,
+          email: user.email,
+          profile,
+          isAdmin,
+          error,
+          requestPath: request.nextUrl.pathname,
+        })
+      }
+    } catch (dbError) {
+      console.error('Database error in middleware:', dbError)
+      isAdmin = false
     }
   }
 
-  // 관리자 상태를 쿠키에 저장
-  response.cookies.set('is-admin', isAdmin.toString())
+  // 관리자 상태를 쿠키에 저장 (secure 설정 추가)
+  response.cookies.set('is-admin', isAdmin.toString(), {
+    path: '/',
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+  })
 
-  // /admin 보호: is_admin이 true가 아니면 접근 불가
-  if (request.nextUrl.pathname.startsWith('/admin') && !isAdmin) {
-    // 403 페이지로 리다이렉트
-    console.log('Access denied to admin route:', {
-      path: request.nextUrl.pathname,
-      userId: user?.id,
-      isAdmin,
-    })
-    return NextResponse.redirect(new URL('/403', request.url))
+  // /admin 경로 보호
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    // 사용자가 없거나 admin이 아닌 경우
+    if (!user || !isAdmin) {
+      // 로그인하지 않은 경우 로그인 페이지로
+      if (!user) {
+        response.cookies.set('returnUrl', request.nextUrl.pathname, {
+          path: '/',
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+        })
+        return NextResponse.redirect(new URL('/login', request.url))
+      }
+
+      // 로그인했지만 admin이 아닌 경우 403으로
+      console.log('Access denied to admin route:', {
+        path: request.nextUrl.pathname,
+        userId: user.id,
+        isAdmin,
+      })
+      return NextResponse.redirect(new URL('/403', request.url))
+    }
   }
 
   // 로그인/회원가입 페이지 접근 시 로그인된 사용자 체크
