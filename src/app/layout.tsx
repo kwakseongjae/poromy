@@ -3,6 +3,7 @@ import './globals.css'
 import Navbar from '@/components/navigation/Navbar'
 import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
+import ReactQueryProvider from '@/providers/ReactQueryProvider'
 import { GoogleAnalytics as NextGoogleAnalytics } from '@next/third-parties/google'
 import { getAllKeywords } from '@/constants/seo-keywords'
 import {
@@ -190,10 +191,12 @@ export default async function RootLayout({
         <script {...createJsonLdScript(softwareApplicationSchema)} />
       </head>
       <body>
-        <SupabaseProvider initialUser={user}>
-          <Navbar />
-          <main>{children}</main>
-        </SupabaseProvider>
+        <ReactQueryProvider>
+          <SupabaseProvider initialUser={user}>
+            <Navbar />
+            <main>{children}</main>
+          </SupabaseProvider>
+        </ReactQueryProvider>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <NextGoogleAnalytics
             gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}
