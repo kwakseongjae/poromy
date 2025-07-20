@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
-import { invalidateJobsCache } from '@/utils/cache-manager'
 import { useSupabase } from '@/contexts/SupabaseContext'
+import { useAllJobs, useDeleteJob, useCreateJob, useInvalidateJobsCache } from '@/hooks/useJobsQueries'
 import type { Job, JobType } from '@/types/job'
 
 // 빠른 업로드용 데이터 타입
@@ -26,8 +26,6 @@ interface QuickUploadData {
 }
 
 export default function AdminJobsPage() {
-  const [jobs, setJobs] = useState<Job[]>([])
-  const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [quickUploadData, setQuickUploadData] = useState('')
   const [quickUploadPrompt, setQuickUploadPrompt] = useState('')
@@ -37,8 +35,14 @@ export default function AdminJobsPage() {
   )
   const router = useRouter()
   const { user, isAdmin, loading, adminLoading } = useSupabase()
+  
+  // React Query hooks
+  const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useAllJobs()
+  const deleteJobMutation = useDeleteJob()
+  const createJobMutation = useCreateJob()
+  const invalidateCache = useInvalidateJobsCache()
 
-  // 권한 체크 및 초기 데이터 로드
+  // 권한 체크
   // TODO: 권한 체크 로직 middleware 로 이동 필요
   useEffect(() => {
     // 개발 환경에서 상태 로깅
@@ -68,21 +72,13 @@ export default function AdminJobsPage() {
       return
     }
 
-    // admin인 경우 채용공고 데이터 로드
-    console.log('Loading jobs for admin user')
-    loadJobs()
+    console.log('Admin user authenticated')
   }, [user, isAdmin, loading, adminLoading, router])
 
-  // 채용공고 목록 로드
-  const loadJobs = async () => {
-    try {
-      const response = await fetch('/api/jobs')
-      const data = await response.json()
-      setJobs(data.jobs || [])
-    } catch (error) {
-      console.error('Error loading jobs:', error)
-      setMessage('채용공고를 불러오는 중 오류가 발생했습니다.')
-    }
+  // 에러 처리
+  if (jobsError) {
+    console.error('Error loading jobs:', jobsError)
+    setMessage('채용공고를 불러오는 중 오류가 발생했습니다.')
   }
 
   // 채용공고 삭제
@@ -92,28 +88,13 @@ export default function AdminJobsPage() {
     }
 
     try {
-      const response = await fetch(`/api/admin/jobs?id=${id}`, {
-        method: 'DELETE',
-      })
-
-      if (response.ok) {
-        setMessage('채용공고가 삭제되었습니다.')
-        await loadJobs()
-
-        // 캐시 무효화 - 채용공고가 삭제되었으므로 사용자 캐시 갱신
-        try {
-          await invalidateJobsCache()
-          console.log('Cache invalidated successfully after job deletion')
-        } catch (cacheError) {
-          console.error('Failed to invalidate cache:', cacheError)
-        }
-      } else {
-        const error = await response.json()
-        setMessage(`오류: ${error.error}`)
-      }
+      await deleteJobMutation.mutateAsync(id)
+      setMessage('채용공고가 삭제되었습니다.')
+      console.log('Job deleted successfully')
     } catch (error) {
       console.error('Error deleting job:', error)
-      setMessage('채용공고 삭제 중 오류가 발생했습니다.')
+      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      setMessage(`오류: ${errorMessage}`)
     }
   }
 
@@ -175,8 +156,6 @@ export default function AdminJobsPage() {
   const handleQuickUpload = async () => {
     if (!parsedJobData) return
 
-    setIsLoading(true)
-
     try {
       const job = {
         id: parsedJobData.id,
@@ -194,41 +173,21 @@ export default function AdminJobsPage() {
         deadline: parsedJobData.deadline,
       }
 
-      const response = await fetch('/api/admin/jobs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          job,
-          promptContent: parsedJobData.promptContent,
-        }),
+      await createJobMutation.mutateAsync({
+        job,
+        promptContent: parsedJobData.promptContent,
       })
-
-      if (response.ok) {
-        setMessage('채용공고가 성공적으로 업로드되었습니다.')
-        setQuickUploadData('')
-        setQuickUploadPrompt('')
-        setShowConfirmModal(false)
-        setParsedJobData(null)
-        await loadJobs()
-
-        // 캐시 무효화 - 빠른 업로드 후 사용자 캐시 갱신
-        try {
-          await invalidateJobsCache()
-          console.log('Cache invalidated successfully after quick upload')
-        } catch (cacheError) {
-          console.error('Failed to invalidate cache:', cacheError)
-        }
-      } else {
-        const error = await response.json()
-        setMessage(`오류: ${error.error}`)
-      }
+      
+      setMessage('채용공고가 성공적으로 업로드되었습니다.')
+      setQuickUploadData('')
+      setQuickUploadPrompt('')
+      setShowConfirmModal(false)
+      setParsedJobData(null)
+      console.log('Job created successfully')
     } catch (error) {
       console.error('Error uploading job:', error)
-      setMessage('채용공고 업로드 중 오류가 발생했습니다.')
-    } finally {
-      setIsLoading(false)
+      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      setMessage(`오류: ${errorMessage}`)
     }
   }
 
@@ -238,8 +197,11 @@ export default function AdminJobsPage() {
     setParsedJobData(null)
   }
 
+  // 뮤테이션 로딩 상태
+  const isLoading = createJobMutation.isPending || deleteJobMutation.isPending
+
   // 로딩 중인 경우 로딩 화면 표시
-  if (loading || adminLoading) {
+  if (loading || adminLoading || jobsLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">

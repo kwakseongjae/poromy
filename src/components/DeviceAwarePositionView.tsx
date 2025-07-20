@@ -9,6 +9,7 @@ import { CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
+import { useJobDetail } from '@/hooks/useJobsQueries'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
@@ -22,12 +23,19 @@ export default function DeviceAwarePositionView({
   const router = useRouter()
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
   const [shouldRender, setShouldRender] = useState(false)
-  const [job, setJob] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [promptContent, setPromptContent] = useState<string>('')
   const [toastVisible, setToastVisible] = useState(false)
   const [toastActive, setToastActive] = useState(false)
+  const [jobId, setJobId] = useState<number | null>(null)
+  
+  // React Query를 사용한 job 데이터 페칭
+  const { 
+    data: job, 
+    isLoading: loading, 
+    error,
+    isError
+  } = useJobDetail(jobId)
+  
+  const promptContent = job?.prompt || ''
 
   // 🚀 강화된 스크롤 제어: 페이지 진입 시 항상 상단으로 이동
   useEffect(() => {
@@ -80,61 +88,40 @@ export default function DeviceAwarePositionView({
   }, [isMobileUA, isMobile, router, redirectTo])
 
   useEffect(() => {
-    const fetchJobAndPrompt = async () => {
+    if (shouldRender) {
       try {
         // URL에서 ID 추출 (redirectTo에서 id 파라미터 추출)
         const url = new URL(redirectTo, window.location.origin)
         const encryptedId = url.searchParams.get('id')
 
         if (!encryptedId) {
-          setError('채용 공고를 찾을 수 없습니다.')
-          setLoading(false)
+          console.error('No encrypted ID found in URL')
           return
         }
 
         const decryptedId = decrypt(encryptedId)
-        const jobId = parseInt(decryptedId, 10)
+        const parsedJobId = parseInt(decryptedId, 10)
 
-        if (isNaN(jobId)) {
-          throw new Error('Invalid job ID')
+        if (isNaN(parsedJobId)) {
+          console.error('Invalid job ID')
+          return
         }
 
-        // Fetch specific job from API
-        const response = await fetch(`/api/jobs/${jobId}`)
-        if (!response.ok) {
-          throw new Error('Job not found')
-        }
-
-        const data = await response.json()
-        const foundJob = data.job
-
-        if (foundJob) {
-          setJob(foundJob)
-          setError(null)
-          setPromptContent(foundJob.prompt || '')
-        } else {
-          setError('해당 채용 공고를 찾을 수 없습니다.')
-          setJob(null)
-          setPromptContent('')
-        }
+        setJobId(parsedJobId)
       } catch (err) {
-        setError('잘못된 URL입니다.')
-        console.error('Error fetching job:', err)
-        setJob(null)
-        setPromptContent('')
-      } finally {
-        setLoading(false)
-        // 🚀 데이터 로딩 완료 후에도 스크롤 위치 확인
-        setTimeout(() => {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-        }, 50)
+        console.error('Error parsing job ID:', err)
       }
     }
-
-    if (shouldRender) {
-      fetchJobAndPrompt()
-    }
   }, [shouldRender, redirectTo])
+  
+  // 데이터 로딩 완료 후 스크롤 위치 조정
+  useEffect(() => {
+    if (!loading && job) {
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      }, 50)
+    }
+  }, [loading, job])
 
   // 링크 복사 핸들러
   const handleCopyLink = async () => {
@@ -217,10 +204,10 @@ export default function DeviceAwarePositionView({
         <div className="flex min-h-screen w-full items-center justify-center">
           <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
         </div>
-      ) : error || !job ? (
+      ) : isError || !job ? (
         <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4">
           <p className="text-center font-medium whitespace-pre-line text-gray-600">
-            {error || '채용 공고를 찾을 수 없습니다.'}
+            {isError && error instanceof Error ? error.message : '채용 공고를 찾을 수 없습니다.'}
           </p>
         </div>
       ) : (

@@ -1,110 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
 import { getDeadlineLabel, isJobNew } from '@/utils/job'
 import { usePathname } from 'next/navigation'
+import { useLatestJobs } from '@/hooks/useJobsQueries'
 import type { Job } from '@/types/job'
-
-/**
- * 클라이언트 사이드 캐시 구현
- * - 메모리 캐시로 중복 API 호출 방지
- * - 홈페이지 재방문 시 빠른 로딩 제공
- */
-const jobsCache = {
-  data: null as Job[] | null,
-  timestamp: 0,
-  isLoading: false,
-}
-
-const CACHE_DURATION = 1000 * 60 * 2 // 2분 캐시 (서버 캐시보다 짧게)
 
 export default function JobList() {
   const pathname = usePathname()
-  const [jobs, setJobs] = useState<Job[]>([])
-  const [loading, setLoading] = useState(true)
+  
+  // React Query를 사용한 데이터 페칭
+  const { 
+    data: jobs = [], 
+    isLoading: loading, 
+    error 
+  } = useLatestJobs(10)
 
-  useEffect(() => {
-    const fetchJobs = async () => {
-      const now = Date.now()
-
-      // 캐시된 데이터가 있고 유효한 경우 사용
-      if (
-        jobsCache.data &&
-        now - jobsCache.timestamp < CACHE_DURATION &&
-        !jobsCache.isLoading
-      ) {
-        setJobs(jobsCache.data)
-        setLoading(false)
-        return
-      }
-
-      // 이미 로딩 중인 경우 대기
-      if (jobsCache.isLoading) {
-        // 로딩 상태 모니터링을 위한 폴링
-        const checkLoading = () => {
-          if (!jobsCache.isLoading && jobsCache.data) {
-            setJobs(jobsCache.data)
-            setLoading(false)
-          } else if (!jobsCache.isLoading) {
-            // 로딩 실패한 경우 재시도
-            fetchJobs()
-          } else {
-            setTimeout(checkLoading, 100)
-          }
-        }
-        setTimeout(checkLoading, 100)
-        return
-      }
-
-      try {
-        jobsCache.isLoading = true
-
-        // AbortController로 컴포넌트 언마운트 시 요청 취소
-        const abortController = new AbortController()
-
-        // 메인 페이지에서는 최신 10개만 가져오기 (성능 최적화)
-        const response = await fetch('/api/jobs?latest=true&limit=10', {
-          cache: 'no-store',
-          headers: {
-            'Cache-Control': 'no-cache',
-          },
-          signal: abortController.signal,
-        })
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-        }
-
-        const data = await response.json()
-        const jobsData = data.jobs || []
-
-        // 캐시 업데이트
-        jobsCache.data = jobsData
-        jobsCache.timestamp = now
-
-        setJobs(jobsData)
-      } catch (error) {
-        // AbortError는 의도적인 취소이므로 로그하지 않음
-        if (error instanceof Error && error.name !== 'AbortError') {
-          console.error('Error fetching jobs:', error)
-        }
-
-        // 에러 시에도 캐시된 데이터가 있다면 사용
-        if (jobsCache.data) {
-          setJobs(jobsCache.data)
-        }
-      } finally {
-        jobsCache.isLoading = false
-        setLoading(false)
-      }
-    }
-
-    fetchJobs()
-  }, [])
+  // 에러 처리 (필요시 사용자에게 알림)
+  if (error) {
+    console.error('Error fetching jobs:', error)
+  }
 
   // 홈페이지에서는 성능 최적화를 위해 제한된 수의 데이터 사용
   const jobsData = pathname === '/' ? jobs.slice(0, 12) : jobs
