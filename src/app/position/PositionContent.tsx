@@ -8,7 +8,8 @@ import {
   useLayoutEffect,
   useCallback,
 } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { useSearchQuery, useJobIdParam, usePageParam } from '@/hooks/useQueryParams'
 import { decrypt, encrypt } from '@/utils/crypto'
 import type { JobType, Job } from '@/types/job'
 import Image from 'next/image'
@@ -109,8 +110,9 @@ const getBoardStylePagination = (currentPage: number, totalPages: number) => {
 
 // Mobile JobList Component (inspired by company page UI)
 function MobilePositionContent() {
-  const searchParams = useSearchParams()
-  const [currentPage, setCurrentPage] = useState(1)
+  const [query] = useSearchQuery()
+  const [currentPage, setCurrentPage] = usePageParam()
+  const [encryptedId] = useJobIdParam()
   const [jobTypeFilter, setJobTypeFilter] = useState<JobType | 'all'>('all')
   const [jobs, setJobs] = useState<Job[]>([])
   const [availableJobTypes, setAvailableJobTypes] = useState<JobType[]>([])
@@ -120,7 +122,7 @@ function MobilePositionContent() {
   const [hasMore, setHasMore] = useState(false)
   const itemsPerPage = 10
 
-  const searchQuery = searchParams.get('query') || ''
+  const searchQuery = query || ''
 
   // Fetch jobs from server with pagination
   useEffect(() => {
@@ -214,9 +216,7 @@ function MobilePositionContent() {
   // Reset page when filter changes
   useEffect(() => {
     setCurrentPage(1)
-  }, [jobTypeFilter, searchQuery])
-
-  const encryptedId = searchParams.get('id')
+  }, [jobTypeFilter, searchQuery, setCurrentPage])
 
   if (encryptedId) {
     return null
@@ -442,8 +442,8 @@ function MobilePositionContent() {
 
 function DesktopPositionContent() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const query = searchParams.get('query') || ''
+  const [query, setQuery] = useSearchQuery()
+  const [encryptedId, setEncryptedId] = useJobIdParam()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const targetJobRef = useRef<HTMLAnchorElement>(null)
   const loadingRequestRef = useRef<boolean>(false) // 중복 요청 방지용 ref
@@ -476,13 +476,14 @@ function DesktopPositionContent() {
         let response
 
         // 🚀 성능 최적화: 적절한 캐싱 전략 적용
-        const cacheStrategy = query ? 'no-store' : 'force-cache'
-        const revalidateTime = query ? 0 : 60 // 검색이 아닌 경우 1분 캐싱 (무한스크롤 고려)
+        const searchQuery = query || ''
+        const cacheStrategy = searchQuery ? 'no-store' : 'force-cache'
+        const revalidateTime = searchQuery ? 0 : 60 // 검색이 아닌 경우 1분 캐싱 (무한스크롤 고려)
 
         // 검색 쿼리가 있는 경우 검색 API 사용 (오프셋 기반)
-        if (query) {
+        if (searchQuery) {
           response = await fetch(
-            `/api/jobs?query=${encodeURIComponent(query)}&offset=0&limit=20`,
+            `/api/jobs?query=${encodeURIComponent(searchQuery)}&offset=0&limit=20`,
             {
               cache: cacheStrategy,
               next: { revalidate: revalidateTime },
@@ -533,13 +534,14 @@ function DesktopPositionContent() {
       let response
 
       // 🚀 성능 최적화: 무한스크롤 페이지는 짧은 캐싱 적용
-      const cacheStrategy = query ? 'no-store' : 'default'
-      const revalidateTime = query ? 0 : 30 // 무한스크롤 추가 페이지는 30초 캐싱
+      const searchQuery = query || ''
+      const cacheStrategy = searchQuery ? 'no-store' : 'default'
+      const revalidateTime = searchQuery ? 0 : 30 // 무한스크롤 추가 페이지는 30초 캐싱
 
       // 검색 쿼리가 있는 경우 검색 API 사용
-      if (query) {
+      if (searchQuery) {
         response = await fetch(
-          `/api/jobs?query=${encodeURIComponent(query)}&offset=${currentOffset}&limit=20`,
+          `/api/jobs?query=${encodeURIComponent(searchQuery)}&offset=${currentOffset}&limit=20`,
           {
             cache: cacheStrategy,
             next: { revalidate: revalidateTime },
@@ -634,7 +636,6 @@ function DesktopPositionContent() {
   useEffect(() => {
     const fetchJobAndPrompt = async () => {
       try {
-        const encryptedId = searchParams.get('id')
         if (!encryptedId) {
           setError(
             '채용 공고를 선택하면\n채용 공고 분석 프롬프트를 확인할 수 있습니다.'
@@ -676,11 +677,10 @@ function DesktopPositionContent() {
     }
 
     fetchJobAndPrompt()
-  }, [searchParams])
+  }, [encryptedId])
 
   // Set initial scroll position before paint
   useLayoutEffect(() => {
-    const encryptedId = searchParams.get('id')
     if (!encryptedId || !scrollContainerRef.current || hasScrolledToTarget) {
       return
     }
@@ -761,13 +761,11 @@ function DesktopPositionContent() {
     } catch (err) {
       console.error('Error setting initial scroll:', err)
     }
-  }, [loading, job, filteredJobs, searchParams, hasScrolledToTarget])
+  }, [loading, job, filteredJobs, encryptedId, hasScrolledToTarget])
 
-  // Only reset scroll state on initial mount, not when searchParams change
+  // Only reset scroll state on initial mount, not when encryptedId changes
   useEffect(() => {
     // This effect only runs once on mount
-    const encryptedId = searchParams.get('id')
-
     // If there's no id on initial mount, mark as already scrolled
     // This prevents scrolling when user clicks items after entering /position without id
     setHasScrolledToTarget(!encryptedId)
@@ -775,14 +773,12 @@ function DesktopPositionContent() {
 
   // Handle URL changes - if id is removed, prevent future scrolling
   useEffect(() => {
-    const encryptedId = searchParams.get('id')
-
     // If id is removed (user clicked selected item to deselect),
     // mark as scrolled to prevent scrolling when selecting new items
     if (!encryptedId) {
       setHasScrolledToTarget(true)
     }
-  }, [searchParams])
+  }, [encryptedId])
 
   useEffect(() => {
     let timeoutId: NodeJS.Timeout
@@ -805,7 +801,6 @@ function DesktopPositionContent() {
   // 복사 버튼 클릭 핸들러
   const handleCopyLink = async () => {
     // 현재 포지션의 URL 복사
-    const encryptedId = searchParams.get('id')
     let url = ''
     if (encryptedId) {
       url = `${process.env.NEXT_PUBLIC_APP_URL}/position/${encryptedId}`
@@ -863,11 +858,8 @@ function DesktopPositionContent() {
                     <Fragment key={suggestion}>
                       <button
                         onClick={() => {
-                          const params = new URLSearchParams(
-                            searchParams.toString()
-                          )
-                          params.set('query', suggestion)
-                          router.push(`/position?${params.toString()}`)
+                          setQuery(suggestion)
+                          setEncryptedId(null) // Clear job selection when searching
                         }}
                         className="text-primary cursor-pointer text-sm"
                         aria-label={`${suggestion} 검색`}
@@ -881,21 +873,17 @@ function DesktopPositionContent() {
               </div>
             ) : (
               filteredJobs.map((jobItem) => {
-                const encryptedId = encrypt(String(jobItem.id))
+                const jobEncryptedId = encrypt(String(jobItem.id))
                 const isCurrentJob = job?.id === jobItem.id
-
-                const params = new URLSearchParams(searchParams.toString())
-                if (isCurrentJob) {
-                  params.delete('id')
-                } else {
-                  params.set('id', encryptedId)
-                }
 
                 return (
                   <Link
                     key={jobItem.id}
                     ref={isCurrentJob ? targetJobRef : undefined}
-                    href={`/position?${params.toString()}`}
+                    href={`/position?${new URLSearchParams({
+                      ...(query && { query }),
+                      ...(isCurrentJob ? {} : { id: jobEncryptedId })
+                    }).toString()}`}
                     className={`flex min-h-12 w-full items-center gap-2 rounded-lg px-4 ${
                       isCurrentJob
                         ? 'bg-primary hover:bg-primary-hover text-white'
@@ -1194,11 +1182,8 @@ function DesktopPositionContent() {
 // Main PositionContent Component
 export default function PositionContent() {
   const router = useRouter()
-  const searchParams = useSearchParams()
+  const [encryptedId] = useJobIdParam()
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
-
-  // Check if there's an id parameter in the URL
-  const encryptedId = searchParams.get('id')
 
   // Redirect to /position/[id] if mobile and id exists
   useEffect(() => {

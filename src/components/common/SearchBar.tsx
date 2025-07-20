@@ -1,5 +1,5 @@
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { useState, KeyboardEvent, useEffect, Suspense } from 'react'
+import { useState, KeyboardEvent, Suspense } from 'react'
+import { useSearchQuery } from '@/hooks/useQueryParams'
 
 interface SearchBarProps {
   placeholder?: string
@@ -10,29 +10,22 @@ const SearchBarContent = ({
   placeholder = '검색어를 입력하세요',
   size = 'medium',
 }: SearchBarProps) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const [searchQuery, setSearchQuery] = useState('')
-
-  // URL의 query 파라미터를 input에 반영
-  useEffect(() => {
-    const currentQuery = searchParams.get('query') || ''
-    setSearchQuery(currentQuery)
-  }, [searchParams])
+  const [query, setQuery] = useSearchQuery()
+  const [inputValue, setInputValue] = useState(query)
 
   const handleSearch = () => {
-    const params = new URLSearchParams()
-    if (searchQuery.trim()) {
-      params.set('query', searchQuery)
-    }
-    router.push(`${pathname}?${params.toString()}`)
+    setQuery(inputValue.trim() || null)
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch()
     }
+  }
+
+  // URL이 변경되면 input 값도 동기화
+  if (inputValue !== query) {
+    setInputValue(query || '')
   }
 
   const sizeClasses = {
@@ -54,8 +47,8 @@ const SearchBarContent = ({
     >
       <input
         type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         className={`focus:border-primary w-full rounded-lg border-2 border-gray-200 bg-white px-4 pr-10 placeholder:text-ellipsis focus:outline-none ${sizeClasses[size].input}`}
