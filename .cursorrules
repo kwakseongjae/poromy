@@ -12,6 +12,8 @@
 ### 📁 Directory Structure
 
 ```
+📁 .claude/
+  📄 .claude/settings.local.json
 📁 public/
   📁 public/fonts/
   📁 public/icons/
@@ -163,12 +165,16 @@
     📄 src/emails/verification.tsx
   📁 src/hooks/
     📄 src/hooks/useEmblaCarousel.ts
+    📄 src/hooks/useJobsQueries.ts
   📁 src/lib/
     📄 src/lib/gtag.ts
+    📄 src/lib/query-keys.ts
     📄 src/lib/supabase-client.ts
     📄 src/lib/supabase-jobs.ts
     📄 src/lib/supabase-server.ts
     📄 src/lib/utils.ts
+  📁 src/providers/
+    📄 src/providers/ReactQueryProvider.tsx
   📁 src/types/
     📄 src/types/company.ts
     📄 src/types/ga.d.ts
