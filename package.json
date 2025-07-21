@@ -22,11 +22,6 @@
     "generate:sitemap": "node scripts/generate-sitemap.js",
     "generate:robots": "node scripts/generate-robots.js",
     "cursorrules:update": "node scripts/update-cursorrules.js",
-    "cursorrules:watch": "node scripts/update-cursorrules.js --watch",
-    "cursorrules:setup": "node scripts/update-cursorrules.js --hook",
-    "dev:auto": "pnpm cursorrules:update && next dev",
-    "predev": "pnpm cursorrules:update",
-    "postinstall": "pnpm cursorrules:update",
     "migrate-jobs": "node scripts/migrate-jobs-to-supabase.js",
     "migrate-job": "node scripts/migrate-jobs-to-supabase.js --single"
   },
