@@ -40,6 +40,8 @@
     📁 public/svg/company/
 📁 scripts/
   📄 scripts/generate-data.js
+  📄 scripts/generate-robots.js
+  📄 scripts/generate-sitemap.js
   📄 scripts/migrate-jobs-to-supabase.js
   📄 scripts/structure-injector.ts
   📄 scripts/update-cursorrules.js

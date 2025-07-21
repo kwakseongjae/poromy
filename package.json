@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm cursorrules:update && next build",
+    "build": "pnpm cursorrules:update && pnpm generate:sitemap && pnpm generate:robots && next build",
     "build:analyze": "ANALYZE=true pnpm build",
     "start": "next start",
     "lint": "next lint",
@@ -19,6 +19,8 @@
     "format:check": "prettier --check .",
     "generate-icons": "svgr --config-file .svgrrc.mjs --out-dir src/assets/icons -- public/svg/*.svg",
     "generate-company-data": "node scripts/generate-data.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
+    "generate:robots": "node scripts/generate-robots.js",
     "cursorrules:update": "node scripts/update-cursorrules.js",
     "cursorrules:watch": "node scripts/update-cursorrules.js --watch",
     "cursorrules:setup": "node scripts/update-cursorrules.js --hook",
