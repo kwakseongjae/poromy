@@ -7,10 +7,8 @@ let cachedServerClient: any = null
 let cachedAdminClient: any = null
 
 export async function createClient() {
-  // 이미 생성된 클라이언트가 있다면 재사용 (연결 재활용)
-  if (cachedServerClient) {
-    return cachedServerClient
-  }
+  // 미들웨어와 서버 컴포넌트에서는 매번 새로운 클라이언트 생성
+  // 캐싱을 제거하여 각 요청마다 올바른 쿠키 정보를 사용하도록 함
 
   const cookieStore = await cookies()
 
@@ -47,8 +45,7 @@ export async function createClient() {
     }
   )
 
-  // 클라이언트 캐싱 (동일한 요청 사이클에서 재사용)
-  cachedServerClient = client
+  // 캐싱 제거 - 각 요청마다 새로운 클라이언트 생성
   return client
 }
 

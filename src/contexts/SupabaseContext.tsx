@@ -10,7 +10,7 @@ import {
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import { User } from '@supabase/supabase-js'
-import { setCookie, deleteCookie } from '@/utils/cookie'
+import { AdminServiceClient } from '@/services/admin.service.client'
 
 type SupabaseContextType = {
   user: User | null
@@ -46,54 +46,30 @@ export default function SupabaseProvider({
   const [adminLoading, setAdminLoading] = useState<boolean>(true)
   const router = useRouter()
 
-  // Helper to fetch is_admin from profiles table and sync with cookie
-  const fetchIsAdmin = async (userId: string | undefined | null) => {
+  // Helper to fetch admin status using centralized AdminService
+  const fetchAdminStatus = async (userId: string | undefined | null) => {
     setAdminLoading(true)
 
     if (!userId) {
       setIsAdmin(false)
-      deleteCookie('is-admin')
       setAdminLoading(false)
       return
     }
 
     try {
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('id', userId)
-        .single()
-
-      if (error || !profile) {
-        console.error('Error fetching admin status:', error)
-        setIsAdmin(false)
-        deleteCookie('is-admin')
-        setAdminLoading(false)
-        return
-      }
-
-      const adminStatus = !!profile.is_admin
+      const adminStatus = await AdminServiceClient.checkAdmin(supabase, userId)
       setIsAdmin(adminStatus)
-
-      // 쿠키와 상태 동기화 (미들웨어와 동일한 설정)
-      setCookie('is-admin', adminStatus.toString(), {
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-      })
-
-      // 개발 환경에서만 로깅
+      
+      // Development logging
       if (process.env.NODE_ENV === 'development') {
         console.log('Admin status updated:', {
           userId,
           isAdmin: adminStatus,
-          profile,
         })
       }
     } catch (error) {
-      console.error('Error in fetchIsAdmin:', error)
+      console.error('Error checking admin status:', error)
       setIsAdmin(false)
-      deleteCookie('is-admin')
     } finally {
       setAdminLoading(false)
     }
@@ -107,18 +83,20 @@ export default function SupabaseProvider({
       const newUser = newSession?.user || null
       setUser(newUser)
       setLoading(false)
+      
       if (newUser) {
-        fetchIsAdmin(newUser.id)
+        fetchAdminStatus(newUser.id)
       } else {
         setIsAdmin(false)
         setAdminLoading(false)
-        deleteCookie('is-admin')
       }
     })
 
-    // On mount, fetch isAdmin for initial user
+    // On mount, fetch admin status for initial user
     if (initialUser) {
-      fetchIsAdmin(initialUser.id)
+      fetchAdminStatus(initialUser.id)
+    } else {
+      setAdminLoading(false)
     }
     setLoading(false)
 
@@ -129,28 +107,40 @@ export default function SupabaseProvider({
 
   const signOut = async () => {
     setLoading(true)
-    await supabase.auth.signOut()
-    setIsAdmin(false)
-    deleteCookie('is-admin')
-    router.push('/login')
-    setLoading(false)
+    try {
+      await supabase.auth.signOut()
+      setUser(null)
+      setIsAdmin(false)
+      // Clear admin cache
+      AdminServiceClient.clearCache()
+      router.push('/login')
+    } catch (error) {
+      console.error('Error signing out:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const refreshUser = async () => {
     setLoading(true)
-    const {
-      data: { user: newUser },
-    } = await supabase.auth.getUser()
+    try {
+      const {
+        data: { user: newUser },
+      } = await supabase.auth.getUser()
 
-    setUser(newUser || null)
-    if (newUser) {
-      await fetchIsAdmin(newUser.id)
-    } else {
-      setIsAdmin(false)
-      setAdminLoading(false)
-      deleteCookie('is-admin')
+      setUser(newUser || null)
+      
+      if (newUser) {
+        await fetchAdminStatus(newUser.id)
+      } else {
+        setIsAdmin(false)
+        setAdminLoading(false)
+      }
+    } catch (error) {
+      console.error('Error refreshing user:', error)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (

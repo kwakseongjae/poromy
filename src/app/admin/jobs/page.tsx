@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
-import { useSupabase } from '@/contexts/SupabaseContext'
+import AdminGuard from '@/components/admin/AdminGuard'
 import { useAllJobs, useDeleteJob, useCreateJob, useInvalidateJobsCache } from '@/hooks/useJobsQueries'
 import type { Job, JobType } from '@/types/job'
 
@@ -25,7 +24,7 @@ interface QuickUploadData {
   promptContent: string
 }
 
-export default function AdminJobsPage() {
+function AdminJobsContent() {
   const [message, setMessage] = useState('')
   const [quickUploadData, setQuickUploadData] = useState('')
   const [quickUploadPrompt, setQuickUploadPrompt] = useState('')
@@ -33,47 +32,12 @@ export default function AdminJobsPage() {
   const [parsedJobData, setParsedJobData] = useState<QuickUploadData | null>(
     null
   )
-  const router = useRouter()
-  const { user, isAdmin, loading, adminLoading } = useSupabase()
   
   // React Query hooks
   const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useAllJobs()
   const deleteJobMutation = useDeleteJob()
   const createJobMutation = useCreateJob()
   const invalidateCache = useInvalidateJobsCache()
-
-  // 권한 체크
-  // TODO: 권한 체크 로직 middleware 로 이동 필요
-  useEffect(() => {
-    // 개발 환경에서 상태 로깅
-    if (process.env.NODE_ENV === 'development') {
-      console.log('AdminJobsPage state:', {
-        loading,
-        adminLoading,
-        user: user ? { id: user.id, email: user.email } : null,
-        isAdmin,
-      })
-    }
-
-    // 인증 또는 admin 상태 로딩 중이면 대기
-    if (loading || adminLoading) return
-
-    // 로그인하지 않은 경우
-    if (!user) {
-      console.log('No user, redirecting to login')
-      router.push('/login')
-      return
-    }
-
-    // admin이 아닌 경우 (admin 상태 확인이 완료된 후)
-    if (!isAdmin) {
-      console.log('User is not admin, redirecting to 403')
-      router.push('/403')
-      return
-    }
-
-    console.log('Admin user authenticated')
-  }, [user, isAdmin, loading, adminLoading, router])
 
   // 에러 처리
   if (jobsError) {
@@ -98,7 +62,7 @@ export default function AdminJobsPage() {
     }
   }
 
-  // 빠른 업로드 데이터 파싱
+  // 빠른 업로드 데이터 파싱 - 안전한 방식으로 구현
   const parseQuickUploadData = () => {
     try {
       let jobData
@@ -107,14 +71,28 @@ export default function AdminJobsPage() {
         // 먼저 JSON.parse 시도
         jobData = JSON.parse(quickUploadData)
       } catch {
-        // JSON.parse 실패 시 JavaScript 객체 리터럴로 파싱 시도
+        // JSON.parse 실패 시 안전한 파싱 시도
         const cleanData = quickUploadData.trim()
         if (cleanData.startsWith('{') && cleanData.endsWith('}')) {
-          // eval은 보안상 위험하지만 관리자 전용 페이지이므로 사용
-          // 실제 프로덕션에서는 더 안전한 파서 사용 권장
-          jobData = eval(`(${cleanData})`)
+          // eval 대신 안전한 파싱 방법 사용
+          // 1. 먼저 JavaScript 객체 리터럴을 JSON으로 변환 시도
+          try {
+            // 속성 이름에 따옴표 추가
+            const jsonString = cleanData
+              .replace(/(\w+):/g, '"$1":')
+              // 작은따옴표를 큰따옴표로 변환
+              .replace(/'/g, '"')
+              // 후행 쉼표 제거
+              .replace(/,\s*}/g, '}')
+              .replace(/,\s*]/g, ']')
+            
+            jobData = JSON.parse(jsonString)
+          } catch (parseError) {
+            console.error('파싱 에러:', parseError)
+            throw new Error('데이터 형식이 올바르지 않습니다. JSON 형식으로 입력해주세요.')
+          }
         } else {
-          throw new Error('올바른 형식이 아닙니다.')
+          throw new Error('올바른 형식이 아닙니다. 중괄호({})로 시작하고 끝나야 합니다.')
         }
       }
 
@@ -201,14 +179,12 @@ export default function AdminJobsPage() {
   const isLoading = createJobMutation.isPending || deleteJobMutation.isPending
 
   // 로딩 중인 경우 로딩 화면 표시
-  if (loading || adminLoading || jobsLoading) {
+  if (jobsLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="mx-auto h-32 w-32 animate-spin rounded-full border-b-2 border-gray-900"></div>
-          <p className="mt-4 text-gray-600">
-            {loading ? '인증을 확인하는 중...' : '권한을 확인하는 중...'}
-          </p>
+          <p className="mt-4 text-gray-600">채용공고를 불러오는 중...</p>
         </div>
       </div>
     )
@@ -525,5 +501,14 @@ export default function AdminJobsPage() {
         </div>
       )}
     </div>
+  )
+}
+
+// Export with AdminGuard wrapper
+export default function AdminJobsPage() {
+  return (
+    <AdminGuard>
+      <AdminJobsContent />
+    </AdminGuard>
   )
 }

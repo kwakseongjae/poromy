@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase-server'
+import { AdminService } from '@/services/admin.service'
 
 const KOREAN_NAMES = [
   '권민성',
@@ -76,6 +77,12 @@ function getRandomNickname() {
 }
 
 export async function POST(req: NextRequest) {
+  // 관리자 권한 확인
+  const adminCheck = await AdminService.requireAdmin(req)
+  if (adminCheck.error) {
+    return adminCheck.error
+  }
+
   const { count } = await req.json()
   if (!count || typeof count !== 'number' || count < 1 || count > 50) {
     return NextResponse.json(
@@ -90,7 +97,9 @@ export async function POST(req: NextRequest) {
 
   for (let i = 0; i < count; i++) {
     const email = `test${Date.now()}_${Math.floor(Math.random() * 10000)}@test.test`
-    const password = 'tjdwls5013'
+    // 안전한 랜덤 패스워드 생성 (환경 변수 사용 또는 랜덤 생성)
+    const password = process.env.TEST_USER_PASSWORD || 
+      `Test${Math.random().toString(36).substring(2, 10)}!${Date.now().toString().slice(-4)}`
     const nickname = getRandomNickname()
     // 1. 유저 생성 (이메일 인증)
     const { data: user, error } = await supabase.auth.admin.createUser({

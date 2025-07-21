@@ -3,6 +3,8 @@ import { insertJob, updateJob, deleteJob } from '@/lib/supabase-jobs'
 import { createClient } from '@/lib/supabase-server'
 import { revalidateTag, revalidatePath } from 'next/cache'
 import type { Job } from '@/types/job'
+import { AdminService } from '@/services/admin.service'
+import { handleAdminApiError, AdminErrorHelpers } from '@/utils/admin-errors'
 
 // 캐시 무효화 함수
 async function invalidateJobsCache(jobType?: string, companyName?: string) {
@@ -33,30 +35,11 @@ async function invalidateJobsCache(jobType?: string, companyName?: string) {
   }
 }
 
-// 관리자 권한 확인
+// 관리자 권한 확인 - AdminService 사용
 async function checkAdminPermission() {
   try {
-    const supabase = await createClient()
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser()
-
-    if (userError || !user) {
-      return false
-    }
-
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('is_admin')
-      .eq('id', user.id)
-      .single()
-
-    if (profileError || !profile) {
-      return false
-    }
-
-    return profile.is_admin === true
+    const { user, isAdmin } = await AdminService.getCurrentAdminServer()
+    return isAdmin
   } catch (error) {
     console.error('Error checking admin permission:', error)
     return false
@@ -67,26 +50,23 @@ async function checkAdminPermission() {
 export async function POST(request: NextRequest) {
   try {
     // 관리자 권한 확인
-    const isAdmin = await checkAdminPermission()
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    const adminCheck = await AdminService.requireAdmin(request)
+    if (adminCheck.error) {
+      return adminCheck.error
     }
 
     const body = await request.json()
     const { job, promptContent } = body
 
     if (!job) {
-      return NextResponse.json(
-        { error: 'Job data is required' },
-        { status: 400 }
-      )
+      throw AdminErrorHelpers.validationError('Job data is required')
     }
 
     // 새로운 job 추가 (id는 autoincrement)
     const result = await insertJob({ ...job, promptContent })
 
     if (!result) {
-      return NextResponse.json({ error: 'Failed to save job' }, { status: 500 })
+      throw AdminErrorHelpers.operationFailed('Failed to save job')
     }
 
     // 캐시 무효화 - 새로운 채용공고가 추가되었으므로 모든 관련 캐시 갱신
@@ -98,11 +78,7 @@ export async function POST(request: NextRequest) {
       cacheInvalidated: true,
     })
   } catch (error) {
-    console.error('Error in POST /api/admin/jobs:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return handleAdminApiError(error)
   }
 }
 
@@ -110,30 +86,27 @@ export async function POST(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     // 관리자 권한 확인
-    const isAdmin = await checkAdminPermission()
-    if (!isAdmin) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    const adminCheck = await AdminService.requireAdmin(request)
+    if (adminCheck.error) {
+      return adminCheck.error
     }
 
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
 
     if (!id) {
-      return NextResponse.json({ error: 'Job ID is required' }, { status: 400 })
+      throw AdminErrorHelpers.validationError('Job ID is required')
     }
 
     const jobId = parseInt(id, 10)
     if (isNaN(jobId)) {
-      return NextResponse.json({ error: 'Invalid job ID' }, { status: 400 })
+      throw AdminErrorHelpers.validationError('Invalid job ID')
     }
 
     const success = await deleteJob(jobId)
 
     if (!success) {
-      return NextResponse.json(
-        { error: 'Failed to delete job' },
-        { status: 500 }
-      )
+      throw AdminErrorHelpers.operationFailed('Failed to delete job')
     }
 
     // 캐시 무효화 - 채용공고가 삭제되었으므로 모든 관련 캐시 갱신
@@ -144,10 +117,6 @@ export async function DELETE(request: NextRequest) {
       cacheInvalidated: true,
     })
   } catch (error) {
-    console.error('Error in DELETE /api/admin/jobs:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return handleAdminApiError(error)
   }
 }
