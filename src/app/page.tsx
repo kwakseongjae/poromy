@@ -26,12 +26,15 @@ export const revalidate = 180 // 3분
 export const metadata: Metadata = {
   title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
   description:
-    'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브. 맞춤형 자기소개서 작성과 기업 분석을 도와드립니다.',
+    'ChatGPT, Claude AI로 자기소개서 작성하기. 200개+ 기업의 채용공고 분석과 맞춤형 자소서 프롬프트를 제공합니다. 서류 합격률 높이는 AI 취업 도우미.',
   keywords: getAllKeywords(),
+  alternates: {
+    canonical: 'https://poromy.ai.kr',
+  },
   openGraph: {
     title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
     description:
-      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
+      'ChatGPT, Claude를 활용한 자기소개서 작성법. 200개+ 기업 채용공고 분석과 맞춤형 프롬프트로 서류 합격률을 높이세요.',
     url: 'https://poromy.ai.kr',
     siteName: 'Poromy',
     images: [
@@ -49,7 +52,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Poromy - GPT/Claude AI 자소서 프롬프트 아카이브',
     description:
-      'ChatGPT, Claude 등 AI 모델을 활용한 자소서 작성, 기업 분석, 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
+      'ChatGPT, Claude를 활용한 자기소개서 작성법. 200개+ 기업 채용공고 분석과 맞춤형 프롬프트로 서류 합격률을 높이세요.',
     images: [
       `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
     ],

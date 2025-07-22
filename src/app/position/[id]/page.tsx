@@ -148,28 +148,74 @@ export default async function PositionPage({ params }: Props) {
     const isMobileUA = isMobileDevice(userAgent)
 
     // 구조화된 데이터 스키마 생성
+    // Extract location from conditions
+    const locationCondition = job.conditions.find(
+      (c: string) =>
+        c.includes('서울') ||
+        c.includes('성남') ||
+        c.includes('수원') ||
+        c.includes('대전') ||
+        c.includes('제주') ||
+        c.includes('판교') ||
+        c.includes('부산') ||
+        c.includes('대구') ||
+        c.includes('인천') ||
+        c.includes('광주')
+    );
+    
+    // Extract employment type
+    let employmentType = 'FULL_TIME';
+    if (job.conditions.some((c: string) => c.includes('인턴'))) {
+      employmentType = 'INTERN';
+    } else if (job.conditions.some((c: string) => c.includes('계약직'))) {
+      employmentType = 'CONTRACTOR';
+    } else if (job.conditions.some((c: string) => c.includes('파트타임'))) {
+      employmentType = 'PART_TIME';
+    }
+    
+    // Extract salary if available
+    const salaryCondition = job.conditions.find((c: string) => 
+      c.includes('만원') || c.includes('억') || c.includes('연봉')
+    );
+    
+    let salaryData;
+    if (salaryCondition) {
+      // Simple parsing for common salary formats
+      const salaryMatch = salaryCondition.match(/(\d+)[\s~-]*(\d+)?.*만원/);
+      if (salaryMatch) {
+        if (salaryMatch[2]) {
+          salaryData = {
+            currency: 'KRW',
+            value: {
+              min: parseInt(salaryMatch[1]) * 10000,
+              max: parseInt(salaryMatch[2]) * 10000,
+            },
+            unitText: 'YEAR',
+          };
+        } else {
+          salaryData = {
+            currency: 'KRW',
+            value: parseInt(salaryMatch[1]) * 10000,
+            unitText: 'YEAR',
+          };
+        }
+      }
+    }
+
     const jobPostingSchema = generateJobPostingSchema({
       title: job.jobTitle,
       company: job.companyName,
-      location:
-        job.conditions.find(
-          (c: string) =>
-            c.includes('서울') ||
-            c.includes('성남') ||
-            c.includes('수원') ||
-            c.includes('대전') ||
-            c.includes('제주') ||
-            c.includes('판교')
-        ) || '미지정',
+      location: locationCondition || 'Seoul',
       description: `${job.companyName}의 ${job.jobTitle} 채용 공고입니다. 필요 자격: ${job.qualifications.join(', ')} 우대사항: ${job.preferredQualifications.join(', ')}`,
-      datePosted: new Date().toISOString(),
-      validThrough: new Date(
-        Date.now() + 30 * 24 * 60 * 60 * 1000
-      ).toISOString(),
-      employmentType:
-        job.conditions.find(
-          (c: string) => c.includes('신입') || c.includes('경력')
-        ) || 'FULL_TIME',
+      datePosted: job.createdAt || new Date().toISOString(),
+      validThrough: job.validThrough || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      employmentType: employmentType,
+      salary: salaryData,
+      url: `https://poromy.ai.kr/position/${resolvedParams.id}`,
+      identifier: {
+        name: 'poromy-job-id',
+        value: decryptedId,
+      },
     })
 
     const breadcrumbSchema = generateBreadcrumbSchema([

@@ -28,11 +28,11 @@ export const metadata: Metadata = {
   // ============================================================================
   metadataBase: new URL('https://poromy.ai.kr'),
   title: {
-    default: 'Poromy - AI 채용공고 분석 프롬프트 아카이브',
+    default: 'Poromy - AI 자기소개서 작성 도우미 | ChatGPT, Claude 프롬프트',
     template: '%s | Poromy',
   },
   description:
-    '채용공고와 기업분석을 위한 AI 프롬프트 아카이브. ChatGPT, Claude 등 다양한 AI 모델에 맞는 맞춤형 프롬프트를 제공합니다.',
+    '채용공고와 기업분석을 위한 AI 프롬프트 아카이브. ChatGPT, Claude 등 다양한 AI 모델에 맞는 맞춤형 프롬프트를 제공합니다. 취업 준비생을 위한 자기소개서, 이력서 작성 가이드.',
   keywords: getAllKeywords(),
 
   // ============================================================================

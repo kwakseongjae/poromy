@@ -3,13 +3,16 @@ import { Suspense } from 'react'
 import PositionContent from './PositionContent'
 
 export const metadata: Metadata = {
-  title: '채용 공고 분석 프롬프트 - Poromy',
+  title: '채용공고별 AI 자소서 프롬프트',
   description:
-    'ChatGPT, Claude 등 AI 모델을 활용한 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브. 맞춤형 자기소개서 작성과 기업 분석을 도와드립니다.',
+    '기업별 채용공고에 맞는 자기소개서 작성 프롬프트. ChatGPT, Claude AI로 맞춤형 자소서를 작성하세요. 대기업, 스타트업, 공기업 채용 준비.',
+  alternates: {
+    canonical: 'https://poromy.ai.kr/position',
+  },
   openGraph: {
-    title: '채용 공고 분석 프롬프트 - Poromy',
+    title: '채용공고별 AI 자소서 프롬프트 | Poromy',
     description:
-      'ChatGPT, Claude 등 AI 모델을 활용한 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
+      '기업별 채용공고에 맞는 자기소개서 작성 프롬프트. ChatGPT, Claude AI로 맞춤형 자소서를 작성하세요.',
     url: 'https://poromy.ai.kr/position',
     siteName: 'Poromy',
     images: [
@@ -17,7 +20,7 @@ export const metadata: Metadata = {
         url: `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
         width: 1200,
         height: 630,
-        alt: 'Poromy - 채용 공고 분석 프롬프트',
+        alt: 'Poromy - 채용공고별 AI 자소서 프롬프트',
       },
     ],
     locale: 'ko_KR',
@@ -25,9 +28,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: '채용 공고 분석 프롬프트 - Poromy',
+    title: '채용공고별 AI 자소서 프롬프트 | Poromy',
     description:
-      'ChatGPT, Claude 등 AI 모델을 활용한 채용 공고 분석을 위한 최고의 AI 프롬프트 아카이브',
+      '기업별 채용공고에 맞는 자기소개서 작성 프롬프트. ChatGPT, Claude AI로 맞춤형 자소서를 작성하세요.',
     images: [
       `/images/og-image.jpg?v=${process.env.NEXT_PUBLIC_OG_IMAGE_VERSION}`,
     ],

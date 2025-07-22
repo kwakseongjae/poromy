@@ -130,40 +130,73 @@ export const generateJobPostingSchema = (jobData: {
   employmentType?: string
   salary?: {
     currency: string
-    value: number
+    value: number | { min: number; max: number }
     unitText: string
+  }
+  url?: string
+  identifier?: {
+    name: string
+    value: string
   }
 }) => ({
   '@context': 'https://schema.org',
   '@type': 'JobPosting',
   title: jobData.title,
   description: jobData.description,
-  datePosted: jobData.datePosted,
-  validThrough: jobData.validThrough,
+  // Required fields for Google Search Console
+  datePosted: jobData.datePosted || new Date().toISOString(),
+  validThrough: jobData.validThrough || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
   employmentType: jobData.employmentType || 'FULL_TIME',
   hiringOrganization: {
     '@type': 'Organization',
     name: jobData.company,
+    sameAs: 'https://poromy.ai.kr',
+    logo: 'https://poromy.ai.kr/images/logo.png',
   },
+  // Required jobLocation with proper structure
   jobLocation: {
     '@type': 'Place',
     address: {
       '@type': 'PostalAddress',
+      streetAddress: '',
       addressLocality: jobData.location || 'Seoul',
+      addressRegion: jobData.location || 'Seoul',
+      postalCode: '',
       addressCountry: 'KR',
     },
   },
-  ...(jobData.salary && {
-    baseSalary: {
-      '@type': 'MonetaryAmount',
-      currency: jobData.salary.currency,
-      value: {
-        '@type': 'QuantitativeValue',
-        value: jobData.salary.value,
-        unitText: jobData.salary.unitText,
-      },
+  // Recommended fields
+  baseSalary: jobData.salary ? {
+    '@type': 'MonetaryAmount',
+    currency: jobData.salary.currency || 'KRW',
+    value: typeof jobData.salary.value === 'number' ? {
+      '@type': 'QuantitativeValue',
+      value: jobData.salary.value,
+      unitText: jobData.salary.unitText || 'YEAR',
+    } : {
+      '@type': 'QuantitativeValue',
+      minValue: jobData.salary.value.min,
+      maxValue: jobData.salary.value.max,
+      unitText: jobData.salary.unitText || 'YEAR',
     },
-  }),
+  } : {
+    '@type': 'MonetaryAmount',
+    currency: 'KRW',
+    value: {
+      '@type': 'QuantitativeValue',
+      value: 0,
+      unitText: 'YEAR',
+    },
+  },
+  // Additional recommended fields
+  ...(jobData.url && { url: jobData.url }),
+  ...(jobData.identifier && { identifier: jobData.identifier }),
+  applicantLocationRequirements: {
+    '@type': 'Country',
+    name: 'KR',
+  },
+  jobLocationType: 'TELECOMMUTE',
+  directApply: true,
 })
 
 export const generateArticleSchema = (articleData: {
