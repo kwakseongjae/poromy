@@ -34,13 +34,11 @@ export const useSupabase = () => useContext(SupabaseContext)
 
 export default function SupabaseProvider({
   children,
-  initialUser,
 }: {
   children: ReactNode
-  initialUser: User | null
 }) {
   const [supabase] = useState(() => createBrowserSupabaseClient())
-  const [user, setUser] = useState<User | null>(initialUser)
+  const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [adminLoading, setAdminLoading] = useState<boolean>(true)
@@ -77,12 +75,37 @@ export default function SupabaseProvider({
 
   useEffect(() => {
     setLoading(true)
+    
+    // Get initial user state
+    const getInitialUser = async () => {
+      try {
+        const {
+          data: { user: currentUser },
+        } = await supabase.auth.getUser()
+        
+        setUser(currentUser)
+        
+        if (currentUser) {
+          fetchAdminStatus(currentUser.id)
+        } else {
+          setAdminLoading(false)
+        }
+      } catch (error) {
+        console.error('Error getting initial user:', error)
+        setUser(null)
+        setAdminLoading(false)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    getInitialUser()
+
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, newSession) => {
       const newUser = newSession?.user || null
       setUser(newUser)
-      setLoading(false)
       
       if (newUser) {
         fetchAdminStatus(newUser.id)
@@ -92,18 +115,10 @@ export default function SupabaseProvider({
       }
     })
 
-    // On mount, fetch admin status for initial user
-    if (initialUser) {
-      fetchAdminStatus(initialUser.id)
-    } else {
-      setAdminLoading(false)
-    }
-    setLoading(false)
-
     return () => {
       subscription.unsubscribe()
     }
-  }, [supabase, initialUser])
+  }, [supabase])
 
   const signOut = async () => {
     setLoading(true)

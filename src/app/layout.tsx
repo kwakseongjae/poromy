@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import Navbar from '@/components/navigation/Navbar'
-import { createClient } from '@/lib/supabase-server'
 import SupabaseProvider from '@/contexts/SupabaseContext'
 import ReactQueryProvider from '@/providers/ReactQueryProvider'
 import NuqProvider from '@/providers/NuqProvider'
@@ -151,17 +150,12 @@ export const metadata: Metadata = {
   classification: 'AI Tools, Employment, Career',
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  // 구조화된 데이터 스키마 생성
+  // 구조화된 데이터 스키마 생성 (정적 데이터)
   const organizationSchema = generateOrganizationSchema()
   const websiteSchema = generateWebsiteSchema()
   const softwareApplicationSchema = generateSoftwareApplicationSchema()
@@ -194,7 +188,7 @@ export default async function RootLayout({
       <body>
         <NuqProvider>
           <ReactQueryProvider>
-            <SupabaseProvider initialUser={user}>
+            <SupabaseProvider>
               <Navbar />
               <main>{children}</main>
             </SupabaseProvider>
