@@ -6,7 +6,7 @@ import { encrypt } from '@/utils/crypto'
 import { getProxyImageUrl } from '@/utils/image'
 import { getDeadlineLabel, isJobNew } from '@/utils/job'
 import { usePathname } from 'next/navigation'
-import { useLatestJobs } from '@/hooks/useJobsQueries'
+import { useLatestJobs } from '@/lib/react-query/hooks/jobs-hooks'
 import type { Job } from '@/types/job'
 
 export default function JobList() {
@@ -25,7 +25,8 @@ export default function JobList() {
   }
 
   // 홈페이지에서는 성능 최적화를 위해 제한된 수의 데이터 사용
-  const jobsData = pathname === '/' ? jobs.slice(0, 12) : jobs
+  const jobsArray = Array.isArray(jobs) ? jobs : (jobs?.jobs || [])
+  const jobsData = pathname === '/' ? jobsArray.slice(0, 12) : jobsArray
 
   if (loading) {
     return (
@@ -112,7 +113,7 @@ export default function JobList() {
                       className="flex flex-wrap gap-2 overflow-hidden"
                       style={{ maxHeight: '3.5rem' }}
                     >
-                      {job.conditions.map((condition, index) => (
+                      {job.conditions.map((condition: string, index: number) => (
                         <span
                           key={index}
                           className="inline-flex shrink-0 items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"
@@ -172,7 +173,7 @@ export default function JobList() {
                 <div className="flex w-full items-center">
                   <div className="relative flex-1 overflow-hidden">
                     <div className="flex gap-2 overflow-hidden">
-                      {job.conditions.map((condition, index) => (
+                      {job.conditions.map((condition: string, index: number) => (
                         <span
                           key={index}
                           className="inline-flex shrink-0 items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800"

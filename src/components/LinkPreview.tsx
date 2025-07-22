@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { getProxyImageUrl, getMinimalBlurDataURL } from '@/utils/image'
+import { useLinkPreview } from '@/lib/react-query/hooks'
 
 interface LinkPreviewData {
   url: string
@@ -19,66 +20,18 @@ interface LinkPreviewProps {
   className?: string
 }
 
-// Client-side caching to prevent duplicate requests
-const clientCache = new Map<string, Promise<LinkPreviewData | null>>()
-const CACHE_DURATION = 1000 * 60 * 30 // 30 minutes
-
-const fetchWithCache = async (url: string): Promise<LinkPreviewData | null> => {
-  const cacheKey = url.toLowerCase().trim()
-
-  // Return cached promise if exists
-  if (clientCache.has(cacheKey)) {
-    return clientCache.get(cacheKey)!
-  }
-
-  // Create new request promise
-  const requestPromise = (async () => {
-    try {
-      const response = await fetch('/api/link-preview', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url }),
-        // Add signal for request timeout
-        signal: AbortSignal.timeout(10000), // 10 second timeout
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`)
-      }
-
-      const data = await response.json()
-
-      if (!data.hasPreview) {
-        return null
-      }
-
-      return data
-    } catch (error) {
-      console.error('Link preview fetch error:', error)
-      return null
-    }
-  })()
-
-  // Cache the promise
-  clientCache.set(cacheKey, requestPromise)
-
-  // Auto-cleanup cache after duration
-  setTimeout(() => {
-    clientCache.delete(cacheKey)
-  }, CACHE_DURATION)
-
-  return requestPromise
-}
+// Note: Caching is now handled by React Query
 
 const LinkPreview = ({ url, className = '' }: LinkPreviewProps) => {
-  const [preview, setPreview] = useState<LinkPreviewData | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [isVisible, setIsVisible] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  const abortControllerRef = useRef<AbortController | null>(null)
+
+  // Use React Query hook for link preview data
+  const {
+    data: preview,
+    isLoading: loading,
+    error,
+  } = useLinkPreview(url, isVisible && !!url)
 
   // Intersection Observer for lazy loading
   useEffect(() => {
@@ -108,57 +61,6 @@ const LinkPreview = ({ url, className = '' }: LinkPreviewProps) => {
       }
     }
   }, [])
-
-  // Fetch preview data when visible
-  useEffect(() => {
-    if (!isVisible || !url) return
-
-    let mounted = true
-
-    const loadPreview = async () => {
-      if (!mounted) return
-
-      // Cancel any previous request
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort()
-      }
-
-      abortControllerRef.current = new AbortController()
-
-      setLoading(true)
-      setError(null)
-
-      try {
-        const data = await fetchWithCache(url)
-
-        if (!mounted) return
-
-        if (!data) {
-          setError('No preview available')
-          return
-        }
-
-        setPreview(data)
-      } catch (err) {
-        if (mounted && !abortControllerRef.current?.signal.aborted) {
-          setError('Failed to load preview')
-        }
-      } finally {
-        if (mounted) {
-          setLoading(false)
-        }
-      }
-    }
-
-    loadPreview()
-
-    return () => {
-      mounted = false
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort()
-      }
-    }
-  }, [url, isVisible])
 
   const baseClasses = `block overflow-hidden rounded-lg border border-gray-200 transition-all hover:border-gray-300 ${className}`
 
@@ -202,12 +104,14 @@ const LinkPreview = ({ url, className = '' }: LinkPreviewProps) => {
         <div className="p-4">
           <div className="truncate text-sm text-gray-600">{url}</div>
           <div className="mt-1 text-sm text-gray-500">
-            {error || 'Preview unavailable - Click to visit'}
+            {error?.message || error?.toString() || 'Preview unavailable - Click to visit'}
           </div>
         </div>
       </a>
     )
   }
+
+  const previewData = preview?.preview || preview
 
   // Full preview
   return (
@@ -217,14 +121,14 @@ const LinkPreview = ({ url, className = '' }: LinkPreviewProps) => {
       target="_blank"
       rel="noopener noreferrer"
       className={`${baseClasses} hover:shadow-md`}
-      aria-label={`Visit link: ${preview.title || url}`}
+      aria-label={`Visit link: ${previewData?.title || url}`}
     >
       <div className="flex flex-col sm:flex-row">
-        {preview.images && preview.images.length > 0 && (
+        {previewData?.images && previewData.images.length > 0 && (
           <div className="relative h-32 w-full sm:h-auto sm:w-48">
             <Image
-              src={getProxyImageUrl(preview.images[0])}
-              alt={preview.title || 'Link preview image'}
+              src={getProxyImageUrl(previewData.images[0])}
+              alt={previewData.title || 'Link preview image'}
               fill
               className="object-cover"
               sizes="192px"
@@ -240,14 +144,14 @@ const LinkPreview = ({ url, className = '' }: LinkPreviewProps) => {
           </div>
         )}
         <div className="flex-1 p-4">
-          {preview.title && (
+          {previewData.title && (
             <h3 className="mb-1 line-clamp-2 text-base font-medium text-gray-900">
-              {preview.title}
+              {previewData.title}
             </h3>
           )}
-          {preview.description && (
+          {previewData.description && (
             <p className="mb-2 line-clamp-2 text-sm text-gray-600">
-              {preview.description}
+              {previewData.description}
             </p>
           )}
           <div className="truncate text-xs text-gray-500">

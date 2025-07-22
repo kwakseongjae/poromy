@@ -9,7 +9,7 @@ import { CheckIcon, CopyLinkIcon } from '@/assets'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
-import { useJobDetail } from '@/hooks/useJobsQueries'
+import { useJob } from '@/lib/react-query/hooks/jobs-hooks'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
@@ -33,9 +33,10 @@ export default function DeviceAwarePositionView({
     isLoading: loading, 
     error,
     isError
-  } = useJobDetail(jobId)
+  } = useJob(jobId ? String(jobId) : '', !!jobId)
   
-  const promptContent = job?.prompt || ''
+  const jobData = job?.job || job
+  const promptContent = jobData?.prompt || ''
 
   // 🚀 강화된 스크롤 제어: 페이지 진입 시 항상 상단으로 이동
   useEffect(() => {
@@ -216,8 +217,8 @@ export default function DeviceAwarePositionView({
             <div className="flex items-center">
               <div className="relative h-16 w-16 overflow-hidden rounded-lg">
                 <Image
-                  src={getProxyImageUrl(job.logoUrl)}
-                  alt={`${job.companyName} 로고`}
+                  src={getProxyImageUrl(jobData.logoUrl)}
+                  alt={`${jobData.companyName} 로고`}
                   fill
                   className="object-cover"
                   sizes="64px"
@@ -225,9 +226,9 @@ export default function DeviceAwarePositionView({
               </div>
               <div className="ml-4">
                 <h1 className="text-2xl font-bold text-gray-900">
-                  {job.jobTitle}
+                  {jobData.jobTitle}
                 </h1>
-                <p className="text-lg text-gray-600">{job.companyName}</p>
+                <p className="text-lg text-gray-600">{jobData.companyName}</p>
               </div>
             </div>
           </div>
@@ -239,7 +240,7 @@ export default function DeviceAwarePositionView({
                   직군
                 </span>
                 <span className="font-semibold text-gray-900">
-                  {getJobTypeDisplayName(job.jobType)}
+                  {getJobTypeDisplayName(jobData.jobType)}
                 </span>
               </div>
               <div className="flex items-center">
@@ -247,7 +248,7 @@ export default function DeviceAwarePositionView({
                   직무
                 </span>
                 <span className="font-semibold text-gray-900">
-                  {job.conditions[0]}
+                  {jobData.conditions[0]}
                 </span>
               </div>
               <div className="flex items-center">
@@ -255,7 +256,7 @@ export default function DeviceAwarePositionView({
                   마감일
                 </span>
                 {(() => {
-                  const deadlineLabel = getDeadlineLabel(job.deadline)
+                  const deadlineLabel = getDeadlineLabel(jobData.deadline)
                   if (deadlineLabel === '마감') {
                     return (
                       <span
@@ -274,7 +275,7 @@ export default function DeviceAwarePositionView({
                 })()}
               </div>
               <a
-                href={job.url}
+                href={jobData.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-md bg-blue-600 px-4 py-2 font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
@@ -308,7 +309,7 @@ export default function DeviceAwarePositionView({
               채용 조건
             </h2>
             <div className="flex flex-wrap gap-2">
-              {job.conditions
+              {jobData.conditions
                 .slice(1)
                 .map((condition: string, index: number) => (
                   <span
@@ -321,24 +322,24 @@ export default function DeviceAwarePositionView({
             </div>
           </div>
 
-          {job.positionDescription && (
+          {jobData.positionDescription && (
             <div className="mb-6">
               <h2 className="mb-2 text-lg font-semibold text-gray-900">
                 포지션 소개
               </h2>
               <p className="whitespace-pre-line text-gray-700">
-                {job.positionDescription}
+                {jobData.positionDescription}
               </p>
             </div>
           )}
 
-          {job.mainTask && (
+          {jobData.mainTask && (
             <div className="mb-6">
               <h2 className="mb-2 text-lg font-semibold text-gray-900">
                 주요 업무
               </h2>
               <p className="whitespace-pre-line text-gray-700">
-                {job.mainTask}
+                {jobData.mainTask}
               </p>
             </div>
           )}
@@ -348,7 +349,7 @@ export default function DeviceAwarePositionView({
               지원 자격
             </h2>
             <ul className="list-inside list-disc space-y-2 text-gray-700">
-              {job.qualifications.map(
+              {jobData.qualifications.map(
                 (qualification: string, index: number) => (
                   <li key={index}>{qualification}</li>
                 )
@@ -361,7 +362,7 @@ export default function DeviceAwarePositionView({
               우대 사항
             </h2>
             <ul className="list-inside list-disc space-y-2 text-gray-700">
-              {job.preferredQualifications.map(
+              {jobData.preferredQualifications.map(
                 (qualification: string, index: number) => (
                   <li key={index}>{qualification}</li>
                 )
@@ -373,7 +374,7 @@ export default function DeviceAwarePositionView({
             <PromptContainer
               type="position"
               title="AI 프롬프트"
-              description={`${job.companyName}의 ${job.jobTitle} 포지션에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사한 후 ChatGPT, Claude 등 AI 솔루션에 붙여넣어 학습시키세요.`}
+              description={`${jobData.companyName}의 ${jobData.jobTitle} 포지션에 대한 AI 프롬프트입니다.\nCopy 버튼을 클릭하여 프롬프트를 복사한 후 ChatGPT, Claude 등 AI 솔루션에 붙여넣어 학습시키세요.`}
               prompt={promptContent}
             />
           </div>
