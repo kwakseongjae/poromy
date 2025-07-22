@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import AdminGuard from '@/components/admin/AdminGuard'
-import { useAllJobs, useDeleteJob, useCreateJob, useInvalidateJobsCache } from '@/hooks/useJobsQueries'
+import { useAllJobs, useDeleteJob, useCreateJob } from '@/lib/react-query/hooks/jobs-hooks'
+import { useQueryClient } from '@tanstack/react-query'
+import { queryKeys } from '@/lib/react-query/query-keys'
 import type { Job, JobType } from '@/types/job'
 
 // 빠른 업로드용 데이터 타입
@@ -37,7 +39,12 @@ function AdminJobsContent() {
   const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useAllJobs()
   const deleteJobMutation = useDeleteJob()
   const createJobMutation = useCreateJob()
-  const invalidateCache = useInvalidateJobsCache()
+  const queryClient = useQueryClient()
+  const invalidateCache = () => {
+    queryClient.invalidateQueries({
+      queryKey: ['poromy', 'jobs'],
+    })
+  }
 
   // 에러 처리
   if (jobsError) {
@@ -52,7 +59,7 @@ function AdminJobsContent() {
     }
 
     try {
-      await deleteJobMutation.mutateAsync(id)
+      await deleteJobMutation.mutateAsync(String(id))
       setMessage('채용공고가 삭제되었습니다.')
       console.log('Job deleted successfully')
     } catch (error) {
@@ -97,8 +104,9 @@ function AdminJobsContent() {
       }
 
       // 다음 ID 계산 (가장 큰 ID + 1)
+      const jobsArray = Array.isArray(jobs) ? jobs : (jobs?.jobs || [])
       const nextId =
-        jobs.length > 0 ? Math.max(...jobs.map((job) => job.id)) + 1 : 1
+        jobsArray.length > 0 ? Math.max(...jobsArray.map((job) => job.id)) + 1 : 1
 
       const parsedData: QuickUploadData = {
         id: nextId.toString(),
@@ -297,7 +305,7 @@ function AdminJobsContent() {
             {/* 채용공고 목록 */}
             <div>
               <h2 className="mb-4 text-xl font-semibold">
-                채용공고 목록 ({jobs.length}개)
+                채용공고 목록 ({Array.isArray(jobs) ? jobs.length : (jobs?.jobs?.length || 0)}개)
               </h2>
 
               <div className="overflow-x-auto">
@@ -325,7 +333,7 @@ function AdminJobsContent() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {jobs.map((job) => (
+                    {(Array.isArray(jobs) ? jobs : (jobs?.jobs || [])).map((job) => (
                       <tr key={job.id}>
                         <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
                           {job.id}

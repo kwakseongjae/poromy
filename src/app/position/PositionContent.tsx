@@ -19,6 +19,13 @@ import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
+// New React Query hooks
+import { 
+  useInfiniteJobs, 
+  useJob, 
+  useSearchJobs, 
+  usePositionPrompt 
+} from '@/lib/react-query/hooks'
 
 interface PreviewJob {
   id: number

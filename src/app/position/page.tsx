@@ -2,6 +2,9 @@ import { Metadata } from 'next'
 import { Suspense } from 'react'
 import PositionContent from './PositionContent'
 
+// Force dynamic rendering to avoid SSR issues with nuqs
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: '채용공고별 AI 자소서 프롬프트',
   description:
