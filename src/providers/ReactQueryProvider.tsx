@@ -3,35 +3,11 @@
 import React from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { createQueryClient } from '@/lib/react-query/client'
 
-// React Query 클라이언트 설정
+// React Query 클라이언트 설정 (optimized configuration)
 function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        // 5분간 fresh 상태 유지 (빈번한 refetch 방지)
-        staleTime: 5 * 60 * 1000,
-        // 30분간 캐시 유지
-        gcTime: 30 * 60 * 1000,
-        // 에러 시 3번 재시도
-        retry: 3,
-        // 에러 시 지수 백오프로 재시도 간격 증가
-        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-        // 창 포커스 시 자동 refetch 활성화
-        refetchOnWindowFocus: true,
-        // 네트워크 재연결 시 자동 refetch 활성화
-        refetchOnReconnect: true,
-        // 컴포넌트 마운트 시 fresh한 데이터가 아니면 refetch
-        refetchOnMount: true,
-      },
-      mutations: {
-        // 뮤테이션 에러 시 1번 재시도
-        retry: 1,
-        // 뮤테이션 에러 시 2초 후 재시도
-        retryDelay: 2000,
-      },
-    },
-  })
+  return createQueryClient()
 }
 
 let browserQueryClient: QueryClient | undefined = undefined
