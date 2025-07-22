@@ -16,6 +16,7 @@
   📄 .claude/settings.local.json
 📁 docs/
   📄 docs/nuqs-integration.md
+  📄 docs/react_query_migration.md
 📁 public/
   📁 public/fonts/
   📁 public/icons/
@@ -69,6 +70,7 @@
       📁 src/app/auth/callback/
     📁 src/app/company/
       📁 src/app/company/[id]/
+      📄 src/app/company/layout.tsx
       📄 src/app/company/page.tsx
     📁 src/app/guide/
       📁 src/app/guide/[type]/
@@ -76,6 +78,7 @@
     📁 src/app/inquiry/
       📁 src/app/inquiry/[id]/
       📁 src/app/inquiry/new/
+      📄 src/app/inquiry/layout.tsx
       📄 src/app/inquiry/page.tsx
     📁 src/app/login/
       📄 src/app/login/page.tsx
@@ -116,6 +119,9 @@
       📄 src/assets/icons/SalesIcon.tsx
     📄 src/assets/index.ts
   📁 src/components/
+    📁 src/components/admin/
+      📄 src/components/admin/AdminErrorBoundary.tsx
+      📄 src/components/admin/AdminGuard.tsx
     📁 src/components/analytics/
       📄 src/components/analytics/ClientAnalytics.tsx
       📄 src/components/analytics/EngagementTracker.tsx
@@ -169,18 +175,26 @@
     📄 src/emails/verification.tsx
   📁 src/hooks/
     📄 src/hooks/useEmblaCarousel.ts
-    📄 src/hooks/useJobsQueries.ts
     📄 src/hooks/useQueryParams.ts
   📁 src/lib/
+    📁 src/lib/react-query/
+      📁 src/lib/react-query/hooks/
+      📄 src/lib/react-query/api-client.ts
+      📄 src/lib/react-query/client.ts
+      📄 src/lib/react-query/index.ts
+      📄 src/lib/react-query/query-keys.ts
     📄 src/lib/gtag.ts
-    📄 src/lib/query-keys.ts
     📄 src/lib/supabase-client.ts
     📄 src/lib/supabase-jobs.ts
+    📄 src/lib/supabase-middleware.ts
     📄 src/lib/supabase-server.ts
     📄 src/lib/utils.ts
   📁 src/providers/
     📄 src/providers/NuqProvider.tsx
     📄 src/providers/ReactQueryProvider.tsx
+  📁 src/services/
+    📄 src/services/admin.service.client.ts
+    📄 src/services/admin.service.ts
   📁 src/types/
     📄 src/types/company.ts
     📄 src/types/ga.d.ts
@@ -190,6 +204,7 @@
     📄 src/types/supabase.ts
     📄 src/types/svg.d.ts
   📁 src/utils/
+    📄 src/utils/admin-errors.ts
     📄 src/utils/cache-manager.ts
     📄 src/utils/cookie.ts
     📄 src/utils/crypto.ts
