@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { Suspense } from 'react'
-import PositionContent from './PositionContent'
+import PositionContent from '../../components/position/PositionContent'
 
 // Force dynamic rendering to avoid SSR issues with nuqs
 export const dynamic = 'force-dynamic'
