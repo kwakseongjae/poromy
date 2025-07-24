@@ -1,7 +1,8 @@
 /**
  * PreloadResources Component
  * 중요한 리소스들을 프리로드하여 초기 페이지 로딩 성능을 개선합니다.
- * - 폰트 파일 프리로드 (강화된 캐싱)
+ * - 폰트 파일 프리로드
+ * - 중요 이미지 프리로드 (LCP 최적화)
  * - 외부 도메인 DNS 프리페치
  */
 export const PreloadResources = () => {
@@ -14,7 +15,6 @@ export const PreloadResources = () => {
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
-        media="all"
       />
       <link
         rel="preload"
@@ -22,7 +22,6 @@ export const PreloadResources = () => {
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
-        media="all"
       />
       <link
         rel="preload"
@@ -30,7 +29,6 @@ export const PreloadResources = () => {
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
-        media="all"
       />
       <link
         rel="preload"
@@ -38,47 +36,39 @@ export const PreloadResources = () => {
         as="font"
         type="font/woff2"
         crossOrigin="anonymous"
-        media="all"
       />
 
-      {/* 📱 폰트 prefetch 추가 (브라우저 캐시 강화) */}
+      {/* 🖼️ 중요 이미지 프리로드 - Hero Carousel (LCP 최적화) */}
       <link
-        rel="prefetch"
-        href="/fonts/Pretendard-Regular.woff"
-        as="font"
-        type="font/woff"
-        crossOrigin="anonymous"
+        rel="preload"
+        href="/images/home-carousel-1.png"
+        as="image"
+        type="image/png"
+        fetchPriority="high"
       />
       <link
-        rel="prefetch"
-        href="/fonts/Pretendard-Medium.woff"
-        as="font"
-        type="font/woff"
-        crossOrigin="anonymous"
+        rel="preload"
+        href="/images/home-carousel-2.png"
+        as="image"
+        type="image/png"
+        fetchPriority="high"
       />
+
+      {/* 🎨 로고 및 네비게이션 에셋 프리로드 */}
       <link
-        rel="prefetch"
-        href="/fonts/Pretendard-SemiBold.woff"
-        as="font"
-        type="font/woff"
-        crossOrigin="anonymous"
-      />
-      <link
-        rel="prefetch"
-        href="/fonts/Pretendard-Bold.woff"
-        as="font"
-        type="font/woff"
-        crossOrigin="anonymous"
+        rel="preload"
+        href="/svg/logo-icon.svg"
+        as="image"
+        type="image/svg+xml"
       />
 
       {/* DNS 프리페치 - 외부 서비스 도메인 */}
       <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
       <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-      <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-      <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 
       {/* Supabase 도메인 프리커넥트  */}
-      <link rel="preconnect" href="https://supabase.co" />
+      <link rel="dns-prefetch" href="https://jcebfbrgdtxbcsgpkvca.supabase.co" />
+      <link rel="preconnect" href="https://jcebfbrgdtxbcsgpkvca.supabase.co" />
 
       {/* Google Analytics 프리커넥트 */}
       <link rel="preconnect" href="https://www.google-analytics.com" />
