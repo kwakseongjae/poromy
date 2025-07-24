@@ -45,6 +45,15 @@ export function useAdminInquiries(params?: { page?: number; limit?: number; stat
   })
 }
 
+// Get test user count
+export function useTestUserCount() {
+  return useQuery({
+    queryKey: queryKeys.admin.testUserCount().queryKey,
+    queryFn: adminApi.getTestUserCount,
+    staleTime: 30 * 1000, // 30 seconds
+  })
+}
+
 // Add test users mutation
 export function useAddTestUsers() {
   const queryClient = useQueryClient()
@@ -60,6 +69,11 @@ export function useAddTestUsers() {
       // Invalidate users list
       queryClient.invalidateQueries({
         queryKey: queryKeys.admin.users().queryKey,
+      })
+      
+      // Invalidate test user count
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.admin.testUserCount().queryKey,
       })
     },
   })

@@ -106,6 +106,8 @@ export const authApi = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+  getAdminStatus: () => 
+    apiClient<{ isAdmin: boolean }>('/api/auth/admin-status'),
 }
 
 // Jobs API
@@ -287,10 +289,14 @@ export const adminApi = {
     return apiClient<{ inquiries: any[]; total?: number }>(`/api/admin/inquiries?${searchParams}`)
   },
   
-  addTestUsers: () => 
-    apiClient<{ success: boolean }>('/api/admin/add-test-users', {
+  addTestUsers: (data: { count: number }) => 
+    apiClient<{ created: number; error?: string }>('/api/admin/add-test-users', {
       method: 'POST',
+      body: JSON.stringify(data),
     }),
+  
+  getTestUserCount: () =>
+    apiClient<{ count: number }>('/api/admin/test-users/count'),
 }
 
 // Prompts API

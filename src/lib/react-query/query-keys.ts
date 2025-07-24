@@ -10,6 +10,9 @@ export const queryKeys = {
     profile: (userId: string) => ({ 
       queryKey: ['poromy', 'auth', 'profile', userId] 
     }),
+    adminStatus: () => ({
+      queryKey: ['poromy', 'auth', 'admin-status'],
+    }),
   },
 
   // Job-related queries
@@ -112,6 +115,9 @@ export const queryKeys = {
     }),
     inquiries: (params?: { page?: number; limit?: number; status?: string }) => ({
       queryKey: ['poromy', 'admin', 'inquiries', params],
+    }),
+    testUserCount: () => ({
+      queryKey: ['poromy', 'admin', 'test-user-count'],
     }),
   },
 
