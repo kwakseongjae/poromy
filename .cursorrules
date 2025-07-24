@@ -85,7 +85,6 @@
     📁 src/app/position/
       📁 src/app/position/[id]/
       📄 src/app/position/page.tsx
-      📄 src/app/position/PositionContent.tsx
     📁 src/app/role/
       📁 src/app/role/[name]/
       📄 src/app/role/page.tsx
@@ -156,6 +155,7 @@
       📄 src/components/navigation/Sidebar.tsx
     📁 src/components/position/
       📄 src/components/position/JobList.tsx
+      📄 src/components/position/PositionContent.tsx
     📁 src/components/ui/
       📄 src/components/ui/Dialog.tsx
     📄 src/components/ClientRedirect.tsx
@@ -184,6 +184,7 @@
       📄 src/lib/react-query/index.ts
       📄 src/lib/react-query/query-keys.ts
     📄 src/lib/gtag.ts
+    📄 src/lib/supabase-best-practices.md
     📄 src/lib/supabase-client.ts
     📄 src/lib/supabase-jobs.ts
     📄 src/lib/supabase-middleware.ts
@@ -215,6 +216,7 @@
     📄 src/utils/prompt.ts
     📄 src/utils/structured-data.ts
   📄 src/middleware.ts
+📄 CLAUDE.md
 📄 frontend-design-guideline.md
 📄 next-env.d.ts
 📄 next-sitemap.config.js

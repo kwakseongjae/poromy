@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useSupabase } from '@/contexts/SupabaseContext'
-import { createClient } from '@supabase/supabase-js'
 import { deleteCookie, getCookie } from '@/utils/cookie'
 
 function LoginContent() {
@@ -81,85 +80,60 @@ function LoginContent() {
       const hash = window.location.hash.substring(1)
       const params = new URLSearchParams(hash)
       const accessToken = params.get('access_token')
+      const refreshToken = params.get('refresh_token')
       const type = params.get('type')
       const error = params.get('error')
 
       if (error) {
         console.error('Email verification error:', error)
+        setError('이메일 인증 중 오류가 발생했습니다.')
         return
       }
 
-      if (accessToken && type === 'signup') {
+      if (accessToken && refreshToken && type === 'signup') {
         try {
-          const supabaseAdmin = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.SUPABASE_SERVICE_ROLE_KEY!,
-            {
-              auth: {
-                autoRefreshToken: false,
-                persistSession: false,
-              },
-            }
-          )
-
-          // access_token으로 세션 정보 가져오기
-          const {
-            data: { user },
-            error: userError,
-          } = await supabaseAdmin.auth.getUser(accessToken)
-
-          if (userError || !user) {
-            console.error('User error:', userError)
-            return
-          }
-
-          // 프로필 업데이트
-          const { error: updateError } = await supabaseAdmin
-            .from('profiles')
-            .update({
-              is_verified: true,
-              updated_at: new Date().toISOString(),
-            })
-            .eq('id', user.id)
-
-          if (updateError) {
-            console.error('Profile update error:', updateError)
-            return
-          }
-
-          // 업데이트 후 is_verified 상태 확인
-          const { data: profile, error: checkError } = await supabaseAdmin
-            .from('profiles')
-            .select('is_verified')
-            .eq('id', user.id)
-            .single()
-
-          if (checkError || !profile?.is_verified) {
-            console.error('Profile verification failed')
-            return
-          }
-
-          // 세션 생성
-          const { error: sessionError } = await supabaseAdmin.auth.setSession({
+          // 클라이언트 사이드에서 세션 설정
+          const { data, error: sessionError } = await supabase.auth.setSession({
             access_token: accessToken,
-            refresh_token: params.get('refresh_token') || '',
+            refresh_token: refreshToken,
           })
 
-          if (sessionError) {
+          if (sessionError || !data.user) {
             console.error('Session creation error:', sessionError)
+            setError('세션 생성 중 오류가 발생했습니다.')
             return
           }
 
-          // 모든 것이 성공적으로 완료되면 홈으로 리다이렉트
-          router.push('/')
+          // API 라우트를 통해 프로필 업데이트 (보안상 안전)
+          const response = await fetch('/api/update-profile', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userId: data.user.id,
+              is_verified: true,
+            }),
+          })
+
+          if (!response.ok) {
+            throw new Error('Profile update failed')
+          }
+
+          // 성공적으로 완료되면 홈으로 리다이렉트
+          setMessage('이메일 인증이 완료되었습니다!')
+          setTimeout(() => {
+            router.push('/')
+          }, 2000)
         } catch (error) {
           console.error('Error in verification process:', error)
+          setError('인증 처리 중 오류가 발생했습니다.')
         }
       }
     }
 
     handleEmailVerification()
-  }, [router])
+  }, [router, supabase])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -82,10 +82,32 @@ src/
 - Example: `queryKeys.jobs.detail(id)` → `['poromy', 'jobs', 'detail', id]`
 
 #### 2. Supabase Integration
+- **IMPORTANT**: Always use centralized Supabase clients from the `lib` folder
+- **Never** import `createClient` directly from `@supabase/supabase-js`
 - Multiple client configurations for different contexts:
-  - `supabase-client.ts` - Client-side operations
-  - `supabase-server.ts` - Server-side operations
-  - `supabase-middleware.ts` - Middleware authentication
+  - `supabase-client.ts` - Browser client for client-side operations (singleton pattern)
+  - `supabase-server.ts` - Server client for SSR and API routes (fresh per request)
+  - `supabase-middleware.ts` - Middleware client for route protection
+  - `createAdminClient()` - Admin client for operations that bypass RLS
+
+##### Supabase Client Usage Patterns
+```typescript
+// ✅ Client-side components
+import { createBrowserSupabaseClient } from '@/lib/supabase-client'
+const supabase = createBrowserSupabaseClient()
+
+// ✅ Server components and API routes (user context)
+import { createClient } from '@/lib/supabase-server'
+const supabase = await createClient()
+
+// ✅ Admin operations (bypasses RLS)
+import { createAdminClient } from '@/lib/supabase-server'
+const supabase = createAdminClient()
+
+// ❌ NEVER do this
+import { createClient } from '@supabase/supabase-js'
+const supabase = createClient(...) // Creates unnecessary instances
+```
 
 #### 3. Performance Optimization
 - ISR (Incremental Static Regeneration) with 3-minute revalidation

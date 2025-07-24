@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createAdminClient } from '@/lib/supabase-server'
 import { NextResponse } from 'next/server'
 
 export async function GET(request: Request) {
@@ -22,16 +22,7 @@ export async function GET(request: Request) {
   if (accessToken && type === 'signup') {
     try {
       // 서비스 롤 키를 사용하여 Supabase 클라이언트 생성
-      const supabaseAdmin = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        {
-          auth: {
-            autoRefreshToken: false,
-            persistSession: false,
-          },
-        }
-      )
+      const supabaseAdmin = createAdminClient()
 
       // access_token으로 세션 정보 가져오기
       const {

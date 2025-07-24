@@ -1,11 +1,6 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@/lib/supabase-server'
 import { NextRequest } from 'next/server'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -16,6 +11,9 @@ export async function GET(
 ) {
   try {
     const { id } = await params
+    
+    // Supabase 클라이언트 생성
+    const supabase = await createClient()
 
     // 문의 조회
     const { data: inquiry, error: inquiryError } = await supabase
