@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import LinkPreview from '@/components/LinkPreview'
 import { useSupabase } from '@/contexts/SupabaseContext'
+import { useCreateAnswer } from '@/lib/react-query/hooks/inquiries-hooks'
 
 interface AnswerFormProps {
   inquiryId: string
@@ -22,70 +22,44 @@ export default function AnswerForm({
   const router = useRouter()
   const [content, setContent] = useState('')
   const [url, setUrl] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { isAdmin, user } = useSupabase()
-  const supabase = createBrowserSupabaseClient()
+  const createAnswerMutation = useCreateAnswer()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     setError(null)
 
-    try {
-      if (!user) {
-        throw new Error('로그인이 필요합니다.')
-      }
-      if (!isAdmin) {
-        throw new Error('관리자 권한이 필요합니다.')
-      }
-
-      // 답변 등록
-      const { error: insertError } = await supabase.from('answers').insert({
-        inquiry_id: inquiryId,
-        admin_id: user.id,
-        content,
-        url: url || null,
-      })
-
-      if (insertError) throw insertError
-
-      // 이메일 발송 API 호출
-      const emailResponse = await fetch('/api/email/answer-notification', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          inquiry: {
-            id: inquiryId,
-            title: inquiryTitle,
-            userNickname,
-          },
-          answer: {
-            content,
-            url: url || null,
-          },
-          userEmail,
-        }),
-      })
-
-      if (!emailResponse.ok) {
-        console.error('이메일 발송 실패:', await emailResponse.json())
-        // 이메일 발송 실패는 답변 등록을 막지 않음
-      }
-
-      // 성공 시 폼 초기화 및 페이지 새로고침
-      setContent('')
-      setUrl('')
-      router.refresh()
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : '답변 등록 중 오류가 발생했습니다.'
-      )
-    } finally {
-      setIsSubmitting(false)
+    if (!user) {
+      setError('로그인이 필요합니다.')
+      return
     }
+    if (!isAdmin) {
+      setError('관리자 권한이 필요합니다.')
+      return
+    }
+
+    createAnswerMutation.mutate(
+      {
+        inquiryId,
+        data: {
+          content: content.trim(),
+          url: url.trim() || null,
+        },
+      },
+      {
+        onSuccess: () => {
+          setContent('')
+          setUrl('')
+          router.refresh()
+        },
+        onError: (err: any) => {
+          setError(
+            err.message || '답변 등록 중 오류가 발생했습니다.'
+          )
+        },
+      }
+    )
   }
 
   if (!isAdmin) {
@@ -140,10 +114,10 @@ export default function AnswerForm({
       <div className="flex justify-end">
         <button
           type="submit"
-          disabled={isSubmitting}
+          disabled={createAnswerMutation.isPending}
           className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
         >
-          {isSubmitting ? '등록 중...' : '답변 등록'}
+          {createAnswerMutation.isPending ? '등록 중...' : '답변 등록'}
         </button>
       </div>
     </form>

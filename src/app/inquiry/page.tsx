@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase-server'
+import { createClient, getOptimizedUser } from '@/lib/supabase-server'
 import Link from 'next/link'
 import InquiryList from '@/components/inquiry/InquiryList'
 import { Inquiry } from '@/types/inquiry'
@@ -33,18 +33,13 @@ const InquiryPageSkeleton = () => (
 // 데이터 fetching 최적화 함수
 const fetchInquiryData = async (supabase: any) => {
   // 병렬로 모든 데이터 가져오기
-  const [
-    { data: inquiries, error: inquiriesError },
-    {
-      data: { user },
-    },
-  ] = await Promise.all([
-    supabase
-      .from('inquiries')
-      .select('id, title, content, url, status, created_at, user_id')
-      .order('created_at', { ascending: false }),
-    supabase.auth.getUser(),
-  ])
+  // Performance optimization: Get user from JWT first
+  const user = await getOptimizedUser()
+  
+  const { data: inquiries, error: inquiriesError } = await supabase
+    .from('inquiries')
+    .select('id, title, content, url, status, created_at, user_id')
+    .order('created_at', { ascending: false })
 
   if (inquiriesError) {
     throw new Error('Failed to fetch inquiries')
