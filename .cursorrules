@@ -15,8 +15,10 @@
 📁 .claude/
   📄 .claude/settings.local.json
 📁 docs/
+  📄 docs/auth-performance-optimization.md
   📄 docs/nuqs-integration.md
   📄 docs/react_query_migration.md
+  📄 docs/supabase-best-practices.md
 📁 public/
   📁 public/fonts/
   📁 public/icons/
@@ -58,13 +60,16 @@
       📁 src/app/api/admin/
       📁 src/app/api/auth/
       📁 src/app/api/create-profile/
+      📁 src/app/api/debug/
       📁 src/app/api/email/
       📁 src/app/api/image-proxy/
+      📁 src/app/api/inquiries/
       📁 src/app/api/inquiry/
       📁 src/app/api/jobs/
       📁 src/app/api/link-preview/
       📁 src/app/api/prompts/
       📁 src/app/api/revalidate/
+      📁 src/app/api/test-supabase/
       📁 src/app/api/update-profile/
     📁 src/app/auth/
       📁 src/app/auth/callback/
@@ -119,6 +124,7 @@
     📄 src/assets/index.ts
   📁 src/components/
     📁 src/components/admin/
+      📄 src/components/admin/AddTestUserForm.tsx
       📄 src/components/admin/AdminErrorBoundary.tsx
       📄 src/components/admin/AdminGuard.tsx
     📁 src/components/analytics/
@@ -184,7 +190,7 @@
       📄 src/lib/react-query/index.ts
       📄 src/lib/react-query/query-keys.ts
     📄 src/lib/gtag.ts
-    📄 src/lib/supabase-best-practices.md
+    📄 src/lib/supabase-auth-helpers.ts
     📄 src/lib/supabase-client.ts
     📄 src/lib/supabase-jobs.ts
     📄 src/lib/supabase-middleware.ts

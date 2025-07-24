@@ -1,0 +1,122 @@
+name: git:commit
+description: Create a standardized git commit with Poromy's convention
+version: 1.0.0
+author: Claude Code
+
+command: |
+  # Git Commit Helper for Poromy Project
+  
+  echo "📝 Poromy Commit Convention Helper"
+  echo "=================================="
+  
+  # Check if there are changes to commit
+  if [ -z "$(git status --porcelain)" ]; then
+    echo "❌ No changes to commit"
+    exit 1
+  fi
+  
+  # Show current changes
+  echo "\n📊 Current changes:"
+  git status --short
+  
+  # Commit type selection
+  echo "\n🎯 Select commit type:"
+  echo "1) feat     - 새로운 기능"
+  echo "2) fix      - 버그 수정"
+  echo "3) docs     - 문서 변경"
+  echo "4) style    - 코드 포맷팅"
+  echo "5) refactor - 리팩토링"
+  echo "6) perf     - 성능 개선"
+  echo "7) test     - 테스트"
+  echo "8) chore    - 빌드/도구"
+  echo "9) deps     - 의존성"
+  echo "10) security - 보안"
+  
+  read -p "Type number: " type_num
+  
+  case $type_num in
+    1) type="feat";;
+    2) type="fix";;
+    3) type="docs";;
+    4) type="style";;
+    5) type="refactor";;
+    6) type="perf";;
+    7) type="test";;
+    8) type="chore";;
+    9) type="deps";;
+    10) type="security";;
+    *) echo "Invalid selection"; exit 1;;
+  esac
+  
+  # Scope input
+  echo "\n📁 Common scopes: auth, admin, ui, api, db, supabase, query, hooks"
+  read -p "Enter scope (optional): " scope
+  
+  # Subject input
+  echo "\n✏️  Enter commit subject (imperative mood, English):"
+  read -p "> " subject
+  
+  # Body input
+  echo "\n📄 Enter commit body (optional, press Ctrl+D when done):"
+  body=$(cat)
+  
+  # Breaking change check
+  read -p "\n⚠️  Is this a breaking change? (y/N): " breaking
+  
+  # Issue number
+  read -p "🔗 Related issue number (optional): " issue
+  
+  # Construct commit message
+  if [ -n "$scope" ]; then
+    commit_msg="$type($scope): $subject"
+  else
+    commit_msg="$type: $subject"
+  fi
+  
+  if [ -n "$body" ]; then
+    commit_msg="$commit_msg\n\n$body"
+  fi
+  
+  if [ "$breaking" = "y" ] || [ "$breaking" = "Y" ]; then
+    commit_msg="$commit_msg\n\nBREAKING CHANGE: This commit introduces breaking changes"
+  fi
+  
+  if [ -n "$issue" ]; then
+    commit_msg="$commit_msg\n\nCloses #$issue"
+  fi
+  
+  # Show preview
+  echo "\n📋 Commit preview:"
+  echo "=================="
+  echo -e "$commit_msg"
+  echo "=================="
+  
+  # Confirm
+  read -p "\n✅ Proceed with commit? (Y/n): " confirm
+  
+  if [ "$confirm" != "n" ] && [ "$confirm" != "N" ]; then
+    git add -A
+    echo -e "$commit_msg" | git commit -F -
+    echo "\n✨ Commit created successfully!"
+  else
+    echo "\n❌ Commit cancelled"
+  fi
+
+parameters:
+  - name: type
+    description: Commit type (feat, fix, docs, etc.)
+    required: false
+  - name: scope
+    description: Commit scope (area of change)
+    required: false
+  - name: message
+    description: Commit message
+    required: false
+
+examples:
+  - description: Interactive mode
+    command: /git:commit
+  - description: Quick commit
+    command: /git:commit feat auth "Add OAuth login"
+  - description: With scope and issue
+    command: /git:commit fix ui "Resolve dropdown z-index" --issue 42
