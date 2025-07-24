@@ -71,3 +71,13 @@ export function useCreateProfile() {
     },
   })
 }
+
+// Check admin status
+export function useAdminStatus() {
+  return useQuery({
+    queryKey: queryKeys.auth.adminStatus().queryKey,
+    queryFn: authApi.getAdminStatus,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: false,
+  })
+}

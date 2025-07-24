@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createMiddlewareClient } from '@/lib/supabase-middleware'
+import { getUserFromSession } from '@/lib/supabase-auth-helpers'
 
 export async function middleware(request: NextRequest) {
   // Early return for non-protected routes
@@ -33,8 +34,10 @@ export async function middleware(request: NextRequest) {
   // Create Supabase client for middleware
   const supabase = createMiddlewareClient(request, response)
   
-  // Get current user
-  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  // Performance optimization: Get session first, then extract user from JWT
+  const { data: { session } } = await supabase.auth.getSession()
+  const user = getUserFromSession(session)
+  const userError = !session ? new Error('No session') : null
   
   let isAdmin = false
   
