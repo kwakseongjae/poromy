@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
+import { getUserFromSession, getClaims } from './supabase-auth-helpers'
 
 // 📈 성능 최적화: 전역 클라이언트 캐싱으로 Cold Start 방지
 let cachedServerClient: any = null
@@ -97,6 +98,67 @@ export async function getUser() {
     return data.user
   } catch (error) {
     console.error('Failed to get user:', error)
+    return null
+  }
+}
+
+/**
+ * Performance-optimized version of getUser that uses JWT claims when possible
+ * This avoids a network round trip when we only need basic user info
+ * 
+ * @param forceRefresh - Force a fresh fetch from the server (default: false)
+ * @returns User object from JWT claims or fresh from server
+ */
+export async function getOptimizedUser(forceRefresh: boolean = false) {
+  const supabase = await createClient()
+
+  try {
+    // First, try to get the session
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+    
+    if (sessionError || !session) {
+      return null
+    }
+
+    // If not forcing refresh, try to get user from JWT claims
+    if (!forceRefresh) {
+      const userFromJWT = getUserFromSession(session)
+      if (userFromJWT) {
+        return userFromJWT
+      }
+    }
+
+    // If we need fresh data or JWT parsing failed, fall back to getUser()
+    const { data, error } = await supabase.auth.getUser()
+    if (error) {
+      console.error('Auth error:', error)
+      return null
+    }
+    return data.user
+  } catch (error) {
+    console.error('Failed to get user:', error)
+    return null
+  }
+}
+
+/**
+ * Get JWT claims directly without making a network call
+ * Useful for checking custom claims, roles, permissions, etc.
+ */
+export async function getOptimizedClaims() {
+  const supabase = await createClient()
+
+  try {
+    // Get the session which contains the JWT
+    const { data: { session }, error } = await supabase.auth.getSession()
+    
+    if (error || !session) {
+      return null
+    }
+
+    return getClaims(session)
+  } catch (error) {
+    console.error('Failed to get claims:', error)
     return null
   }
 }

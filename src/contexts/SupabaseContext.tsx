@@ -11,6 +11,7 @@ import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import { useRouter } from 'next/navigation'
 import { User } from '@supabase/supabase-js'
 import { AdminServiceClient } from '@/services/admin.service.client'
+import { getUserFromSession } from '@/lib/supabase-auth-helpers'
 
 type SupabaseContextType = {
   user: User | null
@@ -76,9 +77,32 @@ export default function SupabaseProvider({
   useEffect(() => {
     setLoading(true)
     
-    // Get initial user state
+    // Get initial user state - Performance optimized
     const getInitialUser = async () => {
       try {
+        // First try to get session (no network call)
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (session) {
+          // Extract user from JWT for immediate UI update
+          const userFromJWT = getUserFromSession(session)
+          if (userFromJWT) {
+            setUser(userFromJWT)
+            fetchAdminStatus(userFromJWT.id)
+            setLoading(false)
+            
+            // Then validate with server in background (optional)
+            supabase.auth.getUser().then(({ data: { user } }) => {
+              if (user && user.id === userFromJWT.id) {
+                // Update with fresh data if needed
+                setUser(user)
+              }
+            })
+            return
+          }
+        }
+        
+        // Fallback to getUser if no session or JWT parsing failed
         const {
           data: { user: currentUser },
         } = await supabase.auth.getUser()
@@ -139,6 +163,7 @@ export default function SupabaseProvider({
   const refreshUser = async () => {
     setLoading(true)
     try {
+      // Force refresh from server (not using cache)
       const {
         data: { user: newUser },
       } = await supabase.auth.getUser()
