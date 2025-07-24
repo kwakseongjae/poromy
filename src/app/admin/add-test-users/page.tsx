@@ -1,33 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import AdminGuard from '@/components/admin/AdminGuard'
-import AddTestUserForm from './AddTestUserForm'
+import AddTestUserForm from '../../../components/admin/AddTestUserForm'
+import { useTestUserCount } from '@/lib/react-query/hooks/admin-hooks'
 
 function AddTestUsersContent() {
-  const [testUserCount, setTestUserCount] = useState<number | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function fetchTestUserCount() {
-      try {
-        const supabase = createBrowserSupabaseClient()
-        const { count } = await supabase
-          .from('profiles')
-          .select('*', { count: 'exact', head: true })
-          .eq('is_test_user', true)
-        setTestUserCount(count || 0)
-      } catch (error) {
-        console.error('Error fetching test user count:', error)
-        setTestUserCount(0)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchTestUserCount()
-  }, [])
+  const { data, isLoading, error } = useTestUserCount()
+  const testUserCount = data?.count ?? null
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50">
@@ -36,7 +15,7 @@ function AddTestUsersContent() {
         <p className="mb-4">
           현재 테스트 유저 수:{' '}
           <span className="font-mono">
-            {loading ? '...' : testUserCount}
+            {isLoading ? '...' : error ? 'Error' : testUserCount}
           </span>
         </p>
         <AddTestUserForm />

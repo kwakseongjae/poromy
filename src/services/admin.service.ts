@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase-server'
+import { createClient, getOptimizedUser } from '@/lib/supabase-server'
 import { SupabaseClient, User } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -125,23 +125,24 @@ export class AdminService {
 
   /**
    * Get current user and check if admin (server-side)
+   * Performance optimized: uses JWT claims when possible
    */
-  static async getCurrentAdminServer(): Promise<{
+  static async getCurrentAdminServer(forceRefresh: boolean = false): Promise<{
     user: User | null
     isAdmin: boolean
   }> {
     try {
-      const supabase = await createClient()
-      const { data: { user }, error } = await supabase.auth.getUser()
+      // Use optimized user retrieval that checks JWT first
+      const user = await getOptimizedUser(forceRefresh)
       
       if (process.env.NODE_ENV === 'development') {
         console.log('[AdminService.getCurrentAdminServer] Auth check:', {
           user: user ? { id: user.id, email: user.email } : null,
-          error: error?.message,
+          optimized: !forceRefresh,
         })
       }
       
-      if (error || !user) {
+      if (!user) {
         return { user: null, isAdmin: false }
       }
 

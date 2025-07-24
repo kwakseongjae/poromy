@@ -77,62 +77,101 @@ function getRandomNickname() {
 }
 
 export async function POST(req: NextRequest) {
-  // 관리자 권한 확인
-  const adminCheck = await AdminService.requireAdmin(req)
-  if (adminCheck.error) {
-    return adminCheck.error
-  }
+  console.log('[add-test-users] API 호출 시작')
+  
+  try {
+    // 관리자 권한 확인
+    console.log('[add-test-users] 관리자 권한 확인 중...')
+    const adminCheck = await AdminService.requireAdmin(req)
+    if (adminCheck.error) {
+      console.log('[add-test-users] 관리자 권한 없음')
+      return adminCheck.error
+    }
+    console.log('[add-test-users] 관리자 권한 확인됨')
 
-  const { count } = await req.json()
-  if (!count || typeof count !== 'number' || count < 1 || count > 50) {
-    return NextResponse.json(
-      { error: '1~50 사이의 숫자를 입력하세요.' },
-      { status: 400 }
-    )
-  }
+    const body = await req.json()
+    console.log('[add-test-users] 요청 데이터:', body)
+    
+    const { count } = body
+    if (!count || typeof count !== 'number' || count < 1 || count > 50) {
+      console.log('[add-test-users] 잘못된 count 값:', count)
+      return NextResponse.json(
+        { error: '1~50 사이의 숫자를 입력하세요.' },
+        { status: 400 }
+      )
+    }
 
-  const supabase = createAdminClient()
-  let created = 0
-  let errors: string[] = []
-
-  for (let i = 0; i < count; i++) {
-    const email = `test${Date.now()}_${Math.floor(Math.random() * 10000)}@test.test`
-    // 안전한 랜덤 패스워드 생성 (환경 변수 사용 또는 랜덤 생성)
-    const password = process.env.TEST_USER_PASSWORD || 
-      `Test${Math.random().toString(36).substring(2, 10)}!${Date.now().toString().slice(-4)}`
-    const nickname = getRandomNickname()
-    // 1. 유저 생성 (이메일 인증)
-    const { data: user, error } = await supabase.auth.admin.createUser({
-      email,
-      password,
-      email_confirm: true,
-      user_metadata: { nickname },
+    console.log('[add-test-users] Supabase Admin 클라이언트 생성 중...')
+    console.log('[add-test-users] 환경 변수 확인:', {
+      SUPABASE_URL: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      SERVICE_ROLE_KEY: !!process.env.SUPABASE_SERVICE_ROLE_KEY
     })
-    if (error || !user?.user?.id) {
-      errors.push(email)
-      continue
-    }
-    // 2. profiles에 추가
-    const { error: profileError } = await supabase.from('profiles').insert([
-      {
-        id: user.user.id,
-        email,
-        nickname,
-        is_test_user: true,
-      },
-    ])
-    if (profileError) {
-      errors.push(email)
-      continue
-    }
-    created++
-  }
+    
+    const supabase = createAdminClient()
+    console.log('[add-test-users] Supabase Admin 클라이언트 생성 완료')
+    let created = 0
+    let errors: string[] = []
 
-  if (errors.length > 0) {
+    for (let i = 0; i < count; i++) {
+      const email = `test${Date.now()}_${Math.floor(Math.random() * 10000)}@test.test`
+      // 안전한 랜덤 패스워드 생성 (환경 변수 사용 또는 랜덤 생성)
+      const password = process.env.TEST_USER_PASSWORD || 
+        `Test${Math.random().toString(36).substring(2, 10)}!${Date.now().toString().slice(-4)}`
+      const nickname = getRandomNickname()
+      
+      try {
+        // 1. 유저 생성 (이메일 인증)
+        const { data: user, error } = await supabase.auth.admin.createUser({
+          email,
+          password,
+          email_confirm: true,
+          user_metadata: { nickname },
+        })
+        
+        if (error || !user?.user?.id) {
+          console.error('User creation error:', error)
+          errors.push(`${email}: ${error?.message || 'User creation failed'}`)
+          continue
+        }
+        
+        // 2. profiles에 추가 (is_test_user 필드 제거, 적절한 기본값 설정)
+        const { error: profileError } = await supabase.from('profiles').insert([
+          {
+            id: user.user.id,
+            email,
+            nickname,
+            is_verified: true, // 테스트 유저는 검증된 상태로 생성
+            is_admin: false,   // 테스트 유저는 일반 유저
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+        ])
+        
+        if (profileError) {
+          console.error('Profile creation error:', profileError)
+          errors.push(`${email}: ${profileError.message}`)
+          continue
+        }
+        
+        created++
+      } catch (userError) {
+        console.error('Error creating user:', userError)
+        errors.push(`${email}: ${userError instanceof Error ? userError.message : 'Unknown error'}`)
+      }
+    }
+
+    if (errors.length > 0) {
+      return NextResponse.json(
+        { created, error: `${errors.length}명 실패: ${errors.slice(0, 3).join(', ')}${errors.length > 3 ? '...' : ''}` },
+        { status: created > 0 ? 200 : 500 } // 부분 성공시 200 반환
+      )
+    }
+    return NextResponse.json({ created })
+  } catch (error) {
+    console.error('Error in add-test-users API:', error)
     return NextResponse.json(
-      { created, error: `${errors.length}명 실패: ${errors.join(', ')}` },
+      { error: `서버 오류가 발생했습니다: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     )
   }
-  return NextResponse.json({ created })
 }

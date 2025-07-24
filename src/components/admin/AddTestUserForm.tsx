@@ -1,14 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useAddTestUsers } from '@/lib/react-query/hooks/admin-hooks'
 
 export default function AddTestUserForm() {
   const [count, setCount] = useState('')
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
-  const router = useRouter()
+  const addTestUsersMutation = useAddTestUsers()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -26,25 +25,27 @@ export default function AddTestUserForm() {
       return
     }
 
-    setLoading(true)
-    try {
-      const res = await fetch('/api/admin/add-test-users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ count: num }),
-      })
-      const data = await res.json()
-      if (res.ok) {
-        setSuccess(`${data.created}명의 테스트 유저가 추가되었습니다.`)
-        router.refresh()
-      } else {
-        setError(data.error || '에러가 발생했습니다.')
+    addTestUsersMutation.mutate(
+      { count: num },
+      {
+        onSuccess: (data) => {
+          if (data.error) {
+            // 부분 성공인 경우
+            setSuccess(`${data.created}명의 테스트 유저가 추가되었습니다.`)
+            setError(`일부 실패: ${data.error}`)
+          } else {
+            // 완전 성공인 경우
+            setSuccess(`${data.created}명의 테스트 유저가 추가되었습니다.`)
+          }
+          setCount('')
+        },
+        onError: (err: any) => {
+          // API 에러 처리 개선
+          const errorMessage = err.response?.data?.error || err.message || '에러가 발생했습니다.'
+          setError(errorMessage)
+        },
       }
-    } catch (err) {
-      setError('에러가 발생했습니다.')
-    } finally {
-      setLoading(false)
-    }
+    )
   }
 
   return (
@@ -65,9 +66,9 @@ export default function AddTestUserForm() {
       <button
         type="submit"
         className="rounded bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
-        disabled={loading}
+        disabled={addTestUsersMutation.isPending}
       >
-        {loading ? '추가 중...' : '테스트 유저 추가'}
+        {addTestUsersMutation.isPending ? '추가 중...' : '테스트 유저 추가'}
       </button>
       {error && <p className="text-sm text-red-500">{error}</p>}
       {success && <p className="text-sm text-green-600">{success}</p>}
