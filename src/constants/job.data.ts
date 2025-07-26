@@ -9,7 +9,6 @@ import type { JobType } from '@/types/job'
  * @property {string[]} conditions - Job requirements (experience, education, location, etc.)
  * @property {string} logoUrl - URL of the company logo image
  * @property {JobType} jobType - Category of the job based on the field/domain
- * @property {string} uploadedAt - Date and time when the job posting was uploaded
  * @property {string} deadline - Date and time when the job posting will be closed
  * @property {string} positionDescription - Description of the job position
  * @property {string} mainTask - Main tasks of the job position

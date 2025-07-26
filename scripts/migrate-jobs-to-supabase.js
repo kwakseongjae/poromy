@@ -94,7 +94,6 @@ async function insertJob(job) {
       logo_url: job.logoUrl,
       url: job.url,
       prompt_content: promptContent,
-      uploaded_at: job.uploadedAt,
       deadline: job.deadline,
     }
 

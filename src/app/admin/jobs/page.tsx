@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { createBrowserSupabaseClient } from '@/lib/supabase-client'
 import AdminGuard from '@/components/admin/AdminGuard'
-import { useAllJobs, useDeleteJob, useCreateJob } from '@/lib/react-query/hooks/jobs-hooks'
+import {
+  useAllJobs,
+  useDeleteJob,
+  useCreateJob,
+} from '@/lib/react-query/hooks/jobs-hooks'
 import { useQueryClient } from '@tanstack/react-query'
-import { queryKeys } from '@/lib/react-query/query-keys'
-import type { Job, JobType } from '@/types/job'
+import type { JobType } from '@/types/job'
 
 // 빠른 업로드용 데이터 타입
 interface QuickUploadData {
@@ -21,7 +23,6 @@ interface QuickUploadData {
   preferredQualifications: string[]
   logoUrl: string
   url: string
-  uploadedAt: string
   deadline: string
   promptContent: string
 }
@@ -34,9 +35,13 @@ function AdminJobsContent() {
   const [parsedJobData, setParsedJobData] = useState<QuickUploadData | null>(
     null
   )
-  
+
   // React Query hooks
-  const { data: jobs = [], isLoading: jobsLoading, error: jobsError } = useAllJobs()
+  const {
+    data: jobs = [],
+    isLoading: jobsLoading,
+    error: jobsError,
+  } = useAllJobs()
   const deleteJobMutation = useDeleteJob()
   const createJobMutation = useCreateJob()
   const queryClient = useQueryClient()
@@ -64,7 +69,10 @@ function AdminJobsContent() {
       console.log('Job deleted successfully')
     } catch (error) {
       console.error('Error deleting job:', error)
-      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : '알 수 없는 오류가 발생했습니다.'
       setMessage(`오류: ${errorMessage}`)
     }
   }
@@ -92,21 +100,27 @@ function AdminJobsContent() {
               // 후행 쉼표 제거
               .replace(/,\s*}/g, '}')
               .replace(/,\s*]/g, ']')
-            
+
             jobData = JSON.parse(jsonString)
           } catch (parseError) {
             console.error('파싱 에러:', parseError)
-            throw new Error('데이터 형식이 올바르지 않습니다. JSON 형식으로 입력해주세요.')
+            throw new Error(
+              '데이터 형식이 올바르지 않습니다. JSON 형식으로 입력해주세요.'
+            )
           }
         } else {
-          throw new Error('올바른 형식이 아닙니다. 중괄호({})로 시작하고 끝나야 합니다.')
+          throw new Error(
+            '올바른 형식이 아닙니다. 중괄호({})로 시작하고 끝나야 합니다.'
+          )
         }
       }
 
       // 다음 ID 계산 (가장 큰 ID + 1)
-      const jobsArray = Array.isArray(jobs) ? jobs : (jobs?.jobs || [])
+      const jobsArray = Array.isArray(jobs) ? jobs : jobs?.jobs || []
       const nextId =
-        jobsArray.length > 0 ? Math.max(...jobsArray.map((job) => job.id)) + 1 : 1
+        jobsArray.length > 0
+          ? Math.max(...jobsArray.map((job) => job.id)) + 1
+          : 1
 
       const parsedData: QuickUploadData = {
         id: nextId.toString(),
@@ -124,7 +138,6 @@ function AdminJobsContent() {
           : [],
         logoUrl: jobData.logoUrl || '',
         url: jobData.url || '',
-        uploadedAt: jobData.uploadedAt || new Date().toISOString(),
         deadline: jobData.deadline || '상시 채용',
         promptContent: quickUploadPrompt,
       }
@@ -155,7 +168,6 @@ function AdminJobsContent() {
         preferredQualifications: parsedJobData.preferredQualifications,
         logoUrl: parsedJobData.logoUrl,
         url: parsedJobData.url,
-        uploadedAt: parsedJobData.uploadedAt,
         deadline: parsedJobData.deadline,
       }
 
@@ -163,7 +175,7 @@ function AdminJobsContent() {
         job,
         promptContent: parsedJobData.promptContent,
       })
-      
+
       setMessage('채용공고가 성공적으로 업로드되었습니다.')
       setQuickUploadData('')
       setQuickUploadPrompt('')
@@ -172,7 +184,10 @@ function AdminJobsContent() {
       console.log('Job created successfully')
     } catch (error) {
       console.error('Error uploading job:', error)
-      const errorMessage = error instanceof Error ? error.message : '알 수 없는 오류가 발생했습니다.'
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : '알 수 없는 오류가 발생했습니다.'
       setMessage(`오류: ${errorMessage}`)
     }
   }
@@ -238,26 +253,19 @@ function AdminJobsContent() {
                     className="w-full rounded-md border-gray-300 font-mono text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                     value={quickUploadData}
                     onChange={(e) => setQuickUploadData(e.target.value)}
-                    placeholder={`JavaScript 객체 형식 (따옴표 없이):
-{
-  companyName: '회사명',
-  jobTitle: '직무 제목',
-  conditions: ['조건1', '조건2'],
-  jobType: 'IT-개발',
-  positionDescription: '직무 설명',
-  mainTask: '주요 업무',
-  qualifications: ['자격1', '자격2'],
-  preferredQualifications: ['우대1', '우대2'],
-  logoUrl: '로고 URL',
-  url: '채용 URL',
-  uploadedAt: '2025-05-25T00:00:00+09:00',
-  deadline: '2025-06-09T23:59:59+09:00'
-}
-
-또는 JSON 형식 (모든 키에 따옴표):
+                    placeholder={`JavaScript 객체 형식:
 {
   "companyName": "회사명",
-  "jobTitle": "직무 제목"
+  "jobTitle": "직무 제목",
+  "conditions": ["조건1", "조건2"],
+  "jobType": "IT-개발",
+  "positionDescription": "직무 설명",
+  "mainTask": "주요 업무",
+  "qualifications": ["자격1", "자격2"],
+  "preferredQualifications": ["우대1", "우대2"],
+  "logoUrl": "로고 URL",
+  "url": "채용 URL",
+  "deadline": "2025-06-09T23:59:59+09:00"
 }`}
                   />
                 </div>
@@ -305,7 +313,8 @@ function AdminJobsContent() {
             {/* 채용공고 목록 */}
             <div>
               <h2 className="mb-4 text-xl font-semibold">
-                채용공고 목록 ({Array.isArray(jobs) ? jobs.length : (jobs?.jobs?.length || 0)}개)
+                채용공고 목록 (
+                {Array.isArray(jobs) ? jobs.length : jobs?.jobs?.length || 0}개)
               </h2>
 
               <div className="overflow-x-auto">
@@ -333,33 +342,35 @@ function AdminJobsContent() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {(Array.isArray(jobs) ? jobs : (jobs?.jobs || [])).map((job) => (
-                      <tr key={job.id}>
-                        <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
-                          {job.id}
-                        </td>
-                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                          {job.companyName}
-                        </td>
-                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                          {job.jobTitle}
-                        </td>
-                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                          {job.jobType}
-                        </td>
-                        <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
-                          {job.deadline}
-                        </td>
-                        <td className="space-x-2 px-6 py-4 text-sm font-medium whitespace-nowrap">
-                          <button
-                            onClick={() => handleDelete(job.id)}
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            삭제
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {(Array.isArray(jobs) ? jobs : jobs?.jobs || []).map(
+                      (job) => (
+                        <tr key={job.id}>
+                          <td className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+                            {job.id}
+                          </td>
+                          <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                            {job.companyName}
+                          </td>
+                          <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                            {job.jobTitle}
+                          </td>
+                          <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                            {job.jobType}
+                          </td>
+                          <td className="px-6 py-4 text-sm whitespace-nowrap text-gray-900">
+                            {job.deadline}
+                          </td>
+                          <td className="space-x-2 px-6 py-4 text-sm font-medium whitespace-nowrap">
+                            <button
+                              onClick={() => handleDelete(job.id)}
+                              className="text-red-600 hover:text-red-900"
+                            >
+                              삭제
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                 </table>
               </div>

@@ -122,7 +122,6 @@ export interface Database {
           logo_url: string | null
           url: string | null
           prompt_content: string | null
-          uploaded_at: string
           deadline: string
           created_at: string
           updated_at: string
@@ -139,7 +138,6 @@ export interface Database {
           logo_url?: string | null
           url?: string | null
           prompt_content?: string | null
-          uploaded_at: string
           deadline: string
           created_at?: string
           updated_at?: string
@@ -157,7 +155,6 @@ export interface Database {
           logo_url?: string | null
           url?: string | null
           prompt_content?: string | null
-          uploaded_at?: string
           deadline?: string
           created_at?: string
           updated_at?: string
