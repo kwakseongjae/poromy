@@ -14,7 +14,8 @@ export type Job = {
   logoUrl: string
   url: string
   prompt: string
-  uploadedAt: string // ISO date string
+  createdAt: string // ISO date string
+  updatedAt: string // ISO date string
   deadline: string // ISO date string or '상시 채용'
   jobType: JobType
 }

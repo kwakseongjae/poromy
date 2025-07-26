@@ -56,7 +56,8 @@ const convertSupabaseJobToJob = (supabaseJob: any): Job => {
     logoUrl: supabaseJob.logo_url || '',
     // 채용공고 URL이 없는 경우 빈 문자열로 기본값 설정
     url: supabaseJob.url || '',
-    uploadedAt: supabaseJob.uploaded_at,
+    createdAt: supabaseJob.created_at,
+    updatedAt: supabaseJob.updated_at,
     deadline: supabaseJob.deadline,
     // 🚀 성능 개선: 직접 문자열로 할당하여 불필요한 함수 호출 제거
     prompt: supabaseJob.prompt_content || '아직 등록된 프롬프트가 없습니다.',
@@ -131,8 +132,10 @@ export const getJobsPaginated = async (
         preferred_qualifications,
         logo_url,
         url,
-        uploaded_at,
-        deadline
+        prompt_content,
+        deadline,
+        created_at,
+        updated_at
       `,
         { count: 'exact' }
       )
@@ -186,8 +189,10 @@ export const getLatestJobs = async (limit: number = 10): Promise<Job[]> => {
         preferred_qualifications,
         logo_url,
         url,
-        uploaded_at,
-        deadline
+        prompt_content,
+        deadline,
+        created_at,
+        updated_at
       `
       )
       .order('id', { ascending: false })
@@ -236,8 +241,10 @@ export const getJobsWithOffset = async (
         preferred_qualifications,
         logo_url,
         url,
-        uploaded_at,
-        deadline
+        prompt_content,
+        deadline,
+        created_at,
+        updated_at
       `,
         { count: 'exact' }
       )
@@ -291,9 +298,10 @@ export const getJobById = async (id: number): Promise<Job | null> => {
         preferred_qualifications,
         logo_url,
         url,
-        uploaded_at,
+        prompt_content,
         deadline,
-        prompt_content
+        created_at,
+        updated_at
       `
       )
       .eq('id', id)
@@ -535,7 +543,6 @@ export const insertJob = async (
       logo_url: job.logoUrl,
       url: job.url,
       prompt_content: job.promptContent,
-      uploaded_at: job.uploadedAt,
       deadline: job.deadline,
     }
 
@@ -595,7 +602,6 @@ export const updateJob = async (
     if (updates.url !== undefined) supabaseUpdates.url = updates.url
     if (updates.promptContent !== undefined)
       supabaseUpdates.prompt_content = updates.promptContent
-    if (updates.uploadedAt) supabaseUpdates.uploaded_at = updates.uploadedAt
     if (updates.deadline) supabaseUpdates.deadline = updates.deadline
 
     // 지정된 ID의 레코드를 업데이트
