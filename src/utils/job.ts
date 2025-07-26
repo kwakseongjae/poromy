@@ -89,11 +89,11 @@ export const getDeadlineLabel = (deadline: string): string => {
 }
 
 /**
- * Check if a job is new (uploaded within 24 hours)
+ * Check if a job is new (created within 24 hours)
  */
-export const isJobNew = (uploadedAt: string): boolean => {
-  const uploadedAtDate = new Date(uploadedAt)
+export const isJobNew = (createdAt: string): boolean => {
+  const createdAtDate = new Date(createdAt)
   const now = new Date()
-  const diffMs = now.getTime() - uploadedAtDate.getTime()
+  const diffMs = now.getTime() - createdAtDate.getTime()
   return diffMs >= 0 && diffMs < 24 * 60 * 60 * 1000
 }
