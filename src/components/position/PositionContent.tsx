@@ -19,6 +19,7 @@ import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
+import { getDeadlineLabel, isJobNew } from '@/utils/job'
 // New React Query hooks
 import { 
   useInfiniteJobs, 
@@ -54,32 +55,6 @@ const formatDeadline = (deadline: string) => {
   return result
 }
 
-// Helper to calculate D-day or show '상시채용'
-const getDeadlineLabel = (deadline: string) => {
-  if (deadline === '상시 채용') return '상시채용'
-  const now = new Date()
-  const end = new Date(deadline)
-
-  if (now > end) return '마감'
-
-  // 날짜가 오늘이고, 아직 마감 시간이 안 지났으면 D-0
-  const isSameDay =
-    now.getFullYear() === end.getFullYear() &&
-    now.getMonth() === end.getMonth() &&
-    now.getDate() === end.getDate()
-
-  if (isSameDay) return 'D-0'
-
-  // 미래면 D-n
-  const todayMidnight = new Date(now)
-  todayMidnight.setHours(0, 0, 0, 0)
-  const endMidnight = new Date(end)
-  endMidnight.setHours(0, 0, 0, 0)
-  const diff = Math.ceil(
-    (endMidnight.getTime() - todayMidnight.getTime()) / (1000 * 60 * 60 * 24)
-  )
-  return `D-${diff}`
-}
 
 // Get available job types from jobs data
 const getAvailableJobTypes = (jobs: Job[]): JobType[] => {
@@ -300,12 +275,7 @@ function MobilePositionContent() {
             {currentJobs.map((job) => {
               const encryptedId = encrypt(String(job.id))
               const deadlineLabel = getDeadlineLabel(job.deadline)
-
-              // Check if job is new (uploaded within 24 hours)
-              const uploadedAtDate = new Date(job.uploadedAt)
-              const now = new Date()
-              const diffMs = now.getTime() - uploadedAtDate.getTime()
-              const isNew = diffMs >= 0 && diffMs < 24 * 60 * 60 * 1000
+              const isNew = isJobNew(job.createdAt)
 
               return (
                 <Link

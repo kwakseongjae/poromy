@@ -55,7 +55,7 @@ export default function JobList() {
         const encryptedId = encrypt(String(job.id))
         const deadlineLabel = getDeadlineLabel(job.deadline)
         // 기존 utils 함수 사용
-        const isNew = isJobNew(job.uploadedAt)
+        const isNew = isJobNew(job.createdAt)
 
         return (
           <article
