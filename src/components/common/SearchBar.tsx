@@ -13,7 +13,7 @@ const SearchBarContent = ({
   const [query, setQuery] = useSearchQuery()
   const [inputValue, setInputValue] = useState(query || '')
 
-  // URL 쿼리가 변경될 때만 input 값을 동기화
+  // URL 쿼리가 변경될 때 input 값 동기화
   useEffect(() => {
     setInputValue(query || '')
   }, [query])
@@ -25,6 +25,7 @@ const SearchBarContent = ({
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      e.preventDefault()
       handleSearch()
     }
   }
