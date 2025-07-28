@@ -14,15 +14,17 @@ import { useJob } from '@/lib/react-query/hooks/jobs-hooks'
 interface DeviceAwarePositionViewProps {
   redirectTo: string
   isMobileUA: boolean
+  serverTime?: string
 }
 
 export default function DeviceAwarePositionView({
   redirectTo,
   isMobileUA,
+  serverTime,
 }: DeviceAwarePositionViewProps) {
   const router = useRouter()
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
-  const [shouldRender, setShouldRender] = useState(false)
+  const [shouldRender, setShouldRender] = useState(isMobileUA)
   const [toastVisible, setToastVisible] = useState(false)
   const [toastActive, setToastActive] = useState(false)
   const [jobId, setJobId] = useState<number | null>(null)
@@ -38,77 +40,59 @@ export default function DeviceAwarePositionView({
   const jobData = job?.job || job
   const promptContent = jobData?.prompt || ''
 
-  // 🚀 강화된 스크롤 제어: 페이지 진입 시 항상 상단으로 이동
+  // 디바이스 타입에 따른 렌더링 제어
   useEffect(() => {
-    const handleScrollToTop = () => {
-      // 즉시 스크롤을 상단으로 이동
+    const shouldShowMobile = isMobileUA || isMobile
+    setShouldRender(shouldShowMobile)
+    
+    if (!shouldShowMobile) {
+      router.replace(redirectTo)
+    }
+  }, [isMobileUA, isMobile, router, redirectTo])
+
+  // 🚀 스크롤 제어: 페이지 진입 시 상단으로 이동
+  useEffect(() => {
+    const scrollToTop = () => {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-
-      // 브라우저 호환성을 위한 대체 방법
-      if (window.scrollY !== 0) {
-        window.scrollTo(0, 0)
-      }
-
-      // document.body와 document.documentElement 모두 제어
       document.body.scrollTop = 0
       document.documentElement.scrollTop = 0
     }
 
-    // 컴포넌트 마운트 즉시 실행
-    handleScrollToTop()
-
-    // 페이지 로드 완료 후에도 실행
+    scrollToTop()
+    
     const timeoutIds = [
-      setTimeout(handleScrollToTop, 50),
-      setTimeout(handleScrollToTop, 100),
-      setTimeout(handleScrollToTop, 200),
+      setTimeout(scrollToTop, 50),
+      setTimeout(scrollToTop, 100),
+      setTimeout(scrollToTop, 200),
     ]
 
-    // 페이지 가시성 변경 시에도 실행 (모바일에서 탭 전환 등)
     const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        handleScrollToTop()
-      }
+      if (!document.hidden) scrollToTop()
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
-    // cleanup
     return () => {
       timeoutIds.forEach(clearTimeout)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [])
 
-  useEffect(() => {
-    if (isMobileUA || isMobile) {
-      setShouldRender(true)
-    } else {
-      router.replace(redirectTo)
-    }
-  }, [isMobileUA, isMobile, router, redirectTo])
-
+  // ID 파싱 및 설정
   useEffect(() => {
     if (shouldRender) {
       try {
-        // URL에서 ID 추출 (redirectTo에서 id 파라미터 추출)
         const url = new URL(redirectTo, window.location.origin)
         const encryptedId = url.searchParams.get('id')
 
-        if (!encryptedId) {
-          console.error('No encrypted ID found in URL')
-          return
-        }
+        if (!encryptedId) return
 
         const decryptedId = decrypt(encryptedId)
         const parsedJobId = parseInt(decryptedId, 10)
 
-        if (isNaN(parsedJobId)) {
-          console.error('Invalid job ID')
-          return
+        if (!isNaN(parsedJobId)) {
+          setJobId(parsedJobId)
         }
-
-        setJobId(parsedJobId)
       } catch (err) {
         console.error('Error parsing job ID:', err)
       }
@@ -140,7 +124,8 @@ export default function DeviceAwarePositionView({
     }
   }
 
-  if (!shouldRender) {
+  // Show loading during hydration or redirect
+  if (isMobile === null || !shouldRender) {
     return (
       <div className="flex min-h-screen items-center justify-center">
         <div className="border-primary h-8 w-8 animate-spin rounded-full border-b-2"></div>
@@ -148,10 +133,11 @@ export default function DeviceAwarePositionView({
     )
   }
 
-  // Helper to calculate D-day or show '상시채용'
+  // Helper to calculate D-day (서버 시간 기준)
   const getDeadlineLabel = (deadline: string) => {
     if (deadline === '상시 채용') return '상시채용'
-    const now = new Date()
+    
+    const now = serverTime ? new Date(serverTime) : new Date()
     const end = new Date(deadline)
 
     if (now > end) return '마감'
@@ -173,10 +159,7 @@ export default function DeviceAwarePositionView({
     return `D-${diff}`
   }
 
-  // Get job type display name
-  const getJobTypeDisplayName = (jobType: JobType): string => {
-    return jobType
-  }
+  const getJobTypeDisplayName = (jobType: JobType): string => jobType
 
   return (
     <div className="w-full bg-white p-4">
@@ -201,6 +184,7 @@ export default function DeviceAwarePositionView({
         </svg>
         목록으로 가기
       </button>
+      
       {loading ? (
         <div className="flex min-h-screen w-full items-center justify-center">
           <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
@@ -232,37 +216,29 @@ export default function DeviceAwarePositionView({
               </div>
             </div>
           </div>
+
           {/* 모바일 채용정보 박스 */}
           <div className="mb-6 flex w-full items-start justify-between md:hidden">
             <div className="flex w-fit min-w-60 flex-col gap-2 rounded-lg bg-gray-50 px-6 py-4">
               <div className="flex items-center">
-                <span className="w-20 text-sm font-medium text-gray-400">
-                  직군
-                </span>
+                <span className="w-20 text-sm font-medium text-gray-400">직군</span>
                 <span className="font-semibold text-gray-900">
                   {getJobTypeDisplayName(jobData.jobType)}
                 </span>
               </div>
               <div className="flex items-center">
-                <span className="w-20 text-sm font-medium text-gray-400">
-                  직무
-                </span>
+                <span className="w-20 text-sm font-medium text-gray-400">직무</span>
                 <span className="font-semibold text-gray-900">
                   {jobData.conditions[0]}
                 </span>
               </div>
               <div className="flex items-center">
-                <span className="w-20 text-sm font-medium text-gray-400">
-                  마감일
-                </span>
+                <span className="w-20 text-sm font-medium text-gray-400">마감일</span>
                 {(() => {
                   const deadlineLabel = getDeadlineLabel(jobData.deadline)
                   if (deadlineLabel === '마감') {
                     return (
-                      <span
-                        className="font-semibold text-orange-500"
-                        aria-label="마감"
-                      >
+                      <span className="font-semibold text-orange-500" aria-label="마감">
                         마감
                       </span>
                     )
@@ -305,9 +281,7 @@ export default function DeviceAwarePositionView({
 
           {/* 채용정보 요약란 */}
           <div className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              채용 조건
-            </h2>
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">채용 조건</h2>
             <div className="flex flex-wrap gap-2">
               {jobData.conditions
                 .slice(1)
@@ -324,9 +298,7 @@ export default function DeviceAwarePositionView({
 
           {jobData.positionDescription && (
             <div className="mb-6">
-              <h2 className="mb-2 text-lg font-semibold text-gray-900">
-                포지션 소개
-              </h2>
+              <h2 className="mb-2 text-lg font-semibold text-gray-900">포지션 소개</h2>
               <p className="whitespace-pre-line text-gray-700">
                 {jobData.positionDescription}
               </p>
@@ -335,9 +307,7 @@ export default function DeviceAwarePositionView({
 
           {jobData.mainTask && (
             <div className="mb-6">
-              <h2 className="mb-2 text-lg font-semibold text-gray-900">
-                주요 업무
-              </h2>
+              <h2 className="mb-2 text-lg font-semibold text-gray-900">주요 업무</h2>
               <p className="whitespace-pre-line text-gray-700">
                 {jobData.mainTask}
               </p>
@@ -345,28 +315,20 @@ export default function DeviceAwarePositionView({
           )}
 
           <div className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              지원 자격
-            </h2>
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">지원 자격</h2>
             <ul className="list-inside list-disc space-y-2 text-gray-700">
-              {jobData.qualifications.map(
-                (qualification: string, index: number) => (
-                  <li key={index}>{qualification}</li>
-                )
-              )}
+              {jobData.qualifications.map((qualification: string, index: number) => (
+                <li key={index}>{qualification}</li>
+              ))}
             </ul>
           </div>
 
           <div className="mb-6">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              우대 사항
-            </h2>
+            <h2 className="mb-2 text-lg font-semibold text-gray-900">우대 사항</h2>
             <ul className="list-inside list-disc space-y-2 text-gray-700">
-              {jobData.preferredQualifications.map(
-                (qualification: string, index: number) => (
-                  <li key={index}>{qualification}</li>
-                )
-              )}
+              {jobData.preferredQualifications.map((qualification: string, index: number) => (
+                <li key={index}>{qualification}</li>
+              ))}
             </ul>
           </div>
 
@@ -379,7 +341,7 @@ export default function DeviceAwarePositionView({
             />
           </div>
 
-          {/* Toast/Modal: 링크 복사됨 */}
+          {/* Toast: 링크 복사됨 */}
           {toastVisible && (
             <div
               className={`fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center rounded-lg bg-gray-900 px-6 py-3 text-base font-medium text-white shadow-lg transition-all ${toastActive ? 'animate-toast-in' : 'animate-toast-out'}`}

@@ -244,6 +244,7 @@ export default async function PositionPage({ params }: Props) {
         <DeviceAwarePositionView
           redirectTo={`/position?id=${resolvedParams.id}`}
           isMobileUA={isMobileUA}
+          serverTime={new Date().toISOString()}
         />
       </>
     )

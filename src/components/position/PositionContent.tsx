@@ -1156,30 +1156,32 @@ function DesktopPositionContent() {
   )
 }
 
+// Loading component
+const PositionLoadingFallback = () => (
+  <div className="container mx-auto px-4 py-8">
+    <div className="flex min-h-screen items-center justify-center">
+      <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
+    </div>
+  </div>
+)
+
 // Main PositionContent Component
 export default function PositionContent() {
   const router = useRouter()
   const [encryptedId] = useJobIdParam()
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' })
 
-  // Redirect to /position/[id] if mobile and id exists
+  // Redirect to mobile view when mobile and has ID
   useEffect(() => {
-    if (isMobile === true && encryptedId) {
+    if (isMobile && encryptedId) {
       router.replace(`/position/${encryptedId}`)
     }
   }, [isMobile, encryptedId, router])
 
-  // Show loading screen during hydration to prevent mismatch
-  if (isMobile === null) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent"></div>
-        </div>
-      </div>
-    )
+  // Show loading during hydration or mobile redirect
+  if (isMobile === null || (isMobile && encryptedId)) {
+    return <PositionLoadingFallback />
   }
 
-  // Render mobile or desktop view based on screen size
   return isMobile ? <MobilePositionContent /> : <DesktopPositionContent />
 }
