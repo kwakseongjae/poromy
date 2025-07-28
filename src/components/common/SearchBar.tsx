@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, Suspense } from 'react'
+import { useState, KeyboardEvent, Suspense, useEffect } from 'react'
 import { useSearchQuery } from '@/hooks/useQueryParams'
 
 interface SearchBarProps {
@@ -11,21 +11,22 @@ const SearchBarContent = ({
   size = 'medium',
 }: SearchBarProps) => {
   const [query, setQuery] = useSearchQuery()
-  const [inputValue, setInputValue] = useState(query)
+  const [inputValue, setInputValue] = useState(query || '')
+
+  // URL 쿼리가 변경될 때만 input 값을 동기화
+  useEffect(() => {
+    setInputValue(query || '')
+  }, [query])
 
   const handleSearch = () => {
-    setQuery(inputValue.trim() || null)
+    const trimmedValue = inputValue.trim()
+    setQuery(trimmedValue || null)
   }
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       handleSearch()
     }
-  }
-
-  // URL이 변경되면 input 값도 동기화
-  if (inputValue !== query) {
-    setInputValue(query || '')
   }
 
   const sizeClasses = {
@@ -55,8 +56,9 @@ const SearchBarContent = ({
         aria-label="검색"
       />
       <button
+        type="button"
         onClick={handleSearch}
-        className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-md p-1 text-gray-500"
+        className="absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded-md p-1 text-gray-500 hover:text-gray-700 transition-colors"
         aria-label="검색"
       >
         <svg
