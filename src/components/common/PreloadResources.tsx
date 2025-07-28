@@ -1,3 +1,9 @@
+import {
+  HomeCarouselImage1,
+  HomeCarouselImage2,
+  HomeCarouselImage3,
+} from '@/assets'
+
 /**
  * PreloadResources Component
  * 전역으로 필요한 핵심 리소스만 프리로드합니다.
@@ -35,7 +41,10 @@ export const PreloadResources = () => {
       <link rel="dns-prefetch" href="https://www.google-analytics.com" />
 
       {/* Supabase 도메인 프리커넥트  */}
-      <link rel="dns-prefetch" href="https://jcebfbrgdtxbcsgpkvca.supabase.co" />
+      <link
+        rel="dns-prefetch"
+        href="https://jcebfbrgdtxbcsgpkvca.supabase.co"
+      />
       <link rel="preconnect" href="https://jcebfbrgdtxbcsgpkvca.supabase.co" />
 
       {/* Google Analytics 프리커넥트 */}
@@ -50,34 +59,26 @@ export const PreloadResources = () => {
 export const HomePreloadResources = () => {
   return (
     <>
-      {/* 🖼️ 홈 캐러셀 이미지 프리로드 (LCP 최적화) */}
+      {/* 🖼️ 홈 캐러셀 이미지 프리로드 (LCP 최적화) - 실제 import된 이미지 경로 사용 */}
       <link
         rel="preload"
-        href="/images/home-carousel-1.png"
+        href={HomeCarouselImage1.src}
         as="image"
         type="image/png"
         fetchPriority="high"
       />
       <link
         rel="preload"
-        href="/images/home-carousel-2.png"
+        href={HomeCarouselImage2.src}
         as="image"
         type="image/png"
         fetchPriority="high"
       />
       <link
         rel="preload"
-        href="/images/home-carousel-3.png"
+        href={HomeCarouselImage3.src}
         as="image"
         type="image/png"
-      />
-
-      {/* 🎨 로고 프리로드 */}
-      <link
-        rel="preload"
-        href="/svg/logo-icon.svg"
-        as="image"
-        type="image/svg+xml"
       />
     </>
   )
