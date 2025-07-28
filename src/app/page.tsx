@@ -11,6 +11,7 @@ import {
   DynamicEngagementTracker,
 } from '@/components/home/DynamicHomeComponents'
 import StructuredData from '@/components/common/StructuredData'
+import { HomePreloadResources } from '@/components/common/PreloadResources'
 import { generateFAQSchema } from '@/utils/structured-data'
 import { faqs } from '@/constants/faq'
 
@@ -100,6 +101,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* 🚀 홈페이지 전용 리소스 프리로드 */}
+      <HomePreloadResources />
+      
       {/* 📊 SEO 최적화: 구조화 데이터 */}
       <StructuredData schema={structuredData} />
       <StructuredData schema={faqSchema} />
