@@ -9,24 +9,21 @@ import {
   useCallback,
 } from 'react'
 import { useRouter } from 'next/navigation'
-import { useSearchQuery, useJobIdParam, usePageParam } from '@/hooks/useQueryParams'
+import {
+  useSearchQuery,
+  useJobIdParam,
+  usePageParam,
+} from '@/hooks/useQueryParams'
 import { decrypt, encrypt } from '@/utils/crypto'
 import type { JobType, Job } from '@/types/job'
 import Image from 'next/image'
 import Link from 'next/link'
-import { CheckIcon, CopyLinkIcon, LinkIcon, ChevronIcon } from '@/assets'
+import { CheckIcon, CopyLinkIcon, ChevronIcon } from '@/assets'
 import SearchBar from '@/components/common/SearchBar'
 import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
 import { getDeadlineLabel, isJobNew } from '@/utils/job'
-// New React Query hooks
-import { 
-  useInfiniteJobs, 
-  useJob, 
-  useSearchJobs, 
-  usePositionPrompt 
-} from '@/lib/react-query/hooks'
 
 interface PreviewJob {
   id: number
@@ -35,30 +32,6 @@ interface PreviewJob {
   logoUrl: string
   conditions: string[]
   url: string
-}
-
-// 마감일을 '5월 18일 17:00' 형태로 포맷팅하는 함수
-const formatDeadline = (deadline: string) => {
-  if (deadline === '상시 채용' || deadline === '마감') return deadline
-  // YYYY-MM-DD 또는 YYYY-MM-DD HH:mm 형태 지원
-  const dateMatch = deadline.match(
-    /(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2}))?/
-  )
-  if (!dateMatch) return deadline
-  const [, , month, day, hour, minute] = dateMatch
-  const monthNum = Number(month)
-  const dayNum = Number(day)
-  let result = `${monthNum}월 ${dayNum}일`
-  if (hour && minute) {
-    result += ` ${hour}:${minute}`
-  }
-  return result
-}
-
-
-// Get available job types from jobs data
-const getAvailableJobTypes = (jobs: Job[]): JobType[] => {
-  return Array.from(new Set(jobs.map((job) => job.jobType))) as JobType[]
 }
 
 // Get job type display name
@@ -95,13 +68,10 @@ function MobilePositionContent() {
   const [query] = useSearchQuery()
   const [currentPage, setCurrentPage] = usePageParam()
   const [encryptedId] = useJobIdParam()
-  const [jobTypeFilter, setJobTypeFilter] = useState<JobType | 'all'>('all')
+  const [jobTypeFilter] = useState<JobType | 'all'>('all')
   const [jobs, setJobs] = useState<Job[]>([])
-  const [availableJobTypes, setAvailableJobTypes] = useState<JobType[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [totalCount, setTotalCount] = useState(0)
-  const [hasMore, setHasMore] = useState(false)
   const itemsPerPage = 10
 
   const searchQuery = query || ''
@@ -146,19 +116,10 @@ function MobilePositionContent() {
         const data = await response.json()
         setJobs(data.jobs || [])
         setTotalCount(data.totalCount || data.jobs?.length || 0)
-        setHasMore(data.hasMore || false)
-
-        // Extract unique job types from the jobs
-        const jobTypes = Array.from(
-          new Set(data.jobs?.map((job: Job) => job.jobType) || [])
-        ) as JobType[]
-        setAvailableJobTypes(jobTypes)
       } catch (err) {
         console.error('Error fetching jobs:', err)
         setJobs([])
-        setAvailableJobTypes([])
         setTotalCount(0)
-        setHasMore(false)
       } finally {
         setLoading(false)
       }
@@ -418,7 +379,6 @@ function MobilePositionContent() {
 }
 
 function DesktopPositionContent() {
-  const router = useRouter()
   const [query, setQuery] = useSearchQuery()
   const [encryptedId, setEncryptedId] = useJobIdParam()
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -434,7 +394,6 @@ function DesktopPositionContent() {
   const [hasScrolledToTarget, setHasScrolledToTarget] = useState<boolean>(false)
   const [loadingMore, setLoadingMore] = useState<boolean>(false)
   const [hasMore, setHasMore] = useState<boolean>(true)
-  const [currentPage, setCurrentPage] = useState<number>(1)
   const [previewJob, setPreviewJob] = useState<PreviewJob | null>(null)
   const [previewPosition, setPreviewPosition] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState<boolean>(false)
@@ -694,7 +653,6 @@ function DesktopPositionContent() {
           if (jobElements.length > 0) {
             // If we have actual elements, use their real positions
             const targetIndex = Math.min(jobIndex, jobElements.length - 1)
-            const targetElement = jobElements[targetIndex] as HTMLElement
 
             // Show the previous item at the top (if exists)
             if (targetIndex > 0) {
@@ -859,7 +817,7 @@ function DesktopPositionContent() {
                     ref={isCurrentJob ? targetJobRef : undefined}
                     href={`/position?${new URLSearchParams({
                       ...(query && { query }),
-                      ...(isCurrentJob ? {} : { id: jobEncryptedId })
+                      ...(isCurrentJob ? {} : { id: jobEncryptedId }),
                     }).toString()}`}
                     className={`flex min-h-12 w-full items-center gap-2 rounded-lg px-4 ${
                       isCurrentJob
