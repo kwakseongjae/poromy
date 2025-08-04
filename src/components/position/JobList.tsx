@@ -7,10 +7,12 @@ import { getProxyImageUrl } from '@/utils/image'
 import { getDeadlineLabel, isJobNew } from '@/utils/job'
 import { usePathname } from 'next/navigation'
 import { useLatestJobs } from '@/lib/react-query/hooks/jobs-hooks'
+import { useViewTracking } from '@/hooks/useViewTracking'
 import type { Job } from '@/types/job'
 
 export default function JobList() {
   const pathname = usePathname()
+  const { trackView } = useViewTracking()
   
   // React Query를 사용한 데이터 페칭
   const { 
@@ -57,6 +59,11 @@ export default function JobList() {
         // 기존 utils 함수 사용
         const isNew = isJobNew(job.createdAt)
 
+        // View tracking handler
+        const handleJobClick = () => {
+          trackView(job.id)
+        }
+
         return (
           <article
             key={String(job.id)}
@@ -69,6 +76,7 @@ export default function JobList() {
               href={`/position/${encryptedId}`}
               className="flex h-full flex-col"
               aria-label={`${job.companyName} ${job.jobTitle} 상세 정보 보기`}
+              onClick={handleJobClick}
             >
               {/* Mobile/Tablet Layout (below lg) */}
               <div className="flex h-full flex-col lg:hidden">

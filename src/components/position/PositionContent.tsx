@@ -24,6 +24,7 @@ import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
 import { getDeadlineLabel, isJobNew } from '@/utils/job'
+import { useViewTracking } from '@/hooks/useViewTracking'
 
 interface PreviewJob {
   id: number
@@ -73,6 +74,7 @@ function MobilePositionContent() {
   const [loading, setLoading] = useState(true)
   const [totalCount, setTotalCount] = useState(0)
   const itemsPerPage = 10
+  const { trackView } = useViewTracking()
 
   const searchQuery = query || ''
 
@@ -244,6 +246,7 @@ function MobilePositionContent() {
                   href={`/position/${encryptedId}`}
                   scroll={false}
                   className="group block overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:border-blue-500 hover:shadow-lg"
+                  onClick={() => trackView(job.id)}
                 >
                   <div className="p-4">
                     <div className="mb-4 flex items-start">
@@ -384,6 +387,7 @@ function DesktopPositionContent() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const targetJobRef = useRef<HTMLAnchorElement>(null)
   const loadingRequestRef = useRef<boolean>(false) // 중복 요청 방지용 ref
+  const { trackView } = useViewTracking()
 
   const [jobs, setJobs] = useState<Job[]>([])
   const [jobsLoading, setJobsLoading] = useState<boolean>(true)
@@ -838,6 +842,10 @@ function DesktopPositionContent() {
                     }}
                     onClick={() => {
                       setPreviewJob(null)
+                      // Only track if we're actually navigating to a different job
+                      if (!isCurrentJob) {
+                        trackView(jobItem.id)
+                      }
                     }}
                   >
                     <Image

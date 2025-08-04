@@ -10,6 +10,7 @@ import PromptContainer from '@/components/common/PromptContainer'
 import { getProxyImageUrl } from '@/utils/image'
 import { useMediaQuery } from 'react-responsive'
 import { useJob } from '@/lib/react-query/hooks/jobs-hooks'
+import { useViewTracking } from '@/hooks/useViewTracking'
 
 interface DeviceAwarePositionViewProps {
   redirectTo: string
@@ -28,6 +29,7 @@ export default function DeviceAwarePositionView({
   const [toastVisible, setToastVisible] = useState(false)
   const [toastActive, setToastActive] = useState(false)
   const [jobId, setJobId] = useState<number | null>(null)
+  const { trackView } = useViewTracking()
   
   // React Query를 사용한 job 데이터 페칭
   const { 
@@ -46,9 +48,27 @@ export default function DeviceAwarePositionView({
     setShouldRender(shouldShowMobile)
     
     if (!shouldShowMobile) {
+      // Extract jobId from current URL path for desktop redirect tracking
+      try {
+        const currentPath = window.location.pathname
+        const pathSegments = currentPath.split('/')
+        const encryptedIdFromPath = pathSegments[pathSegments.length - 1] // Get last segment
+        
+        if (encryptedIdFromPath && encryptedIdFromPath !== 'position') {
+          const decryptedId = decrypt(encryptedIdFromPath)
+          const parsedJobId = parseInt(decryptedId, 10)
+          
+          if (!isNaN(parsedJobId)) {
+            trackView(parsedJobId)
+          }
+        }
+      } catch (err) {
+        console.error('Error extracting job ID for desktop redirect tracking:', err)
+      }
+      
       router.replace(redirectTo)
     }
-  }, [isMobileUA, isMobile, router, redirectTo])
+  }, [isMobileUA, isMobile, router, redirectTo, trackView])
 
   // 🚀 스크롤 제어: 페이지 진입 시 상단으로 이동
   useEffect(() => {
@@ -99,14 +119,17 @@ export default function DeviceAwarePositionView({
     }
   }, [shouldRender, redirectTo])
   
-  // 데이터 로딩 완료 후 스크롤 위치 조정
+  // 데이터 로딩 완료 후 스크롤 위치 조정 및 뷰 트래킹
   useEffect(() => {
-    if (!loading && job) {
+    if (!loading && job && jobId) {
+      // Track view when job data is loaded (for direct URL access)
+      trackView(jobId)
+      
       setTimeout(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
       }, 50)
     }
-  }, [loading, job])
+  }, [loading, job, jobId, trackView])
 
   // 링크 복사 핸들러
   const handleCopyLink = async () => {

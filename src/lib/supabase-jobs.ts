@@ -61,6 +61,8 @@ const convertSupabaseJobToJob = (supabaseJob: any): Job => {
     deadline: supabaseJob.deadline,
     // 🚀 성능 개선: 직접 문자열로 할당하여 불필요한 함수 호출 제거
     prompt: supabaseJob.prompt_content || '아직 등록된 프롬프트가 없습니다.',
+    // View count with default fallback for backward compatibility
+    views: supabaseJob.views || 0,
   }
 }
 
@@ -135,7 +137,8 @@ export const getJobsPaginated = async (
         prompt_content,
         deadline,
         created_at,
-        updated_at
+        updated_at,
+        views
       `,
         { count: 'exact' }
       )
@@ -192,7 +195,8 @@ export const getLatestJobs = async (limit: number = 10): Promise<Job[]> => {
         prompt_content,
         deadline,
         created_at,
-        updated_at
+        updated_at,
+        views
       `
       )
       .order('id', { ascending: false })
@@ -244,7 +248,8 @@ export const getJobsWithOffset = async (
         prompt_content,
         deadline,
         created_at,
-        updated_at
+        updated_at,
+        views
       `,
         { count: 'exact' }
       )
@@ -301,7 +306,8 @@ export const getJobById = async (id: number): Promise<Job | null> => {
         prompt_content,
         deadline,
         created_at,
-        updated_at
+        updated_at,
+        views
       `
       )
       .eq('id', id)

@@ -18,6 +18,7 @@ export type Job = {
   updatedAt: string // ISO date string
   deadline: string // ISO date string or '상시 채용'
   jobType: JobType
+  views: number // View count for tracking popularity
 }
 
 export type JobType =
