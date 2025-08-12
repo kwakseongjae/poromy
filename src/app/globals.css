@@ -140,6 +140,10 @@
     /* 🚀 폰트 렌더링 최적화 */
     text-rendering: optimizeLegibility;
     -webkit-text-size-adjust: 100%;
+    /* 🎯 Body 영역 제한 - 최대 너비 1280px, 중앙 정렬 */
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
   }
 }
 
