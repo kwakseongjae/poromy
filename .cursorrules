@@ -16,6 +16,7 @@
   📄 .claude/settings.local.json
 📁 docs/
   📄 docs/auth-performance-optimization.md
+  📄 docs/information-architecture.md
   📄 docs/nuqs-integration.md
   📄 docs/react_query_migration.md
   📄 docs/supabase-best-practices.md
@@ -182,6 +183,7 @@
   📁 src/hooks/
     📄 src/hooks/useEmblaCarousel.ts
     📄 src/hooks/useQueryParams.ts
+    📄 src/hooks/useViewTracking.ts
   📁 src/lib/
     📁 src/lib/react-query/
       📁 src/lib/react-query/hooks/
